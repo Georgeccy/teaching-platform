@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 统一阅读播放器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478; --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --teal:#39C0C8; --shadow:#2E2A3B; }
+    body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --shadow:#000; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition:background .25s, color .25s; }
+    .pixel { font-family:"Press Start 2P", monospace; }
+    .app { display:flex; min-height:100vh; }
+    .sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; background:var(--bg); transition:width .22s, opacity .22s, padding .22s; overflow:hidden; }
+    .app.collapsed .sidebar { width:0; padding-left:0; padding-right:0; border-right-color:transparent; opacity:0; pointer-events:none; }
+    .logo { font-family:"Press Start 2P",monospace; font-size:13px; line-height:1.7; border:3px solid var(--line); background:var(--yellow); color:#2E2A3B; padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); margin-bottom:28px; white-space:nowrap; }
+    .nav { display:flex; flex-direction:column; gap:6px; }
+    .nav a { display:flex; align-items:center; gap:10px; padding:11px 12px; color:var(--text); text-decoration:none; border:3px solid transparent; font-weight:500; transition:transform .12s, background .12s, border-color .12s; white-space:nowrap; }
+    .nav a .dot { width:12px; height:12px; background:var(--blue); border:2px solid var(--line); flex-shrink:0; }
+    .nav a:hover { transform:translate(-2px,-2px); border-color:var(--line); box-shadow:3px 3px 0 var(--shadow); background:var(--card); }
+    .nav a.active { background:var(--pink); color:#fff; border-color:var(--line); box-shadow:4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background:#fff; }
+    .sidebar-foot { margin-top:auto; display:flex; justify-content:center; padding-top:20px; }
+    .main { flex:1; min-width:0; display:flex; flex-direction:column; }
+    .topbar { display:flex; align-items:center; gap:14px; padding:18px 26px 14px; border-bottom:3px solid var(--line); flex-wrap:wrap; }
+    .icon-btn { width:44px; height:44px; flex-shrink:0; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:transform .12s; }
+    .icon-btn:hover { transform:translate(-2px,-2px); }
+    .icon-btn.on { background:var(--green); color:#fff; }
+    #sidebarToggle { font-family:"Press Start 2P"; font-size:12px; }
+    .crumb { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); white-space:nowrap; }
+    .crumb a { color:var(--blue); text-decoration:none; font-weight:500; }
+    .crumb a:hover { text-decoration:underline; }
+    .spacer { flex:1; }
+    .session { font-family:inherit; font-size:14px; font-weight:500; border:3px solid var(--line); background:var(--card); color:var(--text); padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); cursor:pointer; max-width:320px; }
+    .statbar { display:flex; align-items:center; gap:10px; padding:14px 26px; border-bottom:3px solid var(--line); flex-wrap:wrap; }
+    .mode-toggle { display:flex; border:3px solid var(--line); box-shadow:4px 4px 0 var(--shadow); }
+    .mode-toggle button { font-family:inherit; font-size:13px; font-weight:700; border:none; background:var(--card); color:var(--text); padding:9px 14px; cursor:pointer; }
+    .mode-toggle button.active { background:var(--blue); color:#fff; }
+    .mode-toggle button + button { border-left:3px solid var(--line); }
+    .pill { font-family:"Press Start 2P"; font-size:9px; border:3px solid var(--line); background:var(--card); padding:9px 11px; box-shadow:3px 3px 0 var(--shadow); }
+    .pill .num { color:var(--pink); }
+    .hint { padding:60px 30px; text-align:center; color:var(--muted); font-size:15px; }
+    .stage { flex:1; min-height:0; position:relative; padding:18px 22px 22px; }
+    #deckFrame { width:100%; height:calc(100vh - 210px); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow); background:var(--card); display:block; }
+    .pdf-note { position:absolute; left:22px; top:18px; right:22px; z-index:5; display:none; align-items:center; gap:12px; border:3px solid var(--pink); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:12px 16px; font-size:13px; }
+    .pdf-note.show { display:flex; }
+    .pdf-note b { color:var(--pink); }
+    #loginOverlay { position:fixed; inset:0; background:var(--bg); display:none; flex-direction:column; align-items:center; justify-content:center; gap:18px; z-index:50; }
+    #loginOverlay .box { border:3px solid var(--line); background:var(--card); box-shadow:6px 6px 0 var(--shadow); padding:30px 34px; text-align:center; max-width:420px; }
+    #loginOverlay h2 { font-size:18px; margin-bottom:12px; }
+    #loginOverlay p { color:var(--muted); font-size:13px; margin-bottom:18px; }
+    #loginOverlay button { font-family:"Press Start 2P"; font-size:11px; background:var(--pink); color:#fff; border:3px solid var(--line); padding:13px 16px; cursor:pointer; box-shadow:4px 4px 0 var(--shadow); }
+    @media (max-width:760px) { .sidebar{display:none} .app.collapsed .sidebar{display:none} #deckFrame{height:calc(100vh - 250px)} .session{max-width:200px} }
+  </style>
+</head>
+<body>
+  <div class="app" id="appEl">
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">智学<br/>PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html" class="active"><span class="dot"></span>Reading 单元</a>
+        <a href="writing.html"><span class="dot"></span>Writing 单元</a>
+        <a href="grammar.html"><span class="dot"></span>Grammar 单元</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <button class="icon-btn" id="sidebarToggle" title="收起/展开侧边栏">⟨</button>
+        <div class="crumb"><a href="reading.html">Reading 单元</a> <span>›</span> <span>统一阅读播放器</span></div>
+        <div class="spacer"></div>
+        <select class="session" id="sessionSel" aria-label="选择课程单元或真题">
+          <optgroup label="课程单元">
+            <option value="u1">U1 · 网络交友与诈骗（7 题）</option>
+            <option value="u2">U2 · 价值观与消费（7 题）</option>
+            <option value="u3">U3 · 瞬逝艺术 Fleeting Art（13 题）</option>
+            <option value="u4">U4 · 西九文化区与 M+（10 题）</option>
+            <option value="u5">U5 · Reading 单元（10 题）</option>
+          </optgroup>
+          <optgroup label="历年真题">
+            <option value="p2025" disabled>2025 DSE Paper 1（待上线）</option>
+            <option value="p2024" disabled>2024 DSE Paper 1（待上线）</option>
+            <option value="p2023" disabled>2023 DSE Paper 1（待上线）</option>
+          </optgroup>
+        </select>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+      </div>
+      <div class="statbar">
+        <div class="mode-toggle" id="modeToggle">
+          <button data-mode="practice" class="active">练习模式</button>
+          <button data-mode="paper">试卷模式（PDF）</button>
+        </div>
+        <div class="pill">进度 <span class="num" id="progNo">0/0</span></div>
+        <div class="pill">答对 <span class="num" id="scoreNo">0</span></div>
+        <div class="pill">总用时 <span class="num" id="totalTime">0s</span></div>
+        <div class="spacer"></div>
+        <button class="icon-btn" id="answerToggle" title="显示/隐藏正确答案">👁</button>
+        <button class="icon-btn" id="uploadBtn" title="上传 PDF 原件">📄</button>
+        <input type="file" id="pdfInput" accept="application/pdf" hidden />
+      </div>
+      <div class="stage" id="stage">
+        <iframe id="deckFrame" title="阅读课件" src="about:blank"></iframe>
+        <div class="pdf-note" id="pdfNote"><b>试卷模式：</b> 请点击右上角 📄 上传 PDF 原件，左侧将显示试卷、右侧继续显示题目。</div>
+      </div>
+    </main>
+  </div>
+  <div id="loginOverlay">
+    <div class="box">
+      <h2>请先登录</h2>
+      <p>统一阅读播放器需要登录后才能记录每题作答用时（学生与教师看板可见）。</p>
+      <button id="loginBtn">前往登录</button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const Z = window.ZhiXue;
+    const $ = (s) => document.querySelector(s);
+    const appEl = $('#appEl');
+    const deckFrame = $('#deckFrame');
+
+    let unitNo = null, mode = 'practice';
+    let pdfUrl = null, pdfFile = null;
+    let answered = {};      // qid -> correct(bool)
+    let totalTimeMs = 0;
+    let totalQuestions = 0;
+
+    /* ---------- theme ---------- */
+    function initTheme() {
+      const saved = localStorage.getItem('zhixue-theme');
+      if (saved === 'dark') { document.body.classList.add('dark'); $('#themeBtn').textContent = '☀️'; }
+    }
+    $('#themeBtn').onclick = () => {
+      const d = !document.body.classList.contains('dark');
+      document.body.classList.toggle('dark', d);
+      localStorage.setItem('zhixue-theme', d ? 'dark' : 'light');
+      $('#themeBtn').textContent = d ? '☀️' : '🌙';
+      postToDeck({ type: 'zx-theme', dark: d });
+    };
+
+    /* ---------- sidebar collapse ---------- */
+    function initSidebar() {
+      if (localStorage.getItem('zhixue-sidebar') === 'collapsed') appEl.classList.add('collapsed');
+      syncSidebarGlyph();
+    }
+    function syncSidebarGlyph() { $('#sidebarToggle').textContent = appEl.classList.contains('collapsed') ? '⟩' : '⟨'; }
+    $('#sidebarToggle').onclick = () => {
+      const c = appEl.classList.toggle('collapsed');
+      localStorage.setItem('zhixue-sidebar', c ? 'collapsed' : 'expanded');
+      syncSidebarGlyph();
+    };
+
+    /* ---------- dropdown ---------- */
+    $('#sessionSel').onchange = () => {
+      const v = $('#sessionSel').value;
+      if (v.startsWith('u')) loadUnit(+v.slice(1));
+    };
+
+    /* ---------- mode toggle ---------- */
+    $('#modeToggle').addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      mode = b.dataset.mode;
+      [...$('#modeToggle').children].forEach(x => x.classList.toggle('active', x === b));
+      if (mode === 'paper') enterPaperMode();
+      else enterPracticeMode();
+    });
+
+    function enterPracticeMode() {
+      $('#pdfNote').classList.remove('show');
+      if (pdfUrl) { if (deckFrame.contentWindow) deckFrame.contentWindow.location.reload(); pdfUrl = null; pdfFile = null; }
+    }
+    function enterPaperMode() {
+      if (pdfUrl) injectPdf();
+      else $('#pdfNote').classList.add('show');
+    }
+
+    /* ---------- PDF upload ---------- */
+    $('#uploadBtn').onclick = () => $('#pdfInput').click();
+    $('#pdfInput').onchange = (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      if (file.type !== 'application/pdf') { alert('请上传 PDF 格式的文件'); e.target.value = ''; return; }
+      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+      pdfUrl = URL.createObjectURL(file);
+      pdfFile = file.name;
+      if (mode === 'paper') { enterPaperMode(); }
+      e.target.value = '';
+    };
+    function injectPdf() {
+      $('#pdfNote').classList.remove('show');
+      postToDeck({ type: 'zx-pdf', url: pdfUrl, name: pdfFile });
+    }
+
+    /* ---------- answer / show-answer toggles ---------- */
+    $('#answerToggle').onclick = () => {
+      const on = appEl.classList.toggle('show-answer');
+      $('#answerToggle').textContent = on ? '✅' : '👁';
+      $('#answerToggle').classList.toggle('on', on);
+      postToDeck({ type: 'zx-showanswer', on: on });
+    };
+
+    /* ---------- cross-frame messaging ---------- */
+    function postToDeck(msg) {
+      if (deckFrame.contentWindow) {
+        try { deckFrame.contentWindow.postMessage(msg, '*'); } catch (e) {}
+      }
+    }
+    window.addEventListener('message', (ev) => {
+      const d = ev.data || {};
+      if (d.type === 'zx-ready') {
+        totalQuestions = d.count || 0;
+        updateStatbar();
+        // sync current UI state into the freshly loaded deck
+        postToDeck({ type: 'zx-theme', dark: document.body.classList.contains('dark') });
+        if (appEl.classList.contains('show-answer')) postToDeck({ type: 'zx-showanswer', on: true });
+        if (mode === 'paper' && pdfUrl) injectPdf();
+      } else if (d.type === 'zx-answer') {
+        onAnswer(d);
+      }
+    });
+
+    function onAnswer(d) {
+      if (answered[d.qid] !== undefined) return; // 每题只记录一次
+      answered[d.qid] = !!d.correct;
+      totalTimeMs += (d.ms || 0);
+      updateStatbar();
+      reportTiming(d);
+    }
+
+    function updateStatbar() {
+      const done = Object.keys(answered).length;
+      const score = Object.values(answered).filter(Boolean).length;
+      $('#progNo').textContent = done + '/' + totalQuestions;
+      $('#scoreNo').textContent = score;
+      $('#totalTime').textContent = (totalTimeMs / 1000).toFixed(0) + 's';
+    }
+
+    async function reportTiming(d) {
+      if (!Z || !Z.token) return;
+      try {
+        await fetch('/api/question-timing', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Z.token },
+          body: JSON.stringify({ session: 'reading-u' + unitNo, qid: d.qid, type: 'mc', ms: d.ms, correct: d.correct })
+        });
+      } catch (e) {}
+    }
+
+    /* ---------- load a unit deck (verbatim, via iframe) ---------- */
+    function loadUnit(u) {
+      unitNo = u;
+      pdfUrl = null; pdfFile = null;
+      mode = 'practice';
+      [...$('#modeToggle').children].forEach(x => x.classList.toggle('active', x.dataset.mode === 'practice'));
+      answered = {}; totalTimeMs = 0;
+      $('#pdfNote').classList.remove('show');
+      $('#sessionSel').value = 'u' + u;
+      deckFrame.src = 'courseware/reading/unit' + u + '.html';
+    }
+
+    deckFrame.onload = () => {
+      if (!deckFrame.contentDocument) return;
+      setupDeck(unitNo);
+    };
+
+    function setupDeck(u) {
+      const doc = deckFrame.contentDocument;
+      if (!doc) return;
+      // 1) hide the deck's own top bar so only the split-view shows
+      const style = doc.createElement('style');
+      style.textContent = '.topbar{display:none!important}body{padding-top:0!important;margin:0!important}';
+      doc.head.appendChild(style);
+      // 2) inject the timing/answer hook script (runs inside the deck, same-origin)
+      const script = doc.createElement('script');
+      script.textContent = HOOK_SRC.replace(/__SESSION__/g, 'reading-u' + u);
+      doc.body.appendChild(script);
+    }
+
+    /* ---------- boot ---------- */
+    async function boot() {
+      initTheme();
+      initSidebar();
+      if (!Z || !Z.token) { $('#loginOverlay').style.display = 'flex'; return; }
+      const want = new URLSearchParams(location.search).get('unit');
+      const target = (want && /^u[1-5]$/.test(want)) ? +want.slice(1) : 1;
+      loadUnit(target);
+    }
+    $('#loginBtn').onclick = () => { if (Z && Z.login) Z.login(); };
+
+    /* ============ INJECTED HOOK (runs inside the original deck) ============ */
+    const HOOK_SRC = `
+    (function(){
+      var SESSION = '__SESSION__';
+      var doc = document;
+      function post(m){ try{ parent.postMessage(m,'*'); }catch(e){} }
+      var blocks = Array.prototype.slice.call(doc.querySelectorAll('.practice-mcq'));
+      blocks.forEach(function(b,i){ b.setAttribute('data-qindex', i); });
+      var timers = {};
+      blocks.forEach(function(b,i){ timers[i] = { accum:0, since:null, done:false }; });
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(ents){
+          ents.forEach(function(e){
+            var i = +e.target.getAttribute('data-qindex');
+            if (e.isIntersecting && !timers[i].done) { if (!timers[i].since) timers[i].since = Date.now(); }
+            else if (timers[i].since) { timers[i].accum += Date.now() - timers[i].since; timers[i].since = null; }
+          });
+        }, { threshold:0.5 });
+        blocks.forEach(function(b){ io.observe(b); });
+      }
+      doc.querySelectorAll('.pmcq-opt').forEach(function(opt){
+        opt.addEventListener('click', function(){
+          var block = opt.closest ? opt.closest('.practice-mcq') : null;
+          var i = block ? +block.getAttribute('data-qindex') : -1;
+          if (i < 0 || timers[i].done) return;
+          if (timers[i].since) { timers[i].accum += Date.now() - timers[i].since; timers[i].since = null; }
+          var ms = timers[i].accum; timers[i].done = true;
+          var correct = opt.getAttribute('data-correct') === 'true';
+          post({ type:'zx-answer', session:SESSION, qid:'q'+i, ms:ms, correct:correct });
+        });
+      });
+      window.addEventListener('message', function(ev){
+        var d = ev.data || {};
+        if (d.type === 'zx-theme') { doc.body.classList.toggle('dark', !!d.dark); }
+        else if (d.type === 'zx-showanswer') {
+          doc.querySelectorAll('.pmcq-opt').forEach(function(o){
+            if (o.getAttribute('data-correct') === 'true') {
+              if (d.on) o.style.outline = '3px solid #4FC46A';
+              else o.style.outline = '';
+            }
+          });
+        }
+        else if (d.type === 'zx-pdf') {
+          var left = doc.querySelector('.split-left');
+          if (left) left.innerHTML = '<embed src="'+d.url+'" type="application/pdf" style="width:100%;height:100%;border:none;min-height:600px"></embed>';
+        }
+      });
+      post({ type:'zx-ready', session:SESSION, count:blocks.length });
+    })();
+    `;
+
+    boot();
+  })();
+  </script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

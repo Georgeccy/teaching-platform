@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2023 DSE Paper 1 阅读卷 · 网页课件 v4</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Palette panel (body-level, JS-positioned, fullscreen-proof) -->
+  <div class="palette-panel" id="palettePanel">
+    <div class="pp-title">Theme Color</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+    <div class="pp-note">saved locally</div>
+  </div>
+
+<div class="deck">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">&lt;/&gt; DSE 2023</div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+    </div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 36 36">
+          <circle class="ring-bg" cx="18" cy="18" r="14"/>
+          <circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+        </svg>
+        <div class="ring-text">0%</div>
+      </div>
+      <div class="score-detail">
+        <div class="sd-label">Score</div>
+        <div class="sd-val">0/0</div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+      <span class="theme-label">Dark Mode</span>
+    </div>
+  </aside>
+
+  <button class="sb-edge-tab" onclick="toggleSidebar()" title="展开侧边栏 (S)">☰</button>
+
+  <!-- ===== Main Area ===== -->
+  <div class="main-area">
+
+    <!-- ===== Topbar ===== -->
+    <div class="topbar">
+      <span class="course-tag">2023 DSE · Paper 1</span>
+      <span class="slide-title mono" id="topbarTitle"></span>
+      <span class="page-counter page-counter-top" id="pageCounter">
+        <span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span>
+        <span class="pc-total" id="pcTotal"></span>
+      </span>
+      <span class="score-badge">
+        <span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span>
+      </span>
+      <span class="streak-badge" style="display:none">
+        <span class="streak-fire">🔥</span><span class="streak-count">0</span>
+      </span>
+      <span class="zoom-controls">
+        <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+        <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+        <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+      </span>
+      <span class="timer-wrap">
+        <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets (1/2/3/5/10 min)">
+          <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5">
+          <span class="t-colon">:</span>
+          <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00">
+          <span class="timer-done-label">TIME UP</span>
+        </span>
+        <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+        <button class="timer-reset" onclick="resetTimer()">Reset</button>
+      </span>
+      <button class="hint-toggle-btn" id="hintToggleBtn" onclick="toggleHints()" title="Show/hide all method tips (H)">💡 Show Tips</button>
+      <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode: show full passage">🔒 Easy</button>
+      <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+      <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">↺ Reset</button>
+      <span class="palette-wrap">
+        <button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">🎨</button>
+      </span>
+      <button class="clear-hl-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker — 随机点名">🎲</button>
+    </div>
+
+    <!-- Random picker overlay -->
+    <div class="rand-overlay" id="randOverlay" onclick="if(event.target===this)toggleRandPanel()">
+      <div class="rand-card">
+        <div class="rand-head">
+          <span class="rand-title">🎲 随机点名</span>
+          <span class="rand-range-wrap">1 – <input class="rand-max" id="randMax" type="number" min="2" max="999" value="40"></span>
+        </div>
+        <div class="rand-num" id="randNum">?</div>
+        <div class="rand-btns">
+          <button class="rand-go" onclick="drawRandom()">开始点名！</button>
+          <button class="rand-close" onclick="toggleRandPanel()">关闭</button>
+        </div>
+        <div class="rand-history" id="randHistory"></div>
+      </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+<section class="slide" data-title="封面" data-section="cover" data-part="开场">
+  <div class="s1-card-wrapper">
+    <div class="xdf-header-bar">
+      <div class="xdf-logo-text">DSE READING <span>// 2023 真题</span></div>
+      <div class="xdf-sub-text">Paper 1 · Reading</div>
+    </div>
+    <div style="padding:28px 32px">
+      <div class="slide-h1" style="text-align:center;margin-bottom:6px">2023 HKDSE 英语 Paper 1</div>
+      <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Flash Fiction · Michelle Obama</div>
+      <div style="display:flex;justify-content:center;margin-bottom:24px">
+        <div class="teacher-badge">
+          <div class="tb-avatar">成</div>
+          <div class="tb-name">成雨老师</div>
+          <div class="tb-tag">TEACHER</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-bottom:20px">
+        <div class="class-badge">真题精讲 · 2023 阅读卷</div>
+      </div>
+      <div class="s1-meta-grid">
+        <div class="s1-meta-card"><div class="sm-label">Part A 必做</div><div class="sm-value">Text 1</div><div class="sm-sub">Flash Fiction 闪小说</div></div>
+        <div class="s1-meta-card"><div class="sm-label">Part B2 困难</div><div class="sm-value">Text 4</div><div class="sm-sub">Michelle Obama · Becoming</div></div>
+        <div class="s1-meta-card"><div class="sm-label">题型</div><div class="sm-value">34 slides</div><div class="sm-sub">MC · TFNG · Proofreading · Matching</div></div>
+      </div>
+      <div class="timeline-row">
+        <div class="tl-seg c1"><div class="seg-ph">Part A</div><div class="seg-name">Text 1</div><div class="sm-sub">Flash Fiction + Q1–22</div></div>
+        <div class="tl-seg c2"><div class="seg-ph">入门测</div><div class="seg-name">Entry Test</div><div class="sm-sub">核心词汇翻卡</div></div>
+        <div class="tl-seg c3"><div class="seg-ph">Part B2</div><div class="seg-name">Text 4</div><div class="sm-sub">Michelle Obama + Q43–68</div></div>
+        <div class="tl-seg c4"><div class="seg-ph">收尾</div><div class="seg-name">Done</div><div class="sm-sub">回顾 + 完成</div></div>
+      </div>
+    </div>
+    <div class="xdf-grid-pattern"><span>USE ARROW KEYS // SWIPE TO NAVIGATE</span></div>
+  </div>
+</section>
+
+
+<section class="slide" data-title="Objectives" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Part A · Objectives</div>
+<div class="slide-h2">2023 DSE Paper 1 Reading</div>
+<div class="card" style="margin-top:16px;padding:24px 28px">
+  <p style="font-size:20px;margin-bottom:16px">In this lesson, you will explore the 2023 DSE Paper 1 Reading passage on <strong>Flash Fiction</strong> and a memoir excerpt from <strong>Michelle Obama</strong>’s Becoming.</p>
+  <ul style="font-size:20px;line-height:2.2;padding-left:24px">
+    <li>📖 Understand what <strong>Flash Fiction</strong> is and how to write one</li>
+    <li>✏️ Practise a range of question types: <strong>MC, T/F/NG, Proofreading, Cloze, Matching, Short Answer</strong></li>
+    <li>🔍 Analyse character and conflict in the sample story <strong>"The Big Bang"</strong></li>
+    <li>💡 Explore Michelle Obama’s reflections on <strong>motherhood, parenting, and identity</strong></li>
+    <li>📝 Apply <strong>reading strategies</strong> to tackle both Part A compulsory and Part B2 harder sections</li>
+  </ul>
+</div>
+</section>
+
+<section class="slide" data-title="Part A Entry Test" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Entry Test · Part A</div>
+<div class="slide-h3" style="margin-bottom:18px">Flash Fiction: Key Vocabulary</div>
+<div class="flip-grid g5">
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">snippet</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">片段；零碎信息</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">flash fiction</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">闪小说（微型小说）</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">antagonist</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">对手；反派角色</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">overkill</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">过犹不及；多余</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">flesh out</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">充实；使…具体化</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">life-altering</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">改变人生的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">obstacle</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">障碍；阻碍</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">moral argument</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">道德论点</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">economical</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">节约的；精炼的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">strip away</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">剥离；去除</div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class="slide" data-title="Q1–Q2 · Text 1" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraph 1: Introduction to Flash Fiction</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q1–Q2 · Text 1</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>People have been enjoying stories for as long as humanity has been around. Some people love to read 400-page novels, while others struggle to read the first four paragraphs. More and more, technology has unfortunately resulted in many people having shorter attention spans. Therefore, writers have to find new ways to tell stories in a way that appeals to people who are used to reading snippets of information on the small screen of their smart phones. Flash fiction is a medium that works perfectly in a low-attention-span world.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q1i-box">
+  <div class="pmcq-label">Q1(i) · MC · 1 mark(s)<span class="acc-badge acc-low">27%</span></div>
+  <div class="pmcq-q">Stories are <strong>(i)</strong> _____ to the human race</div>
+  <div class="pmcq-options" id="q1i-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>as big as</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>as old as</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>as long as</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>as difficult as</span>
+  </div>
+</div><div class="practice-mcq" id="q1ii-box">
+  <div class="pmcq-label">Q1(ii) · MC · 1 mark(s)<span class="acc-badge acc-mid">65%</span></div>
+  <div class="pmcq-q">Yet some find it <strong>(ii)</strong> _____ to even get through the first few paragraphs</div>
+  <div class="pmcq-options" id="q1ii-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>boring</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>difficult</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>essential</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>meaningless</span>
+  </div>
+</div><div class="practice-mcq" id="q1iii-box">
+  <div class="pmcq-label">Q1(iii) · MC · 1 mark(s)<span class="acc-badge acc-mid">63%</span></div>
+  <div class="pmcq-q">So flash fiction is <strong>(iii)</strong> _____ for many of today’s readers</div>
+  <div class="pmcq-options" id="q1iii-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>a big challenge</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>a confusing idea</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>an ideal solution</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>an excellent puzzle</span>
+  </div>
+</div><div class="practice-mcq" id="q2-box">
+  <div class="pmcq-label">Q2 · 1 mark(s)<span class="acc-badge acc-mid">65%</span></div>
+  <div class="pmcq-q">What word in paragraph 1 is used to indicate that the writer feels disappointed or unhappy with people’s reading habits?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q2-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q2-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>unfortunately</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q3–Q4 · Text 1" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraph 1: Cause & Word Meaning</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q3–Q4 · Text 1</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>People have been enjoying stories for as long as humanity has been around. Some people love to read 400-page novels, while others struggle to read the first four paragraphs. More and more, technology has unfortunately resulted in many people having shorter attention spans. Therefore, writers have to find new ways to tell stories in a way that appeals to people who are used to reading snippets of information on the small screen of their smart phones. Flash fiction is a medium that works perfectly in a low-attention-span world.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q3-box">
+  <div class="pmcq-label">Q3 · 1 mark(s)<span class="acc-badge acc-high">70%</span></div>
+  <div class="pmcq-q">According to paragraph 1, what has changed so that writers have to look for different ways to tell stories?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q3-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q3-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>technology</strong> / <strong>attention span(s)</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q4-box">
+  <div class="pmcq-label">Q4 · 1 mark(s)<span class="acc-badge acc-mid">65%</span></div>
+  <div class="pmcq-q">Find a word in paragraph 1 which means things that are brief and concise.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q4-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q4-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>snippets</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q5 · Synonyms" data-section="practice" data-part="Part A">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Q5: Synonyms (Paragraphs 2-4, 3 marks)</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Paragraphs 2–4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>Flash fiction is a category of short story that limits the author to a word count of 1,000 words or less. Some magazines limit flash fiction stories to as little as 300 words.</div>
+<div class="passage-excerpt"><div class="para-num">¶3</div>Following the tips below will guide you in writing a solid flash fiction story.</div>
+<div class="passage-excerpt"><div class="para-num">¶4</div>With a limit of 1,000 words, there isn't a lot of room for character development, so you'll want to pick one character to focus on. There will likely be two characters in the story because you'll often use a human antagonist as opposition to your main character. You might be able to use three characters, but any more than that will probably be overkill in the realm of flash fiction.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q5i-box">
+  <div class="pmcq-label">Q5(i) · 1 mark(s)<span class="acc-badge acc-mid">52%</span></div>
+  <div class="pmcq-q">Find a word in paragraphs 2, 3 or 4 which means <strong>restrict</strong>.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q5i-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q5i-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>limit(s)</strong> [para 2]</p>
+  </div>
+</div>
+    <div class="practice-mcq" id="q5ii-box">
+  <div class="pmcq-label">Q5(ii) · 1 mark(s)<span class="acc-badge acc-high">71%</span></div>
+  <div class="pmcq-q">Find a word which means <strong>strong</strong>.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q5ii-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q5ii-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>solid</strong> [para 4]</p>
+  </div>
+</div>
+    <div class="practice-mcq" id="q5iii-box">
+  <div class="pmcq-label">Q5(iii) · 1 mark(s)<span class="acc-badge acc-mid">64%</span></div>
+  <div class="pmcq-q">Find a word which means <strong>too much of something</strong>.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q5iii-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q5iii-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>overkill</strong> [para 4]</p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q6 · Proofreading" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraph 4: Proofreading Table</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q6 · Proofreading</h4>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>With a limit of 1,000 words, there isn't a lot of room for character development, so you'll want to pick one character to focus on. There will likely be two characters in the story because you'll often use a human antagonist as opposition to your main character. You might be able to use three characters, but any more than that will probably be overkill in the realm of flash fiction.</div>
+  </div>
+  <div class="split-right">
+    <div class="card accent" style="margin-bottom:8px"><p style="font-size:20px">Below is a summary of paragraph 4. In four of the lines there is ONE mistake. If you find a mistake, underline it and see the correction. In one line there is no mistake.</p></div>
+    <div class="tb-wrap"><table>
+    <tr><th>#</th><th>Summary</th><th style="width:140px"></th></tr>
+    <tr><td>e.g.</td><td>You should have the main focus on only one <u>sentence</u> in the story.</td><td style="color:var(--text-3)"><span style="color:var(--fcc-green-dark);font-weight:800">character</span></td></tr>
+    <tr class="q1-hidden-row" id="q6-row-i"><td>(i)</td><td>However, flash fiction usually has another character who <span class="cloze" data-answer="opposes">supports</span></td><td><span class="acc-badge acc-low">22%</span> <button class="q1-tap-btn" onclick="revealQ1Row('q6-row-i')">Tap to reveal</button></td></tr>
+    <tr class="q1-hidden-row" id="q6-row-ii"><td>(ii)</td><td>the main character. So the story will probably have two characters. <span class="q1-no-mistake" style="color:var(--fcc-green-dark);font-weight:800">&#10003; no mistake</span></td><td><span class="acc-badge acc-mid">62%</span> <button class="q1-tap-btn" onclick="revealQ1Row('q6-row-ii')">Tap to reveal</button></td></tr>
+    <tr class="q1-hidden-row" id="q6-row-iii"><td>(iii)</td><td>There is <span class="cloze" data-answer="a">no</span> chance that you will be able to incorporate three</td><td><span class="acc-badge acc-low">29%</span> <button class="q1-tap-btn" onclick="revealQ1Row('q6-row-iii')">Tap to reveal</button></td></tr>
+    <tr class="q1-hidden-row" id="q6-row-iv"><td>(iv)</td><td>characters into your story. However, <span class="cloze" data-answer="if">unless</span> you feel the need to have any</td><td><span class="acc-badge acc-low">22%</span> <button class="q1-tap-btn" onclick="revealQ1Row('q6-row-iv')">Tap to reveal</button></td></tr>
+    <tr class="q1-hidden-row" id="q6-row-v"><td>(v)</td><td>more than this, your <span class="cloze" data-answer="story">theme</span> will be too long, i.e. more than 1000 words.</td><td><span class="acc-badge acc-low">29%</span> <button class="q1-tap-btn" onclick="revealQ1Row('q6-row-v')">Tap to reveal</button></td></tr>
+    </table></div>
+    <div style="margin-top:10px">
+    <button class="reveal-btn" onclick="toggleRev('q6-all-ans')" style="font-size:15px">Show Explanations</button>
+    <div class="ans-reveal" id="q6-all-ans">
+      <strong>(i) supports &rarr; opposes</strong> &mdash; The antagonist <em>opposes</em> the main character (cf. &para;4: &ldquo;antagonist as opposition&rdquo;).<br>
+      <strong>(ii) &#10003;</strong> &mdash; no mistake.<br>
+      <strong>(iii) no &rarr; a</strong> &mdash; &ldquo;a chance&rdquo; / &ldquo;some chance&rdquo; / &ldquo;little chance&rdquo; &mdash; There IS a chance to include three characters, just limited.<br>
+      <strong>(iv) unless &rarr; if</strong> &mdash; &ldquo;if&rdquo; / &ldquo;when&rdquo; / &ldquo;whenever&rdquo; you feel the need.<br>
+      <strong>(v) theme &rarr; story</strong> &mdash; &ldquo;story&rdquo; / &ldquo;text&rdquo; / &ldquo;fiction&rdquo; &mdash; the word limit applies to the story, not the theme.<br><br>
+      <span class="method-badge">&#128273; Proofreading 四步法：定位 &rarr; 对照 &rarr; 识别语义 &rarr; 替换。核心陷阱：错词永远和正确答案是&ldquo;同类用词&rdquo;&mdash;&mdash;词性相同、词义范围相同。</span>
+    </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q7–Q8 · Text 1" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraphs 5-6: Summary Cloze & Reference</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q7–Q8 · Text 1</h4>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Longer story forms have a beginning, middle, and end, but with flash fiction, you're really telling only the end of a story. Of course, you won't be able to flesh out a complex story world. Instead, your flash fiction story should focus on one scene, one moment in the life of your character. It needs to be a significant, life-altering moment for your character. Focusing on one scene also means focusing on one location. So for flash fiction your limited word count focuses on the essentials to the story.</div>
+<div class="passage-excerpt"><div class="para-num">¶6</div>All stories are about conflict. A story can be easily defined as a character who wants or needs something and has to overcome some obstacle in order to attain it. The obstacle is the conflict. You have to answer two very important questions to write a really good flash fiction story:<br>1. What does your main character want?<br>2. Who or what is trying to stop your main character from getting it?</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q7-box">
+  <div class="pmcq-label">Q7 · Summary Cloze · 4 marks</div>
+  <div class="pmcq-q">Complete the notes below about paragraph 5 by writing <strong>ONE word</strong> taken from the paragraph in each blank.</div>
+  <p style="font-size:16px;margin-bottom:10px">The <span class="cloze" onclick="revealCloze(this)" data-answer="limited">____</span><span class="acc-badge acc-high">71%</span> length of flash fiction helps create a focus on the key features of the story.</p>
+  <div class="tb-wrap"><table>
+    <tr><th>Longer Story Forms</th><th>Flash Fiction</th></tr>
+    <tr><td>These stories have three main parts. The author can develop a more <span class="cloze" onclick="revealCloze(this)" data-answer="complex">____</span><span class="acc-badge acc-low">37%</span> environment for the story.</td>
+        <td>The <span class="cloze" onclick="revealCloze(this)" data-answer="end">____</span><span class="acc-badge acc-low">30%</span> part of the typical story structure provides the focus of flash fiction.<br>It has a simpler structure which looks at a single <span class="cloze" onclick="revealCloze(this)" data-answer="scene">____</span><span class="acc-badge acc-mid">63%</span>, and this must be an important event for the character.</td></tr>
+  </table></div>
+</div>
+<div class="practice-mcq" id="q8-box">
+  <div class="pmcq-label">Q8 · 1 mark(s)<span class="acc-badge acc-mid">40%</span></div>
+  <div class="pmcq-q">What does "it" (line 27) refer to?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q8-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q8-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>something that / what the main character wants</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q9–Q11 · Text 1" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraphs 7-9: MC Questions</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q9–Q11 · Text 1</h4>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>Your theme is the moral argument of your story. It's about how you want your readers to be impacted by the story. What do you want them to be encouraged to do, be, or believe as a result of reading your story?</div>
+<div class="passage-excerpt"><div class="para-num">¶8</div>You only have up to 1,000 words to tell your story, so you have to choose those words wisely. When you know what actions and ideas you want to communicate, choose the least amount of words to communicate them.</div>
+<div class="passage-excerpt"><div class="para-num">¶9</div>Flash fiction forces you to be economical with your words. It helps you to focus your ideas and strip away anything that isn't essential to your story. Often, when you're writing flash fiction, you'll write more than you need. When you go back through, you'll see what needs to be there, what can be taken out, and what needs to be reworked, which helps you to develop your editing and revising skills.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q9-box">
+  <div class="pmcq-label">Q9 · MC · 1 mark(s)<span class="acc-badge acc-high">80%</span></div>
+  <div class="pmcq-q">Having a "moral argument" (line 29) helps...</div>
+  <div class="pmcq-options" id="q9-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>end the story quickly.</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>encourage the reader to read longer stories.</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>prevent the characters from doing anything.</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>influence the reader’s response to the story.</span>
+  </div>
+</div><div class="practice-mcq" id="q10-box">
+  <div class="pmcq-label">Q10 · 1 mark(s)<span class="acc-badge acc-mid">40%</span></div>
+  <div class="pmcq-q">What does "you go back through" (line 37) mean?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q10-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q10-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>editing / reviewing / rereading / revising</strong> (the flash fiction you have written)</p>
+  </div>
+</div><div class="practice-mcq" id="q11-box">
+  <div class="pmcq-label">Q11 · MC · 1 mark(s)<span class="acc-badge acc-high">70%</span></div>
+  <div class="pmcq-q">Which of the following is <strong>NOT</strong> mentioned as a benefit of writing flash fiction in paragraph 9?</div>
+  <div class="pmcq-options" id="q11-opts">
+    <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>ability to write more</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>more efficient use of words</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>clearer focus on the key elements of the story</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>better ability to remove unimportant material</span>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q12–Q13 · The Big Bang" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraphs 10-11: Word & Reference</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q12–Q13 · The Big Bang</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>BOO00000OMMMM!!!! Timothy's eyes nearly popped out of his head. His face was blackened with soot and his hair stood on end. He looked down at what remained of the school laboratory bench and saw smouldering wood and shattered glass. Shocked faces gazed up at him.</div>
+<div class="passage-excerpt"><div class="para-num">¶11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q12-box">
+  <div class="pmcq-label">Q12 · 1 mark(s)<span class="acc-badge acc-mid">55%</span></div>
+  <div class="pmcq-q">Find a phrase in paragraph 10 that indicates that Timothy was very surprised.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q12-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q12-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>eyes (nearly) popped out (of his head)</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q13-box">
+  <div class="pmcq-label">Q13 · 1 mark(s)<span class="acc-badge acc-low">23%</span></div>
+  <div class="pmcq-q">Whose faces are referred to in line 43 when the author says "Shocked faces gazed"?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q13-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q13-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>audience’s / parents’ / (science) teachers’</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q14–Q15 · The Big Bang" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraph 11: Summary Cloze</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q14–Q15 · The Big Bang</h4>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q14-box">
+  <div class="pmcq-label">Q14 · Cloze · 4 marks</div>
+  <div class="pmcq-q">Complete the summary of paragraph 11 below by using <strong>ONE word</strong> taken from the paragraph for each gap.</div>
+  <p style="font-size:16px">It all began during <span class="cloze" onclick="revealCloze(this)" data-answer="Chemistry">____</span><span class="acc-badge acc-mid">60%</span> when Timothy wasn’t paying attention. Professor Snookhorn asked for volunteers and Timothy <span class="cloze" onclick="revealCloze(this)" data-answer="mumbled">____</span><span class="acc-badge acc-mid">53%</span> a reply. Although Professor Snookhorn was <span class="cloze" onclick="revealCloze(this)" data-answer="enthused">____</span><span class="acc-badge acc-mid">57%</span>, he glared at Timothy as he gave him his instructions. After the sound of the bell ended the lesson, the <span class="cloze" onclick="revealCloze(this)" data-answer="thug">____</span><span class="acc-badge acc-mid">60%</span>, Billy Brenton, teased Timothy.</p>
+</div>
+<div class="practice-mcq" id="q15-box">
+  <div class="pmcq-label">Q15 · 1 mark(s)<span class="acc-badge acc-low">25%</span></div>
+  <div class="pmcq-q">In line 51, what did Timothy think it was ‘too late’ to do?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q15-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q15-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>(to) withdraw / pull out from the contest</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q16 · TFNG" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraphs 12-13: T/F/NG</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q16 · TFNG</h4>
+    <div class="passage-excerpt"><div class="para-num">¶12</div>Four weeks and 25 excruciating extra Chemistry lessons later, Timothy was blinking out nervously at a gaggle of eager science teachers and pushy parents, crammed into the National School of Science Laboratory for what Professor Snookhorn enthusiastically described as "The pinnacle of my teaching career" (no pressure).</div>
+<div class="passage-excerpt"><div class="para-num">¶13</div>Professor Snookhorn was a superlative scientist but little did he know that Timothy was a bigger hazard than sulphuric acid when it came to Chemistry. He had mistaken Timothy's glazed expression for wide-eyed enthusiasm in class. Timothy looked down at the glistening bench, taking in the jewel-coloured containers of liquids and crystals, without a clue of what they were or how to use them.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q16-box">
+  <div class="pmcq-label">Q16 · TFNG · 4 marks</div>
+  <div class="pmcq-q">According to paragraphs 12 and 13, are the following statements True (T), False (F) or Not Given (NG)?</div>
+  <div class="card" style="margin-bottom:8px;padding:12px 14px">
+    <p style="font-size:15px;margin-bottom:8px"><strong>(i)</strong> <span class="acc-badge acc-mid">63%</span> Timothy enjoyed preparing for the competition.</p>
+    <div class="tfng-group" data-answer="F" data-explain="“25 excruciating extra Chemistry lessons” shows he did NOT enjoy it">
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+    <p style="font-size:15px;margin-bottom:8px"><strong>(ii)</strong> <span class="acc-badge acc-mid">45%</span> Professor Snookhorn informed Timothy about the hazards in a chemistry laboratory.</p>
+    <div class="tfng-group" data-answer="NG" data-explain="No mention of Snookhorn informing Timothy about hazards">
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+    <p style="font-size:15px;margin-bottom:8px"><strong>(iii)</strong> <span class="acc-badge acc-mid">42%</span> There was hardly any space left for any more parents and teachers to watch the competition.</p>
+    <div class="tfng-group" data-answer="T" data-explain="Teachers and parents were “crammed into” the lab">
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+    <p style="font-size:15px;margin-bottom:8px"><strong>(iv)</strong> <span class="acc-badge acc-high">75%</span> Timothy did not know what to do with the materials he had been given.</p>
+    <div class="tfng-group" data-answer="T" data-explain="He was “without a clue of what they were or how to use them.”">
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q17–Q19 · The Big Bang" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Paragraphs 14-16: Understanding</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q17–Q19 · The Big Bang</h4>
+    <div class="passage-excerpt"><div class="para-num">¶14</div>A klaxon blared. Timothy's competitors scurried around like a pack of lab rats. Timothy had not bothered reading the competition rules, but jerked into action, picking random coloured bottles up and mixing the contents in a large glass container which appeared to have been placed on the bench in front of him for that purpose.</div>
+<div class="passage-excerpt"><div class="para-num">¶15</div>A smell like Billy Brenton's worst ever fart began to fill the air and Timothy looked down in alarm at his bench. Thick grey smoke filled Timothy's nostrils. The glass container into which he had poured his random mix shuddered and shook. The pushy parents started to point. The science teachers went pale. Timothy gulped. BOO00000OMMMM!!!!</div>
+<div class="passage-excerpt"><div class="para-num">¶16</div>As the smoke cleared, the science teachers began to clap and a tear of pride trickled down Professor Snookhorn's cheek. A voice boomed: "Ladies and gentlemen I give you the winner of this year's Young Scientist of the Year - The Biggest Bang: TIMOTHY TRENTON!"</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q17-box">
+  <div class="pmcq-label">Q17 · 1 mark(s)<span class="acc-badge acc-mid">69%</span></div>
+  <div class="pmcq-q">"Timothy looked down in alarm" (line 62). What surprised Timothy?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q17-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q17-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>the smell / thick grey smoke / the container shuddered and shook</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q18-box">
+  <div class="pmcq-label">Q18 · 1 mark(s)<span class="acc-badge acc-low">18%</span></div>
+  <div class="pmcq-q">What caused the "BOO00000OMMMM!!!!" (line 65)?<br><br>The explosion was caused when Timothy ________</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q18-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q18-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>(randomly) mixed the content(s) / poured his random mix into a (glass) container</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q19-box">
+  <div class="pmcq-label">Q19 · 1 mark(s)<span class="acc-badge acc-mid">52%</span></div>
+  <div class="pmcq-q">Professor Snookhorn had ‘a tear of pride’ (line 66). What was he proud of?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q19-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q19-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>the explosion / the (successful) experiment / the big(gest) bang</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q20 · Timeline" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Q20: Timeline of Events (3 marks) <span class="acc-badge acc-mid">56%</span></div>
+<div class="split-view" style="max-height:620px">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="flex:1;overflow-y:auto">
+    <h4>Paragraphs 10–16</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>BOO00000OMMMM!!!! Timothy's eyes nearly popped out of his head. His face was blackened with soot and his hair stood on end. He looked down at what remained of the school laboratory bench and saw smouldering wood and shattered glass. Shocked faces gazed up at him.</div>
+<div class="passage-excerpt"><div class="para-num">¶11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+<div class="passage-excerpt"><div class="para-num">¶12</div>Four weeks and 25 excruciating extra Chemistry lessons later, Timothy was blinking out nervously at a gaggle of eager science teachers and pushy parents, crammed into the National School of Science Laboratory for what Professor Snookhorn enthusiastically described as "The pinnacle of my teaching career" (no pressure).</div>
+<div class="passage-excerpt"><div class="para-num">¶13</div>Professor Snookhorn was a superlative scientist but little did he know that Timothy was a bigger hazard than sulphuric acid when it came to Chemistry. He had mistaken Timothy's glazed expression for wide-eyed enthusiasm in class. Timothy looked down at the glistening bench, taking in the jewel-coloured containers of liquids and crystals, without a clue of what they were or how to use them.</div>
+<div class="passage-excerpt"><div class="para-num">¶14</div>A klaxon blared. Timothy's competitors scurried around like a pack of lab rats. Timothy had not bothered reading the competition rules, but jerked into action, picking random coloured bottles up and mixing the contents in a large glass container which appeared to have been placed on the bench in front of him for that purpose.</div>
+<div class="passage-excerpt"><div class="para-num">¶15</div>A smell like Billy Brenton's worst ever fart began to fill the air and Timothy looked down in alarm at his bench. Thick grey smoke filled Timothy's nostrils. The glass container into which he had poured his random mix shuddered and shook. The pushy parents started to point. The science teachers went pale. Timothy gulped. BOO00000OMMMM!!!!</div>
+<div class="passage-excerpt"><div class="para-num">¶16</div>As the smoke cleared, the science teachers began to clap and a tear of pride trickled down Professor Snookhorn's cheek. A voice boomed: "Ladies and gentlemen I give you the winner of this year's Young Scientist of the Year - The Biggest Bang: TIMOTHY TRENTON!"</div>
+  </div>
+  <div class="split-right" style="flex:1.2;overflow-y:auto">
+    <div class="card accent" style="margin-bottom:12px">
+      <p style="font-size:16px">Below is a timeline of some of the events experienced by Timothy. Look at paragraphs 10-16 and drag the correct letter into each box. Use each letter ONCE only. Two options are NOT used.</p>
+    </div>
+    <p style="font-size:16px;font-weight:700;margin-bottom:10px">Options: A. Timothy caused an explosion  B. Timothy slept  C. Timothy cried  D. Timothy 'volunteered'  E. Timothy made Professor Snookhorn angry</p>
+    <div class="word-pool" id="q20-pool">
+      <div class="draggable" draggable="true" data-word="A" data-cat="3">A. Timothy caused an explosion</div>
+      <div class="draggable" draggable="true" data-word="B" data-cat="1">B. Timothy slept</div>
+      <div class="draggable" draggable="true" data-word="C" data-cat="X">C. Timothy cried</div>
+      <div class="draggable" draggable="true" data-word="D" data-cat="2">D. Timothy 'volunteered'</div>
+      <div class="draggable" draggable="true" data-word="E" data-cat="X">E. Timothy made Professor Snookhorn angry</div>
+    </div>
+    <!-- Timeline visual: recreates the original exam question diagram -->
+    <div style="background:#fff;border:1px solid var(--card-bd);border-radius:8px;padding:12px;margin:14px 0 8px">
+      <svg viewBox="0 0 860 195" style="width:100%;height:auto;max-width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
+        <text x="40" y="20" font-size="16" font-weight="700" font-family="Times New Roman, serif">(i)</text>
+        <rect x="20" y="30" width="100" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <polygon points="60,90 80,90 70,108" fill="#000" />
+
+        <text x="200" y="20" font-size="16" font-weight="700" font-family="Times New Roman, serif">(ii)</text>
+        <rect x="180" y="30" width="100" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <polygon points="220,90 240,90 230,108" fill="#000" />
+
+        <rect x="320" y="30" width="160" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <text x="400" y="50" text-anchor="middle" font-size="16" font-family="Times New Roman, serif">Billy teased</text>
+        <text x="400" y="70" text-anchor="middle" font-size="16" font-family="Times New Roman, serif">Timothy</text>
+        <polygon points="390,90 410,90 400,108" fill="#000" />
+
+        <text x="540" y="20" font-size="16" font-weight="700" font-family="Times New Roman, serif">(iii)</text>
+        <rect x="520" y="30" width="100" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <polygon points="560,90 580,90 570,108" fill="#000" />
+
+        <rect x="660" y="30" width="170" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <text x="745" y="50" text-anchor="middle" font-size="16" font-family="Times New Roman, serif">Timothy won</text>
+        <text x="745" y="70" text-anchor="middle" font-size="16" font-family="Times New Roman, serif">the competition</text>
+        <polygon points="735,90 755,90 745,108" fill="#000" />
+
+        <rect x="20" y="120" width="800" height="50" stroke="#000" stroke-width="1.5" fill="#fff" />
+        <text x="40" y="150" font-size="16" font-weight="700" font-family="Times New Roman, serif">One month ago</text>
+        <text x="800" y="150" text-anchor="end" font-size="16" font-weight="700" font-family="Times New Roman, serif">End of story</text>
+
+        <polygon points="820,115 855,145 820,175" fill="#000" />
+      </svg>
+    </div>
+
+    <!-- 3 drop zones labeled (i) (ii) (iii) — A-E options draggable into these -->
+    <div style="display:flex;flex-direction:column;gap:10px;margin:8px 0 12px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:16px;font-weight:700;min-width:48px">(i)</span>
+        <div class="drop-zone" data-accept="1" style="min-width:140px;min-height:40px;flex:0 0 auto"><div class="drop-content"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:16px;font-weight:700;min-width:48px">(ii)</span>
+        <div class="drop-zone" data-accept="2" style="min-width:140px;min-height:40px;flex:0 0 auto"><div class="drop-content"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:16px;font-weight:700;min-width:48px">(iii)</span>
+        <div class="drop-zone" data-accept="3" style="min-width:140px;min-height:40px;flex:0 0 auto"><div class="drop-content"></div></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button class="reveal-btn" onclick="checkQ20()">Check</button>
+      <button class="reveal-btn" onclick="resetQ20()" style="background:var(--text-3)">Reset</button>
+      <button class="reveal-btn" onclick="toggleRev('q20-ans')" style="font-size:14px">Show Answers</button>
+    </div>
+    <div class="ans-reveal" id="q20-ans" style="margin-top:8px">
+      <p style="font-size:16px"><strong>(i) B</strong> — One month ago: Timothy slept<br><strong>(ii) D</strong> — Timothy 'volunteered'<br><strong>(iii) A</strong> — Timothy caused an explosion<br><strong>Not used:</strong> C (Timothy cried), E (Timothy made Professor Snookhorn angry)</p>
+    </div>
+    <div class="ans-reveal" id="q20-result" style="margin-top:8px"></div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q21–Q22 · The Big Bang" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Evaluation & Character Match</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q21–Q22 · The Big Bang</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>BOO00000OMMMM!!!! Timothy's eyes nearly popped out of his head. His face was blackened with soot and his hair stood on end. He looked down at what remained of the school laboratory bench and saw smouldering wood and shattered glass. Shocked faces gazed up at him.</div>
+<div class="passage-excerpt"><div class="para-num">¶11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+<div class="passage-excerpt"><div class="para-num">¶12</div>Four weeks and 25 excruciating extra Chemistry lessons later, Timothy was blinking out nervously at a gaggle of eager science teachers and pushy parents, crammed into the National School of Science Laboratory for what Professor Snookhorn enthusiastically described as "The pinnacle of my teaching career" (no pressure).</div>
+<div class="passage-excerpt"><div class="para-num">¶13</div>Professor Snookhorn was a superlative scientist but little did he know that Timothy was a bigger hazard than sulphuric acid when it came to Chemistry. He had mistaken Timothy's glazed expression for wide-eyed enthusiasm in class. Timothy looked down at the glistening bench, taking in the jewel-coloured containers of liquids and crystals, without a clue of what they were or how to use them.</div>
+<div class="passage-excerpt"><div class="para-num">¶14</div>A klaxon blared. Timothy's competitors scurried around like a pack of lab rats. Timothy had not bothered reading the competition rules, but jerked into action, picking random coloured bottles up and mixing the contents in a large glass container which appeared to have been placed on the bench in front of him for that purpose.</div>
+<div class="passage-excerpt"><div class="para-num">¶15</div>A smell like Billy Brenton's worst ever fart began to fill the air and Timothy looked down in alarm at his bench. Thick grey smoke filled Timothy's nostrils. The glass container into which he had poured his random mix shuddered and shook. The pushy parents started to point. The science teachers went pale. Timothy gulped. BOO00000OMMMM!!!!</div>
+<div class="passage-excerpt"><div class="para-num">¶16</div>As the smoke cleared, the science teachers began to clap and a tear of pride trickled down Professor Snookhorn's cheek. A voice boomed: "Ladies and gentlemen I give you the winner of this year's Young Scientist of the Year - The Biggest Bang: TIMOTHY TRENTON!"</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q21-box">
+  <div class="pmcq-label">Q21 · Evaluation · 2 marks</div>
+  <div class="pmcq-q">Is the story "The Big Bang" a good example of flash fiction?</div>
+  <div style="margin:10px 0">
+    <label style="font-size:16px;margin-right:20px"><input type="checkbox" id="q21-yes"> A good example of flash fiction</label>
+    <label style="font-size:16px"><input type="checkbox" id="q21-no"> Not a good example</label>
+  </div>
+  <p style="font-size:15px;margin-bottom:6px">(i) Evidence 1:</p>
+  <textarea class="sa-input" style="width:100%;min-height:50px;font-size:14px" placeholder="Type your evidence..."></textarea>
+  <p style="font-size:15px;margin:10px 0 6px">(ii) Evidence 2:</p>
+  <textarea class="sa-input" style="width:100%;min-height:50px;font-size:14px" placeholder="Type your evidence..."></textarea>
+  <div style="margin-top:10px">
+    <button class="reveal-btn" onclick="toggleRev('q21-ans')" style="font-size:14px">Show Answers</button>
+  </div>
+  <div class="ans-reveal" id="q21-ans">
+    <p style="font-size:16px"><strong>A good example of flash fiction:</strong> Story focuses on one main character (Timothy); has less than 1000 words; focuses on one scene (the competition/explosion); focuses on one conflict; focuses on one theme.</p>
+  </div>
+</div>  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q22 · Character Match" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Practice · Part A</div>
+<div class="slide-h3">Q22: Matching Comments to Characters (3 marks)</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Paragraphs 10–16</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>BOO00000OMMMM!!!! Timothy's eyes nearly popped out of his head. His face was blackened with soot and his hair stood on end. He looked down at what remained of the school laboratory bench and saw smouldering wood and shattered glass. Shocked faces gazed up at him.</div>
+<div class="passage-excerpt"><div class="para-num">¶11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+<div class="passage-excerpt"><div class="para-num">¶12</div>Four weeks and 25 excruciating extra Chemistry lessons later, Timothy was blinking out nervously at a gaggle of eager science teachers and pushy parents, crammed into the National School of Science Laboratory for what Professor Snookhorn enthusiastically described as "The pinnacle of my teaching career" (no pressure).</div>
+<div class="passage-excerpt"><div class="para-num">¶13</div>Professor Snookhorn was a superlative scientist but little did he know that Timothy was a bigger hazard than sulphuric acid when it came to Chemistry. He had mistaken Timothy's glazed expression for wide-eyed enthusiasm in class. Timothy looked down at the glistening bench, taking in the jewel-coloured containers of liquids and crystals, without a clue of what they were or how to use them.</div>
+<div class="passage-excerpt"><div class="para-num">¶14</div>A klaxon blared. Timothy's competitors scurried around like a pack of lab rats. Timothy had not bothered reading the competition rules, but jerked into action, picking random coloured bottles up and mixing the contents in a large glass container which appeared to have been placed on the bench in front of him for that purpose.</div>
+<div class="passage-excerpt"><div class="para-num">¶15</div>A smell like Billy Brenton's worst ever fart began to fill the air and Timothy looked down in alarm at his bench. Thick grey smoke filled Timothy's nostrils. The glass container into which he had poured his random mix shuddered and shook. The pushy parents started to point. The science teachers went pale. Timothy gulped. BOO00000OMMMM!!!!</div>
+<div class="passage-excerpt"><div class="para-num">¶16</div>As the smoke cleared, the science teachers began to clap and a tear of pride trickled down Professor Snookhorn's cheek. A voice boomed: "Ladies and gentlemen I give you the winner of this year's Young Scientist of the Year - The Biggest Bang: TIMOTHY TRENTON!"</div>
+  </div>
+  <div class="split-right">
+    <div class="card accent" style="margin-bottom:8px"><p style="font-size:20px">Below are comments made by some of the people in the story The Big Bang. Match each person or group of people with ONE comment. Each letter can be used ONCE only. One letter is NOT used. One has been done for you as an example.</p></div>
+    <div class="card" style="padding:16px 20px;margin-top:12px">
+      <p style="font-size:16px;margin-bottom:12px">Match each comment with the correct person (A-E). Drag each letter to the correct comment box.</p>
+      <div class="word-pool" id="q22-pool">
+        <div class="draggable" draggable="true" data-word="A" data-cat="X">A. Parents</div>
+        <div class="draggable" draggable="true" data-word="B" data-cat="iii">B. Timothy</div>
+        <div class="draggable" draggable="true" data-word="C" data-cat="ex">C. Teachers</div>
+        <div class="draggable" draggable="true" data-word="D" data-cat="i">D. Billy Brenton</div>
+        <div class="draggable" draggable="true" data-word="E" data-cat="ii">E. Professor Snookhorn</div>
+      </div>
+      <div style="margin-top:14px">
+        <p style="font-size:15px;margin-bottom:6px"><strong>(i)</strong> <span class="acc-badge acc-high">76%</span> "He is such a teacher’s pet." 
+          <div class="drop-zone" data-accept="i" style="min-width:80px;display:inline-flex;margin-left:8px"><div class="drop-content"></div></div>
+        </p>
+        <p style="font-size:15px;margin-bottom:6px"><strong>(ii)</strong> <span class="acc-badge acc-mid">67%</span> "He did it... I’m thrilled for us both."
+          <div class="drop-zone" data-accept="ii" style="min-width:80px;display:inline-flex;margin-left:8px"><div class="drop-content"></div></div>
+        </p>
+        <p style="font-size:15px;margin-bottom:6px"><strong>(ex.)</strong> "He is amazing - what an explosion!"
+          <span style="font-size:14px;font-weight:700;color:var(--fcc-green-dark);margin-left:8px">C (given)</span>
+        </p>
+        <p style="font-size:15px;margin-bottom:6px"><strong>(iii)</strong> <span class="acc-badge acc-mid">64%</span> "He has no idea that I’m clueless about this."
+          <div class="drop-zone" data-accept="iii" style="min-width:80px;display:inline-flex;margin-left:8px"><div class="drop-content"></div></div>
+        </p>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="reveal-btn" onclick="checkQ22()">Check</button>
+        <button class="reveal-btn" onclick="resetQ22()" style="background:var(--text-3)">Reset</button>
+        <button class="reveal-btn" onclick="toggleRev('q22-ans')" style="font-size:14px">Show Answers</button>
+      </div>
+      <div class="ans-reveal" id="q22-ans">
+        <p style="font-size:16px"><strong>(i) D</strong> — Billy Brenton<br><strong>(ii) E</strong> — Professor Snookhorn<br><strong>(iii) B</strong> — Timothy<br><strong>Not used:</strong> A (Parents)</p>
+      </div>
+      <div class="ans-reveal" id="q22-result" style="margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Part A Exit Test" data-section="exit-test" data-part="Part A">
+<div class="sec-label">Exit Test · Part A</div>
+<div class="slide-h3" style="margin-bottom:18px">The Big Bang: Key Vocabulary Review</div>
+<div class="flip-grid g5">
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">smouldering</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">闷烧的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">excruciating</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">极痛苦的；折磨人的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">gaggle</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">一群（吵嚷的人）</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">superlative</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">极好的；卓越的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">hazard</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">危险；危害</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">glistening</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">闪闪发光的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">klaxon</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">喇叭；警笛</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">blared</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">发出刺耳声</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">competitors</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">竞争者</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">shuddered</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">发抖；震颤</div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class="slide" data-title="Close Reading · Text 1" data-section="close-reading" data-part="Part A">
+<div class="sec-label">Close Reading · Part A</div>
+<div class="slide-h2">Understanding Flash Fiction</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p><strong>Key insight:</strong> Flash Fiction is built on the principle of <strong>restriction</strong> — every element must serve the story within a tight word limit.</p>
+</div>
+<div class="slide-h4" style="margin-top:12px;margin-bottom:10px">The Five Focuses Framework</div>
+<div class="card" style="margin-bottom:12px">
+  <p><strong>1. Character:</strong> Focus on ONE main character. Use a human antagonist for opposition, but keep it minimal.</p>
+  <p><strong>2. Scene:</strong> Tell only the END of a story. Focus on ONE life-altering moment in ONE location.</p>
+  <p><strong>3. Conflict:</strong> Answer two questions: What does the character want? Who/what is stopping them?</p>
+  <p><strong>4. Theme:</strong> The moral argument — how do you want readers to feel or change?</p>
+  <p><strong>5. Word Choice:</strong> Every word counts. Be economical; strip away non-essentials.</p>
+</div>
+<div class="card" style="margin-bottom:8px">
+  <p><strong>Why flash fiction makes you a better writer:</strong></p>
+  <p>• Forces economical use of words</p>
+  <p>• Focuses ideas on essentials</p>
+  <p>• Develops editing and revising skills</p>
+</div>
+<div class="method-badge">🔑 DSE Tip: When answering reading questions about flash fiction, look for evidence of these five focuses in the text.</div>
+</section>
+
+<section class="slide" data-title="Part B2" data-section="divider" data-part="Part B2">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
+  <div class="class-badge" style="font-size:20px;padding:14px 36px;margin-bottom:24px">Part B2</div>
+  <div class="slide-h1" style="text-align:center">Harder Section</div>
+  <div class="slide-h3" style="text-align:center;color:var(--text-2);margin-top:12px">Text 4 · Michelle Obama · Q46–Q69</div>
+  <p style="text-align:center;font-size:20px;margin-top:20px;color:var(--text-2);max-width:600px">An essay on motherhood and a memoir excerpt exploring identity, perseverance, and family bonds.</p>
+</div>
+</section>
+
+<section class="slide" data-title="Part B2 Entry Test" data-section="entry-test" data-part="Part B2">
+<div class="sec-label">Entry Test · Part B2</div>
+<div class="slide-h3" style="margin-bottom:18px">Michelle Obama: Key Vocabulary</div>
+<div class="flip-grid g5">
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">excerpt</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">摘录；节选</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">clipped</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">简短急促的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">infectious</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">有感染力的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">wry</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">挖苦的；讽刺的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">limelight</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">公众关注中心</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">endure</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">忍受</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">chide</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">责备；斥责</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">scrapped (with)</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">打架；争吵</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">ornery</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">脾气坏的；固执的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">contentious</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">有争议的；引起争论的</div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class="slide" data-title="Q46–Q48 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 1-2: Introduction & Character</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q46–Q48 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>In a special personal essay, excerpted here, in honor of Mother's Day, Michelle Obama shares memories of her mom, Marian Robinson, and women who shaped the extraordinary life of an ordinary girl from Chicago who would grow up to be the wife of the President of the United States.</div>
+<div class="passage-excerpt"><div class="para-num">¶2</div>My mother is a woman who chooses her words carefully. She'll sometimes speak in clipped sentences, her wisdom packed into short bursts and punctuated with an infectious smile or a wry laugh. It's a style that makes her a favorite of everyone she meets - a sweet, witty companion who doesn't need the limelight.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q46-box">
+  <div class="pmcq-label">Q46 · 1 mark(s)<span class="acc-badge acc-low">14%</span></div>
+  <div class="pmcq-q">With reference to paragraph 1, what is the connection between Michelle Obama’s personal essay and Mother’s Day?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-1);font-size:20px">The essay ________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q46-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q46-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>shares / shows Michelle’s memories of her mom // is written in honour of Mothers’ Day</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q47-box">
+  <div class="pmcq-label">Q47 · 1 mark(s)<span class="acc-badge acc-mid">58%</span></div>
+  <div class="pmcq-q">Use ONE word to complete: Shaped by the women in her life, Michelle rose from __________ beginnings.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q47-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q47-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>ordinary / humble / normal</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q48-box">
+  <div class="pmcq-label">Q48 · MC · 1 mark(s)<span class="acc-badge acc-mid">59%</span></div>
+  <div class="pmcq-q">According to paragraph 2, which ONE of the following does <strong>NOT</strong> indicate the way Michelle’s mother speaks?</div>
+  <div class="pmcq-options" id="q48-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>in short sentences</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>chatty and talkative</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>with good judgement</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>deliberate in word choice</span>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q49–Q51 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 2-4: Mother’s Parenting Style</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q49–Q51 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>My mother is a woman who chooses her words carefully. She'll sometimes speak in clipped sentences, her wisdom packed into short bursts and punctuated with an infectious smile or a wry laugh. It's a style that makes her a favorite of everyone she meets - a sweet, witty companion who doesn't need the limelight.</div>
+<div class="passage-excerpt"><div class="para-num">¶3</div>As I've grown older, I've seen how her manner in conversation also reflects her approach to parenting. Because when it came to raising her kids, my mom knew that her voice was less important than allowing me to use my own.</div>
+<div class="passage-excerpt"><div class="para-num">¶4</div>That meant she listened a lot more than she lectured. Growing up, she was willing to endure endless questioning from me - Why did we have to eat eggs for breakfast? Why do people need jobs? Why are the houses bigger in other neighborhoods? She didn't chide me if I scrapped with some of the neighbor kids or challenged my ornery grandfather when I thought he was being a little too ornery. She listened intently to the lunchtime conversations I had with my schoolmates over bologna sandwiches, and nodded patiently along to tales of my contentious piano lessons with my great-aunt Robbie.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q49-box">
+  <div class="pmcq-label">Q49 · Situation Reaction · 2 marks</div>
+  <div class="pmcq-q">Based on the information in paragraphs 2-4, suggest how Michelle’s mother would react in the following situations.</div>
+  <p style="font-size:15px;margin-bottom:6px"><strong>(i)</strong> <span class="acc-badge acc-mid">60%</span> Meeting someone new at a party.</p>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q49i-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q49i-ans">
+    <p style="font-size:16px"><strong>She would speak in clipped sentences / be careful with her speech</strong></p>
+  </div>
+  <p style="font-size:15px;margin:12px 0 6px"><strong>(ii)</strong> <span class="acc-badge acc-mid">63%</span> Hearing her children complaining about friends cheating at a game.</p>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q49ii-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q49ii-ans">
+    <p style="font-size:16px"><strong>She would listen intently</strong></p>
+  </div>
+</div>
+<div class="practice-mcq" id="q50-box">
+  <div class="pmcq-label">Q50 · MC · 1 mark(s)<span class="acc-badge acc-mid">55%</span></div>
+  <div class="pmcq-q">What is the purpose of the list of questions Michelle includes in lines 10-11?</div>
+  <div class="pmcq-options" id="q50-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>to highlight her questioning skills</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>to suggest her questions were trivial</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>to emphasise her constant questions</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>to explain why she asked the questions</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q51-box">
+  <div class="pmcq-label">Q51 · MC · 1 mark(s)<span class="acc-badge acc-high">81%</span></div>
+  <div class="pmcq-q">What does "all that" (line 15) refer to?</div>
+  <div class="pmcq-options" id="q51-opts">
+    <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>Marian’s parenting style</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>piano lessons with Robbie</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>conversations with schoolmates</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Michelle’s way of expressing herself</span>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q52 · TFNG" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraph 5: Parenting Values</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q52 · TFNG</h4>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>In today's world, it's easy to hear all that and think that Marian Robinson was bordering on negligent, that she was letting the kids rule the roost. But the reality was far from that. She and my father, Fraser, were wholly invested in their children, pouring a deep and durable foundation of goodness and honesty, of right and wrong, into my brother and me. After that, they simply let us be ourselves.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q52-box">
+  <div class="pmcq-label">Q52 · TFNG · 3 marks</div>
+  <div class="pmcq-q">According to paragraph 5, decide whether the following statements are True (T), False (F) or Not Given (NG).</div>
+  <div class="card" style="margin-bottom:8px;padding:12px 14px">
+    <p style="font-size:15px;margin-bottom:8px"><strong>(i)</strong> <span class="acc-badge acc-high">83%</span> Michelle’s parents spent a lot of money raising their children.</p>
+    <div class="tfng-group" data-answer="NG" data-explain="No mention of money spent">
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+    <p style="font-size:15px;margin-bottom:8px"><strong>(ii)</strong> <span class="acc-badge acc-high">91%</span> Michelle’s parents tried to directly control their children’s actions.</p>
+    <div class="tfng-group" data-answer="F" data-explain='They "let us be ourselves" rather than control'>
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+    <p style="font-size:15px;margin-bottom:8px"><strong>(iii)</strong> <span class="acc-badge acc-high">90%</span> Michelle’s parents were committed to developing the moral values of their children.</p>
+    <div class="tfng-group" data-answer="T" data-explain='They poured "a deep and durable foundation of goodness and honesty, of right and wrong."'>
+      <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+      <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q53–Q54 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 4-6: Examples & Correlation</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q53–Q54 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>That meant she listened a lot more than she lectured. Growing up, she was willing to endure endless questioning from me - Why did we have to eat eggs for breakfast? Why do people need jobs? Why are the houses bigger in other neighborhoods? She didn't chide me if I scrapped with some of the neighbor kids or challenged my ornery grandfather when I thought he was being a little too ornery. She listened intently to the lunchtime conversations I had with my schoolmates over bologna sandwiches, and nodded patiently along to tales of my contentious piano lessons with my great-aunt Robbie.</div>
+<div class="passage-excerpt"><div class="para-num">¶5</div>In today's world, it's easy to hear all that and think that Marian Robinson was bordering on negligent, that she was letting the kids rule the roost. But the reality was far from that. She and my father, Fraser, were wholly invested in their children, pouring a deep and durable foundation of goodness and honesty, of right and wrong, into my brother and me. After that, they simply let us be ourselves.</div>
+<div class="passage-excerpt"><div class="para-num">¶6</div>I see now how important that kind of freedom is for all children, particularly for girls with flames of their own - flames the world might try to dim. It's up to us, as mothers and mother-figures, to give the girls in our lives the kind of support that keeps their flame lit and lifts up their voices - not necessarily with our own words, but by letting them find the words themselves.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q53-box">
+  <div class="pmcq-label">Q53 · Table Completion · 4 marks</div>
+  <div class="pmcq-q">With reference to paragraphs 4-6, complete the table by finding an example from the text.</div>
+  <div class="tb-wrap"><table>
+    <tr><th></th><th>Example from the text</th></tr>
+    <tr><td>A. A fight or argument <span class="acc-badge acc-mid">66%</span></td><td><span style="color:var(--text-3)">________</span><br><button class="reveal-btn" onclick="toggleRev('q53a-ans')" style="font-size:12px;padding:4px 10px">Show</button><div class="ans-reveal" id="q53a-ans" style="font-size:14px">Michelle confronted Robbie / challenged her grandfather / scrapped with neighbour kids</div></td></tr>
+    <tr><td>B. A parenting lesson <span class="acc-badge acc-low">39%</span></td><td><span style="color:var(--text-3)">________</span><br><button class="reveal-btn" onclick="toggleRev('q53b-ans')" style="font-size:12px;padding:4px 10px">Show</button><div class="ans-reveal" id="q53b-ans" style="font-size:14px">Michelle’s mother listened more than lectured / let children be themselves</div></td></tr>
+    <tr><td>C. A misunderstanding <span class="acc-badge acc-mid">51%</span></td><td><span style="color:var(--text-3)">________</span><br><button class="reveal-btn" onclick="toggleRev('q53c-ans')" style="font-size:12px;padding:4px 10px">Show</button><div class="ans-reveal" id="q53c-ans" style="font-size:14px">Marian Robinson was a negligent parent / let kids rule the roost</div></td></tr>
+    <tr><td>D. An appeal to others <span class="acc-badge acc-low">18%</span></td><td><span style="color:var(--text-3)">________</span><br><button class="reveal-btn" onclick="toggleRev('q53d-ans')" style="font-size:12px;padding:4px 10px">Show</button><div class="ans-reveal" id="q53d-ans" style="font-size:14px">Mother/mother-figures should support children / give girls support to lift their voice</div></td></tr>
+  </table></div>
+</div>
+<div class="practice-mcq" id="q54-box">
+  <div class="pmcq-label">Q54 · 1 mark(s)<span class="acc-badge acc-low">14%</span></div>
+  <div class="pmcq-q">Explain what made the correlation ‘encouraging’ (line 30) for Michelle.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q54-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q54-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>the more she practises, the more she can achieve</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q55–Q56 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraph 8: Learning Piano</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q55–Q56 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>At home, I continued to work on my own progress as a musician. Sitting at Robbie's upright piano, I was quick to pick up the scales and I threw myself into filling out the sight-reading worksheets she gave me. Because we didn't have a piano of our own, I had to do my practicing downstairs on hers. I learned one song in the piano book and then another. I was probably no better than her other students, no less fumbling, but I was driven. To me, there was magic in the learning. I got a buzzy sort of satisfaction from it. For one thing, I'd picked up on the simple, encouraging correlation between how long I practiced and how much I achieved. And I sensed something in Robbie as well - too deeply buried to be an outright pleasure, but still, a pulse of something lighter and happier coming from her when I made it through a song without messing up. I'd notice it out of the corner of my eye: Robbie's lips would unpurse themselves just slightly.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q55-box">
+  <div class="pmcq-label">Q55 · Close Reading · 2 marks</div>
+  <div class="pmcq-q">With reference to paragraph 8, answer the following questions.</div>
+  <p style="font-size:15px;margin-bottom:6px"><strong>(i)</strong> <span class="acc-badge acc-low">18%</span> What was ‘deeply buried’ (line 31)?</p>
+  <button class="reveal-btn" onclick="toggleRev('q55i-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q55i-ans"><p style="font-size:16px"><strong>(Robbie’s) satisfaction / joy / pride</strong> at/about Michelle’s performance</p></div>
+  <p style="font-size:15px;margin:12px 0 6px"><strong>(ii)</strong> <span class="acc-badge acc-mid">57%</span> How was this expressed by Robbie?</p>
+  <button class="reveal-btn" onclick="toggleRev('q55ii-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q55ii-ans"><p style="font-size:16px"><strong>(Robbie’s) lips unpursed themselves (just) slightly</strong></p></div>
+</div>
+<div class="practice-mcq" id="q56-box">
+  <div class="pmcq-label">Q56 · 1 mark(s)<span class="acc-badge acc-low">13%</span></div>
+  <div class="pmcq-q">How did Michelle contribute to the ‘honeymoon phase’ (line 34)?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q56-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q56-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>Michelle could play a song without messing up</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q57–Q59 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 8-9: Understanding Conflict</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q57–Q59 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>At home, I continued to work on my own progress as a musician. Sitting at Robbie's upright piano, I was quick to pick up the scales and I threw myself into filling out the sight-reading worksheets she gave me. Because we didn't have a piano of our own, I had to do my practicing downstairs on hers. I learned one song in the piano book and then another. I was probably no better than her other students, no less fumbling, but I was driven. To me, there was magic in the learning. I got a buzzy sort of satisfaction from it. For one thing, I'd picked up on the simple, encouraging correlation between how long I practiced and how much I achieved. And I sensed something in Robbie as well - too deeply buried to be an outright pleasure, but still, a pulse of something lighter and happier coming from her when I made it through a song without messing up. I'd notice it out of the corner of my eye: Robbie's lips would unpurse themselves just slightly.</div>
+<div class="passage-excerpt"><div class="para-num">¶9</div>This, it turns out, was our honeymoon phase. It's possible that we might have continued this way, Robbie and I, had I been less curious and more reverent when it came to her piano method. But the lesson book was thick enough and my progress on the opening few songs slow enough that I got impatient and started peeking ahead - and not just a few pages ahead but deep into the book, checking out the titles of the more advanced songs and beginning, during my practice sessions, to fiddle around with playing them. When I proudly debuted one of my late-in-the-book songs for Robbie, she exploded, slapping down my achievement with a vicious "Good night!" I got chewed out the way I'd heard her chewing out plenty of students before me. All I'd done was try to learn more and faster, but for Robbie it was a crime approaching treason. She wasn't impressed, not even a little bit.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q57-box">
+  <div class="pmcq-label">Q57 · MC · 1 mark(s)<span class="acc-badge acc-mid">58%</span></div>
+  <div class="pmcq-q">Which of the following is <strong>NOT</strong> a reason Michelle provides to explain the end of the ‘honeymoon phase’?</div>
+  <div class="pmcq-options" id="q57-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Michelle was inquisitive</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Michelle seemed to make limited progress</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>Robbie believed Michelle had a great talent</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Robbie’s teaching style didn’t suit Michelle</span>
+  </div>
+</div><div class="practice-mcq" id="q58-box">
+  <div class="pmcq-label">Q58 · 1 mark(s)<span class="acc-badge acc-mid">65%</span></div>
+  <div class="pmcq-q">Was Michelle’s debut of one of the ‘late-in-the-book songs’ (lines 38-39) a success or a failure? Give a reason.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q58-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q58-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>Success:</strong> Michelle learnt more new songs herself / learnt faster than Robbie at learning new songs// <strong>Failure:</strong> Robbie was not impressed at all // Michelle got chewed out</p>
+  </div>
+</div><div class="practice-mcq" id="q59-box">
+  <div class="pmcq-label">Q59 · 1 mark(s)<span class="acc-badge acc-mid">54%</span></div>
+  <div class="pmcq-q">Find a metaphor for ‘disobedience’ Michelle uses in paragraph 9.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q59-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q59-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>a crime (approaching treason)</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q60–Q62 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 9-10: Personality & Conflict</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q60–Q62 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶9</div>This, it turns out, was our honeymoon phase. It's possible that we might have continued this way, Robbie and I, had I been less curious and more reverent when it came to her piano method. But the lesson book was thick enough and my progress on the opening few songs slow enough that I got impatient and started peeking ahead - and not just a few pages ahead but deep into the book, checking out the titles of the more advanced songs and beginning, during my practice sessions, to fiddle around with playing them. When I proudly debuted one of my late-in-the-book songs for Robbie, she exploded, slapping down my achievement with a vicious "Good night!" I got chewed out the way I'd heard her chewing out plenty of students before me. All I'd done was try to learn more and faster, but for Robbie it was a crime approaching treason. She wasn't impressed, not even a little bit.</div>
+<div class="passage-excerpt"><div class="para-num">¶10</div>Nor was I chastened. I was the kind of kid who liked concrete answers to my questions, who liked to reason things out to some logical if exhausting end. I was lawyerly and also veered toward dictatorial, as my brother Craig, who often got ordered out of our shared play area, would attest. When I thought I had a good idea about something, I didn't like being told no. Which is how my great-aunt and I ended up in each other's faces, both of us hot and unyielding.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q60-box">
+  <div class="pmcq-label">Q60 · 1 mark(s)<span class="acc-badge acc-low">21%</span></div>
+  <div class="pmcq-q">Explain Michelle’s frustration when she says ‘Nor was I chastened’ (line 42).</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q60-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q60-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>She wanted to progress faster but Robbie wouldn’t let her / needed more concrete explanations about Robbie’s method</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q61-box">
+  <div class="pmcq-label">Q61 · 1 mark(s)<span class="acc-badge acc-low">29%</span></div>
+  <div class="pmcq-q">What does the phrase ‘hot and unyielding’ (lines 45-46) suggest about Michelle’s and her great-aunt’s personality?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q61-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q61-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>They were stubborn / unwilling to compromise / unable to accept each other’s approach</strong></p>
+  </div>
+</div><div class="practice-mcq" id="q62-box">
+  <div class="pmcq-label">Q62 · MC · 1 mark(s)<span class="acc-badge acc-mid">59%</span></div>
+  <div class="pmcq-q">Which of the following is <strong>NOT</strong> exhibited by Michelle in paragraph 10?</div>
+  <div class="pmcq-options" id="q62-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>rejecting someone’s ideas</span>
+<span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>understanding her own failures</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>forcing someone to change their mind</span>
+<span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>behaving aggressively in confrontation</span>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q63–Q64 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraphs 11-13: Character & Emotion</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q63–Q64 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>"How could you be mad at me for wanting to learn a new song?"<br>"You're not ready for it. That's not how you learn piano."<br>"But I am ready. I just played it"<br>"That's not how it's done."<br>"But why?"</div>
+<div class="passage-excerpt"><div class="para-num">¶12</div>Piano lessons became epic and trying, largely due to my refusal to follow the prescribed method and Robbie's refusal to see anything good in my freewheeling approach to her songbook. We went back and forth, week after week. I was stubborn and so was she. I had a point of view and she did, too. In between disputes, I continued to play the piano and she continued to listen, offering a stream of corrections. I gave her little credit for my improvement as a player. She gave me little credit for improving. But still, the lessons went on.</div>
+<div class="passage-excerpt"><div class="para-num">¶13</div>Upstairs, my parents and Craig found it all so very funny. They cracked up at the dinner table as I recounted my battles with Robbie, still seething as I ate my spaghetti and meatballs. My parents expressed no sympathy for my woes and none for Robbie's, either. In general, they weren't ones to intervene in matters outside schooling, expecting early on that my brother and I should handle our own business. They seemed to view their job as mostly to listen and bolster us as needed inside the four walls of our home. And where another parent might have scolded a kid for being sassy with an elder as I had been, they also let that be. My mother had lived with Robbie on-and-off since she was about sixteen, following every arcane rule the woman laid down, and it's possible she was secretly happy to see Robbie's authority challenged. Looking back on it now, I think my parents appreciated my feistiness and I'm glad for it. It was a flame inside me they wanted to keep lit.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q63-box">
+  <div class="pmcq-label">Q63 · Character Analysis · 2 marks</div>
+  <div class="pmcq-q">With reference to paragraph 11, identify a characteristic of Michelle’s personality and explain how the paragraph illustrates it.</div>
+  <p style="font-size:15px;margin-bottom:6px"><strong>(i) Characteristic:</strong> <span class="acc-badge acc-mid">46%</span></p>
+  <button class="reveal-btn" onclick="toggleRev('q63i-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q63i-ans"><p style="font-size:16px"><strong>stubborn / argumentative / inquisitive / logical / lawyerly</strong></p></div>
+  <p style="font-size:15px;margin:12px 0 6px"><strong>(ii) Illustration:</strong> <span class="acc-badge acc-low">38%</span></p>
+  <button class="reveal-btn" onclick="toggleRev('q63ii-ans')" style="font-size:14px">Show Answer</button>
+  <div class="ans-reveal" id="q63ii-ans"><p style="font-size:16px"><strong>Not following her aunt’s views / unwilling to accept Robbie’s wisdom / wanting to make faster progress / wanting concrete answers</strong></p></div>
+</div>
+<div class="practice-mcq" id="q64-box">
+  <div class="pmcq-label">Q64 · 1 mark(s)<span class="acc-badge acc-low">22%</span></div>
+  <div class="pmcq-q">With reference to paragraph 13, how did Michelle feel ‘at the dinner table’ (line 57) and why?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q64-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q64-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>angry / annoyed / seething + her family were cracking up / not offering sympathy</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q65 · Gap Fill" data-section="practice" data-part="Part B2">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Q65: Summary Gap Fill (5 marks)</div>
+<div class="card" style="padding:20px 24px;margin-top:12px">
+  <p style="font-size:16px;margin-bottom:16px">Based on the information in paragraph 12, complete the summary by writing <strong>ONE word</strong> in each blank below. Your answers must be grammatically correct.</p>
+  <p style="font-size:16px;line-height:2.5">
+    Michelle had little faith in her great-aunt’s approach, and Robbie 
+    <span class="cloze" onclick="revealCloze(this)" data-answer="refused">____</span><span class="acc-badge acc-low">39%</span> to acknowledge Michelle’s carefree attitude. 
+    Yet, the lessons continued with a constant toing and froing, with Robbie firing off endless 
+    <span class="cloze" onclick="revealCloze(this)" data-answer="corrections">____</span><span class="acc-badge acc-low">34%</span> at her. 
+    At the same time, Michelle was 
+    <span class="cloze" onclick="revealCloze(this)" data-answer="determined">____</span><span class="acc-badge acc-low">4%</span> to do things her own way, refusing to 
+    <span class="cloze" onclick="revealCloze(this)" data-answer="follow">____</span><span class="acc-badge acc-mid">43%</span> her great-aunt’s wishes. 
+    The situation became a somewhat irritating saga to be endured, with neither of them 
+    <span class="cloze" onclick="revealCloze(this)" data-answer="acknowledging">____</span><span class="acc-badge acc-low">7%</span> the other’s endeavours.
+  </p>
+</div>
+</section>
+
+<section class="slide" data-title="Q66–Q67 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Paragraph 13: Parents’ Perspective</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q66–Q67 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶13</div>Upstairs, my parents and Craig found it all so very funny. They cracked up at the dinner table as I recounted my battles with Robbie, still seething as I ate my spaghetti and meatballs. My parents expressed no sympathy for my woes and none for Robbie's, either. In general, they weren't ones to intervene in matters outside schooling, expecting early on that my brother and I should handle our own business. They seemed to view their job as mostly to listen and bolster us as needed inside the four walls of our home. And where another parent might have scolded a kid for being sassy with an elder as I had been, they also let that be. My mother had lived with Robbie on-and-off since she was about sixteen, following every arcane rule the woman laid down, and it's possible she was secretly happy to see Robbie's authority challenged. Looking back on it now, I think my parents appreciated my feistiness and I'm glad for it. It was a flame inside me they wanted to keep lit.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q66-box">
+  <div class="pmcq-label">Q66 · 2 mark(s)<span class="acc-badge acc-mid">41%</span></div>
+  <div class="pmcq-q">Michelle’s parents ‘expressed no sympathy’ (line 58) for neither Michelle nor Robbie. Give <strong>TWO reasons</strong> why.</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q66-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q66-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px">(Michelle's parents) didn't want to intervene children in matters outside schooling // believed in their children making their own choices // happy to see Robbie('s authority) being challenged (by Michelle) // admired Michelle's feistiness // didn't mind (their) children / Michelle being sassy with an elder / Robbie</p>
+  </div>
+</div><div class="practice-mcq" id="q67-box">
+  <div class="pmcq-label">Q67 · 2 mark(s)<span class="acc-badge acc-low">33%</span></div>
+  <div class="pmcq-q">From the text, identify two examples of Michelle ‘being sassy with an elder’ (line 62).</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q67-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q67-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>1. She challenged her (ornery) grandfather.</strong><br><strong>2. She did not (entirely) follow Robbie’s instructions (in piano lessons)</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q68 · Heading Match" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Q68: Matching Summary Headings (5 marks)</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="overflow-y:auto">
+    <h4>Text 4 — Becoming · ¶8-12</h4>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>At home, I continued to work on my own progress as a musician. Sitting at Robbie's upright piano, I was quick to pick up the scales and I threw myself into filling out the sight-reading worksheets she gave me. Because we didn't have a piano of our own, I had to do my practicing downstairs on hers. I learned one song in the piano book and then another. I was probably no better than her other students, no less fumbling, but I was driven. To me, there was magic in the learning. I got a buzzy sort of satisfaction from it. For one thing, I'd picked up on the simple, encouraging correlation between how long I practiced and how much I achieved. And I sensed something in Robbie as well — too deeply buried to be an outright pleasure, but still, a pulse of something lighter and happier coming from her when I made it through a song without messing up. I'd notice it out of the corner of my eye: Robbie's lips would unpurse themselves just slightly.</div>
+    <div class="passage-excerpt"><div class="para-num">¶9</div>This, it turns out, was our honeymoon phase. It's possible that we might have continued this way, Robbie and I, had I been less curious and more reverent when it came to her piano method. But the lesson book was thick enough and my progress on the opening few songs slow enough that I got impatient and started peeking ahead — and not just a few pages ahead but deep into the book, checking out the titles of the more advanced songs and beginning, during my practice sessions, to fiddle around with playing them. When I proudly debuted one of my late-in-the-book songs for Robbie, she exploded, slapping down my achievement with a vicious "Good night!" I got chewed out the way I'd heard her chewing out plenty of students before me. All I'd done was try to learn more and faster, but for Robbie it was a crime approaching treason. She wasn't impressed, not even a little bit.</div>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>Nor was I chastened. I was the kind of kid who liked concrete answers to my questions, who liked to reason things out to some logical if exhausting end. I was lawyerly and also veered toward dictatorial, as my brother Craig, who often got ordered out of our shared play area, would attest. When I thought I had a good idea about something, I didn't like being told no. Which is how my great-aunt and I ended up in each other's faces, both of us hot and unyielding.</div>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>"How could you be mad at me for wanting to learn a new song?" "You're not ready for it. That's not how you learn piano." "But I am ready. I just played it" "That's not how it's done." "But why?"</div>
+    <div class="passage-excerpt"><div class="para-num">¶12</div>Piano lessons became epic and trying, largely due to my refusal to follow the prescribed method and Robbie's refusal to see anything good in my freewheeling approach to her songbook. We went back and forth, week after week. I was stubborn and so was she. I had a point of view and she did, too. In between disputes, I continued to play the piano and she continued to listen, offering a stream of corrections. I gave her little credit for my improvement as a player. She gave me little credit for improving. But still, the lessons went on.</div>
+  </div>
+  <div class="split-right">
+<div class="card accent" style="margin-bottom:8px"><p style="font-size:20px">Below are summary headings for each paragraph of the excerpt from Michelle's memoir. Match the most appropriate summary heading with each paragraph. Each letter can be used ONCE only. One summary heading is NOT used. One has been done for you as an example.</p></div>
+<div class="card" style="padding:16px 20px;margin-top:12px">
+  <p style="font-size:16px;margin-bottom:12px">Drag each letter to the correct paragraph box.</p>
+  <div class="word-pool" id="q68-pool">
+    <div class="draggable" draggable="true" data-word="h-A" data-cat="X">A. Parental pride</div>
+    <div class="draggable" draggable="true" data-word="h-C" data-cat="8">C. Joy of learning</div>
+    <div class="draggable" draggable="true" data-word="h-D" data-cat="10">D. My character and conflict</div>
+    <div class="draggable" draggable="true" data-word="h-E" data-cat="9">E. The mood shifts</div>
+    <div class="draggable" draggable="true" data-word="h-F" data-cat="12">F. Enduring the other</div>
+    <div class="draggable" draggable="true" data-word="h-G" data-cat="11">G. Wanting to understand</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px">
+    <div><p style="font-size:15px"><strong>Paragraph 8</strong> <span class="acc-badge acc-high">80%</span></p><div class="drop-zone" data-accept="8" style="min-height:50px"><div class="drop-content"></div></div></div>
+    <div><p style="font-size:15px"><strong>Paragraph 9</strong> <span class="acc-badge acc-mid">62%</span></p><div class="drop-zone" data-accept="9" style="min-height:50px"><div class="drop-content"></div></div></div>
+    <div><p style="font-size:15px"><strong>Paragraph 10</strong> <span class="acc-badge acc-mid">57%</span></p><div class="drop-zone" data-accept="10" style="min-height:50px"><div class="drop-content"></div></div></div>
+    <div><p style="font-size:15px"><strong>Paragraph 11</strong> <span class="acc-badge acc-mid">53%</span></p><div class="drop-zone" data-accept="11" style="min-height:50px"><div class="drop-content"></div></div></div>
+    <div><p style="font-size:15px"><strong>Paragraph 12</strong> <span class="acc-badge acc-mid">54%</span></p><div class="drop-zone" data-accept="12" style="min-height:50px"><div class="drop-content"></div></div></div>
+  </div>
+  <p style="font-size:14px;margin-top:8px"><strong>Paragraph 13:</strong> B (example) — Life, parenting and Robbie</p>
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button class="reveal-btn" onclick="checkQ68()">Check</button>
+    <button class="reveal-btn" onclick="resetQ68()" style="background:var(--text-3)">Reset</button>
+    <button class="reveal-btn" onclick="toggleRev('q68-ans')" style="font-size:14px">Show Answers</button>
+  </div>
+  <div class="ans-reveal" id="q68-ans">
+    <p style="font-size:16px"><strong>Para 8: C</strong> (Joy of learning)<br><strong>Para 9: E</strong> (The mood shifts)<br><strong>Para 10: D</strong> (My character and conflict)<br><strong>Para 11: G</strong> (Wanting to understand)<br><strong>Para 12: F</strong> (Enduring the other)<br><strong>Not used:</strong> A (Parental pride)</p>
+  </div>
+  <div class="ans-reveal" id="q68-result" style="margin-top:8px"></div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Q69 · Text 4" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="sec-label">Practice · Part B2</div>
+<div class="slide-h3">Keeping Girls’ Flames Lit</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>Q69 · Text 4</h4>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>I see now how important that kind of freedom is for all children, particularly for girls with flames of their own - flames the world might try to dim. It's up to us, as mothers and mother-figures, to give the girls in our lives the kind of support that keeps their flame lit and lifts up their voices - not necessarily with our own words, but by letting them find the words themselves.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q69-box">
+  <div class="pmcq-label">Q69 · 1 mark(s)<span class="acc-badge acc-mid">49%</span></div>
+  <div class="pmcq-q">With reference to the text, how can parents keep girls’ "flames lit"?</div>
+  <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+  <button class="reveal-btn" onclick="toggleRev('q69-ans')">Show Answer</button>
+  <div class="ans-reveal" id="q69-ans">
+    <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+    <p style="font-size:18px"><strong>(to) give freedom to children in matters outside schooling / let them find the words themselves / give support to children to find the words themselves</strong></p>
+  </div>
+</div>
+  </div>
+</div>
+</section>
+
+<section class="slide" data-title="Part B2 Exit Test" data-section="exit-test" data-part="Part B2">
+<div class="sec-label">Exit Test · Part B2</div>
+<div class="slide-h3" style="margin-bottom:18px">Becoming: Key Vocabulary Review</div>
+<div class="flip-grid g5">
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">negligent</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">疏忽的；玩忽职守的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">foundation</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">基础；根基</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">fumbling</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">笨拙的；摸索的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">buzzy</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">兴奋的；激动的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">correlation</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">相关性；关联</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">unpurse</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">松开（嘴唇）</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">honeymoon phase</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">蜜月期</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">reverent</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">恭敬的；虔诚的</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">treason</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">叛国；背叛</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">chastened</div><div class="flip-hint">tap</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">惩戒的；受教训的</div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<section class="slide" data-title="Summary" data-section="exit-test" data-part="">
+<div class="sec-label">Summary</div>
+<div class="slide-h2" style="margin-bottom:16px">Key Takeaways</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>📝 Exam Awareness</h4>
+  <p>Read instructions carefully — especially <strong>word limits</strong> and which paragraph to use.</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>🔍 Reading Strategies</h4>
+  <p>For Part A, focus on <strong>skimming</strong> for main ideas; for Part B2, practise <strong>inferencing</strong> and understanding implied meaning.</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>✍️ Writing Skills</h4>
+  <p>Avoid copying excessively from the text. Use your own words to demonstrate understanding.</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>💡 Key Lesson</h4>
+  <p>Flash Fiction teaches us that <strong>every word counts</strong>. Michelle Obama’s story shows the importance of <strong>supporting children’s independence</strong>.</p>
+</div>
+</section>
+
+<section class="slide" data-title="Well Done!" data-section="done" data-part="">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">Well Done!</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">
+    You completed the 2023 DSE Paper 1 Reading! Keep practising to master both Part A and Part B2 skills.
+  </p>
+  <div class="score-badge" style="font-size:18px;padding:10px 24px;margin-bottom:20px">
+    <span class="sb-correct" id="finalScore">0</span><span class="sb-divider">/</span><span class="sb-total" id="finalTotal">0</span>
+  </div>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 Celebrate!</button>
+</div>
+</section>
+
+  </div><!-- /main-area -->
+</div><!-- /deck -->
+
+<!-- ===== Hard-mode passage templates ===== -->
+<div id="hard-template-text1" style="display:none">
+  <h4>Text 1: Flash Fiction (Full Passage)</h4>
+<div class="passage-excerpt"><div class="para-num">§1</div>People have been enjoying stories for as long as humanity has been around. Some people love to read 400-page novels, while others struggle to read the first four paragraphs. More and more, technology has unfortunately resulted in many people having shorter attention spans. Therefore, writers have to find new ways to tell stories in a way that appeals to people who are used to reading snippets of information on the small screen of their smart phones. Flash fiction is a medium that works perfectly in a low-attention-span world.</div>
+<div class="passage-excerpt"><div class="para-num">§2</div>Flash fiction is a category of short story that limits the author to a word count of 1,000 words or less. Some magazines limit flash fiction stories to as little as 300 words.</div>
+<div class="passage-excerpt"><div class="para-num">§3</div>Following the tips below will guide you in writing a solid flash fiction story.</div>
+<div class="passage-excerpt"><div class="para-num">§4</div>With a limit of 1,000 words, there isn't a lot of room for character development, so you'll want to pick one character to focus on. There will likely be two characters in the story because you'll often use a human antagonist as opposition to your main character. You might be able to use three characters, but any more than that will probably be overkill in the realm of flash fiction.</div>
+<div class="passage-excerpt"><div class="para-num">§5</div>Longer story forms have a beginning, middle, and end, but with flash fiction, you're really telling only the end of a story. Of course, you won't be able to flesh out a complex story world. Instead, your flash fiction story should focus on one scene, one moment in the life of your character. It needs to be a significant, life-altering moment for your character. Focusing on one scene also means focusing on one location. So for flash fiction your limited word count focuses on the essentials to the story.</div>
+<div class="passage-excerpt"><div class="para-num">§6</div>All stories are about conflict. A story can be easily defined as a character who wants or needs something and has to overcome some obstacle in order to attain it. The obstacle is the conflict. You have to answer two very important questions to write a really good flash fiction story:<br>1. What does your main character want?<br>2. Who or what is trying to stop your main character from getting it?</div>
+<div class="passage-excerpt"><div class="para-num">§7</div>Your theme is the moral argument of your story. It's about how you want your readers to be impacted by the story. What do you want them to be encouraged to do, be, or believe as a result of reading your story?</div>
+<div class="passage-excerpt"><div class="para-num">§8</div>You only have up to 1,000 words to tell your story, so you have to choose those words wisely. When you know what actions and ideas you want to communicate, choose the least amount of words to communicate them.</div>
+<div class="passage-excerpt"><div class="para-num">§9</div>Flash fiction forces you to be economical with your words. It helps you to focus your ideas and strip away anything that isn't essential to your story. Often, when you're writing flash fiction, you'll write more than you need. When you go back through, you'll see what needs to be there, what can be taken out, and what needs to be reworked, which helps you to develop your editing and revising skills.</div>
+<div class="passage-excerpt"><div class="para-num">§10</div>BOO00000OMMMM!!!! Timothy's eyes nearly popped out of his head. His face was blackened with soot and his hair stood on end. He looked down at what remained of the school laboratory bench and saw smouldering wood and shattered glass. Shocked faces gazed up at him.</div>
+<div class="passage-excerpt"><div class="para-num">§11</div>A month ago, it had all started fairly well. It was nearly the end of Chemistry and Timothy was drifting in a pleasant doze with his head rested upon Super Science Experiments for Eager Youngsters, whilst Professor Snookhorn droned on. "So, if anyone is interested, raise your hand now ... how about you Timothy?" "Eh? Ermmm - sure," mumbled Timothy with not the faintest idea of what he had been asked. "Marvellous!" replied an enthused Professor Snookhorn, fixing him with a steely gaze through his thick glasses. "Meet me in Lab 922 after school today and we'll get started." The bell clanged and the students crashed out of the classroom like a herd of elephants. Billy Brenton, class thug, barged past Timothy muttering "Swotty boy - volunteering for Young Scientist of the Year - urghh!" "Arggghhhh!" thought Timothy, but it was too late.</div>
+<div class="passage-excerpt"><div class="para-num">§12</div>Four weeks and 25 excruciating extra Chemistry lessons later, Timothy was blinking out nervously at a gaggle of eager science teachers and pushy parents, crammed into the National School of Science Laboratory for what Professor Snookhorn enthusiastically described as "The pinnacle of my teaching career" (no pressure).</div>
+<div class="passage-excerpt"><div class="para-num">§13</div>Professor Snookhorn was a superlative scientist but little did he know that Timothy was a bigger hazard than sulphuric acid when it came to Chemistry. He had mistaken Timothy's glazed expression for wide-eyed enthusiasm in class. Timothy looked down at the glistening bench, taking in the jewel-coloured containers of liquids and crystals, without a clue of what they were or how to use them.</div>
+<div class="passage-excerpt"><div class="para-num">§14</div>A klaxon blared. Timothy's competitors scurried around like a pack of lab rats. Timothy had not bothered reading the competition rules, but jerked into action, picking random coloured bottles up and mixing the contents in a large glass container which appeared to have been placed on the bench in front of him for that purpose.</div>
+<div class="passage-excerpt"><div class="para-num">§15</div>A smell like Billy Brenton's worst ever fart began to fill the air and Timothy looked down in alarm at his bench. Thick grey smoke filled Timothy's nostrils. The glass container into which he had poured his random mix shuddered and shook. The pushy parents started to point. The science teachers went pale. Timothy gulped. BOO00000OMMMM!!!!</div>
+<div class="passage-excerpt"><div class="para-num">§16</div>As the smoke cleared, the science teachers began to clap and a tear of pride trickled down Professor Snookhorn's cheek. A voice boomed: "Ladies and gentlemen I give you the winner of this year's Young Scientist of the Year - The Biggest Bang: TIMOTHY TRENTON!"</div>
+</div>
+<div id="hard-template-text4" style="display:none">
+  <h4>Text 4: Michelle Obama (Full Passage)</h4>
+<div class="passage-excerpt"><div class="para-num">§1</div>In a special personal essay, excerpted here, in honor of Mother's Day, Michelle Obama shares memories of her mom, Marian Robinson, and women who shaped the extraordinary life of an ordinary girl from Chicago who would grow up to be the wife of the President of the United States.</div>
+<div class="passage-excerpt"><div class="para-num">§2</div>My mother is a woman who chooses her words carefully. She'll sometimes speak in clipped sentences, her wisdom packed into short bursts and punctuated with an infectious smile or a wry laugh. It's a style that makes her a favorite of everyone she meets - a sweet, witty companion who doesn't need the limelight.</div>
+<div class="passage-excerpt"><div class="para-num">§3</div>As I've grown older, I've seen how her manner in conversation also reflects her approach to parenting. Because when it came to raising her kids, my mom knew that her voice was less important than allowing me to use my own.</div>
+<div class="passage-excerpt"><div class="para-num">§4</div>That meant she listened a lot more than she lectured. Growing up, she was willing to endure endless questioning from me - Why did we have to eat eggs for breakfast? Why do people need jobs? Why are the houses bigger in other neighborhoods? She didn't chide me if I scrapped with some of the neighbor kids or challenged my ornery grandfather when I thought he was being a little too ornery. She listened intently to the lunchtime conversations I had with my schoolmates over bologna sandwiches, and nodded patiently along to tales of my contentious piano lessons with my great-aunt Robbie.</div>
+<div class="passage-excerpt"><div class="para-num">§5</div>In today's world, it's easy to hear all that and think that Marian Robinson was bordering on negligent, that she was letting the kids rule the roost. But the reality was far from that. She and my father, Fraser, were wholly invested in their children, pouring a deep and durable foundation of goodness and honesty, of right and wrong, into my brother and me. After that, they simply let us be ourselves.</div>
+<div class="passage-excerpt"><div class="para-num">§6</div>I see now how important that kind of freedom is for all children, particularly for girls with flames of their own - flames the world might try to dim. It's up to us, as mothers and mother-figures, to give the girls in our lives the kind of support that keeps their flame lit and lifts up their voices - not necessarily with our own words, but by letting them find the words themselves.</div>
+<div class="passage-excerpt"><div class="para-num">§7</div>Below is an excerpt from Michelle Obama's bestselling memoir, Becoming, in which she recalls how her great-aunt Robbie's tough love and piano lessons helped shape the woman she is today:</div>
+<div class="passage-excerpt"><div class="para-num">§8</div>At home, I continued to work on my own progress as a musician. Sitting at Robbie's upright piano, I was quick to pick up the scales and I threw myself into filling out the sight-reading worksheets she gave me. Because we didn't have a piano of our own, I had to do my practicing downstairs on hers. I learned one song in the piano book and then another. I was probably no better than her other students, no less fumbling, but I was driven. To me, there was magic in the learning. I got a buzzy sort of satisfaction from it. For one thing, I'd picked up on the simple, encouraging correlation between how long I practiced and how much I achieved. And I sensed something in Robbie as well - too deeply buried to be an outright pleasure, but still, a pulse of something lighter and happier coming from her when I made it through a song without messing up. I'd notice it out of the corner of my eye: Robbie's lips would unpurse themselves just slightly.</div>
+<div class="passage-excerpt"><div class="para-num">§9</div>This, it turns out, was our honeymoon phase. It's possible that we might have continued this way, Robbie and I, had I been less curious and more reverent when it came to her piano method. But the lesson book was thick enough and my progress on the opening few songs slow enough that I got impatient and started peeking ahead - and not just a few pages ahead but deep into the book, checking out the titles of the more advanced songs and beginning, during my practice sessions, to fiddle around with playing them. When I proudly debuted one of my late-in-the-book songs for Robbie, she exploded, slapping down my achievement with a vicious "Good night!" I got chewed out the way I'd heard her chewing out plenty of students before me. All I'd done was try to learn more and faster, but for Robbie it was a crime approaching treason. She wasn't impressed, not even a little bit.</div>
+<div class="passage-excerpt"><div class="para-num">§10</div>Nor was I chastened. I was the kind of kid who liked concrete answers to my questions, who liked to reason things out to some logical if exhausting end. I was lawyerly and also veered toward dictatorial, as my brother Craig, who often got ordered out of our shared play area, would attest. When I thought I had a good idea about something, I didn't like being told no. Which is how my great-aunt and I ended up in each other's faces, both of us hot and unyielding.</div>
+<div class="passage-excerpt"><div class="para-num">§11</div>"How could you be mad at me for wanting to learn a new song?"<br>"You're not ready for it. That's not how you learn piano."<br>"But I am ready. I just played it"<br>"That's not how it's done."<br>"But why?"</div>
+<div class="passage-excerpt"><div class="para-num">§12</div>Piano lessons became epic and trying, largely due to my refusal to follow the prescribed method and Robbie's refusal to see anything good in my freewheeling approach to her songbook. We went back and forth, week after week. I was stubborn and so was she. I had a point of view and she did, too. In between disputes, I continued to play the piano and she continued to listen, offering a stream of corrections. I gave her little credit for my improvement as a player. She gave me little credit for improving. But still, the lessons went on.</div>
+<div class="passage-excerpt"><div class="para-num">§13</div>Upstairs, my parents and Craig found it all so very funny. They cracked up at the dinner table as I recounted my battles with Robbie, still seething as I ate my spaghetti and meatballs. My parents expressed no sympathy for my woes and none for Robbie's, either. In general, they weren't ones to intervene in matters outside schooling, expecting early on that my brother and I should handle our own business. They seemed to view their job as mostly to listen and bolster us as needed inside the four walls of our home. And where another parent might have scolded a kid for being sassy with an elder as I had been, they also let that be. My mother had lived with Robbie on-and-off since she was about sixteen, following every arcane rule the woman laid down, and it's possible she was secretly happy to see Robbie's authority challenged. Looking back on it now, I think my parents appreciated my feistiness and I'm glad for it. It was a flame inside me they wanted to keep lit.</div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="../../../assets/app.js"></script>
+<script src="../../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u104',weakKey:'general',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

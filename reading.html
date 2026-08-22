@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · Reading 单元库</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478; --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --teal:#2EC4B6; --purple:#A66BFF; --shadow:#2E2A3B; --accent:var(--yellow); --accent-ink:#2E2A3B; }
+    body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --teal:#2EC4B6; --purple:#B98BFF; --shadow:#000; --accent-ink:#fff; }
+    body[data-kind="reading"] { --accent:var(--blue); }
+    body[data-kind="writing"] { --accent:var(--pink); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition:background .25s, color .25s; }
+    .pixel { font-family:"Press Start 2P", monospace; }
+    .app { display:flex; min-height:100vh; }
+    .sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+    .logo { display:flex; flex-direction:column; gap:2px; border:3px solid var(--line); background:var(--accent); color:var(--accent-ink); padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); margin-bottom:28px; }
+    .logo .lg-en { font-family:"Press Start 2P",monospace; font-size:13px; line-height:1.5; }
+    .logo .lg-cn { font-size:12px; font-weight:700; opacity:.92; }
+    .nav { display:flex; flex-direction:column; gap:6px; }
+    .nav a { display:flex; align-items:center; gap:10px; padding:11px 12px; color:var(--text); text-decoration:none; border:3px solid transparent; font-weight:500; transition:transform .12s, background .12s, border-color .12s; }
+    .nav a .dot { width:12px; height:12px; background:var(--blue); border:2px solid var(--line); flex-shrink:0; }
+    .nav a:hover { transform:translate(-2px,-2px); border-color:var(--line); box-shadow:3px 3px 0 var(--shadow); background:var(--card); }
+    .nav a.active { background:var(--pink); color:#fff; border-color:var(--line); box-shadow:4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background:#fff; }
+    .sidebar-foot { margin-top:auto; display:flex; justify-content:center; padding-top:20px; }
+    .main { flex:1; min-width:0; padding:24px 32px 48px; }
+    .topbar { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+    .search { flex:1; display:flex; align-items:center; gap:10px; border:3px solid var(--line); background:var(--card); padding:10px 14px; box-shadow:4px 4px 0 var(--shadow); }
+    .search input { flex:1; border:none; background:transparent; outline:none; font-family:inherit; font-size:15px; color:var(--text); }
+    .search .mag { width:14px; height:14px; border:3px solid var(--line); border-radius:50%; position:relative; }
+    .search .mag::after { content:""; position:absolute; width:8px; height:3px; background:var(--line); bottom:-6px; right:-5px; transform:rotate(45deg); }
+    .icon-btn { width:46px; height:46px; flex-shrink:0; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:transform .12s; }
+    .icon-btn:hover { transform:translate(-2px,-2px); }
+    .crumb { display:flex; align-items:center; gap:8px; margin-bottom:18px; font-size:13px; color:var(--muted); }
+    .crumb a { color:var(--blue); text-decoration:none; font-weight:500; } .crumb a:hover { text-decoration:underline; }
+    .hero { border:3px solid var(--line); background:var(--card); box-shadow:6px 6px 0 var(--shadow); padding:26px; display:flex; gap:24px; align-items:center; margin-bottom:28px; }
+    .hero .thumb { width:150px; height:150px; flex-shrink:0; background:var(--accent); border:3px solid var(--line); display:flex; align-items:center; justify-content:center; }
+    .hero .tag { display:inline-block; font-family:"Press Start 2P"; font-size:9px; background:var(--yellow); color:#2E2A3B; padding:6px 8px; border:2px solid var(--line); margin-bottom:12px; }
+    .hero h1 { font-size:22px; margin-bottom:10px; } .hero p { color:var(--muted); margin-bottom:16px; max-width:560px; }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+    .chip { font-family:inherit; font-size:13px; font-weight:700; padding:8px 14px; border:3px solid var(--line); background:var(--card); color:var(--text); cursor:pointer; box-shadow:3px 3px 0 var(--shadow); transition:transform .12s, background .12s; }
+    .chip:hover { transform:translate(-2px,-2px); }
+    .chip.active { background:var(--accent); color:var(--accent-ink); }
+    .filters #chipOrder { display:contents; }
+    .chip[data-f] { cursor:grab; } .chip[data-f]:active { cursor:grabbing; }
+    .bx-sec { margin-bottom:34px; }
+    .bx-head { display:flex; align-items:flex-end; justify-content:space-between; margin:6px 0 16px; padding-bottom:8px; border-bottom:3px dashed var(--line); }
+    .bx-head h2 { font-size:18px; } .bx-head .pixel { font-size:10px; color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:22px; }
+    .card { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:18px; display:flex; flex-direction:column; transition:transform .14s, box-shadow .14s; }
+    .card:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--shadow); }
+    .card .cap { width:100%; height:92px; border:3px solid var(--line); margin-bottom:14px; display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size:18px; color:#2E2A3B; }
+    .card h3 { font-size:16px; margin-bottom:4px; } .card .sub { color:var(--muted); font-size:13px; margin-bottom:6px; }
+    .card .desc { color:var(--muted); font-size:12.5px; line-height:1.6; margin-bottom:16px; flex:1; }
+    .card .go { display:inline-block; align-self:flex-start; font-family:"Press Start 2P"; font-size:9px; background:var(--accent); color:var(--accent-ink); border:3px solid var(--line); padding:9px 11px; cursor:pointer; box-shadow:3px 3px 0 var(--shadow); text-decoration:none; transition:transform .12s; }
+    .card .go:hover { transform:translate(-2px,-2px); }
+    footer { margin-top:40px; color:var(--muted); font-size:13px; text-align:center; }
+    .bx-head { cursor:grab; user-select:none; }
+    .bx-head .grip { margin-left:10px; font-size:18px; opacity:.4; }
+    .bx-sec.dragging { opacity:.45; }
+    .order-hint { font-size:12px; color:var(--muted); margin-bottom:14px; }
+    .chip.reset { background:var(--card); }
+    @media (max-width:760px) { .sidebar{display:none} .main{padding:18px} .hero{flex-direction:column; text-align:center} }
+  </style>
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body data-kind="reading">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo"><span class="lg-en">READING</span><span class="lg-cn">阅读单元库</span></div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html" class="active"><span class="dot"></span>Reading 单元</a>
+        <a href="writing.html" class=""><span class="dot"></span>Writing 单元</a>
+        <a href="grammar.html"><span class="dot"></span>Grammar 单元</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="56" height="56" aria-hidden="true">
+          <rect x="8" y="4" width="24" height="8" fill="#FF5D8F"/><rect x="4" y="12" width="32" height="24" fill="#FF5D8F"/>
+          <rect x="8" y="36" width="24" height="4" fill="#FF5D8F"/><rect x="12" y="18" width="5" height="5" fill="#2E2A3B"/><rect x="23" y="18" width="5" height="5" fill="#2E2A3B"/>
+        </svg>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input id="unitSearch" type="text" placeholder="搜索单元 / 题目 / 知识点…  （按 / 聚焦）" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+      </div>
+      <div class="crumb"><a href="index.html">学习主页</a> <span>›</span> <span>Reading 单元库</span></div>
+      
+      <section class="hero">
+        <div class="thumb">
+          <svg viewBox="0 0 40 40" width="64" height="64" aria-hidden="true">
+            <rect x="6" y="4" width="28" height="6" fill="#2E2A3B"/>
+            <rect x="6" y="14" width="28" height="6" fill="#2E2A3B"/>
+            <rect x="6" y="24" width="28" height="6" fill="#2E2A3B"/>
+            <rect x="6" y="34" width="28" height="6" fill="#2E2A3B"/>
+            <rect x="2" y="2" width="4" height="36" fill="#FFC83D"/>
+          </svg>
+        </div>
+        <div>
+          <span class="tag">PAPER 1 · READING</span>
+          <h1>Reading 单元库</h1>
+          <p>按班型分类的 DSE 阅读课件：加速班（港）、真题 &amp; 模拟题、预备班、加速班（内地）。点击任意单元即可打开完整交互课件（含词汇、练习与讨论）。</p>
+        </div>
+      </section>
+      <div class="filters">
+        <button class="chip active" data-f="all">全部</button>
+        <div id="chipOrder">
+<button class="chip" data-f="acc_hk">加速班（港）</button>
+<button class="chip" data-f="pastmock">真题 & 模拟题</button>
+<button class="chip" data-f="prep">预备班</button>
+<button class="chip" data-f="acc_main">加速班（内地）</button>
+        </div>
+        <button class="chip" data-f="fav" id="favChip" title="只看收藏的单元">★ 收藏</button>
+        <button class="chip reset" id="resetOrder" title="恢复默认课型顺序">↺ 重置顺序</button>
+      </div>
+      <div class="order-hint">提示：点 <b>☆</b> 收藏单元、再用 <b>★ 收藏</b> 筛选；标题（⠿）或班型按钮可拖拽排序且同步；点 <b>▾</b> 折叠；按 <b>/</b> 搜索、<b>T</b> 主题、<b>Esc</b> 清空。</div>
+      <div id="bxList">
+      <section class="bx-sec" data-bx="acc_hk">
+        <div class="bx-head"><h2>加速班（港）</h2><span class="pixel">5 UNITS</span><button class="bx-collapse" type="button" aria-label="折叠或展开该班型">▾</button><span class="grip" title="拖拽排序">⠿</span></div>
+        <section class="grid">
+        <div class="card" data-href="courseware/reading/unit1/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--pink)">U1</div>
+          <h3>香港加速班 Reading Unit 1 — DSE 阅读课堂讲义</h3>
+          <div class="sub">加速班（港） · Paper 1 · V8 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit1/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit2.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--pink)">U2</div>
+          <h3>DSE Paper 1 Reading — 香港加速班 Unit 2</h3>
+          <div class="sub">加速班（港） · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit2.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit3.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--pink)">U3</div>
+          <h3>DSE Paper 1 Reading — 香港加速班 Lesson 03</h3>
+          <div class="sub">加速班（港） · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit3.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit4.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--pink)">U4</div>
+          <h3>2025 DSE Paper 1 Reading — 香港加速班</h3>
+          <div class="sub">加速班（港） · Paper 1 · V8 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit4.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit5.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--pink)">U5</div>
+          <h3>香港加速班 Reading Unit 5</h3>
+          <div class="sub">加速班（港） · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit5.html" target="_blank">打开课件 →</a>
+        </div>
+        </section>
+      </section>
+      <section class="bx-sec" data-bx="pastmock">
+        <div class="bx-head"><h2>真题 & 模拟题</h2><span class="pixel">6 UNITS</span><button class="bx-collapse" type="button" aria-label="折叠或展开该班型">▾</button><span class="grip" title="拖拽排序">⠿</span></div>
+        <section class="grid">
+        <div class="card" data-href="courseware/reading/unit101/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U101</div>
+          <h3>2018 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit101/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit102/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U102</div>
+          <h3>2021 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V6 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit102/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit103/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U103</div>
+          <h3>2022 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit103/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit104/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U104</div>
+          <h3>2023 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V4 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit104/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit105/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U105</div>
+          <h3>2024 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V4 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit105/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit106/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--yellow)">U106</div>
+          <h3>2025 DSE Paper 1 阅读卷</h3>
+          <div class="sub">真题 & 模拟题 · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit106/index.html" target="_blank">打开课件 →</a>
+        </div>
+        </section>
+      </section>
+      <section class="bx-sec" data-bx="prep">
+        <div class="bx-head"><h2>预备班</h2><span class="pixel">5 UNITS</span><button class="bx-collapse" type="button" aria-label="折叠或展开该班型">▾</button><span class="grip" title="拖拽排序">⠿</span></div>
+        <section class="grid">
+        <div class="card" data-href="courseware/reading/unit201/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--blue)">U201</div>
+          <h3>预备班 Unit 1 · 读写</h3>
+          <div class="sub">预备班 · Paper 1 · V4 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit201/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit202/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--blue)">U202</div>
+          <h3>预备班 Unit 2 · 读写（整合写作课件第3–8页 + 练习一至六）</h3>
+          <div class="sub">预备班 · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit202/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit203/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--blue)">U203</div>
+          <h3>预备班 Unit 3 · 读写</h3>
+          <div class="sub">预备班 · Paper 1 · V2 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit203/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit204/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--blue)">U204</div>
+          <h3>预备班 Unit 4 · 读写</h3>
+          <div class="sub">预备班 · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit204/index.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit205/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--blue)">U205</div>
+          <h3>Preparatory Class Unit 5 &middot; Reading &amp; Writing Web Courseware</h3>
+          <div class="sub">预备班 · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit205/index.html" target="_blank">打开课件 →</a>
+        </div>
+        </section>
+      </section>
+      <section class="bx-sec" data-bx="acc_main">
+        <div class="bx-head"><h2>加速班（内地）</h2><span class="pixel">2 UNITS</span><button class="bx-collapse" type="button" aria-label="折叠或展开该班型">▾</button><span class="grip" title="拖拽排序">⠿</span></div>
+        <section class="grid">
+        <div class="card" data-href="courseware/reading/unit301.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--green)">U301</div>
+          <h3>DSE Paper 1 Reading · Module 1 People and Society — 香港加速班 · 阅读</h3>
+          <div class="sub">加速班（内地） · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit301.html" target="_blank">打开课件 →</a>
+        </div>
+        <div class="card" data-href="courseware/reading/unit302/index.html">
+          <button class="fav" type="button" aria-label="收藏此单元" title="收藏此单元">☆</button>
+          <div class="cap" style="background:var(--green)">U302</div>
+          <h3>加速班 阅读 Module 2</h3>
+          <div class="sub">加速班（内地） · Paper 1 · V1 MAX</div>
+          <div class="desc">DSE Paper 1 单元，配套完整交互课件。</div>
+          <a class="go" href="courseware/reading/unit302/index.html" target="_blank">打开课件 →</a>
+        </div>
+        </section>
+      </section>
+      </div>
+      <div class="empty" id="emptyState" hidden>
+        <div class="empty-box">
+          <div class="empty-ico">🔍</div>
+          <h3>没有找到匹配的单元</h3>
+          <p>换个关键词，或清除筛选条件再试试。</p>
+          <button class="btn" id="clearFilters" type="button">清空筛选</button>
+        </div>
+      </div>
+      <footer>智学平台 · 混合架构 v0.6 · Reading 单元库（按班型分类 · 由 sync_courseware 自动生成维护）</footer>
+    </main>
+  </div>
+  <!-- 班型筛选由 assets/polish.js 统一接管（搜索 + chip 联动 + 折叠） -->
+  <script src="assets/app.js"></script>
+  <script> ZhiXue.initAuthChip(); </script>
+  <script>
+  (function(){
+    var list = document.getElementById('bxList');
+    var chipOrder = document.getElementById('chipOrder');
+    if (!list) return;
+    var KEY = 'zhixue-bx-order-' + (document.body.dataset.kind || 'x');
+
+    function orderFrom(container, sel, attr) {
+      var o = [];
+      container.querySelectorAll(sel).forEach(function(el) { o.push(el.getAttribute(attr)); });
+      return o;
+    }
+    // 以课型区块顺序为权威，把筛选按钮同步排到一致
+    function syncChips() {
+      if (!chipOrder) return;
+      orderFrom(list, '.bx-sec', 'data-bx').forEach(function(slug) {
+        var chip = chipOrder.querySelector('.chip[data-f="' + slug + '"]');
+        if (chip) chipOrder.appendChild(chip);
+      });
+    }
+    // 以筛选按钮顺序为准，把课型区块同步排到一致
+    function syncSections() {
+      orderFrom(chipOrder, '.chip[data-f]', 'data-f').forEach(function(slug) {
+        var sec = list.querySelector('.bx-sec[data-bx="' + slug + '"]');
+        if (sec) list.appendChild(sec);
+      });
+    }
+    function save() {
+      try { localStorage.setItem(KEY, JSON.stringify(orderFrom(list, '.bx-sec', 'data-bx'))); } catch (e) {}
+    }
+    function restore() {
+      try {
+        var order = JSON.parse(localStorage.getItem(KEY) || '[]');
+        if (order && order.length) {
+          order.forEach(function(slug) {
+            var sec = list.querySelector('.bx-sec[data-bx="' + slug + '"]');
+            if (sec) list.appendChild(sec);
+          });
+          syncChips();
+        }
+      } catch (e) {}
+    }
+    restore();
+
+    function makeDraggable(container, sel, onDrop, horizontal) {
+      var dragEl = null;
+      container.querySelectorAll(sel).forEach(function(el) {
+        el.setAttribute('draggable', 'true');
+        el.addEventListener('dragstart', function(e) {
+          dragEl = el; el.classList.add('dragging');
+          try { e.dataTransfer.setData('text/plain', el.dataset.bx || el.dataset.f); } catch (_) {}
+          e.dataTransfer.effectAllowed = 'move';
+        });
+        el.addEventListener('dragend', function() { el.classList.remove('dragging'); dragEl = null; onDrop(); });
+        el.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          if (!dragEl || dragEl === el) return;
+          var r = el.getBoundingClientRect();
+          var after = horizontal
+            ? (e.clientX - r.left) > (r.width / 2)
+            : (e.clientY - r.top) > (r.height / 2);
+          if (after) container.insertBefore(dragEl, el.nextSibling);
+          else container.insertBefore(dragEl, el);
+        });
+      });
+    }
+    // 拖拽课型区块 → 同步筛选按钮 + 保存
+    makeDraggable(list, '.bx-sec', function() { syncChips(); save(); if (window.ZhiXue) ZhiXue.toast('顺序已保存'); }, false);
+    // 拖拽筛选按钮 → 同步课型区块 + 保存
+    if (chipOrder) makeDraggable(chipOrder, '.chip[data-f]', function() { syncSections(); save(); if (window.ZhiXue) ZhiXue.toast('顺序已保存'); }, true);
+
+    var rb = document.getElementById('resetOrder');
+    if (rb) rb.addEventListener('click', function() {
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      if (window.ZhiXue) ZhiXue.toast('已恢复默认顺序', 'ok');
+      setTimeout(function() { location.reload(); }, 700);
+    });
+  })();
+  </script>
+  <script src="assets/polish.js"></script>
+</body>
+</html>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 5 · Argumentative Essay (2) · 香港加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* 3D flip card */
+.flip-card { perspective:1000px; display:flex; }
+.flip-card-inner { width:100%; height:240px; transition:transform .5s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d; position:relative; }
+.flip-card-inner.flipped { transform:rotateY(180deg); }
+.flip-face { border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; backface-visibility:hidden; -webkit-backface-visibility:hidden; position:absolute; inset:0; overflow:hidden; padding:6px; }
+.flip-front { background:#fff; border:1.5px solid rgba(0,0,0,.06); z-index:2; }
+.flip-back { background:#f0f7f0; border:1.5px solid rgba(11,130,53,.2); transform:rotateY(180deg); display:flex !important; }
+/* notes box */
+.notes-box { background:#FFF9C4; border:1.5px solid rgba(200,93,10,.2); border-radius:12px; padding:14px 18px; margin:14px 0; font-size:18px; line-height:1.7; color:var(--text-1); }
+.notes-box b { color:var(--xdf-gold); }
+/* multi-select checkbox check */
+.cb-item{padding:8px 14px;border-radius:8px;transition:all .3s;font-size:20px;margin:2px 0}
+.cb-item.correct{background:#C8E6C9;color:#1B5E20;font-weight:700}
+.cb-item.wrong{background:#FFCDD2;color:#C62828;text-decoration:line-through}
+.cb-item.missed{border:2px dashed #FF9800;background:#FFF3E0;color:#E65100;font-weight:600}
+/* hw card */
+.hw-card { background:#fff; border:1.5px solid rgba(0,0,0,.06); border-radius:12px; padding:18px 22px; margin-bottom:14px; }
+.hw-card h4 { font-size:20px; font-weight:700; color:var(--xdf-blue); margin-bottom:8px; }
+.hw-card p { font-size:18px; line-height:1.7; color:var(--text-2); }
+/* remove pcard unused styles - not needed for this courseware */
+</style></head><body>
+<div class="topbar">
+  <span class="course-tag">加速班·Unit5</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 5">
+<div style="max-width:960px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-name" style="font-size:15px;padding:0">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">香港加速班</div>
+  </div>
+  <div style="font-size:18px;color:var(--text-2);margin-bottom:6px;font-weight:600">写作 Writing Lesson 05 Argumentative essay (2)</div>
+  <div class="slide-h1">Argumentative Essay (2)<br><span class="accent">措施评估型议论文</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Writing · Paper 2 · DSE</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 5 · Writing</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Argumentative Essay</div><div class="sm-sub">措施评估型议论文</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Highly Dangerous Sports</div><div class="sm-sub">是否应被界定为违法</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Structure</div><div class="sm-value">Opening + 3 Supports</div><div class="sm-sub">+ Counter-argument + Conclusion</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题+构思</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">结构+开头段</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段1-4</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">结尾+总结+范文</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 1 · Course Objectives</p>
+<h2 class="slide-h2">🎯 1. 课程目标 Course Objectives</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px;line-height:1.7">本节课程结束后，学生将能够 By the end of this lesson, students will be able to:</p>
+<div style="display:flex;flex-direction:column;gap:10px">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red);animation:none;opacity:1;transform:none">
+    <h4>● 掌握argumentative essay文体特征、篇章结构</h4>
+    <p>了解one-sided argumentative essay的基本特点</p>
+  </div>
+  <div class="card accent" style="animation:none;opacity:1;transform:none">
+    <h4>● 运用"措施评估型"通用思路构思写作观点</h4>
+    <p>可行性、效果、副作用、必要性/替代方案</p>
+  </div>
+  <div class="card accent" style="animation:none;opacity:1;transform:none">
+    <h4>● 能灵活使用PEER结构完成观点论述</h4>
+    <p>Point → Explain → Example → Result</p>
+  </div>
+  <div class="card accent" style="animation:none;opacity:1;transform:none">
+    <h4>● 借助开头段句式、以及主体段"可行性""效果""副作用"常用句式完成写作</h4>
+    <p>掌握各段落的功能句式和表达</p>
+  </div>
+</div>
+</div></section><section class="slide" data-title="📋 审题分析">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 2 · Understanding the Question</p>
+<h2 class="slide-h2">📋 2. 审题 Understanding the question</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:16px 20px;margin-bottom:16px;font-size:20px;line-height:1.8">
+  <p style="margin-bottom:8px"><b>题目：</b></p>
+  <p>5. In recent years, several people have died in Hong Kong while practising extreme sports, such as parkour.</p>
+  <p>Write an argumentative essay discussing whether highly dangerous sports should be made illegal. Support your arguments with reasons.</p>
+</div>
+<p style="font-size:20px;font-weight:700;margin-bottom:12px"><b>Task 2A: 认真审题，提取以下信息。</b></p>
+
+<div class="ce-item">
+  <div class="ce-cn">1. <b>Role(你是谁):</b></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:4px">✅ 看答案</button>
+  <div class="ce-en">no specific role / a member of the public / a student</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">2. <b>Audience(写给谁):</b></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:4px">✅ 看答案</button>
+  <div class="ce-en">general readers</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">3. <b>Purpose(写作目的):</b></div>
+  <div id="purpose-group" style="display:flex;flex-direction:column;gap:8px;margin:8px 0;font-size:20px">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <input type="checkbox" class="purpose-cb" data-correct="false"> analyze both sides of an issue in a balanced and objective way
+    </label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <input type="checkbox" class="purpose-cb" data-correct="true"> express an opinion and persuade readers to agree with it using reasons
+    </label>
+  </div>
+  <div class="multi-feedback" data-correct-msg=" 应选：express an opinion and persuade readers to agree with it using reasons" style="display:none;font-weight:700;margin:8px 0;padding:8px 14px;background:#fff;border-radius:8px;font-size:18px"></div>
+  <button class="ce-btn" onclick="var g=document.getElementById('purpose-group');checkMultiSelection(g);var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 检查答案</button>
+  <div class="ce-en">✅ 正确选项：express an opinion and persuade readers to agree with it using reasons（这是one-sided argumentative essay，需要明确表达立场并说服读者）</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">4. <b>Register(正式程度):</b></div>
+  <div class="quiz-card" data-correct="0" style="border:none;padding:0;margin:0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+    </div>
+    <div class="quiz-ans">✅ <b>formal</b> — 议论文要求正式语体</div>
+  </div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">5. <b>Tone(语气), 可多选</b></div>
+  <div id="tone-group" style="display:flex;flex-direction:column;gap:8px;margin:8px 0;font-size:20px">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> logical</label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> objective</label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="false"> feelings included</label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> persuasive</label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="false"> vivid / descriptive</label>
+  </div>
+  <div class="multi-feedback" data-correct-msg=" 应选：logical, objective, persuasive" style="display:none;font-weight:700;margin:8px 0;padding:8px 14px;background:#fff;border-radius:8px;font-size:18px"></div>
+  <button class="ce-btn" onclick="var g=document.getElementById('tone-group');checkMultiSelection(g);var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 检查答案</button>
+  <div class="ce-en">✅ 正确选项：logical, objective, persuasive</div>
+</div>
+</div></section><section class="slide" data-title="🧠 想法点">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 3. 想法点 Brainstorming</h2>
+
+<div class="think-prompt" style="margin-bottom:16px"><span class="think-icon">💡</span><span class="think-text">思考3.1: 我们在第一课中学习过评估一个措施是否可行，主要从哪四个方面展开？</span></div>
+<button class="ce-btn" onclick="var a=document.getElementById('s4-ans1');a.classList.toggle('show')" style="margin-bottom:16px">✅ 查看答案</button>
+<div class="ce-en" id="s4-ans1">可行性、效果、副作用、必要性/有替代方案。</div>
+
+<div class="think-prompt" style="margin-bottom:16px"><span class="think-icon">💡</span><span class="think-text">思考3.2: 你认为从法律层面界定"highly dangerous"是否可行？</span></div>
+<button class="ce-btn" onclick="var a=document.getElementById('s4-ans2');a.classList.toggle('show')" style="margin-bottom:16px">✅ 查看答案</button>
+<div class="ce-en" id="s4-ans2">较难。也有人在玩跑酷这类极限运动时安全无患，也有人在滑雪、拳击时不小心受重伤。所以是否危险也取决于个人技术等其他因素。要从法律层面界定"highly dangerous"就很复杂。</div>
+
+<div class="think-prompt" style="margin-bottom:16px"><span class="think-icon">💡</span><span class="think-text">思考3.3: 若highly dangerous sports真的被界定为违法了，你认为是否所有人就会因此而止步这类活动？</span></div>
+<button class="ce-btn" onclick="var a=document.getElementById('s4-ans3');a.classList.toggle('show')" style="margin-bottom:16px">✅ 查看答案</button>
+<div class="ce-en" id="s4-ans3">不一定。那些热爱极限运动的人其实本来就是较少数，这些人可能还是会在违法边缘试探擅自开展这类活动且未被发现。</div>
+
+<div class="think-prompt" style="margin-bottom:16px"><span class="think-icon">💡</span><span class="think-text">思考3.4: 界定highly dangerous sports违法，是否会带来其他副作用？</span></div>
+<button class="ce-btn" onclick="var a=document.getElementById('s4-ans4');a.classList.toggle('show')" style="margin-bottom:16px">✅ 查看答案</button>
+<div class="ce-en" id="s4-ans4">可能会侵害个人自由。有些人认为极限运动有培养信心和韧性的积极作用，且本身有较强的安全意识和技术。对这些人来说可能会侵害他们的选择自由。</div>
+
+<div class="think-prompt" style="margin-bottom:16px"><span class="think-icon">💡</span><span class="think-text">思考3.5: 为了保障公民安全，除了界定highly dangerous sports违法，是否有其他方案？</span></div>
+<button class="ce-btn" onclick="var a=document.getElementById('s4-ans5');a.classList.toggle('show')" style="margin-bottom:16px">✅ 查看答案</button>
+<div class="ce-en" id="s4-ans5">有。如加强安全教育、场地隐患排查、普及安全道具等。</div>
+</div></section><section class="slide" data-title="📊 文章结构">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 4. 文章结构 Overall Structure</h2>
+<table class="rule-table" style="margin-bottom:20px">
+  <tr><th style="width:22%">Paragraph</th><th>Main content</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap">Opening</td>
+      <td class="col-example">*introduce the topic (optional paraphrase) + state opinion*<br>引入话题（可简单改写题目）+ 表达立场</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green)">Body 1<br><span style="font-size:16px;font-weight:400">Feasibility 可行性</span></td>
+      <td class="col-example">Support 1: *explain why the proposal is impractical or difficult to carry out*<br>支持点1：说明措施不现实/难以实行</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green)">Body 2<br><span style="font-size:16px;font-weight:400">Effectiveness 效果</span></td>
+      <td class="col-example">Support 2: *explain why the proposal may not effectively solve the problem*<br>支持点2：说明措施未必能真正解决问题</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green)">Body 3<br><span style="font-size:16px;font-weight:400">Side Effects 副作用</span></td>
+      <td class="col-example">Support 3: *explain possible negative effects or new problems*<br>支持点3：说明可能带来的负面影响或新问题</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green)">Counter-argument &amp; rebuttal<br><span style="font-size:16px;font-weight:400">(Necessity / Responsibility 必要性 / 责任)</span></td>
+      <td class="col-example">Counter-argument &amp; rebuttal (Necessity 必要性)</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green)">Conclusion</td>
+      <td class="col-example">*Restate opinion + ending response*<br>(*encourage reflection / make suggestions / call for action*)<br>重申立场 + 结尾回应（引发思考 / 提出建议 / 呼吁行动）</td></tr>
+</table>
+</div></section><section class="slide" data-title="🟥 Content Bank">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 4 · Content Bank</p>
+<h2 class="slide-h2">🟥 Content Bank 内容库 — 措施评估类 四大通用论点</h2>
+<table class="rule-table">
+  <tr><th style="width:14%">中文</th><th style="width:18%">英文</th><th>角度</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap">可行性</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Feasibility</td>
+      <td class="col-example">太贵 <i>too expensive/costly</i>;<br>太难/太复杂 <i>too difficult/complicated to carry out</i>;<br>太花时间 <i>take too long / be too time-consuming</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap">效果</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Effectiveness</td>
+      <td class="col-example">无法真正解决问题 <i>be unlikely to solve the problem</i>;<br>效果有限 <i>have limited/little effect</i>;<br>效果短暂 <i>only effective in the short term / be unlikely to last</i>;<br>起反效果 <i>be counterproductive / make the situation worse</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap">副作用</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Side effects / drawbacks</td>
+      <td class="col-example">产生负面影响 <i>cause negative effects (on sb/SH)</i><br>带来新的问题 <i>create new problems</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap">必要性/<br>替代方案</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Necessity / better alternatives</td>
+      <td class="col-example">方法太极端 <i>The method is too extreme</i>;<br>有更好的办法 <i>There may be better alternatives</i></td></tr>
+</table>
+</div></section><section class="slide" data-title="✍️ 开头段 Task 5A">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 5 · Opening Paragraph</p>
+<h2 class="slide-h2">✍️ ⭐ Task 5A: 根据括号中的提示，补齐开头段。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P1>>>>>>>>>> 开头段</b></p>
+  <p>In recent years, several accidents involving <span class="cloze" onclick="revealCloze(this)" data-answer="extreme sports">______</span> (极限运动) have led to serious injuries and even deaths in Hong Kong. As a result, some people believe that highly dangerous sports should be made illegal. While this idea may seem reasonable (at first glance), I believe <span class="cloze" onclick="revealCloze(this)" data-answer="banning such sports would be an unwise decision">______</span> (禁止此类运动并非明智的决策) because it is <span class="cloze" onclick="revealCloze(this)" data-answer="impractical">______</span> (不现实的), <span class="cloze" onclick="revealCloze(this)" data-answer="ineffective">______</span> (无效果的) and may <span class="cloze" onclick="revealCloze(this)" data-answer="create negative consequences">______</span> (带来消极后果).</p>
+</div>
+</div></section><section class="slide" data-title="📐 开头段结构">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 5 · Structure &amp; Sentence Patterns</p>
+<h2 class="slide-h2">📐 结构与句式 — 开头段万能模版</h2>
+
+<p style="font-size:20px;font-weight:700;color:var(--xdf-green);margin:12px 0 8px">第一句 改写现象</p>
+<table class="rule-table">
+  <tr><th style="width:28%">版本</th><th>句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">版本A<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">使用趋势型句式<br>(……日渐增长/变得更常见)</span></td>
+      <td class="col-example">- <i>Currently, there has been an increase in the number of …</i>.<br>- <i>Nowadays, … is becoming increasingly common among 人群</i>.<br>- <i>In recent years, there has been a growing trend of/toward + n./-ing</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">版本B<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">直接改写型</span></td>
+      <td class="col-example">保留题干的整体结构，仅改写2-3个关键词，不逐字照抄即可。<br><br>改关键词的方式有：<br>- <span class="cloze" onclick="revealCloze(this)" data-answer="换词性">______</span>，如die→<b>death</b><br>- <span class="cloze" onclick="revealCloze(this)" data-answer="同近义词">______</span>，如be made illegal→<b>be prohibited by law/be banned</b><br>- <span class="cloze" onclick="revealCloze(this)" data-answer="主被动转换">______</span>，如extreme sports should be made illegal→<b>governments should make extreme sports illegal</b></td></tr>
+</table>
+
+<p style="font-size:20px;font-weight:700;color:var(--xdf-green);margin:18px 0 8px">第二句 交代议题</p>
+<table class="rule-table">
+  <tr><th style="width:28%">类型</th><th>句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">使用观点引入型句式<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">(有人提出/认为……)</span></td>
+      <td class="col-example">- <i>Some people believe/suggest/contend that …</i>.<br>- <i>It is believed/suggested/contended (by some individuals) that …</i>.<br>- <i>There is a view that …</i>.</td></tr>
+</table>
+
+<p style="font-size:20px;font-weight:700;color:var(--xdf-green);margin:18px 0 8px">第三句 交代立场</p>
+<table class="rule-table">
+  <tr><th style="width:28%">版本</th><th>句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">版本A<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">只给立场</span></td>
+      <td class="col-example">- <i>While this idea may seem reasonable at first glance, I believe that it is fundamentally flawed/misguided</i>.<br>- <i>While this proposal may appear reasonable at first glance, I firmly believe that …</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">版本B<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">给立场+预告分论点</span></td>
+      <td class="col-example"><i>Though this idea seems valid to a certain extent, I would argue that …</i><br><i>because 分论点1概括, 分论点2概括, 分论点3概括.</i></td></tr>
+</table>
+</div></section><section class="slide" data-title="✍️ 开头段 Task 5B">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 5 · Task 5B</p>
+<h2 class="slide-h2">✍️ ⭐ Task 5B: 根据提示自己写出本文的开头段。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P1>>>>>>>>>> 开头段</b></p>
+  <p>[改写现象，版本A] <span class="cloze" onclick="revealCloze(this)" data-answer="Currently, there has been an increase in the number of deaths associated with extreme sports like parkour in Hong Kong.">______</span></p>
+  <p>[交代议题，使用观点引入句式] <span class="cloze" onclick="revealCloze(this)" data-answer="As a result, it is contended by some people that governments should ban highly dangerous sports.">______</span></p>
+  <p>[交代立场，版本A] <span class="cloze" onclick="revealCloze(this)" data-answer="While this proposal may appear reasonable at first glance, I firmly believe that banning such sports would be fundamentally misguided.">______</span></p>
+</div>
+</div></section><section class="slide" data-title="✍️ 主体段1 可行性">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 6 · Body Paragraph 1 可行性</p>
+<h2 class="slide-h2">✍️ ⭐ Task 6A: 根据括号中的提示，补齐主体段1。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P2>>>>>>>>>> 主体段1 - 可行性</b></p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Point">______</span>: To begin with, making highly dangerous sports illegal would be <span class="cloze" onclick="revealCloze(this)" data-answer="difficult to carry out in practice">______</span> (现实中难以实施).</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Explain 1">______</span>: <span class="cloze" onclick="revealCloze(this)" data-answer="One major problem is that">______</span> (一个主要问题是) it is not easy to clearly define what counts as "highly dangerous".</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Example+Result">______</span>: While sports such as parkour or rock climbing may appear risky, <span class="cloze" onclick="revealCloze(this)" data-answer="many other activities, such as skiing, boxing or horse riding">______</span> (许多其他的活动，比如滑雪、拳击或骑马) also involve a certain level of danger, making it difficult to decide where the line should be drawn.</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Explain 2 (并列原因)">______</span>: In addition, enforcing such a law would <span class="cloze" onclick="revealCloze(this)" data-answer="require a large amount of manpower and monitoring">______</span> (需要大量的人力和监督).</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Result">______</span>: Therefore, banning dangerous sports may simply be <span class="cloze" onclick="revealCloze(this)" data-answer="unrealistic and difficult to enforce">______</span> (不现实且难以执行的).</p>
+</div>
+</div></section><section class="slide" data-title="📐 PEER论证公式">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 6 · PEER</p>
+<h2 class="slide-h2">📐 ⭐ Task 6B: 根据PEER论证公式，在句首横线上填入每句话的功能。</h2>
+
+<h3 class="slide-h3" style="margin-top:8px">论证公式 PEER</h3>
+<table class="rule-table">
+  <tr><th style="width:12%">符号</th><th style="width:18%">英文</th><th style="width:22%">问题</th><th>含义</th></tr>
+  <tr><td style="font-weight:800;color:var(--xdf-green);font-size:24px;text-align:center">P</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Point</td>
+      <td style="color:var(--text-2)">What is your point?</td>
+      <td class="col-example">表明观点</td></tr>
+  <tr><td style="font-weight:800;color:var(--xdf-green);font-size:24px;text-align:center">E</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Explain/explanation</td>
+      <td style="color:var(--text-2)">Why / How?</td>
+      <td class="col-example">展开解释（为什么 / 如何）</td></tr>
+  <tr><td style="font-weight:800;color:var(--xdf-green);font-size:24px;text-align:center">E</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Example</td>
+      <td style="color:var(--text-2)">How / what?</td>
+      <td class="col-example">举例 / 列举 / 具体化</td></tr>
+  <tr><td style="font-weight:800;color:var(--xdf-green);font-size:24px;text-align:center">R</td>
+      <td style="font-weight:600;color:var(--xdf-blue)">Result</td>
+      <td style="color:var(--text-2)">So what? Why it matters?</td>
+      <td class="col-example">结果 / 影响 / 最终判断</td></tr>
+</table>
+
+<div class="notes-box mt-m" style="font-size:20px;line-height:1.8">
+  <b>📌 notes\*:</b><br>
+  PEER 只是一个论证参考公式，并不代表每部分都只能单独写一句，比如第三句句末making it difficult to decide where the line should be drawn就是一个结果，在例证结束后马上总结了"highly dangerous难以界定"这一结论。
+</div>
+</div></section><section class="slide" data-title="📐 可行性参考模版">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 6 · Structure &amp; Sentence Patterns</p>
+<h2 class="slide-h2">📐 结构与句式 — "可行性"参考模版</h2>
+<table class="rule-table">
+  <tr><th style="width:15%">功能</th><th style="width:85%">句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">观点句:<br>某事难以落实</td>
+      <td class="col-example">- <i>To begin with, … would be difficult to carry out in practice</i>.<br>- <i>First of all, it would be far from easy to put … into practice</i>.<br>- <span class="cloze" onclick="revealCloze(this)" data-answer="In the first place, implementing …. would pose considerable practical difficulties"><i>______</i></span></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">原因解释:<br>什么导致了某事难以实现？</td>
+      <td class="col-example">- <i>One major problem/obstacle is that …</i><br>- <span class="cloze" onclick="revealCloze(this)" data-answer="A primary concern is that …"><i>______</i></span><br>- <span class="cloze" onclick="revealCloze(this)" data-answer="One notable limitation is that …"><i>______</i></span></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">举例论证:<br>有哪些具体事实体现了某事实起来有困难</td>
+      <td class="col-example">- <span class="cloze" onclick="revealCloze(this)" data-answer="A good example of this is …"><i>______</i></span><br>- <span class="cloze" onclick="revealCloze(this)" data-answer="This can be seen in the case of …"><i>______</i></span><br>- (举例+对比) <i>While some …, (many) other …</i>.<br>- <u>While some</u> sports such as parkour or rock climbing may appear risky, <u>many other activities</u>, such as skiing, boxing or horse riding, also involve a certain level of danger.</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">最终结论:<br>因此，某事可行性差</td>
+      <td class="col-example">- <i>Therefore, … may simply be unrealistic and difficult to enforce</i>.<br>- <i>Consequently, … is likely to be unworkable and difficult to put into effect</i>.<br>- <span class="cloze" onclick="revealCloze(this)" data-answer="Hence, … is unlikely to work as intended"><i>______</i></span></td></tr>
+</table>
+</div></section><section class="slide" data-title="✍️ 主体段2 效果">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 7 · Body Paragraph 2 效果</p>
+<h2 class="slide-h2">✍️ ⭐ Task 7A: 根据提示完成 body 2。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P3>>>>>>>>>> 主体段2 - 效果</b></p>
+  <p><b>Point</b>: 即使政策落实了，也无法有效地解决问题</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Even if the policy could be introduced, it would still be unlikely to solve the problem effectively.">______</span> (参考结构与句式表格-观点句句式)</p>
+  <p style="margin-top:12px"><b>Explain</b>: 解释为什么立法禁止极限运动也无法有效减少伤亡？</p>
+  <p>Some people may continue participating in dangerous sports secretly. <span class="cloze" onclick="revealCloze(this)" data-answer="Without professional supervision or proper safety guidance, this may make accidents even more serious.">______</span> （若没有专业监督和恰当的安全指导，事故会更加严重。）</p>
+  <p style="margin-top:12px"><span class="cloze" onclick="revealCloze(this)" data-answer="Further Explain+Example">______</span>: 进一步解释导致伤亡的因素还有哪些？</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="More importantly, accidents are often caused by many different factors rather than the sport itself. Some people may <span style=&quot;color:red&quot;>underestimate risks</span>, <span style=&quot;color:red&quot;>ignore safety rules</span> or <span style=&quot;color:red&quot;>fail to prepare properly</span>. In other cases, accidents may be caused by <span style=&quot;color:red&quot;>bad weather</span> or <span style=&quot;color:red&quot;>difficult terrain</span>.">______</span> (在"语言库-极限运动事故发生的因素"中选择合适语料填空)</p>
+  <p style="margin-top:12px"><b>Result</b>: 因此，将这些体育运动设置为违法，可能也无法有效减少伤亡。</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="Therefore, making such sports illegal may not effectively reduce injuries or deaths.">______</span> (参考结构与句式表格-结果句句式)</p>
+</div>
+</div></section><section class="slide" data-title="📐 效果参考模版">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 7 · Structure &amp; Sentence Patterns</p>
+<h2 class="slide-h2">📐 结构与句式 — "效果"参考模版</h2>
+<table class="rule-table">
+  <tr><th style="width:20%">功能</th><th style="width:80%">句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">观点句:<br>某事即便落实，效果也不好</td>
+      <td class="col-example">- <i>Even if … could be introduced, it would still be unlikely to solve the problem effectively.</i><br>- <i>Even if … were enforced, its effectiveness would remain questionable.</i><br>- <i>Even if … could be achieved, it would not necessarily lead to a satisfactory solution.</i></td></tr>
+  <tr><td colspan="2" style="font-weight:700;color:var(--xdf-green);vertical-align:top;text-align:center;padding:14px;border-bottom:1px solid var(--card-bd);background:var(--xdf-gp)">接下来的原因解释、举例论证部分，句式结构和其他主体段相似 (可参考主体段1结构与句式)</td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);vertical-align:top">最终结果:<br>因此，某事无效</td>
+      <td class="col-example">- <i>Therefore, … may not effectively reduce/resolve …</i>.<br>- <i>As such, … would have limited effectiveness in tackling …</i>.<br>- <i>Accordingly, … may not provide a long-term solution to …</i>.</td></tr>
+</table>
+</div></section><section class="slide" data-title="🔴 语言库">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 7 · Language Bank</p>
+<h2 class="slide-h2">🔴 Language Bank 语言库 - <i>Factors contributing to extreme sports incidents</i><br>极限运动事故发生的因素</h2>
+<table class="rule-table">
+  <tr><th>英文</th><th>中文</th></tr>
+  <tr><td style="font-weight:600;color:var(--xdf-blue)"><i>underestimate risks</i></td><td class="col-example">低估风险</td></tr>
+  <tr><td style="font-weight:600;color:var(--xdf-blue)"><i>ignore safety rules</i></td><td class="col-example">忽视安全规则</td></tr>
+  <tr><td style="font-weight:600;color:var(--xdf-blue)"><i>fail to prepare properly</i></td><td class="col-example">未做好充分准备</td></tr>
+  <tr><td style="font-weight:600;color:var(--xdf-blue)"><i>bad weather</i></td><td class="col-example">恶劣天气</td></tr>
+  <tr><td style="font-weight:600;color:var(--xdf-blue)"><i>difficult terrain</i></td><td class="col-example">复杂地形；险峻地形</td></tr>
+</table>
+</div></section><section class="slide" data-title="✍️ 主体段3 副作用">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 8 · Body Paragraph 3 副作用</p>
+<h2 class="slide-h2">✍️ 主体段3 Body paragraph 3 副作用</h2>
+<p style="font-size:20px;font-weight:700;margin-bottom:8px">**Homework: 根据提示完成主体段3</p>
+<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;font-size:20px;line-height:1.8">
+  <p><b>- Point</b>: 禁止极限运动会带来副作用——限制个人自由</p>
+  <p><b>- Explain</b>: 可以从个人权利角度解释</p>
+  <p><b>- Further explain+Example</b>: 有些人喜欢做此类活动，是否也是因为他们体验到了一些好处？具体是什么好处？</p>
+  <p><b>- Result</b>: 再次强调该措施不合理</p>
+</div>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P4>>>>>>>>>> 主体段3-副作用</b></p>
+  <button class="ce-btn" onclick="var a=document.getElementById('s16-ans');a.classList.toggle('show')">📖 看参考答案</button>
+  <div class="ce-en" id="s16-ans">Another major concern is that banning dangerous sports may unfairly limit personal freedom. Adults should have the right to make their own choices, especially when they fully understand the risks involved. Many people take part in extreme sports not simply for excitement, but also to challenge themselves, build confidence and develop perseverance. Therefore, the government should not unnecessarily interfere with personal choices simply because certain activities involve risks.</div>
+</div>
+</div></section><section class="slide" data-title="✍️ 主体段4 反驳">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 9 · Counter-argument &amp; Rebuttal</p>
+<h2 class="slide-h2">✍️ ⭐ Task 9A: 试完成第四个主体段——用必要性反驳反方。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:8px"><b>P5>>>>>>>>>> 主体段4-反方观点与反驳</b></p>
+  <p>Some people may argue that because <span class="cloze" onclick="revealCloze(this)" data-answer="several people have died while taking part in extreme sports">______</span> (一些人在参加极限运动时丧生), the government should <span class="cloze" onclick="revealCloze(this)" data-answer="ban these activities in order to protect public safety">______</span> (为了保护公共安全而禁止这些活动). While protecting lives is certainly important, <span class="cloze" onclick="revealCloze(this)" data-answer="this argument overlooks the fact that banning sports is an overly extreme solution to a more complex problem">______</span> (这种观点忽视了这样一个事实: 对于一个更复杂的问题而言，禁止极限运动是一种过于极端的解决办法). Accidents are often caused by multiple factors rather than the activity itself. <span class="cloze" onclick="revealCloze(this)" data-answer="Instead of introducing strict bans, the government should focus more on improving safety education, strengthening supervision and encouraging the use of proper protective equipment">______</span> (政府不应实施严格禁令，而应更加注重加强安全教育、强化监督，并鼓励人们使用适当的防护装备). These measures would be more practical and effective in reducing accidents while still respecting individual freedom.</p>
+</div>
+</div></section><section class="slide" data-title="📐 反驳参考模版">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 9 · Structure &amp; Sentence Patterns</p>
+<h2 class="slide-h2">📐 结构与句式 — 反方观点与反驳</h2>
+<table class="rule-table">
+  <tr><th style="width:20%">功能</th><th style="width:80%">句式</th></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">引出反方观点<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">因为有死亡，所以要禁止</span></td>
+      <td class="col-example">- <i>Some people may argue that…</i><br>- <i>Proponents of … may suggest that …</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">反驳反方观点<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">全面禁止的做法比较极端</span></td>
+      <td class="col-example">- <i>However, this claim ignores the reality that …</i><br>- <i>While 让步承认反方合理的地方, this argument overlooks the fact that …</i></td></tr>
+  <tr><td style="font-weight:700;color:var(--xdf-green);white-space:nowrap;vertical-align:top">补充解释反驳理由<br><span style="font-size:16px;font-weight:400;color:var(--text-2)">造成伤亡的原因复杂+有其他更有效的方式避免伤亡</span></td>
+      <td class="col-example">- <i>Instead of …., … should …. These measures would be more practical and effective in ….</i><br>- <i>Rather than …, it would be more beneficial for …. to …., as this approach is more likely to ….</i></td></tr>
+</table>
+</div></section><section class="slide" data-title="✍️ 结尾段">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Section 10 · Ending Paragraph</p>
+<h2 class="slide-h2">✍️ ⭐ Task 10A: 根据提示完成结论段。</h2>
+<div style="background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;font-size:20px;line-height:2.2;margin-bottom:16px">
+  <p style="margin-bottom:8px"><b>P6>>>>>>>>>> 结尾段</b></p>
+  <p>In conclusion, although banning highly dangerous sports may seem like a good way to improve public safety, it would be <span class="cloze" onclick="revealCloze(this)" data-answer="difficult to enforce">______</span> (难以执行), <span class="cloze" onclick="revealCloze(this)" data-answer="unlikely to solve the problem effectively">______</span> (不太可能有效解决问题) and <span class="cloze" onclick="revealCloze(this)" data-answer="unfair to individual freedom">______</span> (对个人自由不公平). Rather than introducing unnecessary restrictions, the government should adopt more practical and effective ways to reduce risks (while still respecting personal freedom.)</p>
+</div>
+
+<div class="notes-box" style="font-size:20px;line-height:1.8">
+  <b>结尾段思路：</b><br>
+  1. 总结分论点——难落实、难起效、副作用<br>
+  2. 总结其他方案
+</div>
+</div></section><section class="slide" data-title="📝 作业 + 总结">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">Sections 11-12 · Homework &amp; Summary</p>
+<h2 class="slide-h2">📝 11. 作业 Homework</h2>
+<div class="hw-card"><h4>完成主体段3</h4><p>见讲义 Part 8。</p></div>
+
+<h2 class="slide-h2" style="margin-top:28px">📋 12. 总结 Summary</h2>
+<h3 class="slide-h3" style="color:var(--xdf-green)">✅ 知识清单 Check Your Learning</h3>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">今天我们完成了one-sided argumentative essay的学习，对照以下清单，回顾今天掌握的核心技能：</p>
+
+<div class="card accent" style="margin-bottom:12px">
+  <h4>● 文体认知 (Genre Awareness):</h4>
+  <p>- 了解 one-sided argumentative essay 的基本特点:<br>
+  - 明确表达自己的立场、提供充分的理由和解释支持观点、适当回应反方观点并进行反驳</p>
+</div>
+
+<div class="card accent" style="margin-bottom:12px">
+  <h4>● 文章结构 (Overall Structure):</h4>
+  <p>- Opening → Support 1 可行性 → Support 2 效果 → Support 3 副作用 → Counter-argument & Rebuttal → Conclusion</p>
+</div>
+
+<div class="card accent" style="margin-bottom:12px">
+  <h4>● 段落结构 (Body Paragraph Structure):</h4>
+  <p>- 学习并运用 PEER 段落结构: Point → Explain → Example → Result 展开主体段。注意PEER是一个整体框架，具体的逻辑链可以有所合并或增补。如一句话中结合 explain+example；或者在完成一个 explain 后，并列展开 further explain.</p>
+</div>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s20-expr');a.classList.toggle('show')" style="margin-top:12px">📖 查看常用表达 (Useful Expressions)</button>
+<div class="ce-en" id="s20-expr">
+  <b>● 常用表达 (*Useful Expressions*):</b><br><br>
+  1. <i>First of all, it would be far from easy to put … into practice.</i><br>
+  2. <i>In the first place, implementing … would pose considerable practical difficulties.</i><br>
+  3. <i>One major problem/obstacle is that …</i><br>
+  4. <i>A primary concern is that …</i><br>
+  5. <i>One notable limitation is that …</i><br>
+  6. <i>A good example of this is …</i><br>
+  7. <i>This can be seen in the case of …</i><br>
+  8. <i>Therefore, … may simply be unrealistic and difficult to enforce.</i><br>
+  9. <i>Consequently, … is likely to be unworkable and difficult to put into effect.</i><br>
+  10. <i>Hence, … is unlikely to work as intended.</i><br>
+  11. <i>Even if … could be introduced, it would still be unlikely to solve the problem effectively.</i><br>
+  12. <i>Even if … were enforced, its effectiveness would remain questionable.</i><br>
+  13. <i>As such, … would have limited effectiveness in tackling …</i><br>
+  14. <i>Accordingly, … may not provide a long-term solution to …</i>
+</div>
+</div></section><section class="slide" data-title="📝 范文附录">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+<p class="sec-label">附录 · Model Answer</p>
+<h2 class="slide-h2">📝 范文</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">Task: Write an argumentative essay discussing whether highly dangerous sports should be made illegal. Support your arguments with reasons.</p>
+
+<button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="margin-bottom:12px">📖 显示范文</button>
+<div class="ce-en" style="display:none;line-height:2.2;padding:20px 24px">
+  <p style="margin-bottom:14px"><i>In recent years, several accidents involving extreme sports have led to serious injuries and even deaths in Hong Kong. As a result, some people believe that highly dangerous sports should be made illegal. While this idea may seem reasonable (at first glance), I believe banning such sports would be an unwise decision because it is impractical, ineffective and may create negative consequences.</i></p>
+  <p style="margin-bottom:14px"><i>To begin with, making highly dangerous sports illegal would be difficult to carry out in practice. One major problem is that it is not easy to clearly define what counts as "highly dangerous". While sports such as parkour or rock climbing may appear risky, many other activities, such as skiing, boxing or horse riding, also involve a certain level of danger, making it difficult to decide where the line should be drawn. In addition, enforcing such a law would require a large amount of manpower and monitoring. Therefore, banning dangerous sports may simply be unrealistic and difficult to enforce.</i></p>
+  <p style="margin-bottom:14px"><i>Even if the policy could be introduced, it would still be unlikely to solve the problem effectively. Some people may continue participating in dangerous sports secretly. Without professional supervision or proper safety guidance, this may make accidents even more serious. More importantly, accidents are often caused by many different factors rather than the sport itself. Some people may underestimate risks, ignore safety rules or fail to prepare properly. In other cases, accidents may be caused by bad weather or difficult terrain. Therefore, making such sports illegal may not effectively reduce injuries or deaths.</i></p>
+  <p style="margin-bottom:14px"><i>Another major concern is that banning dangerous sports may unfairly limit personal freedom. Adults should have the right to make their own choices, especially when they fully understand the risks involved. Many people take part in extreme sports not simply for excitement, but also to challenge themselves, build confidence and develop perseverance. Therefore, the government should not unnecessarily interfere with personal choices simply because certain activities involve risks.</i></p>
+  <p style="margin-bottom:14px"><i>Some people may argue that because several people have died while taking part in extreme sports, the government should ban these activities in order to protect public safety. While protecting lives is certainly important, this argument overlooks the fact that banning sports is an overly extreme solution to a more complex problem. Accidents are often caused by multiple factors rather than the activity itself. Instead of introducing strict bans, the government should focus more on improving safety education, strengthening supervision and encouraging the use of proper protective equipment. These measures would be more practical and effective in reducing accidents while still respecting individual freedom.</i></p>
+  <p style="margin-bottom:14px"><i>In conclusion, although banning highly dangerous sports may seem like a good way to improve public safety, it would be difficult to enforce, unlikely to solve the problem effectively and unfair to individual freedom. Rather than introducing unnecessary restrictions, the government should adopt more practical and effective ways to reduce risks (while still respecting personal freedom.)</i></p>
+</div>
+</div></section><section class="slide" data-title="🎉 完成！">
+<div style="max-width:960px;margin:0 auto;width:100%;flex:1">
+
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;min-height:400px">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 5！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：审题分析 → 措施评估四大角度 → PEER论证公式 → 开头段/主体段/结尾段写作 → 常用表达总结</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</div></section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.innerHTML='______';el.classList.remove('revealed');
+  }else{
+    el.innerHTML=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── multi-select checkbox check ──
+function checkMultiSelection(container){
+  var items=container.querySelectorAll('label');
+  var allCorrect=true;
+  items.forEach(function(label){
+    var cb=label.querySelector('input[type="checkbox"]');
+    if(!cb)return;
+    var isCorrect=cb.dataset.correct==='true';
+    var checked=cb.checked;
+    // reset
+    label.className='cb-item';
+    if(checked && isCorrect){label.classList.add('correct')}
+    else if(checked && !isCorrect){label.classList.add('wrong');allCorrect=false}
+    else if(!checked && isCorrect){label.classList.add('missed');allCorrect=false}
+  });
+  // show feedback
+  var feedback=container.parentElement.querySelector('.multi-feedback');
+  if(feedback){
+    feedback.style.display='block';
+    if(allCorrect){feedback.innerHTML='✅ 全部选对了！'+feedback.dataset.correctMsg;feedback.style.color='var(--xdf-green)'}
+    else{feedback.innerHTML='❌ 有选错或漏选的，请对照上面的标注检查。正确选项会显示为绿色。'+feedback.dataset.correctMsg;feedback.style.color='#C62828'}
+  }
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// Keyboard navigation - skip when in input/textarea
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+</script><script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u5',weakKey:'wordform',mode:'quiz'};</script>
+</body></html>

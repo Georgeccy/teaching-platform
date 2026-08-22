@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 作业</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/shell.css" />
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">智学<br/>PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input type="text" placeholder="搜索单元 / 题目 / 知识点" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+      </div>
+
+      <div id="content"><div class="loading">正在加载你的作业清单…</div></div>
+
+      <footer>智学平台 · 作业：所有课件单元构成你的学习计划，已完成单元自动标记</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function loginGate() {
+      const c = document.getElementById('content');
+      c.innerHTML = '<div class="empty"><p style="margin-bottom:16px">请先登录，查看你的作业清单</p><button class="btn" id="loginNow">登录 / 注册</button></div>';
+      document.getElementById('loginNow').addEventListener('click', () => {
+        ZhiXue.openLogin().then(() => window.location.reload());
+      });
+    }
+
+    function card(kind, n, e, done) {
+      const href = 'courseware/' + kind + '/unit' + n + '.html';
+      const badge = done
+        ? '<span class="tag" style="background:var(--green);color:#2E2A3B;margin:0">已完成</span>'
+        : '<span class="tag" style="background:var(--yellow);color:#2E2A3B;margin:0">待完成</span>';
+      const ver = e.version ? ' · V' + e.version : '';
+      return `<div class="card">
+        ${badge}
+        <h3>${esc(e.title)}</h3>
+        <div class="desc">${esc(e.sub || e.tag || '')}${ver}</div>
+        <a class="go" href="${href}" target="_blank" rel="noopener">${done ? '复习 →' : '开始 →'}</a>
+      </div>`;
+    }
+
+    async function render() {
+      const [manifest, progress] = await Promise.all([
+        fetch('/courseware/manifest.json').then(r => r.json()),
+        ZhiXue.loadProgress(),
+      ]);
+      const doneSet = new Set((progress && progress.stats.completedUnits) || []);
+      const kinds = ['reading', 'writing'];
+      const kindName = { reading: 'Reading 阅读单元', writing: 'Writing 写作单元' };
+      let total = 0, done = 0;
+      const sections = kinds.map(kind => {
+        const sec = manifest[kind] || {};
+        const keys = Object.keys(sec);
+        total += keys.length;
+        const cards = keys.map(n => {
+          const isDone = doneSet.has(kind + '-u' + n);
+          if (isDone) done++;
+          return card(kind, n, sec[n], isDone);
+        }).join('');
+        return `<div class="sec-head"><h2>${kindName[kind]}</h2><span class="pixel">${keys.length} 单元</span></div>
+          <div class="grid2">${cards}</div>`;
+      }).join('<div style="height:30px"></div>');
+
+      const pending = total - done;
+      document.getElementById('content').innerHTML = `
+        <div class="hero">
+          <div class="avatar-big">${esc((ZhiXue.user.name||'?').slice(0,1))}</div>
+          <div>
+            <h1>我的作业 · ${esc(ZhiXue.user.name)}</h1>
+            <p>课件库全部单元即你的学习计划，完成的单元会自动标记。保持节奏，DSE 稳了！</p>
+            <a class="btn" href="dashboard.html">查看学习看板 →</a>
+          </div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><div class="label">已完成</div><div class="val green">${done}</div></div>
+          <div class="kpi"><div class="label">待完成</div><div class="val pink">${pending}</div></div>
+          <div class="kpi"><div class="label">单元总数</div><div class="val blue">${total}</div></div>
+        </div>
+        ${sections}`;
+    }
+
+    (async function () {
+      ZhiXue.initAuthChip();
+      if (!ZhiXue.user) { loginGate(); return; }
+      try { await render(); }
+      catch (e) { document.getElementById('content').innerHTML = '<div class="alert warn">加载失败：' + esc(e.message) + '</div>'; }
+    })();
+  </script>
+</body>
+</html>

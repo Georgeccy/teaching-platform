@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 移动答题</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478; --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --shadow:#2E2A3B; }
+    body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --shadow:#000; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition:background .25s, color .25s; min-height:100vh; }
+    .pixel { font-family:"Press Start 2P", monospace; }
+    .page-head { display:flex; align-items:center; gap:14px; justify-content:center; padding:18px; flex-wrap:wrap; }
+    .page-head .logo { font-family:"Press Start 2P"; font-size:12px; border:3px solid var(--line); background:var(--yellow); color:#2E2A3B; padding:8px 10px; box-shadow:4px 4px 0 var(--shadow); }
+    .icon-btn { width:42px; height:42px; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
+    #authChip { display:inline-flex; }
+
+    /* phone */
+    .stage { display:flex; justify-content:center; padding:10px 16px 50px; }
+    .phone { width:340px; max-width:100%; border:4px solid var(--line); background:var(--card); box-shadow:8px 8px 0 var(--shadow); border-radius:26px; padding:12px; position:relative; }
+    .notch { width:120px; height:18px; background:var(--line); margin:0 auto 8px; border-radius:0 0 10px 10px; }
+    .screen { border:3px solid var(--line); background:var(--bg); height:560px; overflow:hidden; position:relative; display:flex; flex-direction:column; }
+    .screen-bar { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-bottom:3px solid var(--line); font-size:12px; }
+    .screen-body { flex:1; overflow-y:auto; padding:14px; }
+
+    .unit-btn { display:block; width:100%; text-align:left; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:14px; margin-bottom:12px; cursor:pointer; transition:transform .1s; }
+    .unit-btn:hover { transform:translate(-2px,-2px); }
+    .unit-btn .t { font-weight:700; font-size:15px; }
+    .unit-btn .s { font-size:12px; color:var(--muted); }
+
+    .q { border:3px solid var(--line); background:var(--card); box-shadow:3px 3px 0 var(--shadow); padding:12px; margin-bottom:14px; }
+    .q .n { font-family:"Press Start 2P"; font-size:8px; color:var(--muted); margin-bottom:8px; }
+    .q .text { font-size:14px; margin-bottom:10px; }
+    .opts { display:flex; gap:8px; }
+    .opt { flex:1; font-family:"Press Start 2P"; font-size:10px; padding:12px 0; text-align:center; border:3px solid var(--line); background:var(--bg); cursor:pointer; transition:transform .1s; }
+    .opt:hover { transform:translate(-1px,-1px); }
+    .opt.sel { background:var(--blue); color:#fff; }
+    .opt.ok { background:var(--green); color:#2E2A3B; }
+    .opt.no { background:var(--pink); color:#fff; }
+
+    .bottom-bar { padding:12px; border-top:3px solid var(--line); }
+    .submit-btn { width:100%; font-family:"Press Start 2P"; font-size:11px; padding:14px; background:var(--green); color:#2E2A3B; border:3px solid var(--line); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; }
+    .submit-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+    .result { text-align:center; padding:20px 10px; }
+    .result .big { font-family:"Press Start 2P"; font-size:26px; color:var(--green); margin:14px 0; }
+    .sync { display:inline-flex; align-items:center; gap:8px; font-size:12px; border:3px solid var(--green); background:var(--green); color:#2E2A3B; padding:8px 12px; margin-top:16px; animation:pulse 1.4s infinite; }
+    @keyframes pulse { 0%,100%{ box-shadow:0 0 0 0 rgba(79,196,106,.5);} 50%{ box-shadow:0 0 0 8px rgba(79,196,106,0);} }
+    .dot-live { width:10px; height:10px; background:var(--line); border-radius:50%; }
+
+    .back { font-size:12px; cursor:pointer; color:var(--blue); text-decoration:underline; }
+    footer { text-align:center; color:var(--muted); font-size:12px; padding:10px 0 30px; }
+  </style>
+</head>
+<body>
+  <div class="page-head">
+    <span class="logo">智学 · 移动答题</span>
+    <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+    <span id="authChip"></span>
+  </div>
+
+  <div class="stage">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="screen-bar"><span id="screenTitle" class="pixel" style="font-size:9px">选择单元</span><span id="screenUser" style="font-size:11px;color:var(--muted)"></span></div>
+        <div class="screen-body" id="screenBody"></div>
+        <div class="bottom-bar" id="bottomBar"></div>
+      </div>
+    </div>
+  </div>
+  <footer>智学平台 · 移动端答题（作答实时同步至教师后台）</footer>
+
+  <script src="assets/app.js"></script>
+  <script>
+    const BANK = {
+      reading: { label:'Reading · T/F/NG', weakKey:'tfng', unit:'mobile-reading', qs:[
+        {q:'文章指出网络友谊完全没有风险。', a:'F'},
+        {q:'作者建议线下见面前应核实对方身份。', a:'T'},
+        {q:'文章声称所有诈骗都发生在周末。', a:'NG'},
+        {q:'家长被建议监督青少年的上网活动。', a:'T'},
+        {q:'报告证明社交媒体能提高考试成绩。', a:'F'},
+      ]},
+      writing: { label:'Writing · 审题', weakKey:'attitude', unit:'mobile-writing', qs:[
+        {q:'"读者来信"应采用正式、具说服力的语气。', a:'T'},
+        {q:'你必须加入与主题无关的个人轶事。', a:'F'},
+        {q:'题目问措施是否必要，因此应有 "Necessity" 段落。', a:'T'},
+        {q:'结论段应提出一个全新的论点。', a:'F'},
+        {q:'PEER 指 Point–Evidence–Explanation–Refutation。', a:'NG'},
+      ]},
+      grammar: { label:'Grammar · 词形转换', weakKey:'wordform', unit:'mobile-grammar', qs:[
+        {q:'care 的形容词形式是 careful。', a:'T'},
+        {q:'success 的动词形式是 succeed。', a:'T'},
+        {q:'pollute 的名词形式是 pollution。', a:'T'},
+        {q:'depend 的形容词形式是 dependable。', a:'T'},
+        {q:'govern 的名词形式是 government。', a:'T'},
+      ]},
+    };
+    const OPTS = [['T','True'],['F','False'],['NG','Not Given']];
+
+    const tbtn = document.getElementById('themeBtn');
+    if (localStorage.getItem('zhixue-theme') === 'dark') { document.body.classList.add('dark'); tbtn.textContent='☀️'; }
+    tbtn.addEventListener('click', () => { document.body.classList.toggle('dark'); const d=document.body.classList.contains('dark'); tbtn.textContent=d?'☀️':'🌙'; localStorage.setItem('zhixue-theme', d?'dark':'light'); });
+
+    ZhiXue.initAuthChip();
+
+    let state = { paper:null, answers:{} };
+    const body = document.getElementById('screenBody');
+    const bottom = document.getElementById('bottomBar');
+    const title = document.getElementById('screenTitle');
+    const userEl = document.getElementById('screenUser');
+
+    ZhiXue.ensureLogin().then((u) => {
+      userEl.textContent = u.name;
+      renderMenu();
+    }).catch(() => {});
+
+    function renderMenu() {
+      title.textContent = '选择单元';
+      bottom.innerHTML = '';
+      body.innerHTML = Object.keys(BANK).map(k => {
+        const b = BANK[k];
+        return `<button class="unit-btn" data-paper="${k}">
+          <div class="t">${b.label}</div>
+          <div class="s">${b.qs.length} 题 · 点击开始</div>
+        </button>`;
+      }).join('');
+      body.querySelectorAll('.unit-btn').forEach(btn => btn.addEventListener('click', () => startPaper(btn.dataset.paper)));
+    }
+
+    function startPaper(paper) {
+      state = { paper, answers:{} };
+      const b = BANK[paper];
+      title.textContent = b.label;
+      body.innerHTML = b.qs.map((item, i) => `
+        <div class="q" data-i="${i}">
+          <div class="n">Q${i+1} / ${b.qs.length}</div>
+          <div class="text">${item.q}</div>
+          <div class="opts">
+            ${OPTS.map(([v,l]) => `<div class="opt" data-v="${v}">${l}</div>`).join('')}
+          </div>
+        </div>`).join('');
+      bottom.innerHTML = `<button class="submit-btn" id="submitBtn" disabled>提交并同步</button>`;
+      body.querySelectorAll('.q').forEach(qEl => {
+        const i = qEl.dataset.i;
+        qEl.querySelectorAll('.opt').forEach(opt => {
+          opt.addEventListener('click', () => {
+            qEl.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+            opt.classList.add('sel');
+            state.answers[i] = opt.dataset.v;
+            const all = Object.keys(state.answers).length === b.qs.length;
+            document.getElementById('submitBtn').disabled = !all;
+          });
+        });
+      });
+      document.getElementById('submitBtn').addEventListener('click', submit);
+    }
+
+    async function submit() {
+      const b = BANK[state.paper];
+      let correct = 0;
+      b.qs.forEach((item, i) => { if (state.answers[i] === item.a) correct++; });
+      const total = b.qs.length;
+      // 标记对错
+      body.querySelectorAll('.q').forEach((qEl, i) => {
+        qEl.querySelectorAll('.opt').forEach(opt => {
+          opt.style.pointerEvents = 'none';
+          if (opt.dataset.v === state.answers[i]) opt.classList.add(opt.dataset.v === b.qs[i].a ? 'ok' : 'no');
+        });
+      });
+      bottom.innerHTML = '<div class="sync"><span class="dot-live"></span>正在同步至教师后台…</div>';
+      try {
+        const prog = await ZhiXue.reportEvent({ type: state.paper, correct, total, weakKey: b.weakKey, unit: b.unit });
+        showResult(correct, total, prog);
+      } catch (e) {
+        bottom.innerHTML = '<div class="sync" style="background:var(--pink)">同步失败：' + e.message + '</div>';
+      }
+    }
+
+    function showResult(correct, total, prog) {
+      const pct = Math.round(correct/total*100);
+      const streak = prog ? prog.stats.streak : 0;
+      bottom.innerHTML = `<button class="submit-btn" onclick="renderMenu()">返回单元列表</button>`;
+      body.innerHTML = `
+        <div class="result">
+          <div class="pixel" style="font-size:10px;color:var(--muted)">本次成绩</div>
+          <div class="big">${pct}%</div>
+          <div>答对 ${correct} / ${total} 题</div>
+          ${prog ? `<div style="margin-top:10px">🔥 当前连胜：<b>${streak}</b></div>` : ''}
+          <div class="sync"><span class="dot-live"></span>已实时同步至教师后台</div>
+          <div style="margin-top:14px"><span class="back" onclick="renderMenu()">再做一组 →</span></div>
+        </div>`;
+    }
+  </script>
+</body>
+</html>

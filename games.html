@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 课间小游戏</title>
+  <link rel="icon" type="image/png" href="assets/app-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4ECD8;
+      --card: #FFFFFF;
+      --text: #2E2A3B;
+      --line: #2E2A3B;
+      --muted: #6B6478;
+      --pink: #FF5D8F;
+      --blue: #4D7CFE;
+      --yellow: #FFC83D;
+      --green: #4FC46A;
+      --shadow: #2E2A3B;
+    }
+    body.dark {
+      --bg: #1A1726;
+      --card: #2E2A3B;
+      --text: #F4ECD8;
+      --line: #F4ECD8;
+      --muted: #B4B2A9;
+      --shadow: #000000;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: "Noto Sans SC", system-ui, sans-serif;
+      font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+      transition: background .25s ease, color .25s ease;
+    }
+    .app { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 220px; flex-shrink: 0; border-right: 3px solid var(--line);
+      padding: 24px 16px; display: flex; flex-direction: column;
+      position: sticky; top: 0; height: 100vh;
+    }
+    .logo {
+      font-family: "Press Start 2P", monospace; font-size: 13px; line-height: 1.7;
+      border: 3px solid var(--line); background: var(--yellow); color: #2E2A3B;
+      padding: 10px 12px; box-shadow: 4px 4px 0 var(--shadow); margin-bottom: 28px;
+    }
+    .nav { display: flex; flex-direction: column; gap: 6px; }
+    .nav a {
+      display: flex; align-items: center; gap: 10px; padding: 11px 12px;
+      color: var(--text); text-decoration: none; border: 3px solid transparent;
+      font-weight: 500; transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .nav a .dot { width: 12px; height: 12px; background: var(--blue); border: 2px solid var(--line); flex-shrink: 0; }
+    .nav a:hover { transform: translate(-2px,-2px); border-color: var(--line); box-shadow: 3px 3px 0 var(--shadow); background: var(--card); }
+    .nav a.active { background: var(--pink); color: #fff; border-color: var(--line); box-shadow: 4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background: #fff; }
+    .nav-sep { font-family:"Press Start 2P",monospace; font-size:8px; color:var(--muted); margin:16px 0 6px; padding-left:12px; letter-spacing:1px; }
+    .nav a.tool .dot { background:var(--green); }
+    .nav a.tool:hover { background:var(--green); color:#04201f; }
+    .sidebar-foot { margin-top: auto; display: flex; justify-content: center; padding-top: 20px; }
+    .topbar { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .search {
+      flex: 1; display: flex; align-items: center; gap: 10px; border: 3px solid var(--line);
+      background: var(--card); padding: 10px 14px; box-shadow: 4px 4px 0 var(--shadow);
+    }
+    .search input { flex: 1; border: none; background: transparent; outline: none; font-family: inherit; font-size: 15px; color: var(--text); }
+    .icon-btn {
+      width: 46px; height: 46px; flex-shrink: 0; border: 3px solid var(--line); background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow); cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; transition: transform .12s ease;
+    }
+    .icon-btn:hover { transform: translate(-2px,-2px); }
+    .avatar { width: 46px; height: 46px; flex-shrink: 0; background: var(--green); border: 3px solid var(--line); box-shadow: 4px 4px 0 var(--shadow); display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size:10px; color:#2E2A3B; }
+    .main { flex: 1; min-width: 0; padding: 24px 32px 48px; }
+    footer { margin-top: 30px; color: var(--muted); font-size: 13px; text-align: center; }
+    @media (max-width: 760px) {
+      .sidebar { display: none; }
+      .main { padding: 18px; }
+      .topbar { flex-wrap: wrap; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/polish.css" />
+  <link rel="stylesheet" href="assets/games.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">智学<br />PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html" class="active"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search">
+          <span class="mag" style="width:14px;height:14px;border:3px solid var(--line);border-radius:50%;position:relative;"></span>
+          <input type="text" placeholder="搜索单元 / 题目 / 知识点" />
+        </div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+        <span class="avatar">学</span>
+      </div>
+
+      <div class="games-hero">
+        <div class="ico">🎮</div>
+        <div>
+          <h1>课间小游戏</h1>
+          <p>学累了？和学宝一起放松一下。俄罗斯方块练手速，贪吃蛇练反应——最高分都记在本地，下次接着刷纪录。</p>
+        </div>
+      </div>
+
+      <div class="games-wrap">
+        <!-- 俄罗斯方块 -->
+        <div class="game" id="tetrisCard">
+          <div class="ghead">
+            <h3>俄罗斯方块</h3>
+            <span class="tag">TETRIS</span>
+          </div>
+          <div class="hud">
+            <div class="stat">分数<b id="tScore">0</b></div>
+            <div class="stat">等级<b id="tLevel">1</b></div>
+            <div class="stat">消除<b id="tLines">0</b></div>
+            <div class="stat">连击<b id="tB2b">—</b></div>
+            <div class="stat">最高<b id="tHi">0</b></div>
+          </div>
+          <div class="play">
+            <div class="side">
+              <div class="stat">暂存 (C)</div>
+              <div class="canvas-frame"><canvas id="tHold" class="game-cv" width="90" height="90"></canvas></div>
+              <button class="pxbtn ghost sm" id="tHoldBtn">暂存</button>
+            </div>
+            <div class="canvas-frame"><canvas id="tCanvas" class="game-cv" width="220" height="440"></canvas></div>
+            <div class="side">
+              <div class="stat">下一个</div>
+              <div class="canvas-frame"><canvas id="tNext" class="game-cv" width="90" height="90"></canvas></div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="pxbtn pink" id="tStart">开始</button>
+            <button class="pxbtn ghost" id="tPause">暂停</button>
+          </div>
+          <div class="dpad">
+            <button class="up" data-k="up">▲</button>
+            <button class="left" data-k="left">◀</button>
+            <button class="mid" data-k="mid">⤓</button>
+            <button class="right" data-k="right">▶</button>
+            <button class="down" data-k="down">▼</button>
+          </div>
+          <div class="controls-hint">
+            键盘：<kbd>←</kbd><kbd>→</kbd> 移动 · <kbd>↑</kbd>/<kbd>X</kbd> 顺旋 · <kbd>Z</kbd> 逆旋 · <kbd>↓</kbd> 软降 · <kbd>空格</kbd> 硬降 · <kbd>C</kbd> 暂存 · <kbd>P</kbd> 暂停
+          </div>
+        </div>
+
+        <!-- 贪吃蛇 -->
+        <div class="game" id="snakeCard">
+          <div class="ghead">
+            <h3>贪吃蛇</h3>
+            <span class="tag">SNAKE</span>
+          </div>
+          <div class="hud">
+            <div class="stat">得分<b id="sScore">0</b></div>
+            <div class="stat">长度<b id="sLen">3</b></div>
+            <div class="stat">最高<b id="sHi">0</b></div>
+          </div>
+          <div class="play">
+            <div class="canvas-frame"><canvas id="sCanvas" class="game-cv" width="320" height="320"></canvas></div>
+          </div>
+          <div class="btn-row">
+            <button class="pxbtn green" id="sStart">开始</button>
+            <button class="pxbtn ghost" id="sPause">暂停</button>
+            <label class="opt"><input type="checkbox" id="sWrap" /> 穿墙</label>
+          </div>
+          <div class="dpad">
+            <button class="up" data-k="up">▲</button>
+            <button class="left" data-k="left">◀</button>
+            <button class="mid" data-k="mid">II</button>
+            <button class="right" data-k="right">▶</button>
+            <button class="down" data-k="down">▼</button>
+          </div>
+          <div class="controls-hint">
+            键盘：<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 转向 · <kbd>空格</kbd> 开始/重来 · <kbd>P</kbd> 暂停
+          </div>
+        </div>
+      </div>
+
+      <footer>智学平台 · 混合架构 v0.5 · 课间小游戏（纯前端 · 最高分存本机）</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script src="assets/polish.js"></script>
+  <script src="assets/games.js"></script>
+  <script>
+    if (window.ZhiXue && ZhiXue.initAuthChip) ZhiXue.initAuthChip();
+  </script>
+</body>
+</html>

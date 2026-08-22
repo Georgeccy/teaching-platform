@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SMT1 Paper 2 · Writing Review · 预备班 | George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green);animation:timerPulse 1s ease infinite}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:22px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter',sans-serif;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-card .flip-back.show{display:flex!important}
+.flip-card .flip-front.flipped{display:none}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:17px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-1)}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--text-1);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:18px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--text-1);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-en[style*="inline"]{display:inline}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.cloze{display:inline-block;min-width:80px;border-bottom:2px dashed var(--xdf-green);cursor:pointer;padding:2px 6px;font-weight:700;color:var(--text-3);transition:all .2s}
+.cloze:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.cloze.revealed{color:var(--xdf-green);border-bottom-style:solid;background:var(--xdf-gl);font-weight:800}
+.vr-btn{display:inline-block;padding:5px 14px;margin:3px 4px;border:2px solid var(--xdf-green);border-radius:20px;cursor:pointer;font-size:16px;font-weight:700;transition:all .2s;background:#fff}
+.vr-btn:hover{background:var(--xdf-gl)}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.flip-grid.g5,.s1-meta-grid{grid-template-columns:1fr 1fr}.flip-grid.g2{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+@media(max-width:768px){.topbar .course-tag{display:none}.topbar .progress-dots{display:none}.slide{padding:42px 14px 36px}.slide-h1{font-size:clamp(26px,6vw,36px)!important}.slide-h2{font-size:clamp(20px,5vw,28px)!important}.slide-h3{font-size:clamp(17px,4vw,22px)!important}.sec-label{font-size:15px}.card h4,.card p,.ce-cn{font-size:15px}.flip-grid.g5{grid-template-columns:repeat(3,1fr)}.flip-q,.flip-ans{font-size:15px}.flip-card{min-height:90px}.passage-excerpt{font-size:14px}.cloze{font-size:14px;min-width:60px}.ce-btn{font-size:14px}.ce-hints span{font-size:14px}.ce-en{font-size:14px}.timer-wrap{gap:3px}.timer-input-wrap{padding:2px 6px 2px 4px;font-size:12px}.t-min,.t-sec{width:18px;font-size:12px}.timer-play{width:24px;height:24px;font-size:12px}.timer-reset{font-size:11px;padding:3px 6px}.page-counter{font-size:12px;padding:4px 12px;bottom:10px}.progress-bar{height:2px}.s1-meta-grid{grid-template-columns:1fr}.xdf-header-bar{padding:12px 16px}.xdf-header-bar .xdf-logo-text{font-size:16px}.class-badge{font-size:12px;padding:6px 14px}.teacher-badge{padding:6px 14px;gap:8px}.teacher-badge .tb-name{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="deck">
+<div class="topbar">
+  <span class="course-tag">预备班·SMT1</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <span class="progress-dots" id="progressDots"></span>
+  <span class="timer-wrap">
+    <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()">
+      <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </span>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </span>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span><span class="pc-total" id="pcTotal"></span></div>
+<section class="slide is-active" data-title="SMT1 Paper 2 · Writing Review">
+
+<div class="s1-card-wrapper">
+  <div class="xdf-header-bar">
+    <div class="xdf-logo-text">SMT1 Writing <span>Paper 2 复习课</span></div>
+    <div class="xdf-sub-text">2019 AIO Vol.1 · Supplementary Mock Test</div>
+  </div>
+  <div style="padding:28px 32px">
+    <div class="slide-h1" style="text-align:center;margin-bottom:6px">SMT1 Paper 2</div>
+    <div class="slide-h2" style="text-align:center;color:var(--xdf-green);margin-bottom:24px">Writing Review</div>
+    <div style="display:flex;justify-content:center;margin-bottom:24px">
+      <div class="teacher-badge">
+        <div class="tb-name">陈成寓 George</div>
+        <div class="tb-tag">Teacher</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:20px">
+      <div class="class-badge">预备班</div>
+    </div>
+    <div class="s1-meta-grid">
+      <div class="s1-meta-card"><div class="sm-label">Part A</div><div class="sm-value">My Favourite Teacher</div><div class="sm-sub">~200 words</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Part B Q9</div><div class="sm-value">Email: Spending</div><div class="sm-sub">~400 words</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Part C</div><div class="sm-value">Translation</div><div class="sm-sub">8+8 sentences</div></div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">入门测</div><div class="sm-sub">10 词伙</div></div>
+      <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">Part A+B 攻略</div><div class="sm-sub">审题→结构→句式→写作</div></div>
+      <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">范文翻译</div><div class="sm-sub">Part C 练习</div></div>
+      <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">出门测</div><div class="sm-sub">10 动词短语</div></div>
+    </div>
+  </div>
+  <div class="xdf-checker-pattern"><span>USE ARROW KEYS TO NAVIGATE</span></div>
+</div>
+
+</section>
+<section class="slide" data-title="入门测">
+
+<div class="sec-label">入门测 · 10 词伙</div>
+<div class="slide-h3" style="margin-bottom:18px">Key Vocabulary — tap to flip</div>
+<div class="flip-grid g5"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">投票</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">vote / cast a vote</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">段落</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">paragraph</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">失利 / 挫折</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">setback / failure</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">团队队长</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">team captain</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">信心</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">faith / confidence</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">消费习惯</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">spending patterns / spending habits</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">名牌服装</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">designer clothes / branded fashion goods</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">预算</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">budget</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">建议 / 忠告</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">advice</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">花费记录</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">spending log</div></div>
+  </div>
+</div></div>
+
+</section>
+<section class="slide" data-title="Part A · Step 1 审题">
+
+<div class="sec-label">Part A · Step 1 审题</div>
+<div class="slide-h3" style="margin-bottom:14px">读懂题目 — My Favourite Teacher Nomination</div>
+<div class="card accent" style="margin-bottom:18px">
+  <h4>题目原文</h4>
+  <p style="font-size:17px;line-height:1.7">You are Chris Wong, a Senior Secondary 3 student in Class A. Your school is holding a <b>'My Favourite Teacher'</b> election. Students can vote by submitting the following nomination form. Complete it below to cast your vote. Note that you need to give your reasons in <b>connected prose</b>.</p>
+</div>
+<div class="card">
+  <h4>RAFT 审题</h4>
+  <table style="width:100%;border-collapse:collapse;font-size:16px;margin-top:8px">
+    <tr style="background:var(--xdf-gl)"><th style="padding:10px 14px;border:1px solid var(--card-bd);text-align:left;color:var(--xdf-green)">要确认的信息</th><th style="padding:10px 14px;border:1px solid var(--card-bd);text-align:left;color:var(--xdf-green)">你的答案</th></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">R — Role</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Chris Wong, S.3A student">______</span></td></tr>
+    <tr style="background:var(--xdf-gp)"><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">A — Audience</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="School (teachers & students)">______</span></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">F — Format</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Nomination form (connected prose)">______</span></td></tr>
+    <tr style="background:var(--xdf-gp)"><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">T — Topic</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Why this teacher is your favourite">______</span></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Part A · Step 2 头脑风暴">
+
+<div class="sec-label">Part A · Step 2 头脑风暴</div>
+<div class="slide-h3" style="margin-bottom:14px">Brainstorming — 想一个具体故事</div>
+<div class="card accent" style="margin-bottom:16px">
+  <p style="font-size:17px">选一位你印象最深的老师，想一个<b>具体的故事</b>。不要只说"老师教得好"——要用一个<b>场景 / 事件</b>来展示。</p>
+</div>
+<div class="card">
+  <h4>你的 Favourite Teacher</h4>
+  <table style="width:100%;border-collapse:collapse;font-size:16px;margin-top:10px">
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700;width:35%;background:var(--xdf-gp)">科目 / 角色</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><i>先自己想一想…</i></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700;background:var(--xdf-gp)">一件难忘的事</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><i>发生了什么？</i></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700;background:var(--xdf-gp)">你当时的感受</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><i>你有什么情绪？</i></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700;background:var(--xdf-gp)">老师说了什么 / 做了什么</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><i>老师怎么帮你的？</i></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700;background:var(--xdf-gp)">这件事对你的影响</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><i>你之后有什么改变？</i></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Part A · Step 3 篇章结构">
+
+<div class="sec-label">Part A · Step 3 篇章结构</div>
+<div class="slide-h3" style="margin-bottom:14px">3 段 Connected Prose</div>
+<div class="card" style="margin-bottom:14px;border-left:4px solid var(--xdf-red)">
+  <h4 style="color:var(--xdf-red)">📌 第 1 段：Introduction</h4>
+  <p style="font-size:17px">引出老师 + 设定场景<br>→ 用一个具体画面开头（时间 / 地点 / 你当时的情绪）<br>→ 点出这位老师是谁</p>
+</div>
+<div class="card" style="margin-bottom:14px;border-left:4px solid var(--xdf-green)">
+  <h4 style="color:var(--xdf-green)">📌 第 2 段：Story</h4>
+  <p style="font-size:17px">叙述那个难忘的事件<br>→ 老师做了什么 / 说了什么<br>→ 你的内心变化</p>
+</div>
+<div class="card" style="border-left:4px solid var(--xdf-gold)">
+  <h4 style="color:var(--xdf-gold)">📌 第 3 段：Impact</h4>
+  <p style="font-size:17px">这件事对你的影响<br>→ 你之后做了什么改变<br>→ 总结——为什么 TA 是你最喜欢的老师</p>
+</div>
+
+</section>
+<section class="slide" data-title="Part A · Step 4 句式">
+
+<div class="sec-label">Part A · Step 4 实用句式</div>
+<div class="slide-h3" style="margin-bottom:18px">Useful Expressions — tap to flip</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">时间开头</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I still remember the day when...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">情绪表达</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I could not forgive myself for...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">老师动作</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">...walked towards me / gently placed his hand on my shoulder</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">老师的话</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">He told me that although...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">老师的话</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">'Remember, ... It doesn't matter how many times you get knocked down, but how many times you get back up.'</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">内心转变</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">His words immediately calmed the storm in my mind</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">行动改变</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">From that day on, I stayed after school to...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">总结升华</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Had it not been for his/her guidance, I would never have...</div></div>
+  </div>
+</div></div>
+
+</section>
+<section class="slide" data-title="Part A · Step 5 写作 P1+P2">
+
+<div class="sec-label">Part A · Step 5 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 1+2：Introduction + Story</div>
+<div class="card" style="margin-bottom:16px;border-left:4px solid var(--xdf-red)">
+  <h4 style="color:var(--xdf-red)">Paragraph 1：Introduction（3-4 句）</h4>
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    I still remember the day I was <span class="cloze" onclick="revealCloze(this)" data-answer="sitting alone in the school playground sobbing over the fact that our team had lost another inter-school football match">______</span><br>
+    Being <span class="cloze" onclick="revealCloze(this)" data-answer="the captain of the school football team">______</span>,<br>
+    I could not forgive myself for <span class="cloze" onclick="revealCloze(this)" data-answer="leading my teammates into a downward spiral of failure and shame">______</span><br>
+    As I was <span class="cloze" onclick="revealCloze(this)" data-answer="burying my face in my palms">______</span>,<br>
+    <span class="cloze" onclick="revealCloze(this)" data-answer="our PE coach Mr Tam">______</span> walked towards me.
+  </p>
+</div>
+<div class="card" style="border-left:4px solid var(--xdf-green)">
+  <h4 style="color:var(--xdf-green)">Paragraph 2：Story（5-6 句）</h4>
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    <span class="cloze" onclick="revealCloze(this)" data-answer="He told me that">______</span> although <span class="cloze" onclick="revealCloze(this)" data-answer="winning games is every athlete's ultimate desire">______</span>, one should never feel depressed over failures.<br>
+    He also said that <span class="cloze" onclick="revealCloze(this)" data-answer="I had to learn from my miscalculations in our previous games in order to improve the team">______</span><br>
+    'Remember, <span class="cloze" onclick="revealCloze(this)" data-answer="It doesn't matter how many times you get knocked down, but how many times you get back up">______</span><br>
+    His words <span class="cloze" onclick="revealCloze(this)" data-answer="immediately calmed the storm in my mind and gave me a substantial boost">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part A · Step 5 写作 P3">
+
+<div class="sec-label">Part A · Step 5 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 3：Impact（4-5 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-gold)">
+  <h4 style="color:var(--xdf-gold)">Paragraph 3：Impact</h4>
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    From that day on, I <span class="cloze" onclick="revealCloze(this)" data-answer="stayed after school to practise my football moves with extra motivation and passion">______</span><br>
+    Whenever I <span class="cloze" onclick="revealCloze(this)" data-answer="feel the past is haunting me">______</span>,<br>
+    I simply think of <span class="cloze" onclick="revealCloze(this)" data-answer="Mr Tam's words">______</span><br>
+    Had it not been for <span class="cloze" onclick="revealCloze(this)" data-answer="his guidance">______</span>,<br>
+    I would never have <span class="cloze" onclick="revealCloze(this)" data-answer="been able to keep my chin up and become this year's recipient of the 'Sportsman of the Year' award">______</span><br>
+    That is why <span class="cloze" onclick="revealCloze(this)" data-answer="Mr Tam is my favourite teacher">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part A · 范文">
+
+<div class="sec-label">Part A · Model Essay</div>
+<div class="slide-h3" style="margin-bottom:14px">My Favourite Teacher — Chris Wong (S.3A)</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p style="font-size:15px;line-height:1.9">I still remember the day I was sitting alone in the school playground sobbing over the fact that my team had lost another inter-school football match. Being the captain of the school football team, I could not forgive myself for leading my teammates into a downward spiral of failure and shame. As I was burying my face in my palms, our PE coach Mr Tam walked towards me. I looked up with my puffy, bloodshot eyes as he gently placed his hand on my shoulder while tears were streaming down my face. Instantly, he knew why I was there and told me that although winning games is, of course, every athlete's ultimate desire, one should never feel depressed over failures.</p>
+  <p style="font-size:15px;line-height:1.9;margin-top:10px">Mr Tam explained that I had to learn from my miscalculations in our previous games in order to improve the team and hone my skills as a footballer. He also told me that my teammates all had faith in me despite the serious setbacks they had faced. 'Remember, Chris. It doesn't matter how many times you get knocked down, but how many times you get back up.' His words immediately calmed the storm in my mind and gave me a substantial boost, which allowed me to move on.</p>
+  <p style="font-size:15px;line-height:1.9;margin-top:10px">From that day on, I stayed after school to practise my football moves with extra motivation and passion. Whenever I feel the past is haunting me, I simply think of Mr Tam's words. Had it not been for his guidance, I would never have been able to keep my chin up and become this year's recipient of the 'Sportsman of the Year' award. That is why Mr Tam is my favourite teacher.</p>
+</div>
+<div class="card" style="font-size:14px">
+  <h4 style="font-size:15px">💡 技能标注</h4>
+  <p style="font-size:13px;line-height:1.8;margin-top:6px">
+    <b>具体场景开头：</b>"I still remember the day..." — 画面感强<br>
+    <b>情绪递进：</b>sobbing → could not forgive myself → tears streaming → calmed the storm → keep my chin up<br>
+    <b>引语：</b>直接引用老师的原话，增加真实感<br>
+    <b>倒装句式：</b>"Had it not been for..." — 高级语法加分
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 1 审题">
+
+<div class="sec-label">Part B · Q9 · Step 1 审题</div>
+<div class="slide-h3" style="margin-bottom:14px">读懂题目 — Email about Spending</div>
+<div class="card accent" style="margin-bottom:18px">
+  <h4>题目原文</h4>
+  <p style="font-size:17px;line-height:1.7">You are replying to an email from your friend who is worried about money. He keeps buying expensive <b>designer clothes</b> and feels his <b>spending is out of control</b>.</p>
+</div>
+<div class="card">
+  <h4>RAFT 审题</h4>
+  <table style="width:100%;border-collapse:collapse;font-size:16px;margin-top:8px">
+    <tr style="background:var(--xdf-gl)"><th style="padding:10px 14px;border:1px solid var(--card-bd);text-align:left;color:var(--xdf-green)">要确认的信息</th><th style="padding:10px 14px;border:1px solid var(--card-bd);text-align:left;color:var(--xdf-green)">你的答案</th></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">R — Role</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="A close friend">______</span></td></tr>
+    <tr style="background:var(--xdf-gp)"><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">A — Audience</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Friend (Peter) who overspends">______</span></td></tr>
+    <tr><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">F — Format</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Email">______</span></td></tr>
+    <tr style="background:var(--xdf-gp)"><td style="padding:10px 14px;border:1px solid var(--card-bd);font-weight:700">T — Topic</td><td style="padding:10px 14px;border:1px solid var(--card-bd)"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain worry + give advice on spending">______</span></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 2 篇章结构">
+
+<div class="sec-label">Part B · Q9 · Step 2 篇章结构</div>
+<div class="slide-h3" style="margin-bottom:14px">5 段式 Email</div>
+<div class="card" style="margin-bottom:10px;border-left:4px solid var(--xdf-red)">
+  <h4 style="color:var(--xdf-red);font-size:16px">📌 开头：Greeting + 铺垫</h4>
+  <p style="font-size:15px">开门见山：我知道你的困扰，我很担心你 → 表明你为什么拒绝借钱</p>
+</div>
+<div class="card" style="margin-bottom:10px;border-left:4px solid var(--xdf-gold)">
+  <h4 style="color:var(--xdf-gold);font-size:16px">📌 主体段 1：Why you're worried</h4>
+  <p style="font-size:15px">你观察到的具体问题（他买了什么、花了多少钱）→ 这样做的后果</p>
+</div>
+<div class="card" style="margin-bottom:10px;border-left:4px solid var(--xdf-green)">
+  <h4 style="color:var(--xdf-green);font-size:16px">📌 主体段 2：Solution 1</h4>
+  <p style="font-size:15px">建议一：投资基础款 / 买经典不过时的衣服 → 为什么这样能省钱</p>
+</div>
+<div class="card" style="margin-bottom:10px;border-left:4px solid var(--xdf-blue)">
+  <h4 style="color:var(--xdf-blue);font-size:16px">📌 主体段 3：Solution 2 + 3</h4>
+  <p style="font-size:15px">建议二：做消费记录 → 建议三：整理衣柜，发掘被遗忘的衣服</p>
+</div>
+<div class="card" style="border-left:4px solid var(--xdf-green)">
+  <h4 style="color:var(--xdf-green);font-size:16px">📌 结尾：Encouragement</h4>
+  <p style="font-size:15px">鼓励 + 表示支持</p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 3 句式">
+
+<div class="sec-label">Part B · Q9 · Step 3 实用句式</div>
+<div class="slide-h3" style="margin-bottom:18px">Useful Expressions — tap to flip</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">开头承认问题</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I am glad that you were willing to share your recent worries with me.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">解释拒绝借钱</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Please don't see it as unhelpful when I turn down your request...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">表达担心</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I must say that I am very worried about your spending patterns.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">指出问题</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Resorting to materialism like this simply opens doors to... issues.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">建议一</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">The first solution would be investing in basic clothing and trends that stay.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">建议二</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Try making a spending log to record all your daily expenditure.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">建议三</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Tidy up your closet — you may find some forgotten but interesting clothes to wear.</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">结尾鼓励</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Remember, I am always here to support you.</div></div>
+  </div>
+</div></div>
+
+</section>
+<section class="slide" data-title="Part B · Step 4 写作 P1">
+
+<div class="sec-label">Part B · Q9 · Step 4 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 1：Introduction（3-4 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-red)">
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    Subject: <span class="cloze" onclick="revealCloze(this)" data-answer="Advice on spending">______</span><br>
+    Dear <span class="cloze" onclick="revealCloze(this)" data-answer="Peter">______</span>,<br><br>
+    I am glad that <span class="cloze" onclick="revealCloze(this)" data-answer="you were willing to share your recent worries with me">______</span><br>
+    Please don't see it as <span class="cloze" onclick="revealCloze(this)" data-answer="unhelpful, or some type of betrayal, when I turn down your request to borrow money">______</span><br>
+    I firmly believe that <span class="cloze" onclick="revealCloze(this)" data-answer="it is best not to wrestle with the issue and that instead we opt for remedial measures and positive solutions promptly">______</span><br>
+    As a close friend of yours, I must say that <span class="cloze" onclick="revealCloze(this)" data-answer="I am very worried about your spending patterns and current finances">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 4 写作 P2">
+
+<div class="sec-label">Part B · Q9 · Step 4 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 2：Problem — 问题的严重性（4-5 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-gold)">
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    With us being students, we should be focusing on <span class="cloze" onclick="revealCloze(this)" data-answer="our education">______</span><br>
+    instead of <span class="cloze" onclick="revealCloze(this)" data-answer="concerning ourselves with style and high-end fashion">______</span><br>
+    I understand that <span class="cloze" onclick="revealCloze(this)" data-answer="the sneakers and fragrance you have started wearing recently may give you enormous self-confidence and satisfy your vanity">______</span><br>
+    Yet resorting to materialism like this simply <span class="cloze" onclick="revealCloze(this)" data-answer="opens doors not only to monetary but also psychological issues">______</span><br><br>
+    Do you remember that time when you <span class="cloze" onclick="revealCloze(this)" data-answer="were so obsessed with squandering a fortune on branded fashion goods that you only had enough money for one meal a day">______</span>?<br>
+    You told me that <span class="cloze" onclick="revealCloze(this)" data-answer="it was reasonable to suffer in pursuit of a dream wardrobe">______</span><br>
+    Clearly, this is by no means justifiable! <span class="cloze" onclick="revealCloze(this)" data-answer="There is much more to life than exorbitantly priced designer fashion">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 4 写作 P3">
+
+<div class="sec-label">Part B · Q9 · Step 4 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 3：Solution 1（4-5 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-green)">
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    Given your <span class="cloze" onclick="revealCloze(this)" data-answer="spiralling condition">______</span>, I am compelled to give you advice on <span class="cloze" onclick="revealCloze(this)" data-answer="rectifying this issue">______</span><br><br>
+    The first solution would be <span class="cloze" onclick="revealCloze(this)" data-answer="investing in basic clothing and trends that stay">______</span><br>
+    This will be particularly beneficial to your wallet because <span class="cloze" onclick="revealCloze(this)" data-answer="there will be no need to revamp your wardrobe constantly">______</span><br>
+    <span class="cloze" onclick="revealCloze(this)" data-answer="Mixing and matching plain T-shirts and jeans can be chic and stylish enough">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 4 写作 P4">
+
+<div class="sec-label">Part B · Q9 · Step 4 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 4：Solution 2 + 3（5-6 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-blue)">
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    In addition, try <span class="cloze" onclick="revealCloze(this)" data-answer="making a spending log to record all your daily expenditure">______</span><br>
+    <span class="cloze" onclick="revealCloze(this)" data-answer="Use a small notebook or one of those managing apps on your phone">______</span><br>
+    Jot down <span class="cloze" onclick="revealCloze(this)" data-answer="every expense made throughout the day">______</span><br>
+    and thereby grasp an immediate understanding of <span class="cloze" onclick="revealCloze(this)" data-answer="how to improve your spending patterns">______</span><br><br>
+    Also, please <span class="cloze" onclick="revealCloze(this)" data-answer="tidy up your closet">______</span><br>
+    By that I don't mean simply <span class="cloze" onclick="revealCloze(this)" data-answer="putting things in order but digging deep at the back of the wardrobe">______</span><br>
+    You may find some <span class="cloze" onclick="revealCloze(this)" data-answer="forgotten but interesting shirts or jackets to wear, deterring you from plunging into more fashion debt">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · Step 4 写作 P5">
+
+<div class="sec-label">Part B · Q9 · Step 4 填空式写作</div>
+<div class="slide-h3" style="margin-bottom:14px">Paragraph 5：Closing（3-4 句）</div>
+<div class="card" style="border-left:4px solid var(--xdf-green)">
+  <p style="font-size:16px;line-height:2.2;margin-top:8px">
+    At the end of the day, all this hinges on <span class="cloze" onclick="revealCloze(this)" data-answer="you making some changes">______</span><br>
+    But this is definitely not <span class="cloze" onclick="revealCloze(this)" data-answer="the end of the world">______</span><br>
+    Remember, I am always here to <span class="cloze" onclick="revealCloze(this)" data-answer="support you">______</span><br>
+    Your new regime may prove tough at first but <span class="cloze" onclick="revealCloze(this)" data-answer="once underway I promise that all your efforts will be worthwhile">______</span><br><br>
+    Best,<br>
+    <span class="cloze" onclick="revealCloze(this)" data-answer="Chris">______</span>
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · 范文 (上)">
+
+<div class="sec-label">Part B · Q9 Model Essay</div>
+<div class="slide-h3" style="margin-bottom:14px">Email about Spending — Chris to Peter</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p style="font-size:14px;line-height:1.85"><b>Subject:</b> Advice on spending<br>
+  <b>Dear Peter,</b></p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">I am glad that you were willing to share your recent worries with me. Please don't see it as unhelpful, or some type of betrayal, when I turn down your request to borrow money. I firmly believe that it is best not to wrestle with the issue and that instead we opt for remedial measures and positive solutions promptly.</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">As a close friend of yours, I must say that I am very worried about your spending patterns and current finances. With us being students, we should be focusing on our education instead of concerning ourselves with style and high-end fashion. I understand that the sneakers and fragrance you have started wearing recently may give you enormous self-confidence and satisfy your vanity. Yet resorting to materialism like this simply opens doors not only to monetary but also psychological issues. Such behaviour is nothing but a magnet for anxiety and nightmarish experiences.</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">Do you remember that time when you were so obsessed with squandering a fortune on branded fashion goods that you only had enough money for one meal a day? You told me that it was reasonable to suffer in pursuit of a dream wardrobe. Clearly, in the light of day, this is by no means justifiable! There is much more to life than exorbitantly priced designer fashion. You are in fact jeopardizing your health at a time when you need to be well nourished, as you train with the school swimming team during puberty.</p>
+</div>
+
+</section>
+<section class="slide" data-title="Part B · 范文 (下)">
+
+<div class="sec-label">Part B · Q9 Model Essay (续)</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p style="font-size:14px;line-height:1.85">Given your spiralling condition, I am compelled to give you advice on rectifying this issue, with the first solution being investing in basic clothing and trends that stay. This will be particularly beneficial to your wallet as there will be no need to revamp your wardrobe constantly. Mixing and matching plain T-shirts and jeans can be chic and stylish enough!</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">In addition, try making a spending log to record all your daily expenditure. Use a small notebook or one of those managing apps on your phone. Jot down every expense made throughout the day and thereby grasp an immediate understanding of how to improve your spending patterns. Find out what costs you the most money and what trivial things you can sacrifice on a daily basis.</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">Also, please tidy up your closet. By tidying, I don't mean simply putting things in order but digging deep at the back of the wardrobe. You may find some forgotten but interesting shirts or jackets to wear, deterring you from plunging into more fashion debt.</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">At the end of the day, all this hinges on you making some changes. But this is definitely not the end of the world. Remember, I am always here to support you. Your new regime may prove tough at first but once underway I promise that all your efforts will be worthwhile.</p>
+  <p style="font-size:14px;line-height:1.85;margin-top:8px">Best,<br>Chris</p>
+</div>
+<div class="card" style="font-size:13px">
+  <h4 style="font-size:14px">💡 技能标注</h4>
+  <p style="font-size:12px;line-height:1.8;margin-top:6px">
+    <b>语气把控：</b>温和但有立场（不judge，但表达担心）<br>
+    <b>反问回忆：</b>"Do you remember that time when..." — 用具体事例说服<br>
+    <b>递进建议：</b>三条建议层层递进（投资基础款 → 做消费记录 → 整理衣柜）<br>
+    <b>高级词汇：</b>resort to materialism / spiralling condition / be compelled to / hinge on<br>
+    <b>Not only... but also：</b>"...not only to monetary but also psychological issues"
+  </p>
+</div>
+
+</section>
+<section class="slide" data-title="Part C1 · 翻译 1-4">
+
+<div class="sec-label">Part C1 · Part A 范文翻译</div>
+<div class="slide-h3" style="margin-bottom:14px">Translate into English (1-4)</div>
+<div class="ce-item">
+  <div class="ce-cn">1. 我仍然记得那一天，我独自坐在学校操场上，为我们队又输了一场校际足球赛而哭泣。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>sob over</span><span>inter-school football match</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I still remember the day I was sitting alone in the school playground sobbing over the fact that our team had lost another inter-school football match.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. 作为学校足球队的队长，我无法原谅自己带领队友陷入失败和羞耻的恶性循环。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>team captain</span><span>cannot forgive myself</span><span>downward spiral</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Being the captain of the school football team, I could not forgive myself for leading my teammates into a downward spiral of failure and shame.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. 当我正把脸埋在手掌里时，我们的体育教练 Mr Tam 向我走来。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>bury one's face in one's palms</span><span>PE coach</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">As I was burying my face in my palms, our PE coach Mr Tam walked towards me.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. 他告诉我，虽然赢球是每个运动员的终极渴望，但一个人不应该因为失败而沮丧。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>ultimate desire</span><span>feel depressed over failures</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">He told me that although winning games is every athlete's ultimate desire, one should never feel depressed over failures.</div>
+</div>
+
+</section>
+<section class="slide" data-title="Part C1 · 翻译 5-8">
+
+<div class="sec-label">Part C1 · Part A 范文翻译</div>
+<div class="slide-h3" style="margin-bottom:14px">Translate into English (5-8)</div>
+<div class="ce-item">
+  <div class="ce-cn">5. 他说我必须从之前比赛中的失误中吸取教训，才能提高球队水平。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>miscalculations</span><span>learn from</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">He said I had to learn from my miscalculations in our previous games in order to improve the team.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">6. “记住，Chris。重要的不是你被击倒了多少次，而是你多少次重新站起来。”</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>get knocked down</span><span>get back up</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">'Remember, Chris. It doesn't matter how many times you get knocked down, but how many times you get back up.'</div>
+</div><div class="ce-item">
+  <div class="ce-cn">7. 他的话立刻平息了我心中的风暴，给了我巨大的动力。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>calm the storm in my mind</span><span>a substantial boost</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">His words immediately calmed the storm in my mind and gave me a substantial boost.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">8. 如果不是他的指导，我永远不可能振作起来，获得今年的“年度运动员”奖。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>had it not been for</span><span>keep one's chin up</span><span>recipient</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Had it not been for his guidance, I would never have been able to keep my chin up and become this year's recipient of the 'Sportsman of the Year' award.</div>
+</div>
+
+</section>
+<section class="slide" data-title="Part C2 · 翻译 1-4">
+
+<div class="sec-label">Part C2 · Q9 范文翻译</div>
+<div class="slide-h3" style="margin-bottom:14px">Translate into English (1-4)</div>
+<div class="ce-item">
+  <div class="ce-cn">1. 作为你的好朋友，我必须说我对你的消费模式非常担心。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>as a close friend of yours</span><span>spending patterns</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">As a close friend of yours, I must say that I am very worried about your spending patterns.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. 我明白你最近开始穿的球鞋和香水可能给你巨大的自信。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>enormous self-confidence</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I understand that the sneakers and fragrance you have started wearing recently may give you enormous self-confidence.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. 但是像这样追求物质主义只会打开通往金钱和心理问题的大门。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>resort to materialism</span><span>open doors to</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Yet resorting to materialism like this simply opens doors not only to monetary but also psychological issues.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. 你还记得那次你痴迷于把钱挥霍在名牌时装上，以至于每天只吃一顿饭吗？</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>squander a fortune on</span><span>branded fashion goods</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Do you remember that time when you were so obsessed with squandering a fortune on branded fashion goods that you only had enough money for one meal a day?</div>
+</div>
+
+</section>
+<section class="slide" data-title="Part C2 · 翻译 5-8">
+
+<div class="sec-label">Part C2 · Q9 范文翻译</div>
+<div class="slide-h3" style="margin-bottom:14px">Translate into English (5-8)</div>
+<div class="ce-item">
+  <div class="ce-cn">5. 考虑到你日益恶化的状况，我必须给你一些建议来解决这个问题。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>spiralling condition</span><span>rectify this issue</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Given your spiralling condition, I am compelled to give you advice on rectifying this issue.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">6. 第一个建议是投资基础款和经典款衣服，这样就不需要不断更新衣橱了。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>invest in basic clothing</span><span>trends that stay</span><span>revamp your wardrobe</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">The first solution would be investing in basic clothing and trends that stay, so there will be no need to revamp your wardrobe constantly.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">7. 另外，试着做一个消费记录本，记下你每天的每一笔开支。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>spending log</span><span>jot down</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">In addition, try making a spending log to record all your daily expenditure — jot down every expense made throughout the day.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">8. 归根结底，这一切都取决于你做出改变。记住，我永远在这里支持你。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词汇提示</button>
+  <div class="ce-hints"><span>hinge on</span></div>
+  <button class="ce-btn ans-btn" onclick="this.nextElementSibling.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">At the end of the day, all this hinges on you making some changes. Remember, I am always here to support you.</div>
+</div>
+
+</section>
+<section class="slide" data-title="出门测">
+
+<div class="sec-label">出门测 · 10 动词短语</div>
+<div class="slide-h3" style="margin-bottom:18px">Key Phrases — tap to flip</div>
+<div class="flip-grid g5"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">提交（表格）</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">submit</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">投票</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">vote / cast a vote</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">原谅自己</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">forgive oneself</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">从……中学习</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">learn from</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">振作起来</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">keep one's chin up</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">借钱</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">borrow money / lend money</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">关心 / 担心</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">be worried about / be concerned about</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">处理（问题）</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">deal with / handle</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">记录（开支）</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">record expenditure / jot down expenses</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">依靠 / 取决于</div><div class="flip-hint"></div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">hinge on / depend on</div></div>
+  </div>
+</div></div>
+
+</section>
+<section class="slide" data-title="🎉 完成！">
+
+<div style="text-align:center;margin-top:15vh">
+  <div class="slide-h1">🎉 恭喜完成！</div>
+  <p style="font-size:22px;color:var(--text-2);margin-top:20px">SMT1 Paper 2 · Writing Review</p>
+  <p style="font-size:17px;color:var(--text-3);margin-top:12px">Part A: My Favourite Teacher · Part B: Email about Spending · Part C: Translation</p>
+</div>
+
+</section>
+</div>
+<script>
+// === Navigation ===
+var current=0;
+function initDots(){
+  var slides=document.querySelectorAll('.slide');
+  var dots=document.getElementById('progressDots');dots.innerHTML='';
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');d.className='dot';d.dataset.pn='第'+(i+1)+'页';
+    d.onclick=function(){goTo(i);};dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+  if(current===slides.length-1)launchConfetti();
+}
+function goTo(i){var slides=document.querySelectorAll('.slide');if(i<0||i>=slides.length||i===current)return;current=i;updateUI();}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){span.textContent=val;input.replaceWith(span);goTo(val-1);}
+    else{span.textContent=current+1;input.replaceWith(span);}
+  }
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();finish();}if(e.key==='Escape'){e.preventDefault();var s=document.createElement('span');s.className='pc-cur';s.id='pcCur';s.onclick=editPageCounter;s.textContent=current+1;input.replaceWith(s);}});
+  input.addEventListener('blur',finish);
+}
+
+// === Timer ===
+var timerDuration=300,timerRemaining=300,timerRunning=false,timerInterval=null,timerDone=false;
+var durations=[60,120,180,300,600],durIdx=3;
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60),sec=timerRemaining%60;
+  document.getElementById('timerMin').value=min;
+  document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+}
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;return m*60+s;
+}
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    if(timerDone){resetTimer();return;}
+    if(timerRemaining<=0){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}else{timerDuration=60;timerRemaining=60;}
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);timerRunning=false;timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+function resetTimer(){
+  clearInterval(timerInterval);timerRunning=false;timerDone=false;
+  var v=readTimerFromInputs();if(v<=0)v=60;
+  timerDuration=v;timerRemaining=v;updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];timerRemaining=timerDuration;timerDone=false;
+  updateTimerDisplay();clearInterval(timerInterval);timerRunning=false;
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// === Cloze ===
+function revealCloze(el){
+  if(el.classList.contains('revealed')){el.textContent='______';el.classList.remove('revealed');}
+  else{el.textContent=el.dataset.answer;el.classList.add('revealed');}
+}
+
+// === Confetti ===
+function launchConfetti(){
+  var wrap=document.createElement('div');wrap.className='confetti-wrap';document.body.appendChild(wrap);
+  var colors=['#0B8235','#4CAF50','#C85D0A','#1A6DAF','#C0392B','#FFD54F'];
+  for(var i=0;i<60;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'%';
+    p.style.width=(6+Math.random()*10)+'px';p.style.height=p.style.width;
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration=(2+Math.random()*3)+'s';
+    p.style.animationDelay=(Math.random()*2)+'s';wrap.appendChild(p);
+  }
+  setTimeout(function(){wrap.remove();},6000);
+}
+
+// === Touch Swipe ===
+(function(){
+  var touchStartX=0,touchStartY=0;
+  var swipeThreshold=50;
+  function isScrollable(el){
+    if(!el)return false;
+    var style=window.getComputedStyle(el);
+    return (style.overflowY==='auto'||style.overflowY==='scroll')&&el.scrollHeight>el.clientHeight;
+  }
+  document.addEventListener('touchstart',function(e){
+    var target=e.target;var inScrollable=false;
+    while(target&&target!==document.body){if(isScrollable(target)){inScrollable=true;break;}target=target.parentElement;}
+    if(inScrollable){touchStartX=0;touchStartY=0;return;}
+    touchStartX=e.changedTouches[0].screenX;touchStartY=e.changedTouches[0].screenY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(touchStartX===0&&touchStartY===0)return;
+    var dx=e.changedTouches[0].screenX-touchStartX;
+    var dy=e.changedTouches[0].screenY-touchStartY;
+    touchStartX=0;touchStartY=0;
+    if(Math.abs(dx)<swipeThreshold)return;
+    if(Math.abs(dy)>Math.abs(dx)*1.5)return;
+    if(dx<0)goTo(current+1);else goTo(current-1);
+  },{passive:true});
+})();
+
+initDots();updateUI();
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u206',weakKey:'general',mode:'quiz'};</script>
+</body>
+</html>

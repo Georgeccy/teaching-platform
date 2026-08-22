@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>课件生成工坊 · Courseware Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F4ECD8; --panel:#FFFDF6; --ink:#2E2A3B; --pink:#FF5D8F;
+    --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --teal:#39C0C8;
+    --muted:#8a8597; --line:#2E2A3B; --shadow:4px 4px 0 var(--ink);
+    --radius:0px;
+  }
+  body.dark{
+    --cream:#16151f; --panel:#211f2e; --ink:#0c0b12; --muted:#9a93ad;
+    --shadow:4px 4px 0 #000;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--cream); color:var(--ink); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .pix{ font-family:'Press Start 2P',monospace; }
+  h1,h2,h3{ margin:0; }
+  button,input,textarea,select{
+    font-family:inherit; color:inherit;
+  }
+  a{ color:var(--blue); }
+
+  /* ---------------- 顶栏 ---------------- */
+  .topbar{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:16px 22px; background:var(--panel);
+    border-bottom:3px solid var(--line);
+    position:sticky; top:0; z-index:20;
+  }
+  .topbar .logo{
+    font-family:'Press Start 2P',monospace; font-size:13px;
+    background:var(--ink); color:var(--cream);
+    padding:10px 12px; border:3px solid var(--line); box-shadow:var(--shadow);
+  }
+  .topbar .sub{ font-size:13px; color:var(--muted); }
+  .topbar .spacer{ flex:1; }
+  .theme-btn{
+    cursor:pointer; border:3px solid var(--line); background:var(--yellow);
+    padding:8px 12px; font-size:12px; font-weight:700; box-shadow:var(--shadow);
+    transition:transform .12s ease;
+  }
+  .theme-btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+
+  .hint{
+    padding:10px 22px; font-size:13px; background:rgba(77,124,254,.12);
+    border-bottom:2px dashed var(--line); color:var(--ink);
+  }
+  .hint b{ color:var(--pink); }
+
+  /* ---------------- 工作区 ---------------- */
+  .workspace{
+    display:grid; grid-template-columns:320px 1fr 1fr; gap:18px;
+    padding:18px 22px 40px; align-items:start;
+  }
+  @media (max-width:1100px){ .workspace{ grid-template-columns:1fr; } }
+
+  .panel{
+    background:var(--panel); border:3px solid var(--line); box-shadow:var(--shadow);
+    display:flex; flex-direction:column; min-height:200px;
+  }
+  .panel > .ph{
+    padding:10px 14px; border-bottom:3px solid var(--line);
+    font-family:'Press Start 2P',monospace; font-size:11px;
+    background:var(--ink); color:var(--cream); display:flex; align-items:center; gap:8px;
+  }
+  .panel > .pb{ padding:14px; overflow:auto; }
+  .panel.center .pb{ max-height:78vh; }
+  .panel.right .pb{ padding:10px; }
+
+  .field{ margin-bottom:14px; }
+  .field > label{ display:block; font-size:12px; font-weight:700; margin-bottom:6px; }
+  textarea,input[type=text]{
+    width:100%; border:3px solid var(--line); background:var(--cream);
+    padding:10px; font-size:14px; resize:vertical; border-radius:var(--radius);
+  }
+  textarea:focus,input:focus{ outline:3px solid var(--teal); outline-offset:0; }
+  textarea.code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; min-height:160px; }
+
+  .btn{
+    cursor:pointer; border:3px solid var(--line); background:var(--green);
+    color:var(--ink); padding:10px 14px; font-weight:700; font-size:13px;
+    box-shadow:var(--shadow); transition:transform .12s ease; display:inline-flex;
+    align-items:center; gap:6px;
+  }
+  .btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn.blue{ background:var(--blue); color:#fff; }
+  .btn.pink{ background:var(--pink); color:#fff; }
+  .btn.ghost{ background:transparent; }
+  .btn.yellow{ background:var(--yellow); }
+  .btn-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+
+  /* 拖拽上传 */
+  .drop{
+    border:3px dashed var(--line); background:rgba(57,192,200,.08);
+    padding:22px 14px; text-align:center; cursor:pointer; transition:.15s;
+  }
+  .drop.drag{ background:rgba(79,196,106,.2); border-color:var(--green); }
+  .drop .big{ font-family:'Press Start 2P',monospace; font-size:12px; margin-bottom:8px; }
+  .drop .sm{ font-size:12px; color:var(--muted); }
+
+  .badge{
+    display:inline-block; padding:3px 8px; font-size:11px; font-weight:700;
+    border:2px solid var(--line); background:var(--yellow);
+  }
+  .badge.writing{ background:var(--green); color:#06210f; }
+  .badge.reading{ background:var(--blue); color:#fff; }
+  .badge.generic{ background:var(--teal); color:#04201f; }
+  .badge.fmt{ background:var(--pink); color:#fff; }
+
+  .meta{ font-size:12px; color:var(--muted); margin-top:8px; }
+  .meta span{ color:var(--ink); font-weight:700; }
+
+  /* 模板库 */
+  .tpl-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .tpl{
+    border:3px solid var(--line); background:var(--cream); padding:10px;
+    display:flex; align-items:center; gap:10px; cursor:pointer; transition:.12s;
+  }
+  .tpl:hover{ background:var(--yellow); }
+  .tpl .tname{ font-weight:700; font-size:13px; }
+  .tpl .tmeta{ font-size:11px; color:var(--muted); }
+  .tpl .del{ margin-left:auto; cursor:pointer; border:2px solid var(--line); background:var(--pink); color:#fff;
+    padding:4px 8px; font-size:11px; font-weight:700; }
+  .tpl .del:hover{ background:#d63b6e; }
+  .empty{ font-size:12px; color:var(--muted); padding:6px 2px; }
+
+  /* 槽位编辑 */
+  .group-title{
+    font-family:'Press Start 2P',monospace; font-size:10px; margin:16px 0 8px;
+    padding-bottom:6px; border-bottom:2px solid var(--line); display:flex; align-items:center; gap:8px;
+  }
+  .group-title .cnt{ background:var(--ink); color:var(--cream); padding:2px 6px; font-size:9px; }
+  .slot{ border:3px solid var(--line); background:var(--cream); padding:10px; margin-bottom:10px; }
+  .slot .sh{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .slot .orig{ font-size:11px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; }
+  .slot textarea, .slot input{ font-size:13px; }
+  .kind{ font-size:10px; font-weight:700; padding:2px 6px; border:2px solid var(--line); }
+  .kind.title{ background:var(--green); color:#06210f; }
+  .kind.content{ background:var(--blue); color:#fff; }
+  .kind.label{ background:var(--yellow); }
+  .kind.nav{ background:var(--muted); color:#fff; }
+  .warn{ background:rgba(255,93,143,.14); border:2px solid var(--pink); padding:8px 10px; font-size:12px; margin-bottom:10px; }
+
+  /* 槽位筛选栏 */
+  .filterbar{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px; position:sticky; top:0; background:var(--panel); padding-bottom:8px; z-index:5; }
+  .filterbar .ftogs{ display:flex; gap:12px; flex-wrap:wrap; font-size:12px; }
+  .filterbar .ftogs label{ display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:700; }
+  .filterbar input[type=checkbox]{ width:16px; height:16px; accent-color:var(--green); }
+
+  /* 预览 */
+  .preview-wrap{ position:relative; border:3px solid var(--line); background:#fff; min-height:60vh; }
+  .preview-wrap iframe{ width:100%; height:72vh; border:0; display:block; background:#fff; }
+  .pb-actions{ display:flex; gap:8px; flex-wrap:wrap; padding:0 0 8px; }
+
+  .toast{
+    position:fixed; right:18px; bottom:18px; background:var(--ink); color:var(--cream);
+    border:3px solid var(--line); box-shadow:var(--shadow); padding:12px 16px; font-size:13px;
+    z-index:50; opacity:0; transform:translateY(10px); transition:.2s; max-width:320px;
+  }
+  .toast.show{ opacity:1; transform:translateY(0); }
+  .hidden{ display:none !important; }
+
+  /* 常驻底部导出条：保证「实时预览 → 下载成品」始终可达，不依赖滚动到右侧面板 */
+  .exportbar{
+    position:sticky; bottom:0; z-index:30;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:12px 22px; margin-top:18px;
+    background:var(--ink); color:var(--cream);
+    border-top:3px solid var(--line); box-shadow:0 -6px 0 rgba(0,0,0,.12);
+  }
+  .exportbar .eb-info{ font-size:12px; opacity:.85; flex:1; min-width:180px; line-height:1.5; }
+  .exportbar .eb-info b{ color:var(--yellow); }
+  .exportbar .eb-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* 预览空状态提示 */
+  .preview-empty{
+    position:absolute; inset:0; display:flex; flex-direction:column; gap:8px;
+    align-items:center; justify-content:center; text-align:center;
+    padding:30px; color:var(--muted); font-size:14px; line-height:1.7; background:#fff;
+  }
+  .preview-empty .big{ font-family:'Press Start 2P',monospace; font-size:13px; color:var(--teal); }
+  .preview-empty b{ color:var(--ink); }
+
+  /* 预览面板 LIVE 指示点 */
+  .live-dot{ width:9px; height:9px; border-radius:50%; background:var(--green); margin-left:auto;
+    box-shadow:0 0 0 0 rgba(79,196,106,.6); animation:pulse 1.6s infinite; }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(79,196,106,.6);} 70%{box-shadow:0 0 0 8px rgba(79,196,106,0);} 100%{box-shadow:0 0 0 0 rgba(79,196,106,0);} }
+</style>
+<link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">STUDIO</div>
+    <div>
+      <div class="pix" style="font-size:12px">课件生成工坊</div>
+      <div class="sub">模板复用 · 零 token 逐字生成 · 通用可扩展</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="theme-btn" id="themeBtn" data-theme-native>🌗 主题</button>
+  </div>
+
+  <div class="hint">
+    <b>用法（主路径）：</b>① 上传一份 <b>skill 文档（.md Markdown）</b> → 自动解析「入门测 / 逐段精读 / 核心词汇 / 考点解析」并<b>一键生成交互课件</b>；② 实时预览 → 下载成品 / 发布到单元库。
+    也支持旧版<b>参考课件（HTML）模板复用</b>路径（左侧第二个上传区）。<b>全程不消耗 AI 逐字生成</b>。
+  </div>
+
+  <div class="workspace">
+    <!-- 左：上传 + 模板库 -->
+    <div class="panel left">
+      <div class="ph">① 参考课件 / 模板库</div>
+      <div class="pb">
+        <div class="drop" id="skillDrop">
+          <div class="big">⬆ 上传 skill 文档</div>
+          <div class="sm">拖拽或点击选择 <b>.md / .markdown</b><br/>① 含 <code>:::slide</code> 指令 → <b>Markdown 主控模板</b>（Ardot 设计语言）<br/>② 阅读 skill 文档（入门测/精读/词汇/考点）→ 阅读风(fCC×Khan)<br/><a href="/courseware/v93/TEMPLATE_DSL.md" target="_blank" style="color:var(--accent,#10b981)">查看模板语法 →</a></div>
+          <input type="file" id="skillFile" accept=".md,.markdown,.txt" class="hidden" />
+        </div>
+        <div class="drop" id="deckDrop">
+          <div class="big">⬆ 上传参考课件（高级）</div>
+          <div class="sm">拖拽或点击选择 .html / .htm<br/>（旧版模板复用路径）</div>
+          <input type="file" id="deckFile" accept=".html,.htm" class="hidden" />
+        </div>
+        <div class="meta" id="deckMeta">尚未加载模板。</div>
+
+        <div class="btn-row">
+          <button class="btn yellow" id="saveTplBtn">💾 保存模板到库</button>
+        </div>
+
+        <h3 class="group-title" style="margin-top:18px">我的模板库</h3>
+        <ul class="tpl-list" id="tplList"><li class="empty">加载中…</li></ul>
+      </div>
+    </div>
+
+    <!-- 中：内容输入 + 槽位编辑 -->
+    <div class="panel center">
+      <div class="ph">② 新内容 / 槽位填充</div>
+      <div class="pb">
+        <!-- skill 文档（主路径） -->
+        <div id="skillEditor">
+          <div class="field">
+            <label>粘贴 / 编辑 <b>skill 文档</b>（Markdown）</label>
+            <textarea id="skillDocArea" class="code" placeholder="模板模式：用 --- 写 frontmatter（title/accent/font），用 :::slide type=cover|vocab|exam|close|… 分页，内部用 :::grid/:::card/:::split/:::callout/:::mcq/:::tfng/:::flip 控制布局与交互。无 :::slide 则按阅读 skill 文档自动解析。"></textarea>
+            <div class="btn-row">
+              <button class="btn blue" id="genSkillBtn">⚡ 解析并生成课件</button>
+              <label class="btn ghost" for="skillFile" style="cursor:pointer">📄 导入 .md</label>
+            </div>
+            <div class="meta" id="skillMeta">尚未解析。</div>
+          </div>
+        </div>
+
+        <!-- 参考课件模板复用（旧版高级路径） -->
+        <div id="templateEditor" class="hidden">
+          <div class="field">
+            <label>粘贴新单元内容（支持 Markdown：# 标题、段落、- 列表）</label>
+            <textarea id="contentArea" class="code" placeholder="例：
+# DSE 写作 Lesson 02
+## 审题要点
+本次题目讨论…
+- 论点一
+- 论点二"></textarea>
+            <div class="btn-row">
+              <button class="btn blue" id="autoFillBtn">⚡ 自动填充到槽位</button>
+              <button class="btn ghost" id="clearFillBtn">↺ 恢复原始</button>
+              <label class="btn ghost" for="contentFile" style="cursor:pointer">📄 导入 .md/.txt</label>
+              <input type="file" id="contentFile" accept=".md,.markdown,.txt" class="hidden" />
+            </div>
+            <div class="warn hidden" id="overflowWarn"></div>
+          </div>
+
+          <div class="filterbar">
+            <input type="text" id="slotSearch" placeholder="🔍 按原文筛选槽位…" />
+            <div class="ftogs">
+              <label><input type="checkbox" id="fTitle" checked /> 标题</label>
+              <label><input type="checkbox" id="fContent" checked /> 内容</label>
+              <label><input type="checkbox" id="fLabel" /> 标签</label>
+              <label><input type="checkbox" id="fNav" /> 导航</label>
+            </div>
+          </div>
+          <div id="slotEditor"><div class="empty">请先在左侧上传一份参考课件 HTML，系统会自动抽取可编辑的文本槽位。</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：预览 -->
+    <div class="panel right">
+      <div class="ph">③ 实时预览 <span class="live-dot" title="内容变动时自动刷新"></span></div>
+      <div class="pb">
+        <div class="pb-actions">
+          <button class="btn pink" id="downloadBtn">⬇ 下载成品 .html</button>
+          <button class="btn yellow" id="publishBtn">🚀 发布到课件库</button>
+          <button class="btn" id="previewNowBtn">🔄 刷新预览</button>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-empty" id="previewEmpty">
+            <div class="big">⬆ 实时预览区</div>
+            上传左侧<b>参考课件</b>并填写内容后，<br/>这里会<b>实时显示</b>生成的成品课件。<br/>完成后点底部「⬇ 下载成品 .html」保存到本地。
+          </div>
+          <iframe id="preview" sandbox="allow-scripts" title="课件预览"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="exportbar">
+    <div class="eb-info" id="ebInfo">尚未加载 skill 文档 —— 先在左侧上传一份 .md，即可实时预览并下载交互课件。</div>
+    <div class="eb-actions">
+      <button class="btn" id="ebRefresh">🔄 刷新预览</button>
+      <button class="btn pink" id="ebDownload">⬇ 下载成品 .html</button>
+      <button class="btn yellow" id="ebPublish">🚀 发布到课件库</button>
+    </div>
+  </div>
+
+<script src="/courseware/v93/generator.js"></script>
+<script>
+/* =====================================================================
+ * 课件生成工坊 —— 核心逻辑（零依赖，纯浏览器端 + 模板库 API）
+ * 复用机制：抽取参考课件的「DOM 文本节点槽位 + 完整 <style>/<script>」，
+ *          新内容仅替换文本节点 textContent，视觉与交互 100% 保留。
+ * ===================================================================== */
+
+/* ---------- 可扩展的课件类型注册表 ----------
+ * 新增课件类型只需在此追加一项：detect 用于识别，classifySlot 用于槽位分类。
+ */
+const CoursewareTypes = {
+  writing: {
+    label: '写作课件',
+    detect(html){ return /--xdf-green/.test(html); },
+    classifySlot(el, text){
+      const cls = (el.className || '').toString(), tag = el.tagName;
+      if (/page-counter|progress-dots|dot/.test(cls)) return 'nav';
+      if (/^\s*\d+\s*\/\s*\d+\s*$/.test(text)) return 'nav';
+      if (tag === 'H1' || tag === 'H2' || tag === 'H3' || /slide-title|slide-h1|slide-h2|slide-h3|header-bar/.test(cls)) return 'title';
+      if (/sec-label|course-tag|tag/.test(cls) || (text.length <= 14 && /[：:：]/.test(text))) return 'label';
+      return 'content';
+    }
+  },
+  reading: {
+    label: '阅读课件',
+    detect(html){ return /--brand-green/.test(html) || html.includes('practice-mcq') || html.includes('passage-excerpt') || html.includes('--fcc-') || html.includes('--khan-'); },
+    classifySlot(el, text){
+      const cls = (el.className || '').toString(), tag = el.tagName;
+      if (/page-counter|progress/.test(cls) || /^\s*\d+\s*\/\s*\d+\s*$/.test(text)) return 'nav';
+      if (tag === 'H1' || tag === 'H2' || tag === 'H3' || /slide-title|title/.test(cls)) return 'title';
+      if (/sec-label|course-tag/.test(cls)) return 'label';
+      return 'content';
+    }
+  },
+  generic: {
+    label: '通用课件',
+    detect(){ return true; },
+    classifySlot(el, text){
+      const tag = el.tagName;
+      if (/^\s*\d+\s*\/\s*\d+\s*$/.test(text)) return 'nav';
+      if (tag === 'H1' || tag === 'H2' || tag === 'H3') return 'title';
+      if (text.length <= 10) return 'label';
+      return 'content';
+    }
+  }
+};
+
+function detectType(html){
+  if (CoursewareTypes.writing.detect(html)) return 'writing';
+  if (CoursewareTypes.reading.detect(html)) return 'reading';
+  return 'generic';
+}
+
+/* ---------- DOM 文本节点槽位抽取（核心） ----------
+ * 沿 childNodes（含文本节点）记录每个非空文本节点的「索引路径」，
+ * 该路径在骨架不变时稳定可复现 → 生成时按路径 set textContent 即可。
+ */
+function nodeByPath(doc, pathStr){
+  const segs = pathStr.split('/').map(Number);
+  let node = doc.documentElement;
+  for (const s of segs){
+    if (!node || !node.childNodes[s]) return null;
+    node = node.childNodes[s];
+  }
+  return node;
+}
+
+function extractSlots(html){
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const type = detectType(html);
+  const typeDef = CoursewareTypes[type];
+  const slots = [];
+  let counter = 0;
+  (function walk(node, path){
+    node.childNodes.forEach((child, i) => {
+      const childPath = path.concat(i);
+      if (child.nodeType === Node.TEXT_NODE){
+        const txt = child.textContent;
+        if (!txt.trim()) return;                       // 跳过纯空白
+        const pTag = child.parentNode.tagName;
+        if (pTag === 'SCRIPT' || pTag === 'STYLE' || pTag === 'NOSCRIPT') return; // 保留脚本/样式
+        const kind = typeDef.classifySlot(child.parentNode, txt);
+        slots.push({
+          id: 's' + (counter++),
+          path: childPath.join('/'),
+          kind, text: txt, preview: txt.replace(/\s+/g,' ').slice(0, 70)
+        });
+      } else if (child.nodeType === Node.ELEMENT_NODE){
+        walk(child, childPath);
+      }
+    });
+  })(doc.documentElement, []);
+  return { doc, type, typeDef, slots };
+}
+
+/* ---------- 生成成品：按槽位值写回文本节点 ---------- */
+function generateDeck(templateHtml, slots, values){
+  const doc = new DOMParser().parseFromString(templateHtml, 'text/html');
+  for (const slot of slots){
+    const v = values[slot.id];
+    if (v === undefined || v === null) continue;
+    const node = nodeByPath(doc, slot.path);
+    if (node && node.nodeType === Node.TEXT_NODE) node.textContent = v;
+  }
+  return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+}
+
+/* ---------- 轻量 Markdown → 内容块 ---------- */
+function mdToBlocks(md){
+  const lines = (md || '').replace(/\r\n/g,'\n').split('\n');
+  const blocks = []; let i = 0;
+  while (i < lines.length){
+    const line = lines[i];
+    if (!line.trim()){ i++; continue; }
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h){ blocks.push({ type:'h', text:h[2].trim() }); i++; continue; }
+    if (/^[-*]\s+/.test(line)){
+      const items = [];
+      while (i < lines.length && /^[-*]\s+/.test(lines[i])){ items.push(lines[i].replace(/^[-*]\s+/,'')); i++; }
+      blocks.push({ type:'ul', items });
+      continue;
+    }
+    const para = [];
+    while (i < lines.length && lines[i].trim() && !/^(#{1,6})\s/.test(lines[i]) && !/^[-*]\s+/.test(lines[i])){
+      para.push(lines[i].trim()); i++;
+    }
+    blocks.push({ type:'p', text: para.join(' ') });
+  }
+  return blocks;
+}
+
+/* 自动映射：标题→title 槽位，段落/列表→content 槽位（保序） */
+function autoFill(slots, values, md){
+  const blocks = mdToBlocks(md);
+  const titles = blocks.filter(b => b.type === 'h');
+  const paras  = blocks.filter(b => b.type === 'p' || b.type === 'ul');
+  const titleSlots = slots.filter(s => s.kind === 'title');
+  const contentSlots = slots.filter(s => s.kind === 'content');
+  titles.forEach((b,idx) => { if (titleSlots[idx]) values[titleSlots[idx].id] = b.text; });
+  paras.forEach((b,idx) => { if (contentSlots[idx]) values[contentSlots[idx].id] = (b.type === 'ul' ? b.items.join(' / ') : b.text); });
+  const overflow = Math.max(0, titles.length - titleSlots.length) + Math.max(0, paras.length - contentSlots.length);
+  return { usedTitles: Math.min(titles.length, titleSlots.length), usedParas: Math.min(paras.length, contentSlots.length), overflow };
+}
+
+/* ============================ 应用状态 ============================ */
+const state = {
+  mode: '',                 // '' | 'skilldoc' | 'template'
+  templateHtml: '', type: 'generic', slots: [], values: {},
+  sourceName: '', name: '',
+  generatedHtml: '', slideCount: 0, title: ''
+};
+
+/* ---------- DOM 引用 ---------- */
+const $ = (s) => document.querySelector(s);
+const deckDrop = $('#deckDrop'), deckFile = $('#deckFile'), deckMeta = $('#deckMeta');
+const contentArea = $('#contentArea'), slotEditor = $('#slotEditor');
+const preview = $('#preview'), tplList = $('#tplList'), toast = $('#toast');
+
+function showToast(msg){
+  toast.textContent = msg; toast.classList.add('show');
+  clearTimeout(showToast._t); showToast._t = setTimeout(()=>toast.classList.remove('show'), 2600);
+}
+
+/* ---------- 主题 ---------- */
+function applyTheme(t){ document.body.classList.toggle('dark', t === 'dark'); try { localStorage.setItem('studio-theme', t); } catch(e){} }
+$('#themeBtn').addEventListener('click', () => applyTheme(document.body.classList.contains('dark') ? 'light' : 'dark'));
+let savedTheme = 'light';
+try { savedTheme = localStorage.getItem('studio-theme') || 'light'; } catch(e){}
+applyTheme(savedTheme);
+
+/* ---------- 渲染槽位编辑器 ---------- */
+const KIND_LABEL = { title:'标题', content:'内容', label:'标签', nav:'导航' };
+const KIND_ORDER = ['title','content','label','nav'];
+function renderSlots(){
+  if (!state.slots.length){ slotEditor.innerHTML = '<div class="empty">该课件未抽取到可编辑文本，可能内容全在脚本/样式中。</div>'; return; }
+  const q = ($('#slotSearch').value || '').trim().toLowerCase();
+  const show = { title:$('#fTitle').checked, content:$('#fContent').checked, label:$('#fLabel').checked, nav:$('#fNav').checked };
+  let html = ''; let shown = 0;
+  for (const kind of KIND_ORDER){
+    if (!show[kind]) continue;
+    const group = state.slots.filter(s => s.kind === kind && (!q || s.text.toLowerCase().includes(q) || (state.values[s.id]||'').toLowerCase().includes(q)));
+    if (!group.length) continue;
+    html += `<div class="group-title">${KIND_LABEL[kind]}<span class="cnt">${group.length}</span></div>`;
+    for (const s of group){
+      shown++;
+      const val = state.values[s.id] !== undefined ? state.values[s.id] : s.text;
+      const ctrl = (kind === 'content' || kind === 'title')
+        ? `<textarea rows="${kind==='content'?3:2}" data-slot="${s.id}">${escapeHtml(val)}</textarea>`
+        : `<input type="text" data-slot="${s.id}" value="${escapeAttr(val)}" />`;
+      html += `<div class="slot">
+        <div class="sh"><span class="kind ${kind}">${KIND_LABEL[kind]}</span>
+          <span class="orig" title="${escapeAttr(s.text)}">原始：${escapeHtml(s.preview)}</span></div>
+        ${ctrl}
+      </div>`;
+    }
+  }
+  slotEditor.innerHTML = shown ? html : '<div class="empty">没有符合筛选条件的槽位。</div>';
+  slotEditor.querySelectorAll('[data-slot]').forEach(el => {
+    el.addEventListener('input', () => {
+      state.values[el.dataset.slot] = el.value;
+      schedulePreview();
+    });
+  });
+}
+['#slotSearch','#fTitle','#fContent','#fLabel','#fNav'].forEach(sel => {
+  $(sel).addEventListener('input', renderSlots);
+  $(sel).addEventListener('change', renderSlots);
+});
+function escapeHtml(s){ return (s||'').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeAttr(s){ return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ---------- 预览（防抖） ---------- */
+let previewTimer = null;
+function schedulePreview(){ clearTimeout(previewTimer); previewTimer = setTimeout(renderPreview, 300); }
+function renderPreview(){
+  const empty = document.getElementById('previewEmpty');
+  if (state.mode === 'skilldoc'){
+    if (!state.generatedHtml){ if(empty) empty.classList.remove('hidden'); preview.removeAttribute('srcdoc'); return; }
+    if(empty) empty.classList.add('hidden');
+    preview.setAttribute('srcdoc', state.generatedHtml);
+    const info = document.getElementById('ebInfo');
+    if(info) info.innerHTML = '实时预览中：<b>'+state.slideCount+'</b> 页交互课件（阅读风 · fCC×Khan）—— 点「⬇ 下载成品」保存，或「🚀 发布」进单元库。';
+    return;
+  }
+  if (!state.templateHtml){ if(empty) empty.classList.remove('hidden'); preview.removeAttribute('srcdoc'); return; }
+  if(empty) empty.classList.add('hidden');
+  const out = generateDeck(state.templateHtml, state.slots, state.values);
+  preview.setAttribute('srcdoc', out);
+  const info = document.getElementById('ebInfo');
+  if(info) info.innerHTML = '实时预览中：<b>' + state.slots.length + '</b> 个槽位 · ' + (state.type==='reading'?'阅读':'写作') + ' —— 点「⬇ 下载成品」存到本地，或「🚀 发布」进单元库。';
+}
+$('#previewNowBtn').addEventListener('click', renderPreview);
+
+/* ---------- 上传参考课件 HTML ---------- */
+function loadDeckHtml(html, name){
+  const { type, slots } = extractSlots(html);
+  state.mode = 'template';
+  state.templateHtml = html; state.type = type; state.slots = slots;
+  state.values = {}; state.sourceName = name || ''; state.name = (name || '模板').replace(/\.(html?|HTML?)$/,'');
+  const tdef = CoursewareTypes[type];
+  deckMeta.innerHTML = `已加载：<span>${escapeHtml(name||'未命名')}</span><br/>
+    识别类型：<span class="badge ${type}">${tdef.label}</span>
+    文本槽位：<span>${slots.length}</span> 个`;
+  applyModeUI();
+  renderSlots(); schedulePreview();
+  showToast('已抽取 ' + slots.length + ' 个可编辑槽位');
+}
+deckDrop.addEventListener('click', () => deckFile.click());
+deckFile.addEventListener('change', (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => loadDeckHtml(r.result, f.name);
+  r.readAsText(f);
+});
+['dragenter','dragover'].forEach(ev => deckDrop.addEventListener(ev, e => { e.preventDefault(); deckDrop.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev => deckDrop.addEventListener(ev, e => { e.preventDefault(); deckDrop.classList.remove('drag'); }));
+deckDrop.addEventListener('drop', e => {
+  const f = e.dataTransfer.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = () => loadDeckHtml(r.result, f.name); r.readAsText(f);
+});
+
+/* ---------- 内容导入 / 自动填充 ---------- */
+$('#contentFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = () => { contentArea.value = r.result; }; r.readAsText(f);
+});
+$('#autoFillBtn').addEventListener('click', () => {
+  if (!state.slots.length){ showToast('请先上传参考课件'); return; }
+  const res = autoFill(state.slots, state.values, contentArea.value);
+  renderSlots(); schedulePreview();
+  if (res.overflow > 0){
+    const w = $('#overflowWarn');
+    w.classList.remove('hidden');
+    w.textContent = `⚠ 已映射 ${res.usedTitles} 标题 / ${res.usedParas} 段落，另有 ${res.overflow} 段内容超出槽位数量未填入（可手动补充）。`;
+  } else {
+    $('#overflowWarn').classList.add('hidden');
+    showToast(`已自动映射 ${res.usedTitles} 标题 / ${res.usedParas} 段落`);
+  }
+});
+$('#clearFillBtn').addEventListener('click', () => {
+  state.values = {}; renderSlots(); schedulePreview(); showToast('已恢复原始内容');
+});
+
+/* ---------- 下载成品 ---------- */
+$('#downloadBtn').addEventListener('click', () => {
+  if (state.mode === 'skilldoc'){
+    if (!state.generatedHtml){ showToast('请先上传 skill 文档'); return; }
+    const blob = new Blob([state.generatedHtml], { type:'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (state.name || 'courseware') + '.html';
+    a.click(); URL.revokeObjectURL(a.href);
+    showToast('成品已下载');
+    return;
+  }
+  if (!state.templateHtml){ showToast('请先上传参考课件'); return; }
+  const out = generateDeck(state.templateHtml, state.slots, state.values);
+  const blob = new Blob([out], { type:'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (state.name || 'courseware') + '_generated.html';
+  a.click(); URL.revokeObjectURL(a.href);
+  showToast('成品已下载');
+});
+
+/* ---------- 发布到课件库 ---------- */
+$('#publishBtn').addEventListener('click', async () => {
+  if (state.mode === 'skilldoc'){
+    if (!state.generatedHtml){ showToast('请先上传 skill 文档'); return; }
+    const title = prompt('发布标题（将显示在单元库）：', state.title || state.name || '我的单元');
+    if (!title) return;
+    try {
+      const r = await api('/api/studio/publish', {
+        method:'POST',
+        body: JSON.stringify({ type:'reading', name: state.name, title, html: state.generatedHtml, color:'teal' })
+      });
+      showToast('已发布：Unit ' + r.unit + ' → ' + r.file + '（点首页「立即同步」刷新单元库）');
+    } catch(err){ showToast('发布失败：' + err.message); }
+    return;
+  }
+  if (!state.templateHtml){ showToast('请先上传参考课件'); return; }
+  const title = prompt('发布标题（将显示在单元库）：', state.name || '我的单元');
+  if (!title) return;
+  const html = generateDeck(state.templateHtml, state.slots, state.values);
+  const type = state.type === 'reading' ? 'reading' : 'writing';
+  try {
+    const r = await api('/api/studio/publish', {
+      method:'POST',
+      body: JSON.stringify({ type, name: state.name, title, html, color:'teal' })
+    });
+    showToast('已发布：Unit ' + r.unit + ' → ' + r.file + '（点首页「立即同步」刷新单元库）');
+  } catch(err){ showToast('发布失败：' + err.message); }
+});
+
+/* ---------- 常驻底部导出条（确保「实时预览 → 下载成品」始终可达） ---------- */
+function doDownload(){
+  if (state.mode === 'skilldoc'){
+    if (!state.generatedHtml){ showToast('请先上传 skill 文档'); return; }
+    const blob = new Blob([state.generatedHtml], { type:'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (state.name || 'courseware') + '.html';
+    a.click(); URL.revokeObjectURL(a.href);
+    showToast('成品已下载');
+    return;
+  }
+  if (!state.templateHtml){ showToast('请先上传参考课件'); return; }
+  const out = generateDeck(state.templateHtml, state.slots, state.values);
+  const blob = new Blob([out], { type:'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (state.name || 'courseware') + '_generated.html';
+  a.click(); URL.revokeObjectURL(a.href);
+  showToast('成品已下载');
+}
+$('#ebRefresh').addEventListener('click', renderPreview);
+$('#ebDownload').addEventListener('click', doDownload);
+$('#ebPublish').addEventListener('click', () => { $('#publishBtn').click(); });
+
+/* ---------- 模板库 API ---------- */
+async function api(path, opts){
+  const r = await fetch(path, Object.assign({ headers:{ 'Content-Type':'application/json' } }, opts));
+  if (!r.ok) throw new Error((await r.json()).error || r.statusText);
+  return r.json();
+}
+async function refreshTplList(){
+  try{
+    const { templates } = await api('/api/studio/templates');
+    if (!templates.length){ tplList.innerHTML = '<li class="empty">库为空，上传参考课件后点击「保存模板到库」。</li>'; return; }
+    tplList.innerHTML = templates.map(t => `
+      <li class="tpl" data-id="${t.id}">
+        <span class="badge ${t.type}">${CoursewareTypes[t.type]?.label || t.type}</span>
+        <div><div class="tname">${escapeHtml(t.name)}</div><div class="tmeta">${t.slotCount} 槽位 · ${t.sourceName||'—'}</div></div>
+        <span class="del" data-del="${t.id}">删除</span>
+      </li>`).join('');
+    tplList.querySelectorAll('.tpl').forEach(li => li.addEventListener('click', e => {
+      if (e.target.dataset.del) return;
+      loadTemplate(li.dataset.id);
+    }));
+    tplList.querySelectorAll('.del').forEach(b => b.addEventListener('click', async e => {
+      e.stopPropagation();
+      await api('/api/studio/template/' + b.dataset.del, { method:'DELETE' });
+      showToast('模板已删除'); refreshTplList();
+    }));
+  }catch(err){ tplList.innerHTML = '<li class="empty">加载失败：' + escapeHtml(err.message) + '</li>'; }
+}
+async function loadTemplate(id){
+  try{
+    const t = await api('/api/studio/template/' + id);
+    loadDeckHtml(t.html, t.sourceName || t.name);
+    state.name = t.name;
+    showToast('已载入模板：' + t.name);
+  }catch(err){ showToast('载入失败：' + err.message); }
+}
+$('#saveTplBtn').addEventListener('click', async () => {
+  if (!state.templateHtml){ showToast('请先上传参考课件'); return; }
+  const name = prompt('模板名称：', state.name || '我的模板');
+  if (!name) return;
+  try{
+    const { id } = await api('/api/studio/template', {
+      method:'POST',
+      body: JSON.stringify({ name, type: state.type, sourceName: state.sourceName, html: state.templateHtml, slots: state.slots })
+    });
+    state.name = name;
+    showToast('模板已保存：' + name);
+    refreshTplList();
+  }catch(err){ showToast('保存失败：' + err.message); }
+});
+
+/* ===================== skill 文档 → 课件（主路径） ===================== */
+let V93 = { css:null, ardotCss:null, js:null };
+async function loadV93Assets(){
+  if (V93.css && V93.js && V93.ardotCss) return V93;
+  try {
+    const [c, a, j] = await Promise.all([
+      fetch('/courseware/v93/reading-style.css').then(r => r.text()),
+      fetch('/courseware/v93/ardot-style.css').then(r => r.text()),
+      fetch('/courseware/v93/reading-interactions.js').then(r => r.text())
+    ]);
+    V93.css = c; V93.ardotCss = a; V93.js = j;
+  } catch(e){ showToast('V9.3 资源加载失败，课件将无样式'); }
+  return V93;
+}
+
+function applyModeUI(){
+  const sk = document.getElementById('skillEditor');
+  const tp = document.getElementById('templateEditor');
+  const saveTpl = document.getElementById('saveTplBtn');
+  if (state.mode === 'template'){
+    if (sk) sk.classList.add('hidden');
+    if (tp) tp.classList.remove('hidden');
+    if (saveTpl) saveTpl.style.display = '';
+  } else {
+    if (sk) sk.classList.remove('hidden');
+    if (tp) tp.classList.add('hidden');
+    if (saveTpl) saveTpl.style.display = 'none';
+  }
+}
+
+let skillPreviewTimer = null;
+function scheduleSkillPreview(){
+  clearTimeout(skillPreviewTimer);
+  skillPreviewTimer = setTimeout(() => {
+    const el = document.getElementById('skillDocArea');
+    if (el && el.value && el.value.trim()) loadSkillDoc(el.value, 'skill-doc');
+  }, 400);
+}
+
+async function loadSkillDoc(md, name){
+  if (!md || !md.trim()){ showToast('文档为空'); return; }
+  await loadV93Assets();
+  if (!V93.js){ showToast('V9.3 资源未加载，无法生成'); return; }
+  // Markdown 即模板：含 :::slide 指令 → Ardot 设计语言；否则回退阅读风(fCC×Khan)
+  const isTemplate = /:::slide/i.test(md);
+  const css = isTemplate ? V93.ardotCss : V93.css;
+  if (!css){ showToast('V9.3 资源未加载，无法生成'); return; }
+  const res = CoursewareGen.buildFromMarkdown(md, css, V93.js);
+  const { html, count, mode } = res;
+  state.mode = 'skilldoc'; // Markdown 两条路径（模板 / skill-doc 回退）均走此预览/下载分支
+  state.generatedHtml = html;
+  state.slideCount = count;
+  // 提取标题（优先 frontmatter，其次首个 # 标题）
+  let title = '课件';
+  const fm = md.match(/^---\s*\n[\s\S]*?title:\s*([^\n]+)/);
+  const h1 = md.match(/^#\s+(.*)$/m);
+  if (fm) title = fm[1].trim().replace(/^["']|["']$/g, '');
+  else if (h1) title = h1[1].trim();
+  state.title = title;
+  state.name = (title || 'skill-doc').replace(/[^\w一-鿿-]+/g, '_').slice(0, 40);
+  const meta = document.getElementById('skillMeta');
+  if (meta) {
+    const styleNote = mode === 'template'
+      ? '交互课件 <span>' + count + '</span> 页 · Ardot 设计语言（Markdown 主控）'
+      : '交互课件 <span>' + count + '</span> 页 · 阅读风(fCC×Khan)';
+    meta.innerHTML = '已解析：<span>' + escapeHtml(title) + '</span><br/>' + styleNote;
+  }
+  applyModeUI();
+  renderPreview();
+  showToast('已生成 ' + count + ' 页交互课件' + (mode === 'template' ? '（模板模式）' : ''));
+}
+
+/* skill 文档上传 + 实时编辑 */
+const skillDrop = document.getElementById('skillDrop');
+const skillFile = document.getElementById('skillFile');
+if (skillDrop){
+  skillDrop.addEventListener('click', () => skillFile.click());
+  skillDrop.addEventListener('dragenter', e => { e.preventDefault(); skillDrop.classList.add('drag'); });
+  skillDrop.addEventListener('dragover', e => { e.preventDefault(); skillDrop.classList.add('drag'); });
+  skillDrop.addEventListener('dragleave', e => { e.preventDefault(); skillDrop.classList.remove('drag'); });
+  skillDrop.addEventListener('drop', e => {
+    e.preventDefault(); skillDrop.classList.remove('drag');
+    const f = e.dataTransfer.files[0]; if (!f) return;
+    const r = new FileReader(); r.onload = () => { const ta = document.getElementById('skillDocArea'); if(ta) ta.value = r.result; loadSkillDoc(r.result, f.name); }; r.readAsText(f);
+  });
+}
+if (skillFile){
+  skillFile.addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader(); r.onload = () => { const ta = document.getElementById('skillDocArea'); if(ta) ta.value = r.result; loadSkillDoc(r.result, f.name); }; r.readAsText(f);
+  });
+}
+const genSkillBtn = document.getElementById('genSkillBtn');
+if (genSkillBtn) genSkillBtn.addEventListener('click', () => { const ta = document.getElementById('skillDocArea'); if(ta) loadSkillDoc(ta.value, 'skill-doc'); });
+const skillDocArea = document.getElementById('skillDocArea');
+if (skillDocArea) skillDocArea.addEventListener('input', scheduleSkillPreview);
+
+/* ---------- 初始化 ---------- */
+refreshTplList();
+applyModeUI();
+loadV93Assets();
+renderPreview();
+</script>
+  <script src="assets/polish.js"></script>
+</body>
+</html>

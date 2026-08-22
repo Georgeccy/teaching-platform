@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 5 · Media and Communication · 加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:28px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative;margin-bottom:4px}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'\2713';color:#fff;font-size:14px;font-weight:700}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}.topbar .slide-title{display:none}.topbar{padding:0 10px;gap:6px}}
+
+.ce-hints.show{display:block!important}.ce-hints2{display:none}.ce-hints2.show{display:block!important}.cihui-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.cihui-pair{display:inline-flex;align-items:center}.cihui-btn{display:inline-block;padding:6px 14px;border-radius:20px;border:1.5px solid var(--xdf-gold);background:#fff;color:var(--text-1);font-size:17px;font-weight:600;cursor:pointer;transition:all .2s}.cihui-btn:hover{background:var(--xdf-gl);border-color:var(--xdf-green);color:var(--xdf-green)}.cihui-btn.revealed{background:var(--xdf-gl);border-color:var(--xdf-green);color:var(--xdf-green);font-weight:700}.cihui-en{display:none;font-size:16px;color:var(--xdf-green);font-weight:700;margin-left:6px;padding:4px 10px;background:var(--xdf-gl);border-radius:8px}.cihui-en.show{display:inline-block!important}.ce-hints2 span{display:inline-block;background:rgba(26,109,175,.08);padding:2px 10px;border-radius:6px;margin:3px 4px;border:1px solid rgba(26,109,175,.15);font-size:18px}.ce-hints span{display:inline-block;background:rgba(200,93,10,.08);padding:2px 10px;border-radius:6px;margin:3px 4px;border:1px solid rgba(200,93,10,.15)}
+</style>
+</head><body>
+
+<div class="topbar">
+  <span class="course-tag">加速班·Unit5</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck">
+<section class="slide" data-title="封面 · Module 5">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-avatar">G</div>
+      <div class="tb-name">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">加速班</div>
+  </div>
+  <div class="slide-h1">Media and Communication<br><span class="accent">Module 5</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Leaflet, Proposal & Essay Writing</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Module 5 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Leaflet + Proposal</div><div class="sm-sub">传单 + 提案</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Media & Communication</div><div class="sm-sub">Internet, Apps, Social Media</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">180-400 words</div><div class="sm-sub">Part A + Part B</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">Leaflet文体</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">Proposal文体</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">范文精讲</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">真题实战</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>新东方 | 加速班写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Learning Objectives</p>
+<h2 class="slide-h2">🎯 本课学习目标</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>① 掌握 Leaflet 传单的文体特征与格式</h4>
+    <p>了解传单的视觉结构、语言技巧和语气选择，能识别并运用 Headings/Subheadings/Bullet points</p>
+  </div>
+  <div class="card accent">
+    <h4>② 掌握 Proposal 提案的文体特征与格式</h4>
+    <p>掌握 To/From/Subject 抬头格式，学会用 persuasive language 和 formal tone 说服读者</p>
+  </div>
+  <div class="card accent">
+    <h4>③ 完成 Part A 传单写作 + Part B 四道真题分析</h4>
+    <p>精讲 Practice Paper 全部 5 道题目的审题分析和范文翻译</p>
+  </div>
+  <div class="card accent">
+    <h4>④ 精讲 5 篇 DSE 范文逐句翻译</h4>
+    <p>Part A (Leaflet) + Q2 (Email) + Q3 (Proposal) + Q4 (Promo Leaflet) + Q5 (Essay)</p>
+  </div>
+</div>
+</section><section class="slide" data-title="📖 什么是 Leaflet">
+<p class="sec-label">Part One · Leaflet Genre</p>
+<h2 class="slide-h2">📖 什么是 Leaflet（传单）？</h2>
+<div class="task-quote">A leaflet is a small printed sheet or folded piece of paper that provides information or advertises something. It is usually <b>distributed for free</b> in public places.</div>
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>① Distributed for free</h4><p>免费派发 — 和报纸不同，传单不收费，放在公共场所供人取阅</p></div>
+  <div class="card accent"><h4>② Used to advertise</h4><p>广告宣传 — 目的通常是宣传某个产品、服务、活动或信息</p></div>
+  <div class="card accent"><h4>③ Give information</h4><p>提供信息 — 告知读者需要知道的事实、提示或建议</p></div>
+</div>
+<div class="quiz-card" data-correct="0">
+  <div class="quiz-q">Which of the following are correct about leaflets?<br>① They are handed out for free.<br>② They are sold in bookshops.<br>③ They are used to advertise or give information.</div>
+  <div class="quiz-opts">
+    <button class="quiz-opt" onclick="checkQuiz(this)">① and ③ only</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">① and ② only</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">② and ③ only</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">①, ② and ③</button>
+  </div>
+  <div class="quiz-ans">✅ <b>① and ③ only</b> — 传单免费派发（not sold），用于广告或提供信息。② 错误 — 传单不在书店出售。</div>
+</div>
+</section><section class="slide" data-title="📐 Leaflet 格式">
+<p class="sec-label">Part One · Leaflet Format</p>
+<h2 class="slide-h2">📐 Leaflet 的格式要素</h2>
+<table class="rule-table">
+  <tr><th style="width:30%">格式要素</th><th>功能与说明</th></tr>
+  <tr><td class="col-type">Headings 标题</td><td class="col-example">大标题吸引注意力，告诉读者主题是什么<br><i>e.g. "Stay Safe Online!"</i></td></tr>
+  <tr><td class="col-type">Subheadings 小标题</td><td class="col-example">将内容分段，引导读者浏览<br><i>e.g. "Benefits of the Internet"</i></td></tr>
+  <tr><td class="col-type">Bullet points 项目符号</td><td class="col-example">用要点形式列出关键信息，方便快速阅读</td></tr>
+  <tr><td class="col-type">Eye-catching design</td><td class="col-example">通过加粗、颜色、图片、留白等视觉手段抓取注意力</td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>📝 引导学生观察：</b>传单的视觉设计 = 快速抓取注意力。考试中<span class="cloze" onclick="revealCloze(this)" data-answer="不需要真正画图">______</span>，但要<span class="cloze" onclick="revealCloze(this)" data-answer="通过文字描述设计">______</span>。
+</div>
+</section><section class="slide" data-title="🎨 Leaflet 语言特点">
+<p class="sec-label">Part One · Language Features</p>
+<h2 class="slide-h2">🎨 Leaflet 的语言特点</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看每种手法的定义和示例 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">明喻 (Similes)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">将两样事物用 like/as 进行比较<br><i>e.g. The Internet is like a vast ocean of knowledge.</i></div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">头韵 (Alliteration)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">重复开头的辅音<br><i>e.g. Safe surfing starts with smart choices.</i></div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">暗喻 (Metaphors)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">将事物直接说成另一种事物<br><i>e.g. Social media is a double-edged sword.</i></div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">祈使句 (Imperatives)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">命令或邀请读者做某事<br><i>e.g. Join us today! Protect your privacy!</i></div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">反问句 (Rhetorical Questions)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">不需回答的问题，引发思考<br><i>e.g. Do you really know who is watching you online?</i></div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">人称视角 (You/We Approach)</div><div class="flip-hint">Definition</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">用 you 和 we 拉近与读者的距离<br><i>e.g. We all want to stay safe online.</i></div></div>
+  </div>
+</div></div>
+<div class="notes-box mt-l">
+  <b>💡 引导学生回忆：</b>Unit 4 学过的 Rhetorical Question 和 Parallelism，可以迁移到 Leaflet 中。
+</div>
+</section><section class="slide" data-title="🎭 Leaflet 语气">
+<p class="sec-label">Part One · Tone & Register</p>
+<h2 class="slide-h2">🎭 Leaflet 的语气选择</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">传单的语气取决于<span style="color:var(--xdf-green);font-weight:700">目的</span>和<span style="color:var(--xdf-green);font-weight:700">受众</span>——给同学的传单可以用 friendly tone，给政府的提案必须 formal。</p>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-blue)"><h4>Formal 正式</h4><p>严肃的社会议题、政府宣传<br><i>e.g. "Citizens are advised to exercise caution when sharing personal information."</i></p></div>
+  <div class="card accent"><h4>Semi-formal 半正式</h4><p>校园活动、公共信息服务<br><i>e.g. "We recommend that you follow these simple tips for a safer online experience."</i></p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-gold)"><h4>Informal 非正式</h4><p>儿童读物、同龄人传单<br><i>e.g. "Hey! Want to learn some cool internet tricks? Read on!"</i></p></div>
+</div>
+<div class="quiz-card" data-correct="1">
+  <div class="quiz-q">A leaflet on Internet safety for teenagers should use what tone?</div>
+  <div class="quiz-opts">
+    <button class="quiz-opt" onclick="checkQuiz(this)">Formal</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Semi-formal</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Informal</button>
+  </div>
+  <div class="quiz-ans">✅ <b>Semi-formal</b> — 给青少年看的网络安全传单，语气半正式：友善但不随意，专业但不刻板。</div>
+</div>
+</section><section class="slide" data-title="🏋️ Leaflet 练习：Marine Life Boat Tours">
+<p class="sec-label">Part One · Practice</p>
+<h2 class="slide-h2">🏋️ Leaflet 练习：Marine Life Boat Tours</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">现在请同学们完成课本 Activity — 从 A-F 六个选项中选出正确表达填入传单。</p>
+<div class="task-quote">Complete the following leaflet for <b>Marine Life Boat Tours</b> by choosing the most appropriate expressions from options A-F below.<br><br>
+A. explore the ocean's hidden treasures<br>
+B. come along for an unforgettable experience<br>
+C. experienced guides will share their knowledge<br>
+D. spot dolphins, sea turtles and colourful fish<br>
+E. book your tickets online today<br>
+F. a fun and educational trip for all ages</div>
+<div class="ce-item">
+  <div class="ce-cn">1. 标题 / Heading：Discover the Wonders Beneath the Waves! — ________</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>D.</b> spot dolphins, sea turtles and colourful fish</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. 第一段 / Opening paragraph：Join our boat tour and ________</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>A.</b> explore the ocean's hidden treasures</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. 中间段 / Body：On board, ________ about the marine ecosystem.</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>C.</b> experienced guides will share their knowledge</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. 结尾 / Closing：Don't miss out — ________ to secure your spot!</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>E.</b> book your tickets online today</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. 整体口号 / Slogan：It's ________. We can't wait to welcome you aboard!</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>F.</b> a fun and educational trip for all ages</div>
+</div><div class="notes-box mt-m">
+  <b>📝 注意：</b>Leaflet 的语言需要说服力 + 信息性。B 选项 "come along for an unforgettable experience" 也是好的呼吁语，但在本题中 F 更贴合结尾语境。
+</div>
+</section><section class="slide" data-title="📄 什么是 Proposal">
+<p class="sec-label">Part Two · Proposal Genre</p>
+<h2 class="slide-h2">📄 什么是 Proposal（提案）？</h2>
+<div class="task-quote">A proposal is a formal document that <b>presents ideas or suggestions</b> and tries to <b>persuade the reader</b> to accept them. It is <b>well-organised</b> with clear sections and sub-headings.</div>
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>① Present ideas / suggestions</h4><p>提出想法或建议 — 不是评论，不是投诉，而是建设性地提出"应该怎么做"</p></div>
+  <div class="card accent"><h4>② Persuade readers</h4><p>说服读者 — 你需要让读者相信你的建议是可行的、有好处的</p></div>
+  <div class="card accent"><h4>③ Well-organised</h4><p>结构清晰 — 有固定的抬头格式（To/From/Subject）和分段小标题</p></div>
+</div>
+<div class="notes-box mt-l">
+  <b>💡 Proposal 的核心 = 提案 + 说服：</b>你需要让读者相信你的建议是可行的、有好处的。和 Letter to the Editor 不同，Proposal 有固定格式。
+</div>
+</section><section class="slide" data-title="📋 Proposal 格式">
+<p class="sec-label">Part Two · Proposal Format</p>
+<h2 class="slide-h2">📋 Proposal 的格式结构</h2>
+<table class="rule-table">
+  <tr><th style="width:30%">组成部分</th><th>功能与示例</th></tr>
+  <tr><td class="col-type">To / From / Subject</td><td class="col-example">抬头信息：<span class="cloze" onclick="revealCloze(this)" data-answer="收件人 / 发件人 / 主题">______</span><br><i>To: Ms Chan, Head of IT &nbsp; From: Chris Wong &nbsp; Subject: Proposal for a photo-sharing platform</i></td></tr>
+  <tr><td class="col-type">Introduction</td><td class="col-example">说明提案<span class="cloze" onclick="revealCloze(this)" data-answer="目的和背景">______</span><br><i>The purpose of this proposal is to...</i></td></tr>
+  <tr><td class="col-type">Body (sub-headings)</td><td class="col-example">分段介绍<span class="cloze" onclick="revealCloze(this)" data-answer="具体建议和理由">______</span>，每段一个小标题</td></tr>
+  <tr><td class="col-type">Conclusion</td><td class="col-example">总结<span class="cloze" onclick="revealCloze(this)" data-answer="建议的主要内容和整体好处">______</span><br><i>To conclude, this proposal would benefit...</i></td></tr>
+  <tr><td class="col-type">Closing remark</td><td class="col-example">礼貌结束，表达<span class="cloze" onclick="revealCloze(this)" data-answer="希望建议被考虑采纳">______</span><br><i>I hope these suggestions are useful and will be taken into consideration.</i></td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>⚠️ 一定要注意格式！</b>考试中格式不对直接扣 Organisation 分。Useful phrases:<br>
+  • <i>The purpose of this proposal is to...</i><br>
+  • <i>To conclude, this proposal would be of benefit to...</i><br>
+  • <i>I hope these suggestions are useful.</i>
+</div>
+</section><section class="slide" data-title="✍️ Proposal 语言特点">
+<p class="sec-label">Part Two · Language Features</p>
+<h2 class="slide-h2">✍️ Proposal 的语言特点</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">提案的语言比传单更正式、更有说服力。以下每道题的题干隐藏了一个关键语言特点——先猜，再点 ✅ 看答案揭晓：</p>
+<div class="ce-item">
+  <div class="ce-cn">1. A proposal is usually <b>_______</b>: the benefits of each suggestion or idea need to be clearly stated so that the reader is persuaded to support it.<br>👉 这个语言特点叫什么？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Persuasive language（说服性语言）</b> — 明确陈述每个建议的好处，让读者被说服去支持提案。<br><i>e.g. This would allow students to share their work more easily, encouraging greater collaboration.</i></div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. A proposal is usually <b>_______</b> in tone, as the audience is often a person or group in a position of authority.<br>👉 提案的语气应该是什么样的？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Tone — Formal（语气：正式）</b> — 读者通常是有权威的人，因此语气需正式、礼貌、客观。<br><i>e.g. "It is recommended that..." rather than "I think you should..."</i></div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. The <b>_______</b> is commonly used in proposals. It makes the text sound more objective.<br>👉 哪种语态能让提案听起来更客观？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Passive voice（被动语态）</b> — 让提案的语气更客观、更正式。主动语态也可以，但较少见。<br><i>e.g. "A photo-sharing space could be set up on the school server" rather than "We could set up a photo-sharing space."</i></div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. To propose something, the <b>_______</b> such as the future simple, future continuous, or the second conditional (could, would) are used.<br>👉 提案中应该多用哪种时态？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Tense — Future &amp; Conditional（时态：将来时与条件式）</b> — 多用将来时和 could/would 来表达建议与可能性。<br><i>e.g. This would increase membership. Students could upload their photos. The club would benefit.</i></div>
+</div></section><section class="slide" data-title="📝 Proposal 示例：Music Streaming">
+<p class="sec-label">Part Two · Model Example</p>
+<h2 class="slide-h2">📝 Proposal 示例：Music Streaming</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">对照格式表格，逐段分析这篇范文——哪个是 Introduction？哪个是 Body？Closing remark 用了什么句型？</p>
+<div class="para-quote">
+<span class="fn-tag">To/From/Subject</span><b>To:</b> Mr Raymond Chan, Head of Marketing<br><b>From:</b> Chris Wong, Student Representative<br><b>Proposal:</b> Ways to boost "Music is Live" subscribers<br><br>
+<span class="fn-tag">Introduction</span>The purpose of this proposal is to suggest ways to increase the number of subscribers to the "Music is Live" streaming service. Currently, the service has 50,000 subscribers, but there is potential for significant growth.<br><br>
+<span class="fn-tag">Body 1</span><b>1. Offer discounted rates for students</b><br>Many potential subscribers are students who cannot afford the full subscription fee. By offering a 50% discount for full-time students, we could attract a large number of new subscribers. This would also build brand loyalty among young people.<br><br>
+<span class="fn-tag">Body 2</span><b>2. Provide exclusive content</b><br>If we could secure exclusive live performances from popular local artists, subscribers would have a strong incentive to join and remain. Exclusive content is one of the most effective ways to differentiate our service from competitors.<br><br>
+<span class="fn-tag">Conclusion</span><b>To conclude</b>, these two measures — student discounts and exclusive content — would significantly boost subscriber numbers. They are cost-effective and would strengthen our market position.<br><br>
+<span class="fn-tag">Closing</span><b>I hope these suggestions are useful</b> and will be taken into consideration. I would be happy to discuss them further if needed.
+</div>
+<div class="notes-box">
+  <b>📝 关键句型：</b>"The purpose of this proposal is to..." / "By + V-ing, we could..." / "If we could..., ... would have a strong incentive to..." / "To conclude, these measures would significantly..."
+</div>
+</section><section class="slide" data-title="🏀 Proposal 练习：Basketball Competition">
+<p class="sec-label">Part Two · Proposal Practice</p>
+<h2 class="slide-h2">🏀 Proposal 练习：Basketball Competition</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">先让学生自己写 2 分钟，再对照答案——对比自己的 subheading 和老师的 subheading，看看差距在哪里。</p>
+<div class="task-quote">Your school's basketball teams want to enter an inter-school basketball competition but cannot afford the entry fees. Write a <b>proposal to the PE Department</b> asking them to pay for the teams' entry fees.</div>
+<div class="ce-item">
+  <div class="ce-cn">Q1: Write the opening sentence with the purpose of the proposal.</div>
+  <div class="ce-hints" style="display:none"><span>本提案的目的是</span> <span>支付参赛费</span> <span>校际篮球赛</span> <span>定于10月至3月举行</span></div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">本提案目的</button><span class="cihui-en">the purpose of this proposal</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">请求体育部</button><span class="cihui-en">ask the PE Department</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">报名费</button><span class="cihui-en">entry fees</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校际篮球赛</button><span class="cihui-en">inter-school basketball competition</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">预计于…举行</button><span class="cihui-en">scheduled to take place</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">十月至三月</button><span class="cihui-en">October to March</span></div></div>
+  <button class="ce-btn" style="margin:0 8px 0 0;border-color:var(--xdf-gold);color:var(--xdf-gold)" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')">🧩 中文提示词</button>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">The purpose of this proposal is to ask the school's PE Department to pay for the basketball teams' entry fees for the inter-school basketball competition scheduled to take place from October to March.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">Q2: Write 3 appropriate sub-headings for the body of the proposal.</div>
+  <div class="ce-hints" style="display:none"><span>谁会参赛</span> <span>学生兴趣</span> <span>校际活动的重要性</span></div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">建议小标题</button><span class="cihui-en">suggested sub-headings</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">参赛人员</button><span class="cihui-en">who would enter</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学生兴趣</button><span class="cihui-en">student interest</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校际运动</button><span class="cihui-en">inter-school sports</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校际活动的重要性</button><span class="cihui-en">importance of inter-school activities</span></div></div>
+  <button class="ce-btn" style="margin:0 8px 0 0;border-color:var(--xdf-gold);color:var(--xdf-gold)" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')">🧩 中文提示词</button>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Suggested sub-headings:</b><br>1. Who would enter the competition<br>2. Student interest in inter-school sports<br>3. The importance of inter-school activities</div>
+</div><div class="ce-item">
+  <div class="ce-cn">Q3: List 3 benefits (bullet points) of paying the entry fees.</div>
+  <div class="ce-hints" style="display:none"><span>增强体能</span> <span>团队精神</span> <span>学校声誉</span> <span>训练动力</span> <span>归属感</span></div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">增强体能</button><span class="cihui-en">boost physical fitness</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">团队精神</button><span class="cihui-en">team spirit</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学校声誉</button><span class="cihui-en">school reputation</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">更刻苦训练</button><span class="cihui-en">train harder</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">弱势学生</button><span class="cihui-en">less privileged students</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学校荣誉与归属感</button><span class="cihui-en">school pride and belonging</span></div></div>
+  <button class="ce-btn" style="margin:0 8px 0 0;border-color:var(--xdf-gold);color:var(--xdf-gold)" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')">🧩 中文提示词</button>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Benefits:</b><br>• Boost students' physical fitness and team spirit<br>• Enhance the school's reputation in inter-school sports<br>• Provide motivation for students to train harder<br>• Give less privileged students a chance to compete<br>• Foster a stronger sense of school pride and belonging</div>
+</div></section><section class="slide" data-title="🎬 Proposal 练习：Film Club Conclusion">
+<p class="sec-label">Part Two · Conclusion Practice</p>
+<h2 class="slide-h2">🎬 Proposal 练习：Film Club Conclusion</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">写 Conclusion 的技巧：不是简单重复，而是把前面提到的所有好处串成一个有说服力的逻辑链。</p>
+<div class="task-quote">Your school's Film Club wants to buy some historical drama DVDs. You are writing a proposal to the club's committee. The body paragraphs discuss: (1) educational value of historical dramas, (2) cost-sharing with the History Department, and (3) attracting new members. <b>Write the conclusion paragraph.</b></div>
+<p style="font-size:20px;line-height:2.4;margin-top:16px">
+To sum up, buying and showing historical dramas would be of benefit to students. Firstly, <span style="color:var(--text-3);font-size:18px">（购买新DVD的费用可与历史科分担）</span> <span class="cloze" onclick="revealCloze(this)" data-answer="the cost of buying new DVDs could be shared with the History Department">________________</span>. <span style="color:var(--text-3);font-size:18px">（此外）</span> <span class="cloze" onclick="revealCloze(this)" data-answer="Furthermore">________</span>, students who are not interested in comedy or action films may then consider joining the Film Club. This would <span style="color:var(--text-3);font-size:18px">（增加会员人数）</span> <span class="cloze" onclick="revealCloze(this)" data-answer="increase its membership">________</span> and, in turn, <span style="color:var(--text-3);font-size:18px">（增加活动资金）</span> <span class="cloze" onclick="revealCloze(this)" data-answer="increase its funds">________</span>.
+</p>
+</section><section class="slide" data-title="📝 Practice Paper 总览">
+<p class="sec-label">Part Three · Practice Paper</p>
+<h2 class="slide-h2">📝 Practice Paper 题目总览</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px"><b>2 hours.</b> Answer <b>Q1 + ONE from Part B</b>. 引导学生快速浏览所有题目，选择最有把握的 Part B 题。</p>
+<div class="card accent" style="margin-bottom:12px"><h4>Part A — Q1: Internet Safety Leaflet (180-200 words)</h4><p>Genre: Leaflet 传单 — 为青少年写一篇关于安全上网的传单</p></div>
+<div class="card accent" style="margin-bottom:12px"><h4>Part B — Q2: Email to App Developer (380-400 words)</h4><p>Genre: Email — 向 App 开发者报告问题并提出改进建议</p></div>
+<div class="card accent" style="margin-bottom:12px"><h4>Part B — Q3: Proposal for Photo-sharing Space (380-400 words)</h4><p>Genre: Proposal — 向学校 IT 部主管提议建立照片共享平台</p></div>
+<div class="card accent" style="margin-bottom:12px"><h4>Part B — Q4: Promotional Leaflet for Workshop (380-400 words)</h4><p>Genre: Promotional Leaflet — 为社交媒体摄影工作坊写宣传传单</p></div>
+<div class="card accent" style="margin-bottom:12px"><h4>Part B — Q5: Discussion Essay (380-400 words)</h4><p>Genre: Essay — 讨论互联网是否对年轻人有负面影响</p></div>
+<div class="notes-box mt-m">
+  <b>📝 策略建议：</b>审题五要素 — Role / Audience / Purpose / Genre / Register。每道题先过这五步再动笔。
+</div>
+</section><section class="slide" data-title="📋 审题分析 · Part A">
+<p class="sec-label">Part Three · Task Analysis</p>
+<h2 class="slide-h2">📋 审题分析 · Part A (Leaflet)</h2>
+<div class="task-quote">You are an active member of your school's IT Club. The club is organising a campaign to raise awareness of Internet safety among teenagers. <b>Write a leaflet</b> giving tips on how to have a safe online experience and complete the leaflet. Write about 180-200 words.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>引导语：</b>审题五要素：Role/Audience/Purpose/Genre/Register — 每道题先过这五步再动笔。</p>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）— 你是谁？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">An active member of the IT Club（IT 俱乐部的活跃成员）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）— 写给谁看？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Teenagers（青少年）— 同龄人，因此语气应亲切但不随便</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）— 为什么写？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To give tips on having a safe online experience + complete the leaflet（提供安全上网建议 + 完成传单）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. Genre（文体）— 用什么格式？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Leaflet（传单）— 需要 Headings / Subheadings / Bullet points / Eye-catching design</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. Register（语域）— 用什么语气？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Semi-formal</b> — 给同龄青少年的半正式语气，友善但不随意</div>
+</div></section><section class="slide" data-title="🧠 Part A 词伙">
+<p class="sec-label">Part A · Vocabulary</p>
+<h2 class="slide-h2">🧠 Part A 核心词伙（中 → 英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">沟通</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">communicate</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">方便</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">convenient</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">娱乐</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">entertainment</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">信息</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">information</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">上瘾</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">addiction</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">网络欺凌</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">cyberbullying</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">诈骗</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">fraud</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">个人数据</div><div class="flip-hint">Noun phrase</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">personal data</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">身份</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">identity</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">密码</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">password</div></div>
+  </div>
+</div></div></section><section class="slide" data-title="✍️ 范文翻译 · Part A (上)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Part A (上)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Internet Safety Leaflet 范文 · 第 1-8 句 · 逐句中译英。先看中文提示构思英文，再看原文对照。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：标题 — 拥有精彩的上网体验……同时保持安全！</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">拥有精彩的上网体验</button><span class="cihui-en">have an amazing online experience</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">同时保持安全</button><span class="cihui-en">while staying safe</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Have an amazing online experience... while staying safe!</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：互联网是一个奇妙的地方——你只需点击一下就能和朋友聊天、学习新东西、探索整个世界。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一个奇妙的地方</button><span class="cihui-en">an amazing place</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">和朋友聊天</button><span class="cihui-en">chat with friends</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学习新事物</button><span class="cihui-en">learn new things</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">探索整个世界</button><span class="cihui-en">explore the whole world</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">只需点击一下</button><span class="cihui-en">with just one click</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The Internet is an amazing place — you can chat with friends, learn new things and explore the whole world with just one click.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：然而，就像现实世界一样，网上也存在你可能需要警惕的风险。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">就像在现实世界中一样</button><span class="cihui-en">just like in the real world</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">网上存在风险</button><span class="cihui-en">there are risks online</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">需要警惕</button><span class="cihui-en">need to be aware of</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">However, just like in the real world, there are risks online that you may need to be aware of.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句四：这篇传单将帮助你了解互联网的好处，以及如何保护自己免受其危险。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">帮助你了解</button><span class="cihui-en">help you understand</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">互联网的好处</button><span class="cihui-en">the benefits of the Internet</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">保护自己免受其危险</button><span class="cihui-en">protect yourself from its dangers</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">This leaflet will help you understand the benefits of the Internet and how to protect yourself from its dangers.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句五：小标题 — 互联网的好处</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">互联网的好处</button><span class="cihui-en">the benefits of the Internet</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>The Benefits of the Internet</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句六：互联网使我们能够即时、方便地与朋友和家人沟通。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使我们能够沟通</button><span class="cihui-en">allows us to communicate</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">与朋友和家人沟通</button><span class="cihui-en">communicate with friends and family</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">即时且方便地</button><span class="cihui-en">instantly and conveniently</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The Internet allows us to communicate with friends and family instantly and conveniently.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句七：此外，它还是一个出色的娱乐和学习信息来源。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">此外</button><span class="cihui-en">In addition</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一个出色的来源</button><span class="cihui-en">an excellent source of</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">娱乐与学习信息</button><span class="cihui-en">entertainment and learning information</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In addition, it is an excellent source of entertainment and learning information.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句八：你可以观看视频、玩在线游戏、为学校项目做研究——这一切都在你的指尖。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">观看视频</button><span class="cihui-en">watch videos</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">玩在线游戏</button><span class="cihui-en">play online games</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">为学校项目做研究</button><span class="cihui-en">do research for school projects</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一切触手可及</button><span class="cihui-en">all at your fingertips</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">You can watch videos, play online games and do research for school projects — all at your fingertips.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Part A 范文(上) · 第 1-8 句</p></section><section class="slide" data-title="✍️ 范文翻译 · Part A (下)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Part A (下)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Internet Safety Leaflet 范文 · 第 9-15 句 · 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句九：小标题 — 需要警惕的危险</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">需要警惕的危险</button><span class="cihui-en">dangers to watch out for</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Dangers to Watch Out For</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十：不幸的是，上网也伴随着风险，例如网络成瘾、网络欺凌和诈骗。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">上网</button><span class="cihui-en">going online</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">伴随着风险</button><span class="cihui-en">comes with risks</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">网络成瘾、网络欺凌与诈骗</button><span class="cihui-en">Internet addiction, cyberbullying and fraud</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Unfortunately, going online also comes with risks such as Internet addiction, cyberbullying and fraud.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十一：网络成瘾会导致成绩下降、缺乏睡眠和社交隔离。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">可能导致</button><span class="cihui-en">can lead to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">成绩下降</button><span class="cihui-en">falling grades</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">睡眠不足</button><span class="cihui-en">lack of sleep</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">社交孤立</button><span class="cihui-en">social isolation</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Internet addiction can lead to falling grades, lack of sleep and social isolation.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十二：网络欺凌会造成严重的情感伤害，如果它发生在你或朋友身上，你应该立即向信任的成年人报告。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">造成严重的情感伤害</button><span class="cihui-en">cause serious emotional harm</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">发生在你或朋友身上</button><span class="cihui-en">happens to you or a friend</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">立即向可信赖的成年人报告</button><span class="cihui-en">report it to a trusted adult immediately</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Cyberbullying can cause serious emotional harm, and if it happens to you or a friend, you should report it to a trusted adult immediately.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十三：小标题 — 如何保护自己</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">如何保护自己</button><span class="cihui-en">what you can do to protect yourself</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>What You Can Do to Protect Yourself</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十四：首先，切勿与陌生人分享你的个人数据，例如密码或地址。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">切勿分享</button><span class="cihui-en">never share</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">你的个人数据</button><span class="cihui-en">your personal data</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">例如密码或你的地址</button><span class="cihui-en">such as passwords or your address</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">与陌生人</button><span class="cihui-en">with strangers</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Firstly, never share your personal data, such as passwords or your address, with strangers.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十五：其次，请使用强密码并定期更改。最后，如果你在网上看到让你不舒服的内容，请告诉父母或老师。安全上网！</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使用强密码</button><span class="cihui-en">use strong passwords</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">定期更换密码</button><span class="cihui-en">change them regularly</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">告诉家长或老师</button><span class="cihui-en">tell a parent or teacher</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">让你感到不适</button><span class="cihui-en">makes you uncomfortable</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">安全上网</button><span class="cihui-en">stay safe online</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Secondly, use strong passwords and change them regularly. Finally, tell a parent or teacher if you see something online that makes you uncomfortable. Stay safe online!</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Part A 范文(下) · 第 9-15 句 · 全篇约 195 词</p></section><section class="slide" data-title="📋 审题分析 · Part B Q2 (Email)">
+<p class="sec-label">Part B · Q2 Task Analysis</p>
+<h2 class="slide-h2">📋 审题分析 · Part B Q2 (Email)</h2>
+<div class="task-quote">You are a user of a mobile chat application called "Friends Chat". The app has recently made changes to its design and features, and many users including you are unhappy. <b>Write an email</b> to the app developer expressing your concerns and suggesting improvements. Write about 380-400 words.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>引导语：</b>Q2 是 Email — 注意格式：Dear Sir/Madam 开头，Yours faithfully 结尾。和 Proposal 不同，Email 不需要 To/From/Subject。</p>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A user of the "Friends Chat" mobile application（聊天 APP 的用户）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">App developer（App 开发者）— 因此语气要礼貌但有说服力</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To express concerns about recent changes + suggest improvements（表达对近期变更的担忧 + 提出改进建议）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. Genre（文体）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Email（电子邮件）— 需要敬语开头和结尾，不需要 To/From/Subject 抬头</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. Register（语域）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Semi-formal</b> — 给开发者写信，礼貌但直接，不需要过于正式</div>
+</div></section><section class="slide" data-title="🧠 Q2 词伙">
+<p class="sec-label">Q2 · Vocabulary</p>
+<h2 class="slide-h2">🧠 Q2 核心词伙（中 → 英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">外观 / 界面美观</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">appearance</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">清晰度</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">clarity</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">功能</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">function</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">图标</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">icons</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">速度</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">speed</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">用户界面</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">user interface</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">不人性化</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">not user-friendly</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">不方便</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">inconvenient</div></div>
+  </div>
+</div></div></section><section class="slide" data-title="✍️ 范文翻译 · Q2 (上)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q2 (上)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Email to App Developer 范文 · 前半部分（Opening + 通知问题）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：尊敬的先生/女士，我写信是为了表达我对你们聊天应用「Friends Chat」近期更新的担忧。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我写信是为了表达我对……的担忧</button><span class="cihui-en">I am writing to express my concerns about</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">近期的更新</button><span class="cihui-en">the recent updates</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">你们的聊天应用</button><span class="cihui-en">your chat application</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Dear Sir/Madam, I am writing to express my concerns about the recent updates to your chat application, 'Friends Chat'.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：我使用该应用超过两年了，但最近的改动使我的体验明显变差。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一直在使用这款应用</button><span class="cihui-en">have been using the app</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">超过两年</button><span class="cihui-en">for over two years</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使我的体验明显恶化</button><span class="cihui-en">have made my experience noticeably worse</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">I have been using the app for over two years, but the recent changes have made my experience noticeably worse.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：第一个问题是通知系统。以前，当我收到消息时会收到清晰、即时的提醒。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">涉及通知系统</button><span class="cihui-en">concerns the notification system</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">清晰即时的提醒</button><span class="cihui-en">clear and instant alerts</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">每当我收到消息时</button><span class="cihui-en">whenever I got a message</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The first problem concerns the notification system. Previously, I received clear and instant alerts whenever I got a message.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句四：然而，更新后，通知经常延迟或不出现——我错过了好几条朋友发来的重要消息。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">通知经常延迟</button><span class="cihui-en">notifications are often delayed</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">完全不显示</button><span class="cihui-en">do not appear at all</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">错过了几条重要消息</button><span class="cihui-en">missed several important messages</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">来自朋友的</button><span class="cihui-en">from friends</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Since the update, however, notifications are often delayed or do not appear at all — I have missed several important messages from friends.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句五：这让我很难及时沟通，而一个聊天应用，这恰恰是它最根本的功能。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使我难以</button><span class="cihui-en">makes it difficult for me to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">及时沟通</button><span class="cihui-en">communicate in a timely manner</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">最基本的功能</button><span class="cihui-en">the most basic function of</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">聊天应用</button><span class="cihui-en">a chat application</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">This makes it difficult for me to communicate in a timely manner, which is the most basic function of a chat application.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句六：我建议您恢复之前通知设置中允许用户选择警报音和振动模式的选项。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我建议你恢复</button><span class="cihui-en">I would suggest that you restore</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在通知设置中</button><span class="cihui-en">in notification settings</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">提示音与振动模式</button><span class="cihui-en">alert sound and vibration pattern</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">I would suggest that you restore the option in notification settings which allowed users to choose their alert sound and vibration pattern.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句七：另一个问题是新的用户界面。图标变小了，颜色方案也难以阅读，尤其是在夜间模式下。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">另一个问题是</button><span class="cihui-en">Another issue is</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">新的用户界面</button><span class="cihui-en">the new user interface</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">难以阅读</button><span class="cihui-en">hard to read</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">尤其在暗黑模式下</button><span class="cihui-en">especially in dark mode</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Another issue is the new user interface. The icons have become smaller, and the colour scheme is hard to read, especially in dark mode.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句八：界面看起来很杂乱，这降低了应用的易用性。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">看起来杂乱</button><span class="cihui-en">looks cluttered</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">降低了应用的使用便利性</button><span class="cihui-en">reduces the usability of the app</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The interface looks cluttered, which reduces the usability of the app.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q2 范文(上) · 第 1-8 句</p></section><section class="slide" data-title="✍️ 范文翻译 · Q2 (下)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q2 (下)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Email to App Developer 范文 · 后半部分（UI 问题 + 改进建议 + 结尾）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句九：我建议简化设计，改用更大的图标和更清晰的文字对比度。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我建议简化设计</button><span class="cihui-en">I recommend simplifying the design</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使用更大的图标</button><span class="cihui-en">with larger icons</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">更清晰的文字对比度</button><span class="cihui-en">clearer text contrast</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">I recommend simplifying the design with larger icons and clearer text contrast.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十：此外，如果能增加可自定义字体大小的选项，对视力有困难的用户将非常有帮助。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">增加……的选项</button><span class="cihui-en">adding an option for</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">可自定义的字体大小</button><span class="cihui-en">customisable font sizes</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将对……非常有帮助</button><span class="cihui-en">would be very helpful for</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">有视力障碍的用户</button><span class="cihui-en">users with visual difficulties</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Furthermore, adding an option for customisable font sizes would be very helpful for users with visual difficulties.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十一：总的来说，我真心希望你们能认真考虑这些建议并恢复一些原有的功能。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我衷心希望</button><span class="cihui-en">I sincerely hope</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">认真考虑这些建议</button><span class="cihui-en">seriously consider these suggestions</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">恢复一些原有的功能</button><span class="cihui-en">restore some of the original features</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">All in all, I sincerely hope you will seriously consider these suggestions and restore some of the original features.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十二：Friends Chat 一直是一款优秀的应用，稍作调整就能让它再次出色。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一直是一款出色的应用</button><span class="cihui-en">has always been a great app</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">稍作调整</button><span class="cihui-en">with a few adjustments</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">可以再次变得出色</button><span class="cihui-en">can be great again</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Friends Chat has always been a great app, and with a few adjustments, it can be great again.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十三：感谢你花时间阅读这封邮件，我期待在未来的更新中看到这些改进。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">抽出时间阅读这封邮件</button><span class="cihui-en">taking the time to read this email</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我期待看到</button><span class="cihui-en">I look forward to seeing</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">这些改进</button><span class="cihui-en">these improvements</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在未来的更新中</button><span class="cihui-en">in future updates</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Thank you for taking the time to read this email, and I look forward to seeing these improvements in future updates.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十四：此致，敬礼</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">此致敬礼</button><span class="cihui-en">Yours faithfully</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Yours faithfully,<br>[Your Name]</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q2 范文(下) · 第 9-14 句 · 全篇约 390 词</p></section><section class="slide" data-title="📋 审题分析 · Part B Q3 (Proposal)">
+<p class="sec-label">Part B · Q3 Task Analysis</p>
+<h2 class="slide-h2">📋 审题分析 · Part B Q3 (Proposal)</h2>
+<div class="task-quote">You are the president of your school's Computer Club. Your school's IT Department is considering setting up a platform where students can share photos of school events. <b>Write a proposal</b> to Ms Chan, Head of the IT Department, suggesting how this photo-sharing space could be set up and managed. Write about 380-400 words.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>引导语：</b>Q3 是 Proposal — 注意格式！To/From/Proposal 抬头 + subheadings 分段。</p>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">President of the Computer Club（计算机俱乐部主席）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Ms Chan, Head of the IT Department（IT 部主管）— 权威人士，必须用 formal tone</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To propose how a photo-sharing platform could be set up and managed（提议如何建立和管理照片共享平台）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. Genre（文体）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Proposal（提案）— 需要 To/From/Subject 抬头 + subheadings + closing remark</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. Register（语域）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Formal</b> — 给 IT 部主管的提案，语气正式，用被动语态和 persuasive language</div>
+</div></section><section class="slide" data-title="🧠 Q3 词伙">
+<p class="sec-label">Q3 · Vocabulary</p>
+<h2 class="slide-h2">🧠 Q3 核心词伙（中 → 英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">浏览</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">browse</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">数字的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">digital</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">下载</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">download</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">图像</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">image</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">媒体</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">media</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">平台</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">platform</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">上传</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">upload</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">可访问的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">accessible</div></div>
+  </div>
+</div></div></section><section class="slide" data-title="✍️ 范文翻译 · Q3 (上)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q3 (上)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Proposal for Photo-sharing Space 范文 · 前半部分（Proposal Header + Introduction + Benefits）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：抬头 — 致：陈女士，IT 部门主管 / 发件人：计算机俱乐部主席 / 提案：建立校内照片共享平台</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">IT部门主管</button><span class="cihui-en">Head of the IT Department</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">计算机俱乐部主席</button><span class="cihui-en">President of the Computer Club</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">建立校内照片共享平台的提案</button><span class="cihui-en">Proposal for a School Photo-sharing Platform</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>To:</b> Ms Chan, Head of the IT Department<br><b>From:</b> President of the Computer Club<br><b>Subject:</b> Proposal for a School Photo-sharing Platform</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：引言 — 本提案的目的是就如何在校内网上建立一个照片共享空间提出建议。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">本提案的目的是</button><span class="cihui-en">The purpose of this proposal is to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">就……提出建议</button><span class="cihui-en">put forward suggestions on</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">建立照片共享空间</button><span class="cihui-en">a photo-sharing space could be set up</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在校内网上</button><span class="cihui-en">on the school&#39;s Intranet</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The purpose of this proposal is to put forward suggestions on how a photo-sharing space could be set up on the school’s Intranet.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：目前，活动照片分散在学生个人的设备上，没有一个集中的地方供所有人浏览。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">活动照片分散</button><span class="cihui-en">photographs of events are scattered</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在学生个人的设备上</button><span class="cihui-en">across students&#39; personal devices</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">没有集中的地方</button><span class="cihui-en">there is no central location</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">供所有人浏览</button><span class="cihui-en">where everyone can browse them</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Currently, photographs of events are scattered across students’ personal devices, and there is no central location where everyone can browse them.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句四：一个共享平台将大大增强我们学校社区的凝聚力。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一个共享平台</button><span class="cihui-en">A shared platform</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将大大增强</button><span class="cihui-en">would greatly enhance</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我们学校的社区凝聚力</button><span class="cihui-en">the sense of community in our school</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">A shared platform would greatly enhance the sense of community in our school.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句五：分标题 — 对学生带来的好处</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">对学生的好处</button><span class="cihui-en">benefits to students</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Benefits to Students</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句六：首先，一个集中的照片平台将使所有学生都能访问校园活动的数字图像，无论他们是否亲自参加了这些活动。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">集中化的照片平台</button><span class="cihui-en">a centralised photo platform</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校园活动的数码图像</button><span class="cihui-en">digital images of school events</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">所有学生都能访问</button><span class="cihui-en">accessible to all students</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">无论是否</button><span class="cihui-en">whether or not</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">亲自参加了活动</button><span class="cihui-en">attended the events in person</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Firstly, a centralised photo platform would make digital images of school events accessible to all students, whether or not they attended the events in person.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句七：这将帮助缺席活动的学生感到更融入学校社区，并让他们及时了解校园的新动态。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">缺席活动的学生</button><span class="cihui-en">students who missed events</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">感到更融入</button><span class="cihui-en">feel more included</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">让他们及时了解</button><span class="cihui-en">keep them up to date with</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校园里发生的事</button><span class="cihui-en">what has been happening on campus</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">This would help students who missed events feel more included in the school community and keep them up to date with what has been happening on campus.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句八：此外，学生可以下载这些图像用于校刊或个人记录，这对记下他们在校期间的回忆非常有价值。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学生可以下载这些图像</button><span class="cihui-en">students could download the images</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校刊或个人记录</button><span class="cihui-en">school publications or personal records</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">对……非常有价值</button><span class="cihui-en">very valuable for</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">记录他们在校期间的回忆</button><span class="cihui-en">documenting their memories during school years</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Additionally, students could download the images for school publications or personal records, which would be very valuable for documenting their memories during school years.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q3 范文(上) · 第 1-8 句</p></section><section class="slide" data-title="✍️ 范文翻译 · Q3 (下)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q3 (下)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Proposal for Photo-sharing Space 范文 · 后半部分（Management + Conclusion + Closing）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句九：分标题 — 管理与安全</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">管理与安全</button><span class="cihui-en">management and security</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Management and Security</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十：在管理方面，我建议平台由 IT 部门和计算机俱乐部成员共同管理。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在管理方面</button><span class="cihui-en">In terms of management</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">建议</button><span class="cihui-en">it is recommended that</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">由……共同管理</button><span class="cihui-en">co-managed by</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">计算机俱乐部成员</button><span class="cihui-en">members of the Computer Club</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In terms of management, it is recommended that the platform be co-managed by the IT Department and members of the Computer Club.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十一：特别是，计算机俱乐部可以负责每周审核和整理上传的照片，以确保内容合适且高质量。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">负责</button><span class="cihui-en">take responsibility for</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">审核和整理上传的照片</button><span class="cihui-en">moderating and organising uploaded photos</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">每周一次</button><span class="cihui-en">on a weekly basis</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">内容合适且高质量</button><span class="cihui-en">content is appropriate and of high quality</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In particular, the Computer Club could take responsibility for moderating and organising uploaded photos on a weekly basis to ensure that content is appropriate and of high quality.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十二：此外，只有获得授权的人才能访问该平台，这可以通过要求学生使用学校账户登录来实现。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">平台访问权限应仅限于</button><span class="cihui-en">access to the platform should be restricted to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">授权人员</button><span class="cihui-en">authorised persons</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使用学校账号登录</button><span class="cihui-en">log in with their school accounts</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Furthermore, access to the platform should be restricted to authorised persons, which could be achieved by requiring students to log in with their school accounts.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十三：结论 — 总的来说，建立一个校内照片共享平台将使所有学生受益，促进学校精神，并提供一份持久的学校生活数字记录。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">建立校内照片共享平台</button><span class="cihui-en">setting up a school photo-sharing platform</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将使所有学生受益</button><span class="cihui-en">would benefit all students</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">弘扬学校精神</button><span class="cihui-en">promote school spirit</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">校园生活的永久数字记录</button><span class="cihui-en">a lasting digital record of school life</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">To conclude, setting up a school photo-sharing platform would benefit all students, promote school spirit and provide a lasting digital record of school life.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十四：这些建议易于实施且成本低廉，在 IT 部门和计算机俱乐部的支持下即可完成。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">易于实施且成本低廉</button><span class="cihui-en">easy to implement and low in cost</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">可在……的支持下实施</button><span class="cihui-en">could be carried out with the support of</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">IT部门与计算机俱乐部</button><span class="cihui-en">the IT Department and the Computer Club</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">These suggestions are easy to implement and low in cost, and could be carried out with the support of both the IT Department and the Computer Club.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十五：结束语 — 我希望这些建议是有用的，并将得到认真考虑。如果进一步讨论此提案能有所帮助，我很乐意参与。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">被认真考虑</button><span class="cihui-en">taken into serious consideration</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">我很乐意进一步提供帮助</button><span class="cihui-en">I would be happy to help further</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">讨论此提案</button><span class="cihui-en">discussing this proposal</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">会有所帮助</button><span class="cihui-en">would be of assistance</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">I hope these suggestions are useful and will be taken into serious consideration. I would be happy to help further if discussing this proposal would be of assistance.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q3 范文(下) · 第 9-15 句 · 全篇约 395 词</p></section><section class="slide" data-title="📋 审题分析 · Part B Q4 (Promo Leaflet)">
+<p class="sec-label">Part B · Q4 Task Analysis</p>
+<h2 class="slide-h2">📋 审题分析 · Part B Q4 (Promotional Leaflet)</h2>
+<div class="task-quote">Your school's Photography Club is organising a workshop on photography for social media. <b>Write a promotional leaflet</b> to encourage students to join the workshop. Describe what participants will learn and why they should sign up. Write about 380-400 words.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>引导语：</b>Q4 是 Promotional Leaflet — 既是 Leaflet（要有标题、排版设计），又是 Promotional（要说服读者报名）。</p>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Photography Club member / organiser（摄影俱乐部成员/组织者）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Fellow students（同学）— 同龄人，语气要有吸引力但不随意</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To encourage students to sign up for a photography workshop（鼓励学生报名摄影工作坊）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. Genre（文体）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Promotional Leaflet（宣传传单）— 需要 Headings + Bullet points + Persuasive language + Call to action</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. Register（语域）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Semi-formal</b> — 鼓舞人心但不浮夸，用 you/we 拉近距离</div>
+</div></section><section class="slide" data-title="🧠 Q4 词伙">
+<p class="sec-label">Q4 · Vocabulary</p>
+<h2 class="slide-h2">🧠 Q4 核心词伙（中 → 英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">推广</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">promote</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">触达</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">reach</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">订阅 / 关注</div><div class="flip-hint">Verb</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">subscribe</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">图片说明</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">caption</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">吸引眼球的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">eye-catching</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">图像</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">graphics</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">灵感</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">inspiration</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">技能</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">skills</div></div>
+  </div>
+</div></div></section><section class="slide" data-title="✍️ 范文翻译 · Q4 (上)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q4 (上)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Promotional Leaflet for Photography Workshop 范文 · 前半部分（Title + Opening + Workshop Description）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：标题 — 提升你的社交媒体摄影水平！参加我们的独家工作坊</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">提升你的社交媒体摄影水平</button><span class="cihui-en">level up your social media photography</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">参加我们的独家工作坊</button><span class="cihui-en">join our exclusive workshop</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Level Up Your Social Media Photography! Join Our Exclusive Workshop</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：你是否曾浏览过社交媒体，想知道为什么有些照片获得了数百个赞而你的却没有？</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">你是否曾浏览过社交媒体</button><span class="cihui-en">Have you ever scrolled through social media</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">好奇为什么</button><span class="cihui-en">wondered why</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">获得数百个赞</button><span class="cihui-en">get hundreds of likes</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">而你的却没有</button><span class="cihui-en">while yours do not</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Have you ever scrolled through social media and wondered why some photos get hundreds of likes while yours do not?</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：答案往往不在于相机本身，而在于你如何使用它。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">不是相机本身</button><span class="cihui-en">not the camera itself</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">如何使用它</button><span class="cihui-en">how you use it</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The answer is often not the camera itself, but how you use it.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句四：摄影俱乐部很高兴为你带来一个关于社交媒体摄影的实操工作坊，专为初学者和中级摄影师设计。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">很高兴为你带来</button><span class="cihui-en">is excited to bring you</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一个实操工作坊</button><span class="cihui-en">a hands-on workshop</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">关于社交媒体摄影</button><span class="cihui-en">on social media photography</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">为初学者和中级摄影师设计</button><span class="cihui-en">designed for both beginners and intermediate photographers</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The Photography Club is excited to bring you a hands-on workshop on social media photography, designed for both beginners and intermediate photographers.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句五：分标题 — 在工作坊中你会学到什么</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在工作坊中你将学到什么</button><span class="cihui-en">what you will learn at the workshop</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>What You Will Learn at the Workshop</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句六：在为期两小时的课程中，经验丰富的学生摄影师将指导你学习如何为社交媒体拍摄出色照片的基础知识。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在本次两小时的课程中</button><span class="cihui-en">in this two-hour session</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">有经验的学生摄影师</button><span class="cihui-en">experienced student photographers</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将指导你</button><span class="cihui-en">will guide you through</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">拍摄出色照片的基础知识</button><span class="cihui-en">the fundamentals of taking great photos</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In this two-hour session, experienced student photographers will guide you through the fundamentals of taking great photos for social media.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句七：你将学到如何构图以立即吸引观众的眼球。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">构图拍摄</button><span class="cihui-en">compose your shots</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">以获得即时观众吸引力</button><span class="cihui-en">for instant audience appeal</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">You will learn how to compose your shots for instant audience appeal.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句八：你还将发现如何利用自然光和角度，让你的照片在不使用昂贵设备的情况下呈现专业感。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">利用自然光与角度</button><span class="cihui-en">use natural light and angles</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">让你的照片看起来专业</button><span class="cihui-en">make your photos look professional</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">无需昂贵设备</button><span class="cihui-en">without expensive equipment</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">You will also discover how to use natural light and angles to make your photos look professional without expensive equipment.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q4 范文(上) · 第 1-8 句</p></section><section class="slide" data-title="✍️ 范文翻译 · Q4 (下)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q4 (下)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Promotional Leaflet 范文 · 后半部分（Strategies + Benefits + Call to Action）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句九：我们将涵盖的技巧包括：撰写吸引人的图片说明、在帖子中战略性使用标签，以及选择最佳发布时间以最大化触达人数。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">撰写吸引人的图片说明</button><span class="cihui-en">writing engaging captions</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">策略性地使用标签</button><span class="cihui-en">using hashtags strategically</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">选择最佳发布时间</button><span class="cihui-en">choosing the best times to post</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">以最大化触达人数</button><span class="cihui-en">for maximum reach</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The techniques we will cover include writing engaging captions, using hashtags strategically in your posts, and choosing the best times to post for maximum reach.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十：你还可以获得关于如何建立全网一致的视觉风格的实用技巧，这有助于增加你的粉丝数量。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">关于……的实用建议</button><span class="cihui-en">practical tips on</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">打造一致的视觉风格</button><span class="cihui-en">creating a consistent visual style</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">在你的个人主页中</button><span class="cihui-en">across your profile</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">增加你的粉丝</button><span class="cihui-en">grow your followers</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">You will also receive practical tips on creating a consistent visual style across your profile, which helps grow your followers.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十一：分标题 — 为什么你应该参加</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">你为什么应该报名</button><span class="cihui-en">why you should sign up</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>Why You Should Sign Up</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十二：无论你想为自己的个人账号、学校的社交媒体页面还是未来的职业申请提升摄影技能，这个工作坊都是你的不二之选。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">提升你的摄影技巧</button><span class="cihui-en">improve your photography skills</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">为你的个人账号</button><span class="cihui-en">for your personal account</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">未来的求职申请</button><span class="cihui-en">future job applications</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">最佳的起点</button><span class="cihui-en">the perfect place to start</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Whether you want to improve your photography skills for your personal account, the school’s social media pages or future job applications, this workshop is the perfect place to start.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十三：你不仅能学到有价值的技能，还能结识其他对摄影充满热情的同学。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学到宝贵的技能</button><span class="cihui-en">learn valuable skills</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">结识同学</button><span class="cihui-en">meet fellow students</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">对摄影有着共同的热情</button><span class="cihui-en">share a passion for photography</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Not only will you learn valuable skills, but you will also meet fellow students who share a passion for photography.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十四：工作坊将于 11 月 15 日下午 3 点在学校礼堂举行。入场免费，但由于场地有限，必须提前报名。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将于……举行</button><span class="cihui-en">will take place on</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">免费入场</button><span class="cihui-en">entry is free</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">必须报名</button><span class="cihui-en">registration is essential</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">名额有限</button><span class="cihui-en">spaces are limited</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The workshop will take place on 15 November at 3 p.m. in the school hall. Entry is free, but registration is essential as spaces are limited.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十五：不要错过！今天就扫描二维码或访问社团网站报名。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">不要错过</button><span class="cihui-en">Don&#39;t miss out</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">扫描二维码</button><span class="cihui-en">scan the QR code</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">访问社团网站</button><span class="cihui-en">visit the club&#39;s website</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">今天报名</button><span class="cihui-en">sign up today</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Don’t miss out! Scan the QR code or visit the club’s website to sign up today.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q4 范文(下) · 第 9-15 句 · 全篇约 390 词</p></section><section class="slide" data-title="📋 审题分析 · Part B Q5 (Essay)">
+<p class="sec-label">Part B · Q5 Task Analysis</p>
+<h2 class="slide-h2">📋 审题分析 · Part B Q5 (Discussion Essay)</h2>
+<div class="task-quote">Some people argue that the Internet is having a negative effect on young people today. <b>Write an essay</b> discussing this view. You should present arguments both for and against the statement before giving your own conclusion. Write about 380-400 words.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>引导语：</b>Discussion Essay — 必须考虑正方和反方观点，再给出自己的立场。和 Argumentative Essay 不同，Discussion 更强调 balance。</p>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Essay writer — 以一个知情的学生的身份发表观点</div>
+</div><div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">General reader / examiner（一般读者 / 考官）— 需要用清晰的论点和证据说服</div>
+</div><div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To discuss both sides of the argument and give your own conclusion（讨论正反双方观点并给出自己的结论）</div>
+</div><div class="ce-item">
+  <div class="ce-cn">4. Genre（文体）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Discussion Essay（讨论文）— 需要 Introduction + Body (for + against) + Conclusion</div>
+</div><div class="ce-item">
+  <div class="ce-cn">5. Register（语域）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Formal</b> — 学术性和论证性的正式语气</div>
+</div></section><section class="slide" data-title="🧠 Q5 词伙">
+<p class="sec-label">Q5 · Vocabulary</p>
+<h2 class="slide-h2">🧠 Q5 核心词伙（中 → 英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">即时的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">instantaneous</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">不间断的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">non-stop</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">过时的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">outdated</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">被……塑造</div><div class="flip-hint">Verb phrase</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">shaped by</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">世界观</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">world view</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">上瘾的</div><div class="flip-hint">Adjective</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">addicted</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">欺凌</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">bullying</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">不信任</div><div class="flip-hint">Noun</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">distrust</div></div>
+  </div>
+</div></div></section><section class="slide" data-title="✍️ 范文翻译 · Q5 (上)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q5 (上)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Discussion Essay 范文 · 前半部分（Introduction + 正方论点：互联网影响年轻人）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：近年来，关于互联网对年轻人是负面影响多还是正面影响多的争论愈演愈烈。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">近年来</button><span class="cihui-en">In recent years</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">关于……有很多讨论</button><span class="cihui-en">there has been much debate about</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">负面影响多于正面影响</button><span class="cihui-en">more negative than positive effects</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">对年轻人</button><span class="cihui-en">on young people</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In recent years, there has been much debate about whether the Internet has more negative than positive effects on young people.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：虽然互联网无疑带来了许多好处，但一些人认为它正在损害年轻人的发展。本文将探讨双方的观点。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">无疑带来了许多好处</button><span class="cihui-en">has undoubtedly brought many benefits</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">有人认为</button><span class="cihui-en">some argue that</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">正在损害年轻人的发展</button><span class="cihui-en">is harming young people&#39;s development</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">审视争论的双方</button><span class="cihui-en">examine both sides of the argument</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">While the Internet has undoubtedly brought many benefits, some argue that it is harming young people’s development. This essay will examine both sides of the argument.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：分论点一 — 互联网确实会带来负面影响</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">确实可能产生负面影响</button><span class="cihui-en">can indeed have negative effects</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>The Internet Can Indeed Have Negative Effects</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句四：一方面，有人担心互联网使年轻人接触到太多不适当和不可靠的信息。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">一方面</button><span class="cihui-en">On the one hand</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">使年轻人接触到</button><span class="cihui-en">exposes young people to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">不适当与不可靠的信息</button><span class="cihui-en">inappropriate and unreliable information</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">On the one hand, there is concern that the Internet exposes young people to too much inappropriate and unreliable information.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句五：由于社交媒体和即时新闻的推送，年轻人不断接收着未经筛选的内容，这可能扭曲他们对世界的认知。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">社交媒体与即时新闻推送</button><span class="cihui-en">social media and instantaneous news feeds</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">不断接收未经筛选的内容</button><span class="cihui-en">constantly receiving unfiltered content</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">扭曲他们的世界观</button><span class="cihui-en">distort their world view</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">With social media and instantaneous news feeds, young people are constantly receiving unfiltered content, which can distort their world view.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句六：此外，网络成瘾是日益令人担忧的问题。许多年轻人花了大量时间上网，这会影响他们的学习成绩和睡眠模式。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">网络成瘾是日益令人担忧的问题</button><span class="cihui-en">Internet addiction is a growing concern</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">花过多时间上网</button><span class="cihui-en">spend excessive amounts of time online</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">影响他们的学业表现</button><span class="cihui-en">affect their academic performance</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">睡眠模式</button><span class="cihui-en">sleeping patterns</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Furthermore, Internet addiction is a growing concern. Many young people spend excessive amounts of time online, which can affect their academic performance and sleeping patterns.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句七：网络欺凌也对年轻人的心理健康构成严重威胁，因为它可以全天候发生，让孩子们无处可逃。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">对……构成严重威胁</button><span class="cihui-en">poses a serious threat to</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">心理健康</button><span class="cihui-en">mental health</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">全天候发生</button><span class="cihui-en">occur around the clock</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">让受害者无处可逃</button><span class="cihui-en">give victims no escape</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Cyberbullying also poses a serious threat to young people’s mental health, as it can occur around the clock and give victims no escape.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句八：最后，长时间上网减少了面对面社交互动，这可能导致社交技能的下降。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">长时间上网</button><span class="cihui-en">spending long hours online</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">减少面对面的社交互动</button><span class="cihui-en">reduces face-to-face social interaction</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">可能导致社交技能下降</button><span class="cihui-en">can lead to a decline in social skills</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Finally, spending long hours online reduces face-to-face social interaction, which can lead to a decline in social skills.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q5 范文(上) · 第 1-8 句</p></section><section class="slide" data-title="✍️ 范文翻译 · Q5 (下)">
+<p class="sec-label">Model Essay Translation</p>
+<h2 class="slide-h2">✍️ 范文翻译 · Q5 (下)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Discussion Essay 范文 · 后半部分（反方论点：年轻人可以抵御影响 + Conclusion）· 逐句中译英。</p>
+<div class="ce-item">
+  <div class="ce-cn">句九：分论点二 — 然而，年轻人并不像有些人说的那样容易受影响</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">并不像有些人说的那样容易受影响</button><span class="cihui-en">not as easily influenced as some claim</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en"><b>However, Young People Are Not as Easily Influenced as Some Claim</b></div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十：另一方面，许多年轻人非常有能力地对互联网上的信息进行批判性评估。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">另一方面</button><span class="cihui-en">On the other hand</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">完全有能力</button><span class="cihui-en">perfectly capable of</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">批判性地评估信息</button><span class="cihui-en">critically evaluating information</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">On the other hand, many young people are perfectly capable of critically evaluating information on the Internet.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十一：学校现在提供数字素养课程，教导学生如何核实信息来源并识别虚假新闻。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">数字素养课程</button><span class="cihui-en">digital literacy programmes</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">核实信息来源</button><span class="cihui-en">verify sources</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">识别假新闻</button><span class="cihui-en">recognise fake news</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Schools now provide digital literacy programmes that teach students how to verify sources and recognise fake news.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十二：此外，互联网提供了前所未有的获取知识的机会——年轻人可以学习新语言，观看教育视频，并与世界各地的专家交流。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">提供了前所未有的知识获取途径</button><span class="cihui-en">provides unprecedented access to knowledge</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">学习新语言</button><span class="cihui-en">learn new languages</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">观看教育视频</button><span class="cihui-en">watch educational videos</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">与世界各地的专家交流</button><span class="cihui-en">connect with experts from around the world</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">Moreover, the Internet provides unprecedented access to knowledge — young people can learn new languages, watch educational videos and connect with experts from around the world.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十三：以前几代年轻人仅有的过时教科书和有限的信息来源，远不能与互联网提供的丰富信息相比。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">过时的教科书</button><span class="cihui-en">outdated textbooks</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">有限的信息来源</button><span class="cihui-en">limited sources of information</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">前几代的年轻人</button><span class="cihui-en">previous generations of young people</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">与……相比相形见绌</button><span class="cihui-en">pale in comparison with</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">互联网提供的丰富信息</button><span class="cihui-en">the wealth of information the Internet provides</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">The outdated textbooks and limited sources of information available to previous generations of young people pale in comparison with the wealth of information the Internet provides.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十四：结论 — 总的来说，虽然互联网确实带来了不容忽视的风险，但我认为它对年轻人的利弊取决于他们如何使用它。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">确实构成风险</button><span class="cihui-en">does pose risks</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">不容忽视</button><span class="cihui-en">cannot be ignored</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">它对年轻人是有害还是有益</button><span class="cihui-en">whether it harms or benefits young people</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">取决于他们如何使用它</button><span class="cihui-en">depends on how they use it</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">In conclusion, while the Internet does pose risks that cannot be ignored, I believe that whether it harms or benefits young people depends on how they use it.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句十五：有了来自家长和老师的适当指导和监督，年轻人完全能够从互联网中获益，同时将其负面影响降到最低。</div>
+  <div class="cihui-grid"><div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">适当的指导与监督</button><span class="cihui-en">proper guidance and supervision</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">来自家长与老师的</button><span class="cihui-en">from parents and teachers</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">享受互联网的好处</button><span class="cihui-en">reap the benefits of the Internet</span></div> <div class="cihui-pair"><button class="cihui-btn" onclick="var n=this.nextElementSibling;n.classList.toggle('show');this.classList.toggle('revealed')">将其负面影响降至最低</button><span class="cihui-en">minimising its negative impact</span></div></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">With proper guidance and supervision from parents and teachers, young people are well able to reap the benefits of the Internet while minimising its negative impact.</div>
+</div><p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">Q5 范文(下) · 第 9-15 句 · 全篇约 400 词</p></section><section class="slide" data-title="📝 互动练习 · 选择题">
+<p class="sec-label">Review · Multiple Choice</p>
+<h2 class="slide-h2">📝 写作知识选择题</h2>
+<div class="quiz-card" data-correct="2">
+  <div class="quiz-q">Q1: Which is NOT a feature of a leaflet's format?</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">A. Headings and subheadings</button><button class="quiz-opt" onclick="checkQuiz(this)">B. Bullet points</button><button class="quiz-opt" onclick="checkQuiz(this)">C. Past tense narrative</button><button class="quiz-opt" onclick="checkQuiz(this)">D. Eye-catching design</button></div>
+  <div class="quiz-ans">✅ <b>C. Past tense narrative</b> — 传单通常用现在时和将来时，不使用过去时叙事。A、B、D 都是传单的正确格式要素。</div>
+</div>
+<div class="quiz-card" data-correct="0">
+  <div class="quiz-q">Q2: A proposal's tone should generally be:</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Formal</button><button class="quiz-opt" onclick="checkQuiz(this)">Semi-formal</button><button class="quiz-opt" onclick="checkQuiz(this)">Informal</button><button class="quiz-opt" onclick="checkQuiz(this)">Casual and humorous</button></div>
+  <div class="quiz-ans">✅ <b>Formal</b> — 提案是正式文件，读者通常是有权威的人，应该用 formal tone。</div>
+</div>
+<div class="quiz-card" data-correct="2">
+  <div class="quiz-q">Q3: What is the correct structure of a proposal?</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Dear... / Body / Yours faithfully</button><button class="quiz-opt" onclick="checkQuiz(this)">Title only / Bullet points / Slogan</button><button class="quiz-opt" onclick="checkQuiz(this)">To/From/Subject / Introduction / Body / Conclusion / Closing</button><button class="quiz-opt" onclick="checkQuiz(this)">Introduction / Argument / Counter-argument / Conclusion only</button></div>
+  <div class="quiz-ans">✅ <b>To/From/Subject / Introduction / Body / Conclusion / Closing</b> — 这是 Proposal 的完整格式结构。</div>
+</div>
+<div class="quiz-card" data-correct="0">
+  <div class="quiz-q">Q4: Which persuasive technique is commonly used in leaflets?</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Rhetorical questions</button><button class="quiz-opt" onclick="checkQuiz(this)">Past perfect tense</button><button class="quiz-opt" onclick="checkQuiz(this)">Third-person narration only</button><button class="quiz-opt" onclick="checkQuiz(this)">Academic citations</button></div>
+  <div class="quiz-ans">✅ <b>Rhetorical questions</b> — 反问句是传单中常用的说服技巧。另外 Imperatives 和 you/we approach 也是常见手法。</div>
+</div>
+<div class="quiz-card" data-correct="0">
+  <div class="quiz-q">Q5: In a discussion essay, what must you include?</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Arguments for both sides</button><button class="quiz-opt" onclick="checkQuiz(this)">Only your own opinion</button><button class="quiz-opt" onclick="checkQuiz(this)">A title and bullet points</button><button class="quiz-opt" onclick="checkQuiz(this)">Only counter-arguments</button></div>
+  <div class="quiz-ans">✅ <b>Arguments for both sides</b> — Discussion essay 必须考虑正方和反方观点，然后给出自己的结论。</div>
+</div>
+</section><section class="slide" data-title="✏️ 学生作品提交">
+<p class="sec-label">Assignment</p>
+<h2 class="slide-h2">✏️ 学生作品提交与课后作业</h2>
+<div class="task-quote" style="font-style:normal">
+<b>课堂练习：</b>从 Part B Q2-Q5 中任选一题，写 200 词以上提交。下节课批改。<br><br>
+<b>🏠 课后作业：</b><br>
+1. 完成 Practice Paper 未完成的题目。<br>
+2. 写一个 Proposal to the Highways Department about extending public transportation in your district (300 words).
+</div>
+<div class="notes-box mt-l">
+  <b>📝 作业建议：</b>Proposal to Highways Department 要运用本课学到的 To/From/Subject 格式 + sub-headings + persuasive language。参考 Slide 11 的 Music Streaming Proposal 示例来组织你的文章。
+</div>
+</section><section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Summary</p>
+<h2 class="slide-h2">✅ 本课知识清单</h2>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Leaflet 传单格式和语言特点（Headings / Subheadings / Bullet points / Persuasive techniques）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Proposal 提案格式和语言特点（To/From/Subject + Formal tone + Passive voice）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>理解 Leaflet 语气选择（Formal / Semi-formal / Informal 取决于受众和目的）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>Part A 范文精讲：Internet Safety Leaflet 逐句翻译</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>Part B 四道真题审题分析（Q2 Email / Q3 Proposal / Q4 Promo Leaflet / Q5 Essay）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>5 篇范文逐句翻译（Part A + Q2 + Q3 + Q4 + Q5）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>完成课后作业：Proposal to Highways Department</span>
+</div>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Module 5！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:700px;line-height:1.8;margin-bottom:28px">你今天学习了：Leaflet 传单 → Proposal 提案 → Part A 网络安全传单 → Part B (Email / Proposal / Leaflet / Essay) → 5 篇范文翻译 → 审题五要素 → 核心词伙 → 写作知识检查</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section>
+</div>
+
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='\u25b6';
+  }else{
+    if(timerDone){resetTimer();}
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+      else{timerDuration=60;timerRemaining=60;}
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='\u25b6';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='\u23f8';
+  }
+}
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  timerRemaining = timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='\u25b6';
+}
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='\u25b6';
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+  updateUI();
+});
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+}
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u305',weakKey:'wordform',mode:'quiz'};</script>
+</body></html>

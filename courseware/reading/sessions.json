@@ -1,0 +1,54 @@
+{
+  "reading": [
+    {
+      "unit": 1,
+      "title": "Unit 1 Reading",
+      "file": "sessions/unit1.json",
+      "count": 7
+    },
+    {
+      "unit": 2,
+      "title": "DSE Reading Unit 2",
+      "file": "sessions/unit2.json",
+      "count": 7
+    },
+    {
+      "unit": 3,
+      "title": "Cover",
+      "file": "sessions/unit3.json",
+      "count": 13
+    },
+    {
+      "unit": 4,
+      "title": "Lesson 04 · WKCD",
+      "file": "sessions/unit4.json",
+      "count": 10
+    },
+    {
+      "unit": 5,
+      "title": "课程概览",
+      "file": "sessions/unit5.json",
+      "count": 10
+    }
+  ],
+  "pastpaper": [
+    {
+      "year": 2025,
+      "title": "2025 DSE Paper 1（待上线）",
+      "file": null,
+      "count": 0
+    },
+    {
+      "year": 2024,
+      "title": "2024 DSE Paper 1（待上线）",
+      "file": null,
+      "count": 0
+    },
+    {
+      "year": 2023,
+      "title": "2023 DSE Paper 1（待上线）",
+      "file": null,
+      "count": 0
+    }
+  ]
+}

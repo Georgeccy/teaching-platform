@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 教师看板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478;
+      --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --shadow:#2E2A3B; --teal:#2DD4BF;
+    }
+    body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --shadow:#000; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition:background .25s, color .25s; }
+    .pixel { font-family:"Press Start 2P", monospace; }
+    .app { display:flex; min-height:100vh; }
+    .sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+    .logo { font-family:"Press Start 2P",monospace; font-size:13px; line-height:1.7; border:3px solid var(--line); background:var(--blue); color:#fff; padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); margin-bottom:28px; }
+    .nav { display:flex; flex-direction:column; gap:6px; }
+    .nav a { display:flex; align-items:center; gap:10px; padding:11px 12px; color:var(--text); text-decoration:none; border:3px solid transparent; font-weight:500; transition:transform .12s, background .12s, border-color .12s; }
+    .nav a .dot { width:12px; height:12px; background:var(--pink); border:2px solid var(--line); flex-shrink:0; }
+    .nav a:hover { transform:translate(-2px,-2px); border-color:var(--line); box-shadow:3px 3px 0 var(--shadow); background:var(--card); }
+    .nav a.active { background:var(--green); color:#2E2A3B; border-color:var(--line); box-shadow:4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background:#fff; }
+    .sidebar-foot { margin-top:auto; display:flex; justify-content:center; padding-top:20px; }
+    .main { flex:1; min-width:0; padding:24px 32px 48px; }
+    .topbar { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+    .search { flex:1; display:flex; align-items:center; gap:10px; border:3px solid var(--line); background:var(--card); padding:10px 14px; box-shadow:4px 4px 0 var(--shadow); }
+    .search input { flex:1; border:none; background:transparent; outline:none; font-family:inherit; font-size:15px; color:var(--text); }
+    .search .mag { width:14px; height:14px; border:3px solid var(--line); border-radius:50%; position:relative; }
+    .search .mag::after { content:""; position:absolute; width:8px; height:3px; background:var(--line); bottom:-6px; right:-5px; transform:rotate(45deg); }
+    .icon-btn { width:46px; height:46px; flex-shrink:0; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:transform .12s; }
+    .icon-btn:hover { transform:translate(-2px,-2px); }
+    .sync-chip { display:flex; align-items:center; gap:7px; font-size:12px; font-weight:500; border:3px solid var(--line); background:var(--card); box-shadow:3px 3px 0 var(--shadow); padding:8px 11px; color:var(--muted); white-space:nowrap; transition:background .2s,color .2s; }
+    .sync-chip .led { width:10px; height:10px; border:2px solid var(--line); background:var(--green); flex-shrink:0; }
+    .sync-chip.busy .led { background:var(--yellow); animation:pulse .9s infinite; }
+    .sync-chip.err .led { background:var(--pink); }
+    .sync-chip.busy { color:var(--text); }
+    .sync-chip.err { color:var(--pink); }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+    @media (max-width:760px) { .sync-chip { display:none; } }
+    .sec-head { display:flex; align-items:flex-end; justify-content:space-between; margin:8px 0 18px; }
+    .sec-head h2 { font-size:18px; }
+    .sec-head .pixel { font-size:10px; color:var(--muted); }
+    .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:18px; margin-bottom:28px; }
+    .kpi { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:18px; }
+    .kpi .label { font-size:12px; color:var(--muted); margin-bottom:8px; }
+    .kpi .val { font-family:"Press Start 2P"; font-size:20px; }
+    .kpi .val.pink{color:var(--pink)} .kpi .val.blue{color:var(--blue)} .kpi .val.green{color:var(--green)} .kpi .val.yellow{color:#D9A400}
+    .cols { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:28px; }
+    .panel { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:20px; }
+    .panel h3 { font-size:15px; margin-bottom:16px; }
+    .wrow { margin-bottom:12px; }
+    .wrow .top { display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px; }
+    .wbar { height:14px; border:3px solid var(--line); background:var(--bg); }
+    .wbar > i { display:block; height:100%; }
+    .trend { width:100%; height:160px; display:block; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { text-align:left; padding:12px 10px; border-bottom:3px solid var(--line); font-size:14px; }
+    th { font-family:"Press Start 2P"; font-size:9px; color:var(--muted); }
+    tbody tr { cursor:pointer; transition:background .1s; }
+    tbody tr:hover { background:var(--bg); }
+    .pill { font-family:"Press Start 2P"; font-size:8px; padding:5px 7px; border:2px solid var(--line); display:inline-block; }
+    .pill.red{background:var(--pink);color:#fff} .pill.yellow{background:var(--yellow);color:#2E2A3B} .pill.green{background:var(--green);color:#2E2A3B}
+    .detail { border:3px solid var(--line); background:var(--card); box-shadow:6px 6px 0 var(--shadow); padding:22px; margin-top:22px; display:none; }
+    .detail.show { display:block; }
+    .detail h3 { font-size:16px; margin-bottom:16px; }
+    .close-x { float:right; cursor:pointer; font-family:"Press Start 2P"; font-size:12px; border:3px solid var(--line); padding:6px 8px; background:var(--card); box-shadow:3px 3px 0 var(--shadow); }
+    .loading { text-align:center; color:var(--muted); padding:60px 0; }
+    .err { color:var(--pink); font-weight:700; text-align:center; padding:40px 0; }
+    /* 单题用时分析面板 */
+    .tselect { display:flex; align-items:center; gap:10px; margin:10px 0 14px; }
+    .tselect label { font-size:13px; font-weight:700; color:var(--muted); }
+    .tselect select { flex:1; max-width:340px; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); font-family:inherit; font-size:14px; padding:8px 10px; color:var(--text); cursor:pointer; }
+    .tsum { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px; }
+    .tsum .tcell { border:3px solid var(--line); background:var(--card); box-shadow:3px 3px 0 var(--shadow); padding:10px 16px; }
+    .tsum .tcell .l { font-size:11px; color:var(--muted); margin-bottom:4px; }
+    .tsum .tcell .v { font-family:"Press Start 2P"; font-size:15px; }
+    .tsum .tcell .v.pink{color:var(--pink)} .tsum .tcell .v.green{color:var(--green)} .tsum .tcell .v.blue{color:var(--blue)}
+    .trow { display:grid; grid-template-columns:46px 1fr 70px 26px; align-items:center; gap:10px; padding:7px 0; border-bottom:2px solid var(--line); }
+    .trow .q { font-family:"Press Start 2P"; font-size:9px; color:var(--muted); }
+    .tbar { height:16px; border:2px solid var(--line); background:var(--bg); }
+    .tbar > i { display:block; height:100%; transition:width .3s; }
+    .trow .t { font-family:"Press Start 2P"; font-size:9px; white-space:nowrap; }
+    .trow .m { text-align:center; font-weight:800; font-size:14px; }
+    .trow .m.ok{color:var(--green)} .trow .m.no{color:var(--pink)}
+    .tnote { font-size:12px; color:var(--muted); margin-top:12px; line-height:1.7; }
+    .tag-slow { font-size:9px; padding:2px 5px; border:2px solid var(--line); background:var(--pink); color:#fff; margin-left:6px; }
+    footer { margin-top:40px; color:var(--muted); font-size:13px; text-align:center; }
+    @media (max-width:860px){ .cols{grid-template-columns:1fr} .sidebar{display:none} .main{padding:18px} }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">教师<br/>CONSOLE</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学生主页</a>
+        <a href="teacher.html" class="active"><span class="dot"></span>数据看板</a>
+        <a href="dashboard.html"><span class="dot"></span>学生视角</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input type="text" placeholder="搜索学生 / 知识点" id="searchInput" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+        <span id="syncChip" class="sync-chip" title="课件源目录实时同步状态"><span class="led"></span><span id="syncText">同步：就绪</span></span>
+      </div>
+
+      <div id="content"><div class="loading">正在加载班级数据…</div></div>
+
+      <footer>智学平台 · 混合架构 v0.5 · 教师数据看板（数据由 Node 后端聚合）</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    const WEAK = { tfng:'T/F/NG 判断', pronoun:'代词指代', attitude:'态度词推断', wordform:'词形转换', conjunction:'连词语序', intransitive:'不及物陷阱' };
+    const WEAK_COLOR = { tfng:'#FF5D8F', pronoun:'#4D7CFE', attitude:'#FFC83D', wordform:'#4FC46A', conjunction:'#2DD4BF', intransitive:'#9B6BF2' };
+
+    const tbtn = document.getElementById('themeBtn');
+    if (localStorage.getItem('zhixue-theme') === 'dark') { document.body.classList.add('dark'); tbtn.textContent='☀️'; }
+    tbtn.addEventListener('click', () => { document.body.classList.toggle('dark'); const d=document.body.classList.contains('dark'); tbtn.textContent=d?'☀️':'🌙'; localStorage.setItem('zhixue-theme', d?'dark':'light'); });
+
+    ZhiXue.initAuthChip();
+
+    // 实时同步状态指示：轮询 .watch_status.json
+    (function () {
+      var chip = document.getElementById('syncChip');
+      var txt = document.getElementById('syncText');
+      function fmt(ts) {
+        if (!ts) return '未知';
+        var d = new Date(ts), s = Math.floor((Date.now() - d.getTime()) / 1000);
+        if (s < 5) return '刚刚';
+        if (s < 60) return s + ' 秒前';
+        if (s < 3600) return Math.floor(s / 60) + ' 分钟前';
+        return d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+      }
+      function poll() {
+        fetch('/.watch_status.json', { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (s) {
+            if (!s) { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; return; }
+            if (s.status === 'running') { chip.className = 'sync-chip busy'; txt.textContent = '同步中…'; }
+            else if (s.status === 'error') { chip.className = 'sync-chip err'; txt.textContent = '同步失败 · 见日志'; }
+            else { chip.className = 'sync-chip'; txt.textContent = '最后同步 · ' + fmt(s.updatedAt); }
+          })
+          .catch(function () { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; });
+      }
+      poll();
+      setInterval(poll, 5000);
+    })();
+
+    let OVERVIEW = null;
+    ZhiXue.ensureLogin().then(async (u) => {
+      if (u.role !== 'teacher') { document.getElementById('content').innerHTML = '<div class="err">该页面仅教师可访问。<br/><a href="dashboard.html">返回我的看板 →</a></div>'; return; }
+      const data = await ZhiXue.api('/api/teacher/overview');
+      OVERVIEW = data;
+      render(data);
+    }).catch(() => {});
+
+    function render(d) {
+      const k = d.kpis;
+      document.getElementById('content').innerHTML = `
+        <div class="kpis">
+          <div class="kpi"><div class="label">班级平均正确率</div><div class="val pink">${k.classAvg}%</div></div>
+          <div class="kpi"><div class="label">活跃学生</div><div class="val blue">${k.activeStudents}/${k.totalStudents}</div></div>
+          <div class="kpi"><div class="label">平均最长连胜</div><div class="val green">${k.avgStreak}</div></div>
+          <div class="kpi"><div class="label">累计练习量</div><div class="val yellow">${k.totalExercises}</div></div>
+        </div>
+
+        <div class="cols">
+          <div class="panel">
+            <h3>📈 班级近 14 天答题趋势</h3>
+            ${trendSvg(d.trend)}
+          </div>
+          <div class="panel">
+            <h3>📉 班级薄弱知识点排行</h3>
+            ${d.weakRanking.map(w => `
+              <div class="wrow">
+                <div class="top"><span>${w.label}</span><span style="font-family:'Press Start 2P';font-size:9px">${w.mastery}</span></div>
+                <div class="wbar"><i style="width:${w.mastery}%;background:${w.mastery<55?'var(--pink)':w.mastery<70?'var(--yellow)':'var(--green)'}"></i></div>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="sec-head"><h2>👥 学生明细</h2><span class="pixel">CLICK ROW FOR DETAIL</span></div>
+        <div class="panel" style="padding:0;overflow:hidden">
+          <table>
+            <thead><tr><th>姓名</th><th>正确率</th><th>当前连胜</th><th>最长连胜</th><th>已完成</th><th>最薄弱</th></tr></thead>
+            <tbody id="stuBody">
+              ${d.students.map(s => `
+                <tr data-id="${s.id}">
+                  <td><b>${s.name}</b></td>
+                  <td>${accPill(s.accuracy)}</td>
+                  <td>🔥 ${s.streak}</td>
+                  <td>${s.maxStreak}</td>
+                  <td>${s.completed}</td>
+                  <td>${s.weakest.label}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="detail" id="detail"></div>
+      `;
+
+      document.getElementById('searchInput').addEventListener('input', filterRows);
+      document.querySelectorAll('#stuBody tr').forEach(tr => {
+        tr.addEventListener('click', () => openDetail(tr.dataset.id));
+      });
+      ZhiXue.initAuthChip();
+    }
+
+    function accPill(a) {
+      const cls = a>=70?'green':a>=50?'yellow':'red';
+      return `<span class="pill ${cls}">${a}%</span>`;
+    }
+
+    function filterRows(e) {
+      const q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll('#stuBody tr').forEach(tr => {
+        const name = tr.querySelector('td').textContent.toLowerCase();
+        tr.style.display = name.includes(q) ? '' : 'none';
+      });
+    }
+
+    let SESSION_META = null;
+    async function ensureSessionMeta() {
+      if (SESSION_META !== null) return SESSION_META;
+      try {
+        SESSION_META = await fetch('courseware/reading/sessions.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null);
+      } catch (e) { SESSION_META = null; }
+      return SESSION_META;
+    }
+    function sessionLabel(sid) {
+      if (SESSION_META) {
+        const m = String(sid).match(/^reading-u(\d+)$/);
+        if (m) {
+          const u = (SESSION_META.reading || []).find(x => String(x.unit) === m[1]);
+          if (u) return '📖 ' + u.title;
+        }
+      }
+      return sid;
+    }
+
+    async function openDetail(id) {
+      const stu = OVERVIEW.students.find(s => s.id === id);
+      const det = document.getElementById('detail');
+      det.innerHTML = '<div class="loading">加载中…</div>';
+      det.classList.add('show');
+      det.scrollIntoView({behavior:'smooth'});
+      try {
+        const data = await ZhiXue.api('/api/teacher/student/' + id);
+        const p = data.progress;
+        const weakArr = Object.keys(p.weakPoints).map(key => ({key, label:WEAK[key]||key, v:p.weakPoints[key]})).sort((a,b)=>a.v-b.v);
+        det.innerHTML = `
+          <span class="close-x" id="closeDet">✕</span>
+          <h3>${stu.name} 的薄弱点画像</h3>
+          <div style="margin-bottom:6px;color:var(--muted);font-size:13px">正确率 ${stu.accuracy}% · 当前连胜 ${stu.streak} · 已完成 ${stu.completed} 个单元</div>
+          ${weakArr.map(w => `
+            <div class="wrow">
+              <div class="top"><span>${w.label}</span><span style="font-family:'Press Start 2P';font-size:9px">${w.v}</span></div>
+              <div class="wbar"><i style="width:${w.v}%;background:${WEAK_COLOR[w.key]||'var(--blue)'}"></i></div>
+            </div>`).join('')}
+          <div style="margin-top:14px"><span class="pill yellow">建议</span> 优先补习「${weakArr[0].label}」，可在 Reading / Grammar 单元库中定向布置练习。</div>
+
+          <h3 style="margin-top:26px">⏱ 单题作答用时分析</h3>
+          <div class="tselect">
+            <label>选择课程</label>
+            <select id="tSessionSel"><option value="">— 暂无单题计时数据 —</option></select>
+          </div>
+          <div id="timingBody"></div>
+        `;
+        document.getElementById('closeDet').addEventListener('click', () => det.classList.remove('show'));
+        await ensureSessionMeta();
+        renderTiming(p.questionTimings || []);
+      } catch (err) {
+        det.innerHTML = '<div class="err">加载失败：' + err.message + '</div>';
+      }
+    }
+
+    function renderTiming(timings) {
+      const sel = document.getElementById('tSessionSel');
+      const body = document.getElementById('timingBody');
+      if (!sel || !body) return;
+      const bySession = {};
+      timings.forEach(t => { (bySession[t.session] = bySession[t.session] || []).push(t); });
+      const sessions = Object.keys(bySession);
+      if (!sessions.length) {
+        sel.innerHTML = '<option value="">— 暂无单题计时数据 —</option>';
+        body.innerHTML = '<div class="tnote">该学生尚未在「统一阅读播放器」中作答，暂无单题用时记录。可引导学生前往 <a href="reading-app.html" target="_blank" style="color:var(--blue)">统一阅读播放器 →</a> 练习。</div>';
+        return;
+      }
+      sel.innerHTML = sessions.map(s => `<option value="${s}">${sessionLabel(s)}</option>`).join('');
+      function draw(sid) {
+        const arr = (bySession[sid] || []).slice().sort((a,b) => String(a.qid).localeCompare(String(b.qid)) || a.ts - b.ts);
+        const n = arr.length;
+        const totalMs = arr.reduce((s,t)=>s+t.ms,0);
+        const avg = totalMs / n;
+        const maxMs = Math.max(1, ...arr.map(t=>t.ms));
+        const correct = arr.filter(t=>t.correct).length;
+        body.innerHTML = `
+          <div class="tsum">
+            <div class="tcell"><div class="l">题数</div><div class="v">${n}</div></div>
+            <div class="tcell"><div class="l">平均用时</div><div class="v blue">${(avg/1000).toFixed(1)}s</div></div>
+            <div class="tcell"><div class="l">总用时</div><div class="v">${(totalMs/1000).toFixed(0)}s</div></div>
+            <div class="tcell"><div class="l">用时内正确率</div><div class="v ${correct/n>=0.6?'green':'pink'}">${Math.round(correct/n*100)}%</div></div>
+          </div>
+          ${arr.map(t => {
+            const qn = (parseInt(String(t.qid).replace(/\D/g,''),10) || 0) + 1;
+            const sec = t.ms/1000;
+            const isSlow = t.ms > avg * 1.4 && t.ms > 3000;
+            const w = Math.max(4, sec/(maxMs/1000)*100);
+            return `<div class="trow">
+              <span class="q">Q${qn}</span>
+              <div class="tbar"><i style="width:${w.toFixed(1)}%;background:${isSlow?'var(--pink)':'var(--green)'}"></i></div>
+              <span class="t">${sec.toFixed(1)}s${isSlow?'<span class="tag-slow">偏慢</span>':''}</span>
+              <span class="m ${t.correct?'ok':'no'}">${t.correct?'✓':'✗'}</span>
+            </div>`;
+          }).join('')}
+          <div class="tnote">说明：粉色条表示该学生作答明显偏慢（&gt; 平均 1.4 倍且 &gt; 3 秒），可作为课堂针对性讲评的依据。</div>
+        `;
+      }
+      draw(sessions[0]);
+      sel.onchange = () => draw(sel.value);
+    }
+
+    function trendSvg(trend) {
+      const w=320, h=150, pad=18, max=100, n=trend.length;
+      const bw=(w-pad*2)/n;
+      const bars = trend.map((d,i) => {
+        const x=pad+i*bw;
+        const bh=(d.avg/max)*(h-pad*2);
+        const y=h-pad-bh;
+        const col = d.avg>=70?'var(--green)':d.avg>=50?'var(--yellow)':'var(--pink)';
+        return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw-3).toFixed(1)}" height="${bh.toFixed(1)}" fill="${col}" stroke="var(--line)" stroke-width="2"/>`;
+      }).join('');
+      return `<svg class="trend" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="var(--line)" stroke-width="2"/>${bars}</svg>`;
+    }
+  </script>
+</body>
+</html>

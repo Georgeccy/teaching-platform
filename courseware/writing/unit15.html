@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 15 · Blog (1) · 香港加速班写作课 | 成雨</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head><body>
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Unit15</span>
+  <span class="slide-title" id="topbarTitle">Blog (1)</span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 15">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">成</div><div class="tb-name">成雨</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">Blog (1)<br><span class="accent">Will Robots Replace Workers?</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">博客写作 — 机器人是否会取代人类工作者</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 15 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Blog Entry</div><div class="sm-sub">Semi-formal</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Robots &amp; Workers</div><div class="sm-sub">Opinion + Rebuttal</div></div>
+<div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~450 words</div><div class="sm-sub">7 paragraphs</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题构思</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">三个支持段</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">让步+反驳</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">结论+互动</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 本节课目标</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">By the end of this lesson, students will be able to:</p>
+<div class="card accent" style="border-left:4px solid var(--xdf-red);margin-bottom:16px">
+<h4>1. 掌握 blog entry 文体特征、篇章结构</h4>
+<p>Master the genre features and structure of blog entry</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>2. 借助开头段句式完成 blog 开头段写作</h4>
+<p>Use opening paragraph sentence patterns to write blog openings</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>3. 能灵活使用 PEER 结构完成观点论述</h4>
+<p>Flexibly use PEER structure to develop arguments</p>
+</div>
+<div class="card accent">
+<h4>4. 在论述中使用对比论证</h4>
+<p>Use comparison/contrast in argumentation</p>
+</div>
+<div class="task-quote" style="margin-top:20px">You write a blog for your school website. Write a blog entry stating whether you agree or disagree with the motion "Robots will replace workers in the future". Give reasons to support your opinion.</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Task 2A · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题分析</h2>
+<div class="ce-item">
+  <div class="ce-cn">1. <b>Role</b>（你是谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A blogger</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. <b>Audience</b>（写给谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Blog readers</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>3. Purpose</b>（写作目的）</div>
+<div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="checkQuiz(this)">analyze both sides in a balanced and objective way</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">express an opinion and persuade readers to agree</button>
+</div>
+<div class="quiz-ans">✅ <b>express an opinion and persuade readers</b> — Blog entry 需要表达明确立场并说服读者</div>
+</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn">4. <b>Register</b>（正式程度）</div>
+<div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+</div>
+<div class="quiz-ans">✅ <b>semi-formal</b> — Blog 面向读者，可以使用第一人称，语气较轻松但仍需有逻辑</div>
+</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>5. Tone</b>（语气，可多选）</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin:6px 0">
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> logical</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> objective</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> persuasive</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> engaging</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> vivid / descriptive</label>
+</div>
+<button class="ce-btn" onclick="checkTones(this)">✅ 检查答案</button>
+<div class="ce-en">✅ 应选：logical / persuasive / engaging。Blog 需要有逻辑地说服读者，同时保持互动感。</div>
+</div>
+</section><section class="slide" data-title="🧠 Brainstorming">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.1: 以下特质中，哪些属于机器人，哪些属于人类？speed, creativity, accuracy, ethics, efficiency, empathy</span></div>
+<div class="flip-grid g2 mt-m">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">🤖 Robots</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">speed<br>accuracy<br>efficiency</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">👤 Humans</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">creativity<br>ethics<br>empathy</div></div>
+  </div>
+</div>
+</div>
+<div class="think-prompt" style="margin-top:14px"><span class="think-icon">📍</span><span class="think-text">思考3.2: 上一题归纳出来的人类特质，你认为能被机器人取代吗？</span></div>
+<div class="ce-item">
+  <div class="ce-cn"></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">机器人难以拥有创造力、道德、同理心这类品质。更多的是根据人类的指令/程序执行任务。</div>
+</div>
+<div class="think-prompt" style="margin-top:14px"><span class="think-icon">📍</span><span class="think-text">思考3.3: 机器人本身的设计，制造，维护，是否也需要人类来进行？</span></div>
+<div class="ce-item">
+  <div class="ce-cn"></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">需要。从这个角度来看，就算机器人取代了一部分工作，也会创造新的工作岗位。</div>
+</div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">Blog entry 采用七段式结构（含结尾互动）：</p>
+<table class="rule-table">
+<tr><th style="width:22%">Paragraph</th><th>Main content</th></tr>
+<tr><td class="col-type">Opening</td><td class="col-example">Introduce the topic + state opinion<br>引入话题 + 表达立场</td></tr>
+<tr><td class="col-type">Body 1</td><td class="col-example">Support 1: creativity and innovation<br>机器人无法代替人类的创意与创新</td></tr>
+<tr><td class="col-type">Body 2</td><td class="col-example">Support 2: emotions and empathy<br>机器人无法代替人类的情感和同理心</td></tr>
+<tr><td class="col-type">Body 3</td><td class="col-example">Support 3: create new employment opportunities<br>机器人也会创造新的就业岗位</td></tr>
+<tr><td class="col-type">Body 4</td><td class="col-example">Counter-argument: improve efficiency (让步)<br>Rebuttal: assist workers, not replace (反驳)</td></tr>
+<tr><td class="col-type">Conclusion</td><td class="col-example">Restate opinion + call for action<br>重申观点 + 呼吁行动</td></tr>
+<tr><td class="col-type">Ending</td><td class="col-example">Reader Engagement — 鼓励评论交流</td></tr>
+</table>
+</section><section class="slide" data-title="✍️ 开头段 Task 5A">
+<p class="sec-label">Part 5 · Opening Paragraph</p>
+<h2 class="slide-h2">✍️ 开头段 Task 5A + 句式模版</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 5A: 根据括号中的提示，补齐开头段</p>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P1 >>>>>>>> Opening</i><br><br>
+<b><i>Will Robots Really Replace Human Workers?</i></b><br><br>
+<i>Hi everyone,</i><br><br>
+<span class="cloze" onclick="revealCloze(this)" data-answer="Recently, I watched a debate on">______</span> (最近，我看了一场关于……的辩论) the motion "Robots will replace workers in the future". It was an interesting discussion and <span class="cloze" onclick="revealCloze(this)" data-answer="it made me think seriously about the role of robots">______</span> (它让我认真思考了机器人的作用/角色) in our society. <span class="cloze" onclick="revealCloze(this)" data-answer="Personally, I disagree with the motion">______</span> (就个人而言，我不同意这个辩题) because I believe robots can replace some jobs, but they can never completely <i>replace human workers.</i>
+</div>
+<div class="card accent mt-m" style="font-size:16px">
+<h4>Blog 开头段万能模版</h4>
+<p><b>第一句 背景引入：</b><br><i>Recently, I watched a debate on / read a book about ...</i> / <i>Recently, I came across a discussion about ...</i></p>
+<p><b>第二句 交代话题：</b><br><i>The topic caught my attention because … is becoming an increasingly important part of our lives.</i> / <i>It made me think seriously about the role of …</i></p>
+<p><b>第三句 表明立场：</b><br><i>Personally, I agree/disagree with the motion because ...</i> / <i>In my opinion, although …, …</i> / <i>While it is true that …, I believe that …</i></p>
+</div>
+</section><section class="slide" data-title="✏️ Task 5B 开头段练习">
+<p class="sec-label">Task 5B · Opening Paragraph Practice</p>
+<h2 class="slide-h2">✏️ Task 5B: 根据提示重新写出本文的开头段</h2>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P1 >>>>>>>> Opening</i><br><br>
+[背景引入，句式2] <span class="cloze" onclick="revealCloze(this)" data-answer="Recently, I came across a discussion about whether robots will replace workers in the future.">______</span><br>
+[交代话题，句式1] <span class="cloze" onclick="revealCloze(this)" data-answer="This topic caught my attention because technology is becoming an increasingly important part of our lives.">______</span><br>
+[表明立场，句式3] <span class="cloze" onclick="revealCloze(this)" data-answer="While it is true that robots can improve productivity, I believe that they cannot fully replace human beings.">______</span>
+</div>
+</section><section class="slide" data-title="✍️ Body 1 Task 6A">
+<p class="sec-label">Part 6 · Body 1 — Creativity</p>
+<h2 class="slide-h2">✍️ Body 1: 创新段 Task 6A</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 6A: 根据括号中的提示，补齐主体段1</p>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P2 >>>>>>>> Body 1 — Creativity</i><br><br>
+<b>Point:</b> First of all, many jobs require creativity and innovation, <span class="cloze" onclick="revealCloze(this)" data-answer="which robots cannot fully replicate">______</span> (机器人无法完全复制/替代).<br><br>
+<b>Explain:</b> <span class="cloze" onclick="revealCloze(this)" data-answer="While robots are excellent at following instructions and performing programmed tasks">______</span> (虽然机器人非常擅长遵循指令和执行程序化的任务), they struggle to think outside the box or generate original ideas. They may find it difficult to perform jobs that depend heavily on creative thinking.<br><br>
+<b>Example:</b> For example, <span class="cloze" onclick="revealCloze(this)" data-answer="artists, designers and entrepreneurs">______</span> (艺术家、设计师和企业家) often rely on imagination and creativity to solve problems and develop new products.<br><br>
+<b>Result:</b> <span class="cloze" onclick="revealCloze(this)" data-answer="Since these abilities are uniquely human">______</span> (因为这些能力是人类所独有的), robots are unlikely to replace workers in such professions.
+</div>
+</section><section class="slide" data-title="📐 PEER + Task 6B">
+<p class="sec-label">Part 6 · PEER Formula + Task 6B</p>
+<h2 class="slide-h2">📐 PEER 论证公式 + Task 6B</h2>
+<table class="rule-table" style="font-size:17px;margin-bottom:14px">
+<tr><th style="width:15%"></th><th>功能</th><th>作用</th></tr>
+<tr><td class="col-type"><b>P</b> (Point)</td><td>What is your point?</td><td class="col-example">表明观点</td></tr>
+<tr><td class="col-type"><b>E</b> (Explain)</td><td>Why / How?</td><td class="col-example">展开解释</td></tr>
+<tr><td class="col-type"><b>E</b> (Example)</td><td>How / what?</td><td class="col-example">举例 / 列举 / 具体化</td></tr>
+<tr><td class="col-type"><b>R</b> (Result)</td><td>So what? Why it matters?</td><td class="col-example">结果 / 影响 / 最终判断</td></tr>
+</table>
+<div class="hw-card">
+<h4>🌟 Task 6B: 根据PEER论证公式，在句首横线上填入每句话的功能</h4>
+<p>回顾 Body 1 范文中的四句话，分别标注它们属于 P / E / E / R 中的哪个功能。</p>
+</div>
+<div class="notes-box mt-m">
+<b>📝 PEER 灵活运用：</b>PEER 是一个整体框架，具体的逻辑链可以有所合并或增补。如一句话中结合 explain+example；或者在完成一个 explain 后，并列展开 further explain。
+</div>
+</section><section class="slide" data-title="✍️ Body 2 Task 7A">
+<p class="sec-label">Part 7 · Body 2 — Emotions</p>
+<h2 class="slide-h2">✍️ Body 2: 情感段 Task 7A</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 7A: 根据提示完成 body 2</p>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P3 >>>>>>>> Body 2 — Emotions</i><br><br>
+<b>Point:</b> 此外，情商是另一个人类具有明显优势的领域。<br>
+<span class="cloze" onclick="revealCloze(this)" data-answer="Furthermore, emotional intelligence is another area where humans have a clear advantage.">______</span><br><br>
+<b>Explain:</b> 解释情感在职业中有何存在的必要？<br>
+Many occupations involve <span class="cloze" onclick="revealCloze(this)" data-answer="understanding people's feelings, building relationships and providing emotional support">______</span>（理解他人的感受、建立人际关系以及提供情感支持）.<br><br>
+<b>Example:</b> 有哪些职业可以作为例子？<br>
+Teachers encourage students when they face difficulties, while <span class="cloze" onclick="revealCloze(this)" data-answer="doctors comfort patients during challenging times">______</span> (医生在困难时期安慰病人).<br><br>
+<b>Further explain:</b> 对比论述，机器人是否无法完成上述工作任务？<br>
+By contrast, although robots may be able to simulate certain responses, <span class="cloze" onclick="revealCloze(this)" data-answer="they cannot genuinely empathize with others.">______</span> (它们无法真正地与他人共情)<br><br>
+<b>Result:</b> 因此，在需要人际交往技能的工作中，人类工作者仍然是不可或缺的。<br>
+<span class="cloze" onclick="revealCloze(this)" data-answer="Therefore, human workers remain essential in jobs that require interpersonal skills.">______</span>
+</div>
+</section><section class="slide" data-title="🔘 Language Bank 对比语言">
+<p class="sec-label">Part 7 · Think 7.1 + Language Bank</p>
+<h2 class="slide-h2">🤔 思考7.1 + Language Bank — 对比语言</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考7.1: 若去掉 further explain 这一句，论述的说服力是否会下降？</span></div>
+<div class="ce-item">
+  <div class="ce-cn"></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">会下降。对比论证可以使论述更具深度，提升说服力。</div>
+</div>
+<div class="card accent mt-m">
+<h4>🔘 Language Bank — Making Comparisons 对比语言</h4>
+<table class="rule-table" style="font-size:17px;margin-top:8px">
+<tr><th style="width:25%">类型</th><th>句式</th></tr>
+<tr><td class="col-type">同一句比较</td><td class="col-example"><i>A…, while/whereas B …</i><br><i>A can …, but B can ...</i></td></tr>
+<tr><td class="col-type">两句话比较</td><td class="col-example">第一句 <i>A …</i> 第二句 <i>In contrast, B …</i><br>第一句 <i>A …</i> 第二句 <i>However, B …</i><br>第一句 <i>A …</i> 第二句 <i>On the other hand, B …</i></td></tr>
+</table>
+</div>
+<div class="notes-box mt-m">
+<b>📌 Notes:</b> <i>although</i> 是让步连接词，不是真正意义上的比较。
+</div>
+</section><section class="slide" data-title="📝 Body 3 Homework">
+<p class="sec-label">Part 8 · Body 3 — Employment (Homework)</p>
+<h2 class="slide-h2">📝 Body 3: Homework 范文</h2>
+<div class="hw-card">
+<h4>Homework: 根据提示完成主体段3 — 就业</h4>
+<p><b>Point:</b> 机器人这一产业本身也会创造就业<br><b>Explain:</b> 科技的发展本身由人来推动（研发、运作、维护）<br><b>Example:</b> 机器人产业需要哪些人类岗位？<br><b>Result:</b> 机器人并不会完全取代人类，反而需要人类</p>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s12-ans');a.classList.toggle('show')">📖 查看参考范文</button>
+<div class="ce-en" id="s12-ans" style="line-height:1.9;font-size:17px"><i>Moreover, technological advancement often creates new employment opportunities instead of simply eliminating existing ones. As new technologies become more widely used, companies need skilled workers to develop, operate and maintain them, leading to the creation of entirely new industries and professions. For instance, the rapid growth of the robotics industry has increased the demand for robotics engineers, software developers and maintenance technicians. In addition, many companies now hire specialists to design, program and manage artificial intelligence systems. Therefore, rather than replacing all workers, robots are likely to create new career opportunities for people with the right skills.</i></div>
+</section><section class="slide" data-title="✍️ Body 4 Task 9A">
+<p class="sec-label">Part 9 · Body 4 — Counter-argument & Rebuttal</p>
+<h2 class="slide-h2">✍️ Body 4: 反方观点与反驳 Task 9A</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 9A: 根据提示完成第四个主体段</p>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P5 >>>>>>>> Body 4 — Counter-argument & Rebuttal</i><br><br>
+<i>Admittedly, robots are becoming increasingly powerful and efficient. In factories,</i> <span class="cloze" onclick="revealCloze(this)" data-answer="they can work around the clock without getting tired and perform repetitive tasks more accurately than humans">______</span> (它们可以夜以继日地工作而不感到疲倦，并且能够比人类更准确地执行重复性任务). As a result, some routine jobs may eventually disappear. Nevertheless, this does not necessarily mean that robots will replace all workers. <span class="cloze" onclick="revealCloze(this)" data-answer="As mentioned earlier, human creativity and emotional intelligence remain essential in many professions">______</span> (如前文所述，人类的创造力和情商在许多职业中仍然至关重要), while technological advancement continues to generate new career opportunities. Therefore, robots are more likely to transform the workplace than eliminate the need for human workers altogether.
+</div>
+</section><section class="slide" data-title="🔘 结构句式 反方/反驳">
+<p class="sec-label">Structure & Sentence Patterns · Counter-argument & Rebuttal</p>
+<h2 class="slide-h2">🔘 结构句式 — 引出反方 / 反驳 / 论述</h2>
+<div class="card accent" style="margin-bottom:14px">
+<h4>引出反方观点</h4>
+<p>• <i>Admittedly, …</i><br>• <i>Some people may argue that…</i><br>• <i>Proponents of … may suggest that …</i></p>
+</div>
+<div class="card accent" style="margin-bottom:14px">
+<h4>反驳反方观点</h4>
+<p>• <i>However, this claim ignores the reality that …</i><br>• <i>Nevertheless, this does not necessarily mean that …</i><br>• <i>While</i> 让步承认反方合理的地方, <i>this argument overlooks the fact that</i> (没有必要性) …</p>
+</div>
+<div class="card accent">
+<h4>论述反驳理由</h4>
+<p>• <i>As discussed above, ...</i> (若反驳理由已在上文完成论述——如本文前三段已经论述了这种非必要性——这里再做总结强调即可)<br>• <i>As mentioned earlier, ...</i><br>• <i>As explained previously, ...</i><br>• <i>For the reasons outlined above, ...</i></p>
+</div>
+</section><section class="slide" data-title="✍️ 结论&收尾 Task 10A">
+<p class="sec-label">Part 10 · Conclusion & Ending</p>
+<h2 class="slide-h2">✍️ 结论 &amp; 收尾 Task 10A</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 10A: 根据提示完成结论和收尾段</p>
+<div class="para-quote" style="font-size:17px;line-height:1.9">
+<i>P6-7 >>>>>>>> Conclusion & Ending</i><br><br>
+<i>To conclude, I believe robots will continue to change the workplace and take over certain routine tasks. Nevertheless, human creativity and empathy remain irreplaceable.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="Instead of worrying about robots replacing us, we should focus on learning new skills and working alongside technology">______</span> (与其担心机器人取代我们，不如专注于学习新技能并与技术协作).<br><br>
+<i>What do you think?</i> <span class="cloze" onclick="revealCloze(this)" data-answer="Will robots become our competitors or our partners in the future?">______</span> (未来，机器人会成为我们的竞争对手还是合作伙伴？) <i>Feel free to share your thoughts in the comments below!</i><br><br>
+<i>Thanks for reading!</i>
+</div>
+<div class="notes-box mt-m">
+<b>📝 结尾思路：</b>① 总结论点 ② 呼吁行动 ③（可另起一段）读者互动
+</div>
+</section><section class="slide" data-title="📋 总结">
+<p class="sec-label">Part 12 · Summary</p>
+<h2 class="slide-h2">📋 知识清单 Check Your Learning</h2>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 文体认知 Genre Awareness</h4>
+<p>了解 blog entry 的基本特点：有标题、开场问候（可选）、可使用第一人称、与读者有互动；主体内容偏议论性，可参照 PEER 结构展开。</p>
+</div>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 文章结构 Overall Structure</h4>
+<p>Opening → Support 1 创新 → Support 2 情感 → Support 3 创造就业 → Counter-argument &amp; Rebuttal → Conclusion &amp; Ending</p>
+</div>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 段落结构 Body Paragraph Structure</h4>
+<p>PEER: Point → Explain → Example → Result。注意 PEER 是一个整体框架，具体逻辑链可以合并或增补。</p>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s16-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div class="ce-en" id="s16-exp" style="display:none;line-height:2.0">
+<b>常用表达 Useful Expressions:</b><br>
+• <i>Recently, I watched a debate on / read a book about ...</i><br>
+• <i>The topic caught my attention because … is becoming an increasingly important part of our lives.</i><br>
+• <i>It made me think seriously about the role of …</i><br>
+• <i>Personally, I agree/disagree with the motion because ...</i><br>
+• <i>In my opinion, although …, …</i><br>
+• <i>Admittedly, …</i><br>
+• <i>Some people may argue that…</i><br>
+• <i>However, this claim ignores the reality that …</i><br>
+• <i>Nevertheless, this does not necessarily mean that …</i><br>
+• <i>As discussed above, ...</i><br>
+• <i>For the reasons outlined above, ...</i>
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">Appendix · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Will Robots Really Replace Human Workers?</h2>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:1.9">
+<p style="margin-bottom:12px"><b><i>Will Robots Really Replace Human Workers?</i></b></p>
+<p style="margin-bottom:12px"><i>Hi everyone,</i></p>
+<p style="margin-bottom:12px"><i>Recently, I watched a debate on the motion "Robots will replace workers in the future". It was an interesting discussion and it made me think seriously about the role of robots in our society. Personally, I disagree with the motion because I believe robots can replace some jobs, but they can never completely replace human workers.</i></p>
+<p style="margin-bottom:12px"><i>First of all, many jobs require creativity and innovation, which robots cannot fully replicate. While robots are excellent at following instructions and performing programmed tasks, they struggle to think outside the box or generate original ideas. They may find it difficult to perform jobs that depend heavily on creative thinking. For example, artists, designers and entrepreneurs often rely on imagination and creativity to solve problems and develop new products. Since these abilities are uniquely human, robots are unlikely to replace workers in such professions.</i></p>
+<p style="margin-bottom:12px"><i>Furthermore, emotional intelligence is another area where humans have a clear advantage. Many occupations involve understanding people's feelings, building relationships and providing emotional support. Teachers encourage students when they face difficulties, while doctors comfort patients during challenging times. By contrast, although robots may be able to simulate certain responses, they cannot genuinely empathize with others. Therefore, human workers remain essential in jobs that require interpersonal skills.</i></p>
+<p style="margin-bottom:12px"><i>Moreover, technological advancement often creates new employment opportunities instead of simply eliminating existing ones. As new technologies become more widely used, companies need skilled workers to develop, operate and maintain them, leading to the creation of entirely new industries and professions. For instance, the rapid growth of the robotics industry has increased the demand for robotics engineers, software developers and maintenance technicians. In addition, many companies now hire specialists to design, program and manage artificial intelligence systems. Therefore, rather than replacing all workers, robots are likely to create new career opportunities for people with the right skills.</i></p>
+<p style="margin-bottom:12px"><i>Admittedly, robots are becoming increasingly powerful and efficient. In factories, they can work around the clock without getting tired and perform repetitive tasks more accurately than humans. As a result, some routine jobs may eventually disappear. Nevertheless, this does not necessarily mean that robots will replace all workers. As mentioned earlier, human creativity and emotional intelligence remain essential in many professions, while technological advancement continues to generate new career opportunities. Therefore, robots are more likely to transform the workplace than eliminate the need for human workers altogether.</i></p>
+<p style="margin-bottom:12px"><i>To conclude, I believe robots will continue to change the workplace and take over certain routine tasks. Nevertheless, human creativity and empathy remain irreplaceable. Instead of worrying about robots replacing us, we should focus on learning new skills and working alongside technology.</i></p>
+<p style="margin-bottom:8px"><i>What do you think? Will robots become our competitors or our partners in the future? Feel free to share your thoughts in the comments below!</i></p>
+<p style="margin-bottom:4px"><i>Thanks for reading!</i></p>
+</div>
+<p style="font-size:20px;color:var(--text-3);margin-top:10px;text-align:right">✅ 字数：约450词</p>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+<div style="font-size:72px;margin-bottom:24px">🎉</div>
+<h2 class="slide-h2">恭喜完成 Unit 15！</h2>
+<p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：审题分析 → Brainstorming（机器人 vs 人类特质）→ 七段式结构 → Blog 开头段模版 → PEER 论证 → 对比论证 → 让步与反驳 → 结论与读者互动</p>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握 blog entry 文体特征与开头段模版</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握 PEER 段落结构</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握对比论证 (while/whereas/in contrast)</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握让步与反驳句式 (Admittedly/Nevertheless)</span></div>
+<button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px;margin-top:24px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── V7 enhanced keydown (arrows + ESC + input guard) ──
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='u15blog_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u15',weakKey:'general',mode:'quiz'};</script>
+</body></html>

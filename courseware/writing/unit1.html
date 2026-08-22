@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 1 · Letter to the Editor · 香港加速班写作课 | 陈成寓</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;perspective:1000px;display:flex}
+.flip-card-inner{width:100%;height:240px;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;position:relative}
+.flip-card-inner.flipped{transform:rotateY(180deg)}
+.flip-face{border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;position:absolute;inset:0;overflow:hidden;padding:6px}
+.flip-front{background:#fff;border:1.5px solid rgba(0,0,0,.06);z-index:2}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);transform:rotateY(180deg)}
+.flip-front{background:#fff;border:1.5px solid rgba(0,0,0,.06);z-index:2}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);transform:rotateY(180deg)}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+/* playing cards for slide 5 — realistic design */
+.pcard-wrap{aspect-ratio:2.5/3.5;width:100%;max-width:170px;margin:0 auto;perspective:800px}
+.pcard{background:#fff;border:1.8px solid #ccc;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.1),inset 0 0 0 1px rgba(255,255,255,.5);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;padding:8px;width:100%;height:100%;cursor:pointer;transition:box-shadow .2s;box-sizing:border-box}
+.pcard:hover{box-shadow:0 5px 18px rgba(0,0,0,.15)}
+.pcard .pc-tl{font-size:15px;font-weight:800;line-height:1.1;text-align:left}
+.pcard .pc-tl .pc-suit{font-size:15px;line-height:1}
+.pcard .pc-br{font-size:15px;font-weight:800;line-height:1.1;text-align:left;transform:rotate(180deg);align-self:end;justify-self:end}
+.pcard .pc-br .pc-suit{font-size:15px;line-height:1}
+.pcard .pc-body{grid-column:1/-1;display:flex;align-items:center;justify-content:center;font-size:28px;gap:6px;flex-wrap:wrap;padding:4px}
+/* cloze hint button */
+.cloze-hint-btn{display:inline;font-size:13px;color:var(--xdf-blue);background:#eef4fb;border:1px solid #c5d8ee;border-radius:4px;padding:0 6px;transition:all .2s;font-weight:600;vertical-align:baseline;white-space:nowrap}
+.cloze-hint-text{display:inline;font-size:18px;color:var(--xdf-blue);font-weight:400}  /* always visible, larger font */
+/* slide 2 — animated course objectives */
+.s2-list{list-style-position:inside;padding:0}
+.s2-item{opacity:0;transform:translateY(16px);animation:s2-item-in 300ms cubic-bezier(0.165,0.84,0.44,1) forwards}
+.s2-item:nth-child(1){animation-delay:50ms}
+.s2-item:nth-child(2){animation-delay:120ms}
+.s2-item:nth-child(3){animation-delay:190ms}
+.s2-item:nth-child(4){animation-delay:260ms}
+@keyframes s2-item-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.s2-title{opacity:0;animation:s2-title-in 250ms ease-out 0ms forwards}
+@keyframes s2-title-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.s2-highlight{position:relative;display:inline-block;color:var(--xdf-green);font-weight:800}
+.s2-highlight::after{content:'';position:absolute;inset:-2px -6px;background:var(--xdf-gl);border-radius:6px;z-index:-1;animation:s2-pulse 2s ease-in-out 0.5s infinite}
+@keyframes s2-pulse{0%,100%{opacity:.6;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.04)}}
+@media (prefers-reduced-motion:reduce){
+  .s2-item,.s2-title{opacity:1;transform:none;animation:none}
+  .s2-highlight::after{animation:none;opacity:.6}
+}
+/* student text input */
+.student-input-area{margin-bottom:16px}
+.student-input-wrap{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.student-input-wrap label{font-size:18px;font-weight:600;color:var(--text-1);line-height:1.5}
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;transition:border-color .2s;color:var(--text-1)}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;align-self:flex-start}
+.submit-btn:hover{background:var(--xdf-gd)}
+.submit-btn:active{transform:scale(.97)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap}
+.student-answer.show{display:block}
+.reference-answer{display:none;background:#fff8e1;border:1.5px solid #ffd54f;border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.reference-answer.show{display:block}
+.reference-answer::before{content:"📖 参考答案：";font-weight:700;color:#f57f17;display:block;margin-bottom:4px}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px;transition:all .2s}
+.edit-btn:hover{background:rgba(26,109,175,.08)}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-colloc{display:none;font-size:18px;color:#2e7d32;background:#e8f5e9;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px}
+.ce-colloc.show{display:block}
+.ce-colloc span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:16px;border:1px solid #a5d6a7}
+/* Task 3A interactive selection */
+.t3a-option{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1.5px solid #ddd;border-radius:10px;cursor:pointer;transition:all .2s;margin-bottom:6px;font-size:17px;line-height:1.6;background:#fff;color:var(--text-1);user-select:none}
+.t3a-option:hover{border-color:var(--xdf-blue);background:#f5f7ff}
+.t3a-cb{font-size:20px;flex-shrink:0;margin-top:2px;width:24px;text-align:center}
+.t3a-sel{display:none;background:#e8f5e9;border:1.5px solid #2e7d32;border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);margin-top:8px}
+.t3a-sel.show{display:block}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+/* ── show/hide toggle system ── */
+/* Each element type uses its own specific rule — no global .show!important to avoid conflicts */
+.ce-hints.show{display:block}
+.ce-en.show{display:block}
+.student-answer.show{display:block}
+.gw-answer.show{display:block}
+.quiz-ans.show{display:block}
+.err-right.show{display:block}
+.flip-back.show{display:flex}  /* flip-back uses flex from .flip-face; .show is only a state flag */
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="course-tag">加速班·Unit1</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide" data-title="封面 · Unit 1">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><div class="tb-name">陈成寓 George</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">Letter to the Editor<br><span class="accent">措施评估类写作</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">Letter to the Editor — 读者来信</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 1 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Letter to the Editor</div><div class="sm-sub">Formal letter</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Sports Facilities</div><div class="sm-sub">Opening school facilities to public</div></div>
+<div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~400 words</div><div class="sm-sub">6 paragraphs</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题与角度</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">结构+词伙</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">逐段练习</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">翻译+范文</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div>
+
+</div>
+</section><section class="slide" data-title="🎯 课程目标">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">🎯 Course Objectives</p>
+<h2 class="slide-h2 s2-title">本节课结束后，学生将能够：</h2>
+<ol class="s2-list" style="font-size:20px;line-height:2.2;margin-bottom:20px">
+  <li class="s2-item">了解并初步掌握 <strong class="s2-highlight">Letter to the editor</strong> 的文体结构和语气特征</li>
+  <li class="s2-item">运用"<strong class="s2-highlight">措施评估</strong>"通用思路来评估一个措施</li>
+  <li class="s2-item">初步掌握 counter-argument & rebuttal（反方观点与反驳）的基本写法</li>
+  <li class="s2-item">初步掌握"措施评估类"常用句式，并尝试运用在写作中</li>
+</ol>
+
+</div>
+</section><section class="slide" data-title="📋 Paper 2 概览">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📋 Writing Overview</p>
+<h2 class="slide-h2">DSE Paper 2 Writing</h2>
+<div style="display:grid;gap:14px;margin-bottom:20px">
+<div class="card accent" style="padding:16px 20px"><h4>Part A (10%)</h4><p>Write about 200 words based on given materials</p></div>
+<div class="card accent" style="padding:16px 20px"><h4>Part B (15%)</h4><p>Choose ONE out of the four questions and write an essay of about 400 words on the given topic</p></div>
+</div>
+<h3 style="font-size:22px;margin-bottom:10px">评分标准 Level 4</h3>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:14px">点击卡片查看每个评分维度的详细要求 →</p>
+<div class="flip-grid g3" style="grid-template-columns:repeat(3,1fr)">
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:22px">Content<br><span style="font-size:18px;color:var(--text-3)">内容</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:17px;line-height:1.6">题目回应基本充分 · 内容大部分切题 · 部分论点发展较好 · 体现一定的读者意识</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:22px">Language<br><span style="font-size:18px;color:var(--text-3)">语言</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:17px;line-height:1.6">句式有一定复杂度 · 词汇量中等准确 · 拼写标点基本准确 · 语气风格符合文体</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:22px">Organisation<br><span style="font-size:18px;color:var(--text-3)">组织</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:17px;line-height:1.6">文章组织流畅 · 结构连贯 · 连接清晰 · 有明确开头结尾</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</section><section class="slide" data-title="🔍 审题 Task 3A">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">🔍 Understanding the Question</p>
+<h2 class="slide-h2">2016 Part B02</h2>
+<div class="card" style="padding:20px 24px;margin-bottom:16px;background:#f8f9fb;border-left:4px solid var(--xdf-blue)">
+<p style="font-size:24px;line-height:1.8"><b>题目：</b>Because of the lack of sports facilities, some people in your community have suggested that schools should allow the public to use their sports facilities after school hours.</p>
+<p style="font-size:24px;line-height:1.8;margin-top:8px"><b>任务：</b>Write a letter to the editor of the Hong Kong Daily stating your opinion. Support your opinions with three reasons.</p>
+</div>
+
+<h3 style="font-size:20px;margin-bottom:12px">Task 3A: 分析写作要求</h3>
+<p style="font-size:16px;color:var(--text-2);margin-bottom:14px">💡 先自己思考，填写或选择答案后点击提交查看反馈</p>
+
+<div class="student-input-area" style="padding:18px 20px;background:#f8f9fb;border-radius:14px;border:1.5px solid rgba(0,0,0,.06)">
+
+  <!-- 1. Role -->
+  <div class="student-input-wrap" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed #e0e0e0">
+    <label style="font-size:17px;font-weight:700;margin-bottom:6px;display:block;color:var(--text-1)">1. Role（你是谁？）</label>
+    <textarea class="student-ta" id="t3a-r" placeholder="输入你的答案..." style="min-height:50px"></textarea>
+    <button class="submit-btn" id="t3a-r-sb" onclick="submitAnswer(this,'t3a-r','t3a-r-ans');document.getElementById('t3a-r-ref').classList.add('show')">✏️ 提交</button>
+    <div class="student-answer" id="t3a-r-ans"></div>
+    <div class="reference-answer" id="t3a-r-ref" style="margin-top:8px">a student / a member of the public / a resident in the community</div>
+    <button class="edit-btn" id="t3a-r-eb" onclick="continueEdit('t3a-r','t3a-r-ans','t3a-r-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+
+  <!-- 2. Audience -->
+  <div class="student-input-wrap" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed #e0e0e0">
+    <label style="font-size:17px;font-weight:700;margin-bottom:6px;display:block;color:var(--text-1)">2. Audience（写给谁？）</label>
+    <textarea class="student-ta" id="t3a-a" placeholder="输入你的答案..." style="min-height:50px"></textarea>
+    <button class="submit-btn" id="t3a-a-sb" onclick="submitAnswer(this,'t3a-a','t3a-a-ans');document.getElementById('t3a-a-ref').classList.add('show')">✏️ 提交</button>
+    <div class="student-answer" id="t3a-a-ans"></div>
+    <div class="reference-answer" id="t3a-a-ref" style="margin-top:8px">editor and readers of the Hong Kong Daily</div>
+    <button class="edit-btn" id="t3a-a-eb" onclick="continueEdit('t3a-a','t3a-a-ans','t3a-a-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+
+  <!-- 3. Purpose -->
+  <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed #e0e0e0">
+    <div style="font-size:17px;font-weight:700;margin-bottom:10px;color:var(--text-1)">3. Purpose（写作目的）— 点击选择正确的选项</div>
+    <div class="t3a-option" id="t3a-p-1" onclick="toggleT3A('t3a-p',event)">
+      <span class="t3a-cb" id="t3a-p-cb1">□</span>
+      <span>analyze both sides of an issue in a balanced and objective way（较客观、平衡地分析不同观点）</span>
+    </div>
+    <div class="t3a-option" id="t3a-p-2" onclick="toggleT3A('t3a-p',event)">
+      <span class="t3a-cb" id="t3a-p-cb2">□</span>
+      <span>express an opinion and persuade readers to agree with it using reasons（表达观点并用理由说服读者认同）</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="submit-btn" id="t3a-p-sb" onclick="checkT3APurpose()">✅ 检查答案</button>
+    </div>
+    <div class="t3a-sel" id="t3a-p-fb"></div>
+  </div>
+
+  <!-- 4. Register -->
+  <div class="student-input-wrap" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed #e0e0e0">
+    <label style="font-size:17px;font-weight:700;margin-bottom:6px;display:block;color:var(--text-1)">4. Register（正式程度）</label>
+    <textarea class="student-ta" id="t3a-reg" placeholder="输入你的答案..." style="min-height:50px"></textarea>
+    <button class="submit-btn" id="t3a-reg-sb" onclick="submitAnswer(this,'t3a-reg','t3a-reg-ans');document.getElementById('t3a-reg-ref').classList.add('show')">✏️ 提交</button>
+    <div class="student-answer" id="t3a-reg-ans"></div>
+    <div class="reference-answer" id="t3a-reg-ref" style="margin-top:8px">formal（严格来说可视为 formal ~ semi-formal，但教学上直接归为 formal）</div>
+    <button class="edit-btn" id="t3a-reg-eb" onclick="continueEdit('t3a-reg','t3a-reg-ans','t3a-reg-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+
+  <!-- 5. Tone -->
+  <div style="margin-bottom:4px">
+    <div style="font-size:17px;font-weight:700;margin-bottom:10px;color:var(--text-1)">5. Tone（语气）— 点击选择正确的选项（可多选 ✓）</div>
+    <div class="t3a-option" id="t3a-t-1" onclick="toggleT3A('t3a-t',event)">
+      <span class="t3a-cb" id="t3a-t-cb1">□</span>
+      <span>logical（有逻辑）</span>
+    </div>
+    <div class="t3a-option" id="t3a-t-2" onclick="toggleT3A('t3a-t',event)">
+      <span class="t3a-cb" id="t3a-t-cb2">□</span>
+      <span>persuasive（有说服力）</span>
+    </div>
+    <div class="t3a-option" id="t3a-t-3" onclick="toggleT3A('t3a-t',event)">
+      <span class="t3a-cb" id="t3a-t-cb3">□</span>
+      <span>descriptive and vivid（生动、有画面感）</span>
+    </div>
+    <div class="t3a-option" id="t3a-t-4" onclick="toggleT3A('t3a-t',event)">
+      <span class="t3a-cb" id="t3a-t-cb4">□</span>
+      <span>neutral（立场中立）</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="submit-btn" id="t3a-t-sb" onclick="checkT3ATone()">✅ 检查答案</button>
+    </div>
+    <div class="t3a-sel" id="t3a-t-fb"></div>
+  </div>
+
+</div>
+
+</div>
+</section><section class="slide" data-title="🤔 思考4.1 评估角度">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">🤔 Brainstorming</p>
+<h2 class="slide-h2">如何评估一个方法或措施？</h2>
+<p style="font-size:26px;color:var(--text-1);margin-bottom:18px;line-height:1.6">如果有人说：<strong>"最好的减肥方法就是节食。"</strong>你会相信吗？你会从哪些角度思考？</p>
+<p style="font-size:18px;color:var(--text-3);margin-bottom:16px">点击下方扑克牌，翻转查看对应的思考角度 →</p>
+
+<div class="flip-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;max-width:800px;margin-left:auto;margin-right:auto">
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front" style="border:none">
+        <div class="pcard-wrap"><div class="pcard">
+          <div class="pc-tl" style="color:var(--xdf-red)">A<br><span class="pc-suit">♥</span></div>
+          <div></div>
+          <div class="pc-body" style="color:var(--xdf-red);font-size:32px">♥</div>
+          <div class="pc-br" style="color:var(--xdf-red)">A<br><span class="pc-suit">♥</span></div>
+        </div></div>
+      </div>
+      <div class="flip-face flip-back" style="align-items:center;justify-content:center;border-left:4px solid var(--xdf-red)"><div class="flip-ans" style="font-size:18px;line-height:1.5;text-align:center;color:var(--text-1)"><strong>① 这个方法真的做得到吗？<br>（可行性）</strong></div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front" style="border:none">
+        <div class="pcard-wrap"><div class="pcard">
+          <div class="pc-tl" style="color:var(--xdf-red)">2<br><span class="pc-suit">♥</span></div>
+          <div></div>
+          <div class="pc-body" style="color:var(--xdf-red);font-size:22px;flex-direction:column;gap:8px"><div>♥</div><div>♥</div></div>
+          <div class="pc-br" style="color:var(--xdf-red)">2<br><span class="pc-suit">♥</span></div>
+        </div></div>
+      </div>
+      <div class="flip-face flip-back" style="align-items:center;justify-content:center;border-left:4px solid var(--xdf-green)"><div class="flip-ans" style="font-size:18px;line-height:1.5;text-align:center;color:var(--text-1)"><strong>② 这个方法真的有效吗？<br>（效果）</strong></div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front" style="border:none">
+        <div class="pcard-wrap"><div class="pcard">
+          <div class="pc-tl" style="color:#000">3<br><span class="pc-suit">♠</span></div>
+          <div></div>
+          <div class="pc-body" style="color:#000;font-size:22px;flex-direction:column;gap:6px"><div>♠</div><div style="display:flex;gap:12px"><span>♠</span><span>♠</span></div></div>
+          <div class="pc-br" style="color:#000">3<br><span class="pc-suit">♠</span></div>
+        </div></div>
+      </div>
+      <div class="flip-face flip-back" style="align-items:center;justify-content:center;border-left:4px solid var(--xdf-gold)"><div class="flip-ans" style="font-size:18px;line-height:1.5;text-align:center;color:var(--text-1)"><strong>③ 会不会带来额外的问题？<br>（副作用）</strong></div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front" style="border:none">
+        <div class="pcard-wrap"><div class="pcard">
+          <div class="pc-tl" style="color:#000">4<br><span class="pc-suit">♠</span></div>
+          <div></div>
+          <div class="pc-body" style="color:#000;font-size:22px;flex-direction:column;gap:6px"><div style="display:flex;gap:16px"><span>♠</span><span>♠</span></div><div style="display:flex;gap:16px"><span>♠</span><span>♠</span></div></div>
+          <div class="pc-br" style="color:#000">4<br><span class="pc-suit">♠</span></div>
+        </div></div>
+      </div>
+      <div class="flip-face flip-back" style="align-items:center;justify-content:center;border-left:4px solid var(--xdf-blue)"><div class="flip-ans" style="font-size:18px;line-height:1.5;text-align:center;color:var(--text-1)"><strong>④ 真的有必要这样做吗？有没有更好的方法？<br>（必要性/替代方案）</strong><br></div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📐 文章结构">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📐 Overall Structure</p>
+<h2 class="slide-h2">措施评估类 Letter to the Editor 基本框架</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">点击"内容"列的空白区域，查看每个段落的写作要点 →</p>
+<div style="overflow-x:auto;font-size:18px">
+<table class="rule-table" id="s6-table">
+<tr><th style="width:25%">段落</th><th>内容（点击查看）</th></tr>
+<tr><td class="col-type"><b>Opening</b></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="State purpose of writing + state opinion（写作目的 + 引入话题 + 表明立场）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+<tr><td class="col-type"><b>Body 1</b><br>Feasibility 可行性</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain why the proposal is impractical or difficult to carry out（说明措施难以实行）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+<tr><td class="col-type"><b>Body 2</b><br>Effectiveness 效果</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain why the proposal may not effectively solve the problem（说明措施未必能真正解决问题）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+<tr><td class="col-type"><b>Body 3</b><br>Side Effects 副作用</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain possible negative effects or new problems（说明可能带来的负面影响或新问题）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+<tr><td class="col-type"><b>Body 4</b><br>Counter-argument & rebuttal 必要性</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain why some support it + rebut by pointing out a weakness / more important consideration （说明支持理由 + 指出缺陷 / 更关键因素进行反驳）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+<tr><td class="col-type"><b>Conclusion</b></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Restate opinion + ending response（重申立场 + 建议/呼吁行动）" style="min-width:400px;display:inline-block;text-align:left">点击查看</span></td></tr>
+</table>
+</div>
+
+</div>
+</section><section class="slide" data-title="🧠 Content Bank 内容库">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">🧠 Content Bank — 四大通用论点</p>
+<h2 class="slide-h2">措施评估类常用英文表达</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+
+<h3 style="font-size:20px;color:var(--xdf-red);margin-bottom:8px">🔴 可行性 Feasibility</h3>
+<div class="flip-grid g2" style="margin-bottom:20px">
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">太贵</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">too expensive / costly</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">太难/太复杂</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">too difficult / complicated to carry out</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">太花时间</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">take too long / be too time-consuming</div></div>
+  </div>
+</div>
+</div>
+
+<h3 style="font-size:20px;color:var(--xdf-green);margin-bottom:8px">🟢 效果 Effectiveness</h3>
+<div class="flip-grid g2" style="margin-bottom:20px">
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">无法真正解决问题</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">be unlikely to solve the problem</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">效果有限</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">have limited / little effect</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">短期有效</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">only effective in the short term / be unlikely to last</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">起反效果</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">be counterproductive / make the situation worse</div></div>
+  </div>
+</div>
+</div>
+
+<h3 style="font-size:20px;color:var(--xdf-gold);margin-bottom:8px">🟠 副作用 Side Effects</h3>
+<div class="flip-grid g2" style="margin-bottom:20px">
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">产生负面影响</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">cause negative effects (on sth)</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">带来新的问题</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">create new problems</div></div>
+  </div>
+</div>
+</div>
+
+<h3 style="font-size:20px;color:var(--xdf-blue);margin-bottom:8px">🔵 必要性 Necessity</h3>
+<div class="flip-grid g2" style="margin-bottom:20px">
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">不是某方责任</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">it is not X's responsibility; it is Y's responsibility</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">方法过于极端</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">too extreme</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">有更好的办法</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">There may be better alternatives</div></div>
+  </div>
+</div>
+</div>
+
+</div>
+</section><section class="slide" data-title="✍️ 开头段 Opening">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">✍️ Opening Paragraph</p>
+<h2 class="slide-h2">Task 6A: 完成开头段</h2>
+
+<div class="card" style="padding:20px 24px;margin-bottom:12px;font-size:20px;line-height:2">
+Dear editor,<br><br>
+I am writing in response to a recent suggestion that schools should <span class="cloze" onclick="revealCloze(this)" data-answer="open their sports facilities to the public">______</span><span class="cloze-hint-btn">💡</span><span class="cloze-hint-text">向公众开放体育设施</span>after school hours because <span class="cloze" onclick="revealCloze(this)" data-answer="there are not enough sports venues">______</span><span class="cloze-hint-btn">💡</span><span class="cloze-hint-text">没有足够的运动场地</span> in the community. While this idea may sound <span class="cloze" onclick="revealCloze(this)" data-answer="reasonable">______</span><span class="cloze-hint-btn">💡</span><span class="cloze-hint-text">合理的</span>, I believe it is <span class="cloze" onclick="revealCloze(this)" data-answer="ultimately unwise">______</span><span class="cloze-hint-btn">💡</span><span class="cloze-hint-text">最终是不明智的</span> for several important reasons.
+</div>
+
+<div class="card" style="background:var(--xdf-gl);padding:12px 18px;margin-bottom:16px">
+<p style="font-size:18px;color:var(--xdf-gd);font-weight:600">🌟 Notes: Letter to the editor首句主要作用是说明写信目的，至于题目只需轻微改写1-2词即可，无需过度改写。</p>
+</div>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s8-structure');a.classList.toggle('show')" style="margin-bottom:12px">📖 查看句式模版</button>
+<div id="s8-structure" class="ce-en">
+<!-- <h3 style="font-size:20px;margin-bottom:10px">结构与句式模版</h3> -->
+<div style="overflow-x:auto;font-size:18px">
+<table class="rule-table">
+<tr><th style="width:35%">句式</th><th>模板</th></tr>
+<tr><td class="col-type">第一句说明写信目的</td><td class="col-example">I am writing in response to the suggestion/proposal/opinion that + 完整内容</td></tr>
+<tr><td class="col-type"></td><td class="col-example">I am writing to express my view on the suggestion/proposal/opinion that + 完整内容</td></tr>
+<tr><td class="col-type">第二句表明立场</td><td class="col-example">While this idea may sound reasonable, I believe it is ultimately + 形容词（综合本质上不合理）for several important reasons.</td></tr>
+</table>
+</div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📝 主体段1 可行性">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Body 1 — Feasibility</p>
+<h2 class="slide-h2">PEER 论证结构 + 连排问句</h2>
+
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">阅读以下句子，判断每句话在段落中的作用，点击"作用："后的空白查看答案 →</p>
+
+<div class="ce-item">
+<div class="ce-cn">To begin with, the proposal is impractical and difficult to carry out. <b>（作用：</b><span class="cloze" onclick="revealCloze(this)" data-answer="表现观点 point">______</span><b>）</b></div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn">Even if some schools are willing to share their sports facilities, many problems would arise. <b>（作用：</b><span class="cloze" onclick="revealCloze(this)" data-answer="展开解释 Explanation">______</span><b>）</b></div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn">Who would be allowed to use the facilities? How would schedules be arranged? "What rules would be introduced?" </div>
+<div class="ce-cn"><b>（作用：</b><span class="cloze" onclick="revealCloze(this)" data-answer="举例 Example / 具体化问题">______</span><b>）</b></div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn">These are difficult issues that many schools are not prepared to handle. <b>（作用：</b><span class="cloze" onclick="revealCloze(this)" data-answer="总结前面句子">______</span><b>）</b></div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn">As a result, expecting schools to organise public access to sports facilities may simply be unrealistic. <b>（作用：</b><span class="cloze" onclick="revealCloze(this)" data-answer="结果/最终判断">______</span><b>）</b></div>
+</div>
+
+<h3 style="font-size:20px;margin-bottom:10px">论证公式 PEER</h3>
+<div style="overflow-x:auto;font-size:18px;margin-bottom:16px">
+<table class="rule-table">
+<tr><th>要素</th><th>含义</th><th>说明</th></tr>
+<tr><td class="col-type">P (Point)</td><td>What is your point?</td><td class="col-example">表现观点</td></tr>
+<tr><td class="col-type">E (Explanation)</td><td>Why / How?</td><td class="col-example">展开解释（为什么/如何）</td></tr>
+<tr><td class="col-type">E (Example)</td><td>How / what?</td><td class="col-example">举例/列举/具体化</td></tr>
+<tr><td class="col-type">R (Result)</td><td>So what? Why it matters?</td><td class="col-example">结果/影响/最终判断</td></tr>
+</table>
+</div>
+
+<div class="card" style="background:var(--xdf-gl);padding:12px 18px;margin-bottom:12px">
+<p style="font-size:18px;color:var(--xdf-gd);font-weight:600">🌟 Notes: PEER 只是一个论证参考公式，并不代表每一段都必须完整使用 PEER 的所有部分。只要论证链条完整，能够清楚解释观点并提供足够支持即可。</p>
+</div>
+
+<h3 style="font-size:20px;margin-bottom:8px">思考7.2: 三个问句的作用？</h3>
+<div class="ce-item"><div class="ce-cn">本段连续使用三个问句（Who? How? What?），如果改成陈述句版本，语气会更强还是更弱？为什么？</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 查看分析</button>
+  <div class="ce-en">连排问句可以加强语气，让问题看起来更多、更复杂，也更难解决。相比之下，陈述句则平淡、较客观。连续问句还能引导读者思考，因此会让论证更有说服力。这种写法特别适合 letter to the editor，因为它可以让作者的立场更明显、语气更有力度。</div></div>
+
+</div>
+</section><section class="slide" data-title="📝 主体段2 效果">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Body 2 — Effectiveness</p>
+<h2 class="slide-h2">Task 8A: PEER 分步提示</h2>
+
+<div class="student-input-area" style="margin-bottom:18px;padding:16px 20px;background:#f8f9fb;border-radius:14px;border:1.5px solid rgba(0,0,0,.06)">
+<h3 style="font-size:20px;margin-bottom:12px">思考8.1: 学校设施为什么可能无法满足公众需求？</h3>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">请从以下两个维度思考，在文本框中输入你的想法：</p>
+
+<div class="student-input-wrap">
+<label>📌 <b>(1) Types of facilities:</b> 学校一般有哪些sports facilities？如果开放给公众（所有年龄段）还需要哪些？</label>
+<textarea class="student-ta" id="s8a-ta-1" placeholder="在此输入你的想法..."></textarea>
+<button class="submit-btn" id="s8a-sb-1" onclick="submitAnswer(this,'s8a-ta-1','s8a-ans-1');document.getElementById('s8a-ref-1').classList.add('show')">✏️ 提交我的回答</button>
+<div class="student-answer" id="s8a-ans-1"></div>
+<div class="reference-answer" id="s8a-ref-1">学校设施主要为学生设计（篮球场、泳池等），而公众需求更广（跑道、健身设施等），学校可能无法满足</div>
+<button class="edit-btn" id="s8a-ta-1-eb" onclick="continueEdit('s8a-ta-1','s8a-ans-1','s8a-sb-1')" style="display:none">✏️ 继续输入</button>
+</div>
+
+<div class="student-input-wrap">
+<label>📌 <b>(2) Size/Capacity:</b> 学校是否有足够空间供大量人群使用？</label>
+<textarea class="student-ta" id="s8a-ta-2" placeholder="在此输入你的想法..."></textarea>
+<button class="submit-btn" id="s8a-sb-2" onclick="submitAnswer(this,'s8a-ta-2','s8a-ans-2');document.getElementById('s8a-ref-2').classList.add('show')">✏️ 提交我的回答</button>
+<div class="student-answer" id="s8a-ans-2"></div>
+<div class="reference-answer" id="s8a-ref-2">学校设施规模有限，无法容纳大量使用者</div>
+<button class="edit-btn" id="s8a-ta-2-eb" onclick="continueEdit('s8a-ta-2','s8a-ans-2','s8a-sb-2')" style="display:none">✏️ 继续输入</button>
+</div>
+</div>
+
+<p style="font-size:18px;color:var(--text-2);margin-bottom:16px">点击下方每个步骤的按钮，展开对应的答案参考 →</p>
+
+<div class="ce-item">
+<div class="ce-cn"><b>Point</b>: Even if the plan could be carried out, _______________________.</div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 中文提示</button>
+<div class="ce-hints"><span>仍然不太可能实现其预期目的</span></div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="border-color:#2e7d32;color:#2e7d32">🔑 词伙提示</button>
+<div class="ce-colloc"><span>be unlikely to do sth</span><span>achieve one's intended goal</span><span>solve the shortage of sth</span></div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 展开答案</button>
+  <div class="ce-en">it would still be unlikely to achieve its intended goal of solving the shortage of sports facilities in the community</div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn"><b>Explain 1 — facilities designed for students</b>: 学校设施主要为谁设计？通常有哪些设施？</div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 中文提示</button>
+<div class="ce-hints"><span>学校体育设施主要为学生设计，通常包括篮球场、游泳池和乒乓球桌</span></div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="border-color:#2e7d32;color:#2e7d32">🔑 词伙提示</button>
+<div class="ce-colloc"><span>be mainly designed for</span><span>usually include</span><span>facilities such as</span></div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 展开答案</button>
+  <div class="ce-en">School sports facilities are mainly designed for students and usually include facilities such as basketball courts, swimming pools and table tennis tables.</div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn"><b>Example / Contrast — students' needs vs public needs</b>: 公众可能需要哪些不同的设施？</div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 中文提示</button>
+<div class="ce-hints"><span>不同年龄段的社区成员可能有更广泛的需求，如羽毛球场、跑道或健身设施</span></div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="border-color:#2e7d32;color:#2e7d32">🔑 词伙提示</button>
+<div class="ce-colloc"><span>community members of different ages</span><span>a wider range of needs</span><span>such as / like</span><span>which some schools may not have</span></div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 展开答案</button>
+  <div class="ce-en">However, community members of different ages may have a wider range of needs, such as badminton courts, jogging tracks or fitness facilities, which some schools may not have.</div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn"><b>Explain 2 — limited size</b>: In addition, _______________________.</div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 中文提示</button>
+<div class="ce-hints"><span>学校设施通常规模有限，可能无法容纳大量使用者</span></div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="border-color:#2e7d32;color:#2e7d32">🔑 词伙提示</button>
+<div class="ce-colloc"><span>be limited in size</span><span>accommodate large numbers of users</span></div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 展开答案</button>
+  <div class="ce-en">school facilities are often limited in size and may not be able to accommodate large numbers of users.</div>
+</div>
+
+<div class="ce-item">
+<div class="ce-cn"><b>Result 结果/最终判断</b>: Therefore, even if schools opened their facilities, the proposal _______________________.</div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 中文提示</button>
+<div class="ce-hints"><span>仍然不太可能完全满足公众需求</span></div>
+<button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')" style="border-color:#2e7d32;color:#2e7d32">🔑 词伙提示</button>
+<div class="ce-colloc"><span>be unlikely to</span><span>fully meet the public's needs</span></div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">💡 展开答案</button>
+  <div class="ce-en">would still be unlikely to fully meet the public's needs.</div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📋 Language Bank 语言库">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📋 Effectiveness 效果评估句式</p>
+<h2 class="slide-h2">措施评估类常用句式</h2>
+<div style="overflow-x:auto;font-size:18px">
+<table class="rule-table">
+<tr><th style="width:30%">句式</th><th>例句</th></tr>
+<tr><td class="col-type">Intended goal<br>（无法达到目的）</td><td class="col-example">This measure is unlikely to achieve its intended goal (of +名词).</td></tr>
+<tr><td class="col-type">Solve the problem<br>（无法解决问题）</td><td class="col-example">The proposal may not effectively solve the problem (of +名词).</td></tr>
+<tr><td class="col-type">Meet needs<br>（难以满足需求）</td><td class="col-example">The proposal is unlikely to fully meet people's needs.</td></tr>
+<tr><td class="col-type">Limited effect<br>（效果有限）</td><td class="col-example">This measure may only have a limited/little effect.</td></tr>
+<tr><td class="col-type">Short-term effect<br>（效果短暂）</td><td class="col-example">The measure may only be effective in the short term. 或 The measure is unlikely to last.</td></tr>
+<tr><td class="col-type">Counterproductive<br>（起反效果）</td><td class="col-example">This practice may be counterproductive, as it could ...</td></tr>
+<tr><td class="col-type">Make things worse<br>（情况更糟）</td><td class="col-example">The measure may even make the situation worse.</td></tr>
+</table>
+</div>
+
+</div>
+</section><section class="slide" data-title="📝 主体段3 副作用">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Body 3 — Side Effects</p>
+<h2 class="slide-h2">Task 9A: Homework - 完成主体段3</h2>
+
+<h3 style="font-size:20px;margin-bottom:8px">📌 作业提示（逻辑链条）</h3>
+<div style="display:grid;gap:12px;margin-bottom:16px">
+<div class="card" style="border-left:4px solid var(--xdf-red);padding:14px 18px">
+<h4>1) 学校费用支出（maintenance costs）</h4>
+<p style="font-size:18px;color:var(--text-2);line-height:1.8">
+<b>E (Explanation):</b> 设施需要定期维护<br>
+<b>E (进一步解释):</b> 更多人使用 → 更容易损坏 → 维修费用增加<br>
+<b>R (Result):</b> 开支增加(expenses)
+</p>
+</div>
+<div class="card" style="border-left:4px solid var(--xdf-blue);padding:14px 18px">
+<h4>2) 学生安全有风险（student safety）</h4>
+<p style="font-size:18px;color:var(--text-2);line-height:1.8">
+<b>E (Explanation):</b> 更多公众使用 → 设施更容易损坏<br>
+<b>E (Example):</b> 如篮球场地地面不平(uneven ground)/篮筐损坏(broken basketball hoop)<br>
+<b>R (Result):</b> 学生上PE/training时更容易受伤
+</p>
+</div>
+</div>
+
+<h3 style="font-size:20px;margin-bottom:8px">📝 写完后对照参考</h3>
+<div class="ce-item">
+<div class="ce-cn">Finally, opening school facilities to the public may create several problems for both schools and students. ________________________</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">📖 查看范文参考</button>
+  <div class="ce-en">Sports equipment must be checked and maintained regularly. With more people using the facilities, damage may happen more quickly, leading to higher maintenance costs. Schools may also need to hire extra staff, such as security guards or cleaners, which would increase expenses. More importantly, opening school facilities to the public may put student safety at risk. For example, basketball courts may become damaged after frequent use, and uneven ground or broken basketball hoops may increase the risk of accidents. This means students are more likely to get injured during PE lessons or sports training.</div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📝 主体段4 反驳">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Body 4 — Counter-argument & Rebuttal</p>
+<h2 class="slide-h2">Task 10A: 用必要性反驳反方</h2>
+
+<div class="card" style="padding:18px 22px;margin-bottom:16px;font-size:20px;line-height:2.2">
+Some people may argue that school sports facilities are often unused after school hours, so opening them to the public would <span class="cloze" onclick="revealCloze(this)" data-answer="make better use of resources">______</span>（更好地利用资源）. However, this argument overlooks the fact that <span class="cloze" onclick="revealCloze(this)" data-answer="it is not schools' responsibility to provide adequate sports facilities for the public">______</span>.（学校没有义务为公众提供充足的体育设施）。School facilities are mainly designed for students, not for public use. If there is a shortage of sports facilities in the community, it is <span class="cloze" onclick="revealCloze(this)" data-answer="the government's responsibility">______</span>（政府的责任）to solve the problem instead of placing the burden on schools.
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-bottom:12px">💡 点击上方空白处查看答案</p>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s13-knowledge');a.classList.toggle('show')" style="margin-bottom:12px">📖 查看结构与句式</button>
+<div id="s13-knowledge" class="ce-en">
+<h3 style="font-size:20px;margin-bottom:10px">结构与句式</h3>
+<div style="overflow-x:auto;font-size:18px">
+<table class="rule-table">
+<tr><th style="width:30%">步骤</th><th>内容</th><th>句式</th></tr>
+<tr><td class="col-type">第一句写反方观点</td><td>"闲着也是闲着"，不如高效利用资源</td><td class="col-example">Some people may argue that...</td></tr>
+<tr><td class="col-type">第二句反驳反方</td><td>忽略了一个问题：学校没有责任承担这个角色</td><td class="col-example">However, this argument overlooks the fact that...</td></tr>
+<tr><td class="col-type">第三句补充解释</td><td>谁的责任谁负责</td><td class="col-example">It is the government's responsibility to ... instead of ...</td></tr>
+</table>
+</div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📝 结尾段 Conclusion">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Ending Paragraph</p>
+<h2 class="slide-h2">思考11.1: 结尾段结构</h2>
+
+<div class="card" style="padding:18px 22px;margin:16px 0;font-size:20px;line-height:2">
+In conclusion, although the proposal may be well-intentioned（好意的）, it is impractical（不实际）, unlikely to fully meet public needs（有效）, and may negatively affect schools and students（有副作用）. Instead of expecting schools to solve a wider social problem, the government should take responsibility and invest in proper community sports facilities to better meet public needs.<br><br>
+Yours faithfully,<br>
+Chris Wong
+</div>
+
+<div class="ce-item"><div class="ce-cn">结尾段两句话分别有什么功能？</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show');var b=document.getElementById('s14-knowledge');b.classList.toggle('show')">💡 查看答案</button>
+  <div class="ce-en">① 重申立场&总结主体段论点 ② 提出建议/呼吁行动</div></div>
+
+<div id="s14-knowledge" class="ce-en" style="margin-top:0">
+
+<div style="overflow-x:auto;font-size:18px;margin-bottom:12px">
+<table class="rule-table">
+<tr><th style="width:30%">句式</th><th>模板</th></tr>
+<tr><td class="col-type">重申立场 & 总结论点</td><td class="col-example">Although ... it is impractical/unrealistic, unlikely to ..., and may ...</td></tr>
+<tr><td class="col-type">提出建议 / 呼吁行动</td><td class="col-example">Rather than doing ..., ... should ... / Instead of doing ..., ... should ...</td></tr>
+</table>
+</div>
+
+<div class="card" style="background:var(--xdf-gl);padding:12px 18px">
+<p style="font-size:18px;color:var(--xdf-gd);font-weight:600">🌟 Notes: 与 essay 相比，Letter to the Editor 的结尾通常语气更强。除了重申立场外，往往还会概括理由，并引导读者思考、提出建议或替代方案，甚至呼吁采取行动。</p>
+</div>
+
+</div>
+
+</div>
+</section><section class="slide" data-title="✍️ 翻译练习">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">✍️ Translation Practice</p>
+<h2 class="slide-h2">措施评估型句式翻译练习</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">中→英，点击"💡 词伙提示"可查看关键词，点击"✅ 看答案"查看参考答案 →</p>
+
+<div class="ce-item">
+  <div class="ce-cn">这个建议可能太贵了，因为很多学校可能负担不起额外的安保费用。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>too expensive / costly</span><span>afford the extra costs</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">The proposal may be <b>too expensive</b> because many schools may not be able to afford the extra security costs.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">要求所有学生每天运动两小时可能太难实行，因为学校可能难以安排时间表。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>too difficult to carry out</span><span>arrange timetables</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Requiring all students to exercise for two hours every day may <b>be too difficult to carry out</b> because schools may find it difficult to arrange their timetables.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">这项措施可能太花时间，因为老师可能需要花大量时间管理学生。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>too time-consuming</span><span>spend a lot of time managing students</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">This measure may <b>be too time-consuming</b> because teachers may need to spend a lot of time managing students.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">仅靠减少作业不太可能解决学生的压力问题。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>unlikely to solve the problem</span><span>student stress</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Reducing homework (alone) is <b>unlikely to solve the problem</b> of student stress.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">仅靠海报可能效果有限，因为很多学生可能不会仔细阅读。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>have limited/little effect</span><span>read carefully</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Relying only on posters may <b>have limited effect</b> because many students may not read them carefully.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">这种方法可能只在短期内有效，因为学生可能很快恢复旧习惯。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>effective in the short term</span><span>unlikely to last</span><span>return to old habits</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">This method may only <b>be effective in the short term</b> because students may soon return to their old habits.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">过度依赖人工智能可能对学生的学习造成负面影响。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>cause negative effects</span><span>negatively affect</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Over-relying on artificial intelligence may <b>cause negative effects</b> on students' learning.</div>
+</div>
+
+<p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 先自己尝试翻译，再点击按钮对照答案</p>
+
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Model Answer</p>
+<h2 class="slide-h2">📝 范文：Letter to the Editor</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px">Task: Write a letter to the editor of the Hong Kong Daily stating your opinion on opening school sports facilities to the public. (~400 words, 6 paragraphs)</p>
+<div style="font-size:18px;line-height:2;padding:16px 22px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06)">
+<p style="margin-bottom:12px">Dear editor,</p>
+<p style="margin-bottom:10px">I am writing in response to recent suggestions that schools should <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">open their sports facilities to the public</span> after school hours because there are not enough sports venues in the community. While this idea may sound reasonable, I believe it is <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">ultimately unwise</span> for several important reasons.</p>
+<p style="margin-bottom:10px">To begin with, the proposal is <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">impractical and difficult to carry out</span>. Even if some schools were willing to share their sports facilities, many problems would arise. Who would be allowed to use the facilities? How would schedules be arranged? What rules would be introduced? These are difficult issues that many schools are not prepared to handle. As a result, expecting schools to organize public access to sports facilities may simply be unrealistic.</p>
+<p style="margin-bottom:10px">Even if the plan could be carried out, it would still be unlikely to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">achieve its intended goal</span> of solving the shortage of sports facilities in the community. School sports facilities are mainly designed for students and usually include facilities such as basketball courts, swimming pools and table tennis tables. However, community members of different ages may have a wider range of needs, such as badminton courts, jogging tracks or fitness facilities, which some schools may not have. In addition, school facilities are often limited in size and may not be able to accommodate large numbers of users. Therefore, even if schools opened their facilities, the proposal would still be <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">unlikely to fully meet the public's needs</span>.</p>
+<p style="margin-bottom:10px">Finally, opening school facilities to the public may <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">create several problems</span> for both schools and students. Sports equipment must be checked and maintained regularly. With more people using the facilities, damage may happen more quickly, leading to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">higher maintenance costs</span>. Schools may also need to hire extra staff such as security guards or cleaners, which would increase expenses. Moreover, opening school facilities to the public may <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">put student safety at risk</span>. For example, basketball courts may become damaged after frequent use, and uneven ground or broken basketball hoops may increase the risk of accidents. This means students are more likely to get injured during PE lessons or sports training.</p>
+<p style="margin-bottom:10px">Some people may argue that school sports facilities are often unused after school hours, so opening them to the public would <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">make better use of resources</span>. However, this argument <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">overlooks the fact</span> that it is not schools' responsibility to provide sports facilities for the public. School facilities are mainly designed for students, not for public use. If there is a shortage of sports facilities in the community, it is <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">the government's responsibility</span> to solve the problem instead of placing the burden on schools.</p>
+<p style="margin-bottom:10px">In conclusion, although the proposal may be well-intentioned, it is impractical, unlikely to fully meet public needs, and may negatively affect schools and students. Instead of expecting schools to solve a wider social problem, the government should take responsibility and invest in proper community sports facilities to better meet public needs.</p>
+<p>Yours faithfully,<br>Chris Wong</p>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:8px;text-align:right">✅ 字数：约500词</p>
+
+</div>
+</section><section class="slide" data-title="📋 总结 Summary">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📋 Check Your Learning</p>
+<h2 class="slide-h2">知识清单</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:16px">点击卡片正面查看详细内容，验证你的掌握程度 →</p>
+
+<div class="flip-grid g2">
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">📖 文体认知<br><span style="font-size:18px;color:var(--text-3)">Genre Awareness</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:18px;line-height:1.6">了解 Letter to the Editor 的基本特点：以表达个人立场，评价一个措施或建议，并说服读者认同自己的观点为主要目的；初步掌握其语气特点：logical and persuasive</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">📐 文章结构<br><span style="font-size:18px;color:var(--text-3)">Overall Structure</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:18px;line-height:1.6">掌握措施评估类 Letter to the Editor 的基本框架</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">💡 内容组织<br><span style="font-size:18px;color:var(--text-3)">Content Development</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:18px;line-height:1.6">掌握评估一个措施的常见思路：Feasibility → Effectiveness → Side Effects → Necessity/Responsibility；学会从多个角度分析一个措施是否值得实行</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">⚔️ 反方观点与反驳<br><span style="font-size:18px;color:var(--text-3)">Counter-argument & Rebuttal</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:18px;line-height:1.6">初步掌握 counter-argument & rebuttal 的基本写法：① 指出反方观点的缺陷或局限性 ② 提出更重要的考虑因素或替代方案</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">📝 常用表达<br><span style="font-size:18px;color:var(--text-3)">Useful Expressions</span></div><div class="flip-hint">点击查看</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans" style="font-size:18px;line-height:1.6">This proposal is impractical... / The proposal may not effectively solve... / This measure may create new problems... / Some people may argue that... / However, this argument overlooks the fact that... / It is the government's responsibility to... / In conclusion, although... it is...</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</section><section class="slide" data-title="📝 课后翻译拓展">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<p class="sec-label">📝 Extra Translation Practice</p>
+<h2 class="slide-h2">全文翻译练习：Letter to the Editor</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">将以下21句中译英，组成一封完整的读者来信。点击"💡 词伙提示"查看关键词，点击"✅ 看答案"查看参考译文 →</p>
+
+<div class="ce-item">
+  <div class="ce-cn">1. 敬启者：（正式书信开头）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Dear Director,</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">2. 我写信是想反映贵俱乐部官网所售商品的当前定价问题。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>in regard to 关于</span><span>price levels 定价</span><span>merchandise 商品</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I am writing <b>in regard to</b> the current <b>price levels</b> of goods being sold through your club's website.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">3. 作为一名狂热粉丝，且多年来忠实支持贵俱乐部，我近期震惊地发现贵队大部分周边定价过高。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>avid fan 狂热粉丝</span><span>loyally follow 忠实支持</span><span>be shocked to 震惊地</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">As an <b>avid fan</b>, and one who has <b>loyally followed</b> your club for many years, I <b>was shocked to</b> recently see how much most of your merchandise has been priced at.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">4. 我本攒钱想从贵队藏品中买些东西犒劳自己，如今却因印有俱乐部标志的商品定价高昂而感到失望，甚至有种被欺骗的感觉。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>save money 攒钱</span><span>treat oneself 犒劳自己</span><span>logo 标志</span><span>cheated 被欺骗的</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Having <b>saved money</b> to <b>treat myself</b> to something from your collection, I am now left feeling disappointed and somewhat <b>cheated</b> by the high prices you are charging fans for items featuring the club's <b>logo</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">5. 我想说明为何我认为这种做法错误且不公。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>unfair 不公平的</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I would like to explain why I feel this to be wrong and <b>unfair</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">6. 首先，我知道俱乐部财务状况十分稳健。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>first and foremost 首先</span><span>financial position 财务状况</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>First and foremost</b>, I know the club to be in a strong <b>financial position</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">7. 通过会员费、观赛收入及赞助协议，支持者们已为俱乐部提供了充足的资金。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>membership fees 会员费</span><span>game attendance 观赛收入</span><span>sponsorship agreements 赞助协议</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Through <b>membership fees</b>, <b>game attendance</b> and <b>sponsorship agreements</b>, supporters are already adequately funding the club.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">8. 对许多和我一样的粉丝而言，俱乐部周边被收取不合理高价，让人感觉俱乐部只把我们当作赚钱工具。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>unreasonably high prices 不合理高价</span><span>a means of earning money 赚钱工具</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">For many fans, much like myself, to be further charged <b>unreasonably high prices</b> for club items feels as if the club merely sees us as <b>a means of earning money</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">9. 这并非足球运动的本质。</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">That is not what football is about.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">10. 事实上，鉴于粉丝对俱乐部成功的重要作用，我认为俱乐部理应努力回馈粉丝群体。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>give back to 回馈</span><span>fan base 粉丝群体</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">In fact, I believe the club should be making efforts to <b>give back to</b> the <b>fan base</b>, given our role in the success you are enjoying.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">11. 此外，我认为公开表达对俱乐部支持的人越多越好。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>furthermore 此外</span><span>publicly show support 公开表达支持</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>Furthermore</b>, I would think that the more people <b>publicly showing their support</b> for the club, the better.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">12. 更多粉丝穿戴或使用印有俱乐部队服元素与标志的物品，只会提升俱乐部的人气。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>strip and logo 队服元素与标志</span><span>popularity 人气</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Having more of us walking around wearing or using items featuring the club's <b>strip and logo</b> only supports the club's <b>popularity</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">13. 我相信让尽可能多的粉丝通过正版周边支持俱乐部，符合俱乐部的利益。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>in one's interest 符合…利益</span><span>licensed merchandise 正版周边</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I believe it is <b>in the club's interest</b> to include as many fans as possible endorsing the club through <b>licensed merchandise</b> ownership.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">14. 我还想指出，贵官网所售诸多商品的实际价值远低于其定价。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>point out 指出</span><span>actual value 实际价值</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I would also like to <b>point out</b> that the <b>actual value</b> of many of the goods being sold through your website is much lower than the prices you have chosen to set.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">15. 我认为如此大幅抬高价格在道德上是错误的。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>morally wrong 道德上错误的</span><span>inflate prices 抬高价格</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I feel it is <b>morally wrong</b> to <b>inflate these prices</b> as much as has been done.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">16. 我理解任何商业交易都需要盈利，但俱乐部周边的定价高得离谱。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>make a profit 盈利</span><span>business transaction 商业交易</span><span>reasonable 合理的</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I understand the need to <b>make a profit</b> on any <b>business transaction</b>, but the pricing of the club's merchandise is far higher than can be considered <b>reasonable</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">17. 总之，我希望您能考虑我提出的问题以及我认为此举不合理的原因。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>take into consideration 考虑</span><span>unjustified 不合理的</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Overall, I hope you will <b>take into consideration</b> the issue I have raised and the reasons why I feel this is <b>unjustified</b>.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">18. 我们众多粉丝不仅以行动，更以资金支持俱乐部的各项运营，展现了忠实的拥护。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>loyal support 忠实支持</span><span>finance 资助</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Many of us have shown our <b>loyal support</b> for the club through not only our actions but also the money that <b>finance</b> your activities.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">19. 我希望俱乐部做出些许调整，即便对俱乐部而言微不足道，以此向粉丝传递强烈信号。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>make changes 做出调整</span><span>albeit 尽管</span><span>insignificant 微不足道的</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">I hope that changes, <b>albeit insignificant</b> to the club, will be <b>made</b> to send a strong message to the fans.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">20. 这能让粉丝知道他们的付出与奉献被珍视，俱乐部希望他们能自豪地拥有球队周边。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>dedication 奉献</span><span>appreciated 被珍视</span><span>proud owners 自豪的拥有者</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">That their efforts and <b>dedication</b> are <b>appreciated</b> and that the club wishes for them to be the <b>proud owners</b> of club merchandise.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">21. 此致 敬礼！（正式书信结尾）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Yours sincerely,<br>Chris Wong</div>
+</div>
+
+<p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 先自己尝试逐句翻译，再点击按钮对照答案。21句合起来就是一篇完整的 Letter to the Editor！</p>
+
+</div>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="max-width:900px;margin:0 auto;width:100%">
+
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+<div style="font-size:72px;margin-bottom:24px">🎉</div>
+<h2 class="slide-h2">恭喜完成 Unit 1！</h2>
+<p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：Letter to the Editor 文体特征 → 审题分析 → 措施评估四角度 → PEER 论证结构 → 逐段练习 → 翻译练习 → 完整范文</p>
+<button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+/* Task 3A interactive */
+function toggleT3A(prefix, evt){
+  var i=1;
+  if(!evt)evt=window.event;
+  var target=evt&&evt.currentTarget;
+  while(true){
+    var opt=document.getElementById(prefix+'-'+i);
+    if(!opt)break;
+    var cb=document.getElementById(prefix+'-cb'+i);
+    if(!cb)break;
+    // Single-select (Purpose): radio behavior
+    if(prefix==='t3a-p'){
+      var clicked=target&&target.id===prefix+'-'+i;
+      if(clicked && cb.textContent==='☑'){
+        cb.textContent='□';
+        opt.style.borderColor='#ddd';
+        opt.style.background='#fff';
+        i++;continue;
+      }
+      if(clicked){
+        // uncheck all others
+        for(var j=1;;j++){
+          if(j===i)continue;
+          var o=document.getElementById(prefix+'-'+j);
+          var c=document.getElementById(prefix+'-cb'+j);
+          if(!o||!c)break;
+          c.textContent='□';
+          o.style.borderColor='#ddd';
+          o.style.background='#fff';
+        }
+        cb.textContent='☑';
+        opt.style.borderColor='var(--xdf-blue)';
+        opt.style.background='#e8f0fe';
+      }
+    } else {
+      // Multi-select (Tone): toggle only the clicked option
+      if(target && target.id===prefix+'-'+i){
+        if(cb.textContent==='□'){
+          cb.textContent='☑';
+          opt.style.borderColor='var(--xdf-blue)';
+          opt.style.background='#e8f0fe';
+        } else {
+          cb.textContent='□';
+          opt.style.borderColor='#ddd';
+          opt.style.background='#fff';
+        }
+      }
+    }
+    i++;
+  }
+}
+function checkT3APurpose(){
+  var cb1=document.getElementById('t3a-p-cb1');
+  var cb2=document.getElementById('t3a-p-cb2');
+  var fb=document.getElementById('t3a-p-fb');
+  var opt1=document.getElementById('t3a-p-1');
+  var opt2=document.getElementById('t3a-p-2');
+  var sb=document.getElementById('t3a-p-sb');
+  fb.classList.add('show');
+  fb.style.display='block';
+  if(cb1.textContent==='☑' && cb2.textContent==='□'){
+    fb.innerHTML='❌ 不对。这篇 Letter to the Editor 需要 <b>表达自己的观点并说服读者</b>，而不是客观分析双方立场。再选一次吧。';
+    fb.style.borderColor='#d32f2f';
+    fb.style.background='#ffebee';
+    opt1.style.background='#ffebee';
+    opt1.style.borderColor='#d32f2f';
+  } else if(cb1.textContent==='☑' && cb2.textContent==='☑'){
+    fb.innerHTML='⚠️ 不能两个都选哦——再想想，这篇 Letter to the Editor 的主要目的是哪一个？';
+    fb.style.borderColor='#e65100';
+    fb.style.background='#fff3e0';
+    opt1.style.background='#fff3e0';
+    opt1.style.borderColor='#e65100';
+    opt2.style.background='#fff3e0';
+    opt2.style.borderColor='#e65100';
+  } else if(cb2.textContent==='☑'){
+    fb.innerHTML='✅ 正确！Letter to the Editor 的主要目的是 <b>express an opinion and persuade readers</b>（表达观点并用理由说服读者认同）。';
+    fb.style.borderColor='#2e7d32';
+    fb.style.background='#e8f5e9';
+    opt2.style.borderColor='#2e7d32';
+    opt2.style.background='#e8f5e9';
+    sb.textContent='✅ 已完成';
+    sb.style.background='#888';
+    sb.disabled=true;
+  } else {
+    fb.innerHTML='💡 请先点击选择其中一个选项，再点击检查。';
+    fb.style.borderColor='var(--xdf-gold)';
+    fb.style.background='#fff8e1';
+  }
+}
+function checkT3ATone(){
+  var correct={0:true,1:true,2:false,3:false};
+  var names=['logical','persuasive','descriptive and vivid','neutral'];
+  var fb=document.getElementById('t3a-t-fb');
+  var sb=document.getElementById('t3a-t-sb');
+  fb.classList.add('show');
+  fb.style.display='block';
+  var allCorrect=true;
+  for(var i=1;i<=4;i++){
+    var opt=document.getElementById('t3a-t-'+i);
+    var cb=document.getElementById('t3a-t-cb'+i);
+    var isCorrect=correct[i-1];
+    var selected=cb.textContent==='☑';
+    if(isCorrect && selected){
+      opt.style.background='#e8f5e9';
+      opt.style.borderColor='#2e7d32';
+    } else if(isCorrect && !selected){
+      opt.style.background='#fff3e0';
+      opt.style.borderColor='#e65100';
+      allCorrect=false;
+    } else if(!isCorrect && selected){
+      opt.style.background='#ffebee';
+      opt.style.borderColor='#d32f2f';
+      allCorrect=false;
+    } else {
+      opt.style.background='#fafafa';
+      opt.style.borderColor='#e0e0e0';
+    }
+  }
+  if(allCorrect){
+    fb.innerHTML='✅ 全部正确！Letter to the Editor 的语气是 <b>logical</b>（有逻辑）和 <b>persuasive</b>（有说服力）。';
+    fb.style.borderColor='#2e7d32';
+    fb.style.background='#e8f5e9';
+    sb.textContent='✅ 已完成';
+    sb.style.background='#888';
+    sb.disabled=true;
+  } else {
+    fb.innerHTML='💡 再想想。Letter to the Editor 需要逻辑清晰地说服读者，所以正确的是 <b>logical</b> 和 <b>persuasive</b>。请参考反馈调整你的选择。';
+    fb.style.borderColor='#e65100';
+    fb.style.background='#fff3e0';
+  }
+}
+/* student input */
+function submitAnswer(btnId, areaId, answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(text){
+    ans.textContent=text;
+    ta.style.display='none';
+    ans.classList.add('show');
+    btnId.style.display='none';
+    var eb=document.getElementById(areaId+'-eb');
+    if(eb)eb.style.display='inline-flex';
+  }
+}
+function continueEdit(areaId, answerId, submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+/* ═══════════════════════════════════════════════════════════
+   FIX LOG (2025-07-16)
+   ═══════════════════════════════════════════════════════════
+   Fix #1 — Removed global `.show{display:block!important}` (was line 222)
+            and replaced with element-specific `.X.show{display:block}` rules.
+            Root cause: !important overrode more specific rules:
+              - `.cloze-hint-text.show{display:inline}` → was showing as block
+              - `.mc-item .mc-ans.show{display:inline-block}` → was showing as block
+              - `.flip-back` (used in flip-card state flag) → lost flex layout
+   Fix #2 — Added `.flip-back.show{display:flex}` to preserve flex layout
+            for flip cards that use `.show` as a state flag alongside `.flipped`.
+   ═══════════════════════════════════════════════════════ */
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u1',weakKey:'wordform',mode:'quiz'};</script>
+</body>
+</html>

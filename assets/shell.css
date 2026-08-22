@@ -1,0 +1,67 @@
+/* 智学平台 · 统一外壳样式（sidebar / nav / 卡片 / 顶栏）
+ * 由 dashboard.html 的样式抽出，供各功能页复用，保证视觉一致。 */
+:root {
+  --bg: #F4ECD8; --card: #FFFFFF; --text: #2E2A3B; --line: #2E2A3B;
+  --muted: #6B6478; --pink: #FF5D8F; --blue: #4D7CFE; --yellow: #FFC83D;
+  --green: #4FC46A; --shadow: #2E2A3B; --teal:#2DD4BF; --orange:#FF8A3D; --purple:#9B6BF2;
+}
+body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --shadow:#000; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition: background .25s, color .25s; }
+.pixel { font-family:"Press Start 2P", monospace; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+.logo { font-family:"Press Start 2P",monospace; font-size:13px; line-height:1.7; border:3px solid var(--line); background:var(--yellow); color:#2E2A3B; padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); margin-bottom:28px; }
+.nav { display:flex; flex-direction:column; gap:6px; }
+.nav a { display:flex; align-items:center; gap:10px; padding:11px 12px; color:var(--text); text-decoration:none; border:3px solid transparent; font-weight:500; transition:transform .12s, background .12s, border-color .12s; }
+.nav a .dot { width:12px; height:12px; background:var(--blue); border:2px solid var(--line); flex-shrink:0; }
+.nav a:hover { transform:translate(-2px,-2px); border-color:var(--line); box-shadow:3px 3px 0 var(--shadow); background:var(--card); }
+.nav a.active { background:var(--pink); color:#fff; border-color:var(--line); box-shadow:4px 4px 0 var(--shadow); }
+.nav a.active .dot { background:#fff; }
+.nav-sep { font-family:"Press Start 2P"; font-size:8px; color:var(--muted); margin:14px 4px 4px; letter-spacing:1px; }
+.sidebar-foot { margin-top:auto; display:flex; justify-content:center; padding-top:20px; }
+.main { flex:1; min-width:0; padding:24px 32px 48px; }
+.topbar { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+.search { flex:1; display:flex; align-items:center; gap:10px; border:3px solid var(--line); background:var(--card); padding:10px 14px; box-shadow:4px 4px 0 var(--shadow); }
+.search input { flex:1; border:none; background:transparent; outline:none; font-family:inherit; font-size:15px; color:var(--text); }
+.search .mag { width:14px; height:14px; border:3px solid var(--line); border-radius:50%; position:relative; }
+.search .mag::after { content:""; position:absolute; width:8px; height:3px; background:var(--line); bottom:-6px; right:-5px; transform:rotate(45deg); }
+.icon-btn { width:46px; height:46px; flex-shrink:0; border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:transform .12s; }
+.icon-btn:hover { transform:translate(-2px,-2px); }
+.hero { border:3px solid var(--line); background:var(--card); box-shadow:6px 6px 0 var(--shadow); padding:26px; display:flex; gap:28px; align-items:center; margin-bottom:30px; }
+.hero .avatar-big { width:120px; height:120px; flex-shrink:0; border:3px solid var(--line); background:var(--green); box-shadow:4px 4px 0 var(--shadow); display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size:34px; color:#2E2A3B; }
+.hero h1 { font-size:22px; margin-bottom:8px; }
+.hero p { color:var(--muted); margin-bottom:14px; }
+.btn { display:inline-block; font-family:"Press Start 2P"; font-size:11px; background:var(--pink); color:#fff; border:3px solid var(--line); padding:12px 18px; box-shadow:4px 4px 0 var(--shadow); cursor:pointer; text-decoration:none; transition:transform .12s; }
+.btn:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--shadow); }
+.btn.ghost { background:var(--card); color:var(--text); }
+.sec-head { display:flex; align-items:flex-end; justify-content:space-between; margin:8px 0 18px; }
+.sec-head h2 { font-size:18px; }
+.sec-head .pixel { font-size:10px; color:var(--muted); }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:18px; margin-bottom:30px; }
+.kpi { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:18px; }
+.kpi .label { font-size:12px; color:var(--muted); margin-bottom:8px; }
+.kpi .val { font-family:"Press Start 2P"; font-size:22px; }
+.kpi .val.pink { color:var(--pink); } .kpi .val.blue { color:var(--blue); } .kpi .val.green { color:var(--green); } .kpi .val.yellow { color:#D9A400; }
+.cols { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+.panel { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:20px; }
+.panel h3 { font-size:15px; margin-bottom:16px; }
+.weak-row { margin-bottom:14px; }
+.weak-row .top { display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px; }
+.weak-bar { height:14px; border:3px solid var(--line); background:var(--bg); }
+.weak-bar > i { display:block; height:100%; }
+.trend-svg { width:100%; height:160px; display:block; }
+.grid2 { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:22px; }
+.card { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:18px; transition:transform .14s, box-shadow .14s; }
+.card:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--shadow); }
+.card h3 { font-size:16px; margin-bottom:6px; }
+.card .desc { color:var(--muted); font-size:12px; line-height:1.5; margin-bottom:14px; }
+.card .go { font-family:"Press Start 2P"; font-size:9px; background:var(--blue); color:#fff; border:3px solid var(--line); padding:8px 10px; cursor:pointer; box-shadow:3px 3px 0 var(--shadow); display:inline-block; text-decoration:none; }
+.card .go:hover { transform:translate(-2px,-2px); }
+.tag { display:inline-block; font-family:"Press Start 2P"; font-size:8px; background:var(--yellow); color:#2E2A3B; padding:5px 7px; border:2px solid var(--line); margin-bottom:10px; }
+.empty { text-align:center; color:var(--muted); padding:50px 20px; border:3px dashed var(--line); }
+.alert { border:3px solid var(--line); background:var(--card); box-shadow:4px 4px 0 var(--shadow); padding:14px 16px; margin-bottom:18px; font-size:14px; }
+.alert.warn { border-color:var(--orange); }
+footer { margin-top:40px; color:var(--muted); font-size:13px; text-align:center; }
+.loading { text-align:center; color:var(--muted); padding:60px 0; font-size:14px; }
+@media (max-width:860px){ .cols{ grid-template-columns:1fr; } .sidebar{ display:none; } .main{ padding:18px; } .hero{ flex-direction:column; text-align:center; } }

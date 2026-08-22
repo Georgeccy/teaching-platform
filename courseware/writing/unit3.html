@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>香港加速班 Writing Unit 3 Yearbook Entry | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.mc-correct{color:var(--xdf-green);font-weight:600}
+.mc-correct input{accent-color:var(--xdf-green)}
+.mc-wrong{color:var(--xdf-red);font-weight:600}
+.mc-wrong input{accent-color:var(--xdf-red)}
+.mc-result{font-size:16px;font-weight:700;margin:10px 0 4px}
+.mc-result.pass{color:var(--xdf-green)}
+.mc-result.fail{color:var(--xdf-red)}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V6 additions ── */
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.student-input-wrap{margin:14px 0}
+.student-input-wrap label{display:block;font-size:18px;font-weight:600;color:var(--text-1);margin-bottom:8px;line-height:1.6}
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
+.cloze-hint-btn{display:inline;font-size:13px;color:var(--xdf-blue);background:#eef4fb;border:1px solid #c5d8ee;border-radius:4px;padding:0 6px;cursor:pointer;transition:all .2s;font-weight:600;vertical-align:baseline;white-space:nowrap}
+.cloze-hint-btn:hover{background:#d8e6f7}
+.cloze-hint-text{display:none;font-size:20px;color:var(--xdf-blue);font-weight:400}
+.cloze-hint-text.show{display:inline}
+.s2-item{opacity:0;transform:translateY(16px);animation:s2-item-in 300ms cubic-bezier(.165,.84,.44,1) forwards}
+.s2-item:nth-child(1){animation-delay:50ms}
+.s2-item:nth-child(2){animation-delay:120ms}
+.s2-item:nth-child(3){animation-delay:190ms}
+.s2-item:nth-child(4){animation-delay:260ms}
+@keyframes s2-item-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.s2-highlight{position:relative;display:inline-block;color:var(--xdf-green);font-weight:800}
+.s2-highlight::after{content:'';position:absolute;inset:-2px -6px;background:var(--xdf-gl);border-radius:6px;z-index:-1;animation:s2-pulse 2s ease-in-out .5s infinite}
+@keyframes s2-pulse{0%,100%{opacity:.6;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.04)}}
+@media (prefers-reduced-motion:reduce){
+  .s2-item{opacity:1;transform:none;animation:none}
+  .s2-highlight::after{animation:none;opacity:.6}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="course-tag">香港加速班·Unit3</span>
+  <span class="slide-title" id="topbarTitle">Yearbook Entry</span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 3">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><img class="tb-avatar" src="avatar.jpg" alt="George" onerror="this.style.display='none'"><div class="tb-name">陈成寓 George</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">Yearbook Entry<br><span class="accent">毕业纪念册文章</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">毕业纪念册留言 · 校园回忆写作</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 3 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+  <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Yearbook Entry</div><div class="sm-sub">毕业纪念册留言</div></div>
+  <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">School Memories</div><div class="sm-sub">学业回顾 + 同窗情谊</div></div>
+  <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~300 words</div><div class="sm-sub">两板块 1.1 + 1.2</div></div>
+</div>
+<div class="timeline-row">
+  <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题与构思</div></div>
+  <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">学术生活</div></div>
+  <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">学生生活</div></div>
+  <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">语言库与范文</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 本节课学习目标</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">By the end of this lesson, you will be able to:</p>
+<div style="display:grid;gap:14px">
+  <div class="card accent s2-item" style="border-left:4px solid var(--xdf-red)"><h4>① 文体认知 Genre Awareness</h4><p>了解并初步掌握 Yearbook Entry 的文体结构与语气特征（reflective, nostalgic, sincere and appreciative）。</p></div>
+  <div class="card accent s2-item"><h4>② 题型思路 enjoy / challenging</h4><p>初步掌握 enjoy 与 challenging 两种题型的常用思路与句式。</p></div>
+  <div class="card accent s2-item"><h4>③ 成长型写作框架</h4><p>理解并运用「挑战→成就 / 多样体验 / 成长」框架展开学科回顾。</p></div>
+  <div class="card accent s2-item"><h4>④ 反思与怀旧写作</h4><p>初步掌握反思与怀旧型写作的常用表达与技巧（对比、细节、something 句型）。</p></div>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Part 1 · Understanding the Question</p>
+<h2 class="slide-h2">📋 Task 2A：分析题目的写作要求</h2>
+<div class="notes-box mt-m" style="font-size:16px">
+  <b>题目背景：</b>毕业纪念册委员会向 6C 班征集留言。你是九龙中学（Kowloon Secondary School）6C 班的学生，需完成 yearbook entry。
+</div>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你是谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A graduating student in Class 6C at Kowloon Secondary School.<br><span style="font-weight:400;color:var(--text-2)">九龙中学 6C 班的毕业班学生。</span></div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. Audience（写给谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Fellow graduates and future readers (including yourself).<br><span style="font-weight:400;color:var(--text-2)">同届毕业生与未来的读者（也包括多年后的自己）。</span></div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="true"> reflect on and preserve meaningful memories from secondary school</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="false"> inform readers about the daily life of secondary school students in an objective way</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="true"> express personal feelings and appreciation for people and experiences that shaped one's school life</label>
+  </div>
+  <button class="ce-btn" onclick="checkMultiChoice(this)">✅ 检查答案</button>
+  <div class="mc-result"></div>
+  <div class="ce-en">✅ 第 1、3 项 ✓ 是题目要求的写作目的：reflect on and preserve meaningful memories 与 express personal feelings and appreciation 都符合 yearbook entry 的回顾与情感表达目的。第 2 项 inform readers ... in an objective way 是客观报道，不符合 yearbook 的回顾与情感表达目的。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. Register（正式程度）</div>
+  <div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:8px 0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+    </div>
+    <div class="quiz-ans">✅ <b>semi-formal</b> — 毕业纪念册面向同学与未来的自己，语气正式但不刻板。</div>
+  </div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">5. Tone（语气，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="true"> reflective（回顾与反思性的）</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="false"> Objective（客观理性，不带个人感情色彩的）</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="true"> nostalgic（怀旧的）</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" data-correct="true"> sincere / appreciative（真诚且充满感激的）</label>
+  </div>
+  <button class="ce-btn" onclick="checkMultiChoice(this)">✅ 检查答案</button>
+  <div class="mc-result"></div>
+  <div class="ce-en">✅ reflective ✓ · nostalgic ✓ · sincere / appreciative ✓。Objective 不符合——yearbook entry 重在个人情感。</div>
+</div>
+</section><section class="slide" data-title="🧠 想论点"><p class="sec-label">Part 2 · Brainstorming</p><h2 class="slide-h2">🧠 想论点：先自己想一想</h2><div class="student-input-wrap"><label><b>3.1.</b> 一个科目 challenging 可能有哪些原因？</label><textarea class="student-ta" id="b31"></textarea><button class="submit-btn" id="b31-sb" onclick="submitAnswer(this,'b31','b31-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b31-ans"></div><button class="edit-btn" id="b31-eb" onclick="continueEdit('b31','b31-ans','b31-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b31-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b31-ref" style="display:none">1. 无趣不想听。2. 听又听不懂。3. 懂了记不住。4. 记住了又搞混……或者科目本身比较枯燥难懂，理论知识多、实践少。</div><div class="student-input-wrap"><label><b>3.2.</b> enjoyed studying 可能因为什么原因？</label><textarea class="student-ta" id="b32"></textarea><button class="submit-btn" id="b32-sb" onclick="submitAnswer(this,'b32','b32-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b32-ans"></div><button class="edit-btn" id="b32-eb" onclick="continueEdit('b32','b32-ans','b32-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b32-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b32-ref" style="display:none">有趣不枯燥、多样化、不一样且特别。</div><div class="student-input-wrap"><label><b>3.3.</b> miss most about being a student 可以写什么？</label><textarea class="student-ta" id="b33"></textarea><button class="submit-btn" id="b33-sb" onclick="submitAnswer(this,'b33','b33-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b33-ans"></div><button class="edit-btn" id="b33-eb" onclick="continueEdit('b33','b33-ans','b33-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b33-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b33-ref" style="display:none">和大家在一起；做勇敢 / 随性 / 非常规 / 打破规则 / 热血的事；尽情地感觉和表达（不收放、不克制、不权衡利弊）等。</div><div class="student-input-wrap"><label><b>3.4.</b> 1.1 和 1.2 哪部分更理性？哪部分更感性？</label><textarea class="student-ta" id="b34"></textarea><button class="submit-btn" id="b34-sb" onclick="submitAnswer(this,'b34','b34-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b34-ans"></div><button class="edit-btn" id="b34-eb" onclick="continueEdit('b34','b34-ans','b34-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b34-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b34-ref" style="display:none">1.1 更理性，核心是写自己的成长与收获，语气 reflective。1.2 更感性，核心是陪伴 / 友情与回忆 / 珍惜，语气更 nostalgic。</div></section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 3 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构设计</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:8px">Yearbook entry 分为两块。先自己想一想每块写什么，再点击揭晓。</p>
+<table class="rule-table mt-m">
+  <tr><th style="width:34%">Paragraph</th><th>Main content（点击揭晓）</th></tr>
+  <tr><td class="col-type">1.1 Academic Life</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="学科回顾：成长与收获 (Challenge → Experience → Growth)">点击查看</span></td></tr>
+  <tr><td class="col-type">1.2 Student Life</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="生活回顾：陪伴/友情与回忆/珍惜 (Togetherness → Memories → Appreciation)">点击查看</span></td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>📝 写作要点：</b>1.1 偏理性（成长与收获），1.2 偏感性（同窗情谊与珍惜）。两者共同核心都是 <b>growth and learning</b>。
+</div>
+</section><section class="slide" data-title="✍️ Part 1 学术生活">
+<p class="sec-label">Part 4 · Academic Life (1.1)</p>
+<h2 class="slide-h2">✍️ 第一部分：Academic Life</h2>
+<p style="font-size:20px;line-height:1.9;margin-bottom:14px">题目：<b>Write about one subject that you enjoyed studying or found challenging.</b></p>
+<p style="font-size:20px;color:var(--text-2);line-height:1.9">无论选 enjoy 还是 challenging，内容都从三个角度展开：</p>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px">
+  <div class="card accent"><h4>① Challenge → Achievement</h4><p>挑战与成就感</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-gold)"><h4>② Experience / Variety</h4><p>多样 / 不一样的体验</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-blue)"><h4>③ Growth / Learning</h4><p>学到东西与成长</p></div>
+</div>
+<div class="notes-box mt-l"><b>💡 关键：</b>enjoy 与 challenging 写法结构相同，本质都是写「收获与成长」。</div>
+</section><section class="slide" data-title="📖 Task 5A 范例">
+<p class="sec-label">Task 5A · Student Exemplar</p>
+<h2 class="slide-h2">📖 Task 5A：读范例，找规律</h2>
+<p style="font-size:19px;color:var(--text-2);margin-bottom:12px">阅读下面这篇 Visual Arts 学生范例（高亮处为关键表达），想想它主要用哪两方面说明 enjoy？</p>
+<div style="font-size:19px;line-height:2;padding:16px 22px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px">
+  The subject I enjoyed studying was undoubtedly my elective, Visual Arts. It was not quite a prevalent choice in our class but I found studying Visual Arts was really <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">interesting</span> and <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">helpful</span> to my process of creating. During lessons, not only would we <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">learn about</span> the drawing skills and technique but also the <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">knowledge</span> of art history which is <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">helpful</span> when doing art appreciation. By learning art history, I got precious chance to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">understand different</span> famous artists, for example Van Gogh, Monet, Andy Warhol — you name it. Getting opportunity to study their artwork <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">broaden my horizon</span> to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">learn a myriad of</span> drawing style and painting technique, which gave me tons of <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">inspiration</span> to start my own piece of artwork. Throughout the lessons I created <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">quite a lot of</span> artwork with <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">different</span> drawing materials attempted. Not only did this brushed up <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">my drawing skills</span> but also provided a valuable chance for me to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">try out different drawing tools</span> and paints. I felt really <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">excited and amused</span> during the exploration of creating style and process through studying Visual Art.
+</div>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">想一想：这段用了哪两方面说明 enjoy？点击揭晓！</span></div>
+<button class="reveal-btn" style="margin-top:10px" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en" style="display:none">
+  <b>① 不一样的体验 (Experience / Variety)：</b>关键词 → <i>different / a lot of / a myriad of</i><br>
+  <b>② 学到东西与成长 (Growth / Learning)：</b>关键词 → <i>helpful / learn (knowledge, skills, horizons, inspiration)</i><br>
+  <span style="font-weight:400;color:var(--text-2)">（有趣 interesting / excited / amused 是 enjoy 的结果体现）</span>
+</div>
+</section><section class="slide" data-title="🧠 enjoy 语言库"><p class="sec-label">Task 5B · Language Bank</p><h2 class="slide-h2">🧠 Language Bank — enjoy (the most)</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:14px">点击卡片，查看每个角度的常用句式：</p><div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">① Challenge → Achievement</div><div class="flip-hint">挑战与成就感</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">At first, ... made me ..., but step by step, ...<br>Every improvement gave me a sense of achievement.</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">② Various / Different Experience</div><div class="flip-hint">多样 / 不一样的体验</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">no two lessons ever felt the same.<br>Stories, discussions and role plays always brought laughter and surprises.</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">③ Growth / Learning</div><div class="flip-hint">学到东西与成长</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">... helped me grow as a person. It taught me that ...<br>These lessons have stayed with me long after I left the classroom.</div></div></div></div></div><div class="notes-box mt-l"><b>💡 Enjoy 结构小结：</b>挑战与成就感 + 多样体验 + 成长</div></section><section class="slide" data-title="✍️ Task 5C 练习"><p class="sec-label">Task 5C · Practice</p><h2 class="slide-h2">✍️ Task 5C：写一段 enjoy studying</h2><div class="student-input-wrap"><label><b>✍️ 任务：</b>参照以上框架，写一段 enjoy studying 其他学科的版本（如 Mathematics / Chinese）。</label><div class="ce-hints" style="display:block;margin-bottom:10px">框架提示：At first ... but step by step ... → Every improvement gave me a sense of achievement → What I loved most ... → ... helped me grow as a person.</div><textarea class="student-ta" id="task5c" style="min-height:120px"></textarea><button class="submit-btn" id="task5c-sb" onclick="submitAnswer(this,'task5c','task5c-ans')">✏️ 提交我的回答</button><div class="student-answer" id="task5c-ans"></div><button class="edit-btn" id="task5c-eb" onclick="continueEdit('task5c','task5c-ans','task5c-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('task5c-ref');a.classList.toggle('show')">📖 参考答案（Mathematics 版）</button><div class="ce-en" id="task5c-ref" style="display:none;line-height:1.9">Looking back on my secondary school years, Mathematics was undoubtedly the subject I enjoyed the most. At first, solving difficult problems often frustrated me, but step by step, I became more patient and confident, and every solution gave me a sense of achievement. What I loved most about Mathematics was that no two questions could be solved in exactly the same way. Discovering patterns and finding different approaches always made lessons interesting and rewarding. Most importantly, Mathematics helped me grow as a person. It taught me not to give up easily when facing difficulties and to believe that persistence eventually pays off. These lessons have stayed with me long after I left the classroom.</div></section><section class="slide" data-title="🔍 5.1 challenging 对比">
+<p class="sec-label">Task 5.1 · Enjoy vs Challenging</p>
+<h2 class="slide-h2">🔍 5.1：challenging 写法有什么不同？</h2>
+<p style="font-size:19px;color:var(--text-2);margin-bottom:12px">阅读下面这段 found English challenging 的范例：</p>
+<div style="font-size:19px;line-height:2;padding:16px 22px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin-bottom:14px">
+  Looking back on my secondary school years, English was undoubtedly the subject I found the most challenging. At first, speaking in English made me nervous, and I often worried about making mistakes. However, step by step, I became more confident, and every improvement gave me a sense of achievement. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Although English was demanding at times</span>, no two lessons ever felt the same. Stories, discussions and role plays constantly <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">pushed me out of my comfort zone</span> and encouraged me to try new things. Most importantly, English <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">taught me that growth often comes through challenges</span>. It reminded me not to give up when progress seems slow and to believe in my own potential. These lessons have stayed with me long after I left the classroom.
+</div>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">想一想：它和 enjoy studying 的写法有什么不同吗？</span></div>
+<button class="reveal-btn" style="margin-top:10px" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en" style="display:none">
+  结构相同，内容也基本相同，都从「挑战与成就感」「不同体验」和「成长」三方面展开；<b>不同之处</b>只是 enjoy 更强调「喜欢的原因」，而 challenging 更强调「挑战带来的成长」。<br>
+  <span style="font-weight:400;color:var(--text-2)">（句式有区别的部分已加粗标注）</span>
+</div>
+</section><section class="slide" data-title="🧠 challenging 语言库"><p class="sec-label">Task 5D · Language Bank</p><h2 class="slide-h2">🧠 Language Bank — challenging</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:14px">点击卡片，查看每个角度的常用句式：</p><div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">① Challenge → Achievement</div><div class="flip-hint">挑战与成就感</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">At first, ... made me ..., but step by step, ...<br>Every improvement gave me a sense of achievement.</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">② Challenge → Different Experiences</div><div class="flip-hint">走出舒适圈</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">Although ... was demanding at times, no two ... ever felt the same.<br>... constantly pushed me out of my comfort zone and encouraged me to try new things.<br>Most importantly, ... taught me that growth often comes through challenges.</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">③ Growth through Challenges</div><div class="flip-hint">通过挑战获得成长</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">It reminded me not to give up when ...<br>... and to believe in my own potential.<br>These lessons have stayed with me ...</div></div></div></div></div><div class="notes-box mt-l"><b>💡 提示：</b>Enjoy 与 challenging 本质相同——「收获与成长」。加粗处是句式区别点。</div></section><section class="slide" data-title="✍️ Task 5D 练习"><p class="sec-label">Task 5D · Practice (Homework)</p><h2 class="slide-h2">✍️ Task 5D：写一段 challenging subject</h2><div class="student-input-wrap"><label><b>✍️ 任务：</b>完成 challenging subject 的全段写作（除 English 以外任意学科）。</label><div class="ce-hints" style="display:block;margin-bottom:10px">框架提示：At first ... but step by step ... → Although ... was demanding at times → ... pushed me out of my comfort zone → growth often comes through challenges → believe in my own potential.</div><textarea class="student-ta" id="task5d" style="min-height:130px"></textarea><button class="submit-btn" id="task5d-sb" onclick="submitAnswer(this,'task5d','task5d-ans')">✏️ 提交我的回答</button><div class="student-answer" id="task5d-ans"></div><button class="edit-btn" id="task5d-eb" onclick="continueEdit('task5d','task5d-ans','task5d-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('task5d-ref');a.classList.toggle('show')">📖 参考答案（Mathematics 版）</button><div class="ce-en" id="task5d-ref" style="display:none;line-height:1.9">Looking back on my secondary school years, Mathematics was undoubtedly the subject I found the most challenging. At first, solving difficult problems often left me feeling frustrated, and I sometimes doubted my own abilities. However, step by step, I became more patient and confident, and every solution gave me a real sense of achievement. Although Mathematics was demanding at times, no two questions could be solved in exactly the same way. Discovering patterns and finding different approaches always made lessons interesting and rewarding. Most importantly, Mathematics taught me that growth often comes through challenges. It reminded me not to give up when progress seemed slow and to believe that persistence eventually pays off. These lessons have stayed with me long after I left the classroom.</div></section><section class="slide" data-title="✍️ Part 2 学生生活">
+<p class="sec-label">Part 5 · Student Life (1.2)</p>
+<h2 class="slide-h2">✍️ 第二部分：Student Life</h2>
+<p style="font-size:20px;line-height:1.9;margin-bottom:14px">题目：<b>Write about what you will miss most about being a student in Class 6C.</b></p>
+<p style="font-size:20px;color:var(--text-2);line-height:1.9">核心：写「陪伴 / 友情」与「回忆 / 珍惜」。语气更 <b style="color:var(--xdf-gold)">nostalgic（怀旧）</b>。</p>
+<div class="notes-box mt-l"><b>📝 展开思路：</b>Togetherness（同窗情谊）→ Memories（具体回忆）→ Appreciation（感激与珍惜）。</div>
+</section><section class="slide" data-title="🧠 6.1/6.2 构思"><p class="sec-label">Part 6 · Brainstorming</p><h2 class="slide-h2">🧠 6.1 / 6.2：怎样写好 Student Life？</h2><div class="student-input-wrap"><label><b>6.1.</b> 和大家在一起的校园时光，有哪些内容可以详细写？</label><textarea class="student-ta" id="b61"></textarea><button class="submit-btn" id="b61-sb" onclick="submitAnswer(this,'b61','b61-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b61-ans"></div><button class="edit-btn" id="b61-eb" onclick="continueEdit('b61','b61-ans','b61-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b61-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b61-ref" style="display:none">困难时刻（学业压力、挑战、挫折）；快乐时刻（日常趣事、庆祝、活动）。</div><div class="student-input-wrap"><label><b>6.2.</b> 怎样才能不读起来很平、像流水账？</label><textarea class="student-ta" id="b62"></textarea><button class="submit-btn" id="b62-sb" onclick="submitAnswer(this,'b62','b62-ans')">✏️ 提交我的回答</button><div class="student-answer" id="b62-ans"></div><button class="edit-btn" id="b62-eb" onclick="continueEdit('b62','b62-ans','b62-sb')" style="display:none">✏️ 继续输入</button></div><button class="reveal-btn" style="margin-top:10px" onclick="var a=document.getElementById('b62-ref');a.classList.toggle('show')">💡 参考答案</button><div class="ce-en" id="b62-ref" style="display:none">① 不只写发生了什么，还要写感受、影响和意义。② 用具体细节，而不是抽象概括。③ 用具体的人 + 具体的动作代替笼统表达。④ 加入转折和对比，让文章更有起伏。⑤ 使用更有感染力的词语，加强情感表达。</div></section><section class="slide" data-title="✍️ Task 6A 填空"><p class="sec-label">Task 6A · Guided Writing</p><h2 class="slide-h2">✍️ Task 6A：完成 1.2 内容填充</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:12px">点击每个空白处，揭晓参考填充内容：</p><p style="font-size:19px;line-height:2.1;padding:16px 22px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06)"><b>What I will miss most about Class 6C is the sense of togetherness we shared.</b> <span class="cloze" onclick="revealCloze(this)" data-answer="6C was more than just a class; it was a group of people who stood by one another through both stressful and joyful times.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 班级不只是上课的地方——它是一群陪你一起走过压力与欢乐时光的人。</span> <span class="cloze" onclick="revealCloze(this)" data-answer="That bond is something I will always treasure.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 这份情谊 / 纽带值得永远珍藏。</span><br><br><b>School life was not always easy.</b> <span class="cloze" onclick="revealCloze(this)" data-answer="Projects, deadlines and exams often left us feeling stressed and overwhelmed.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 作业、截止日期和考试常让人倍感压力、喘不过气。</span> However, no one in 6C had to face these challenges alone. <span class="cloze" onclick="revealCloze(this)" data-answer="Some classmates patiently explained difficult homework problems, while others shared their notes or offered words of encouragement before exams.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 同学怎样互相帮忙？（耐心讲题、分享笔记、考前鼓励）</span> <span class="cloze" onclick="revealCloze(this)" data-answer="With such support, even the toughest days became easier.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 有了这样的支持，最难的日子也变轻松了。</span><br><br><span class="cloze" onclick="revealCloze(this)" data-answer="I will also miss the joyful moments we created together.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 也别忘了写一起创造的欢乐瞬间。</span> <span class="cloze" onclick="revealCloze(this)" data-answer="We laughed at inside jokes, shared snacks under the stairs and sang together when PE lessons were cancelled by rain. These small moments turned ordinary school days into unforgettable memories.">点击查看</span> <span class="cloze-hint-text" style="display:inline">💡 用具体小事写欢乐（内部笑话、楼梯下分零食、雨天取消体育课一起唱歌），把平凡日子变成难忘回忆。</span><br><br><b>Looking back, the greatest gift of 6C was not the lessons or the grades, but the people who walked beside me throughout the journey. Those memories of standing side by side through both good times and difficult moments are something I will carry with me long after leaving school.</b></p></section><section class="slide" data-title="🧠 反思怀旧工具箱"><p class="sec-label">Language Bank · Reflective &amp; Nostalgic</p><h2 class="slide-h2">🧠 反思与怀旧型写作工具箱</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:14px">点击卡片，查看 5 个常用技巧与句式：</p><div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">① Contrast 对比</div><div class="flip-hint">突出真正重要的东西</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">more than just ... it was ...<br>not ...; but ...<br>not only ...; but also ...</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">② Go beyond events 不止写事件</div><div class="flip-hint">写感受、影响与意义</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">Projects, deadlines and exams often left us feeling stressed and overwhelmed.<br>These small moments turned ordinary school days into unforgettable memories.</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">③ Specific examples 具体细节</div><div class="flip-hint">小瞬间，更有画面感</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">Some ...; while others ...<br>We laughed ...; shared ...; and ...<br>I still remember how ...</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">④ Stronger language 更有感染力</div><div class="flip-hint">加强情感表达</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">joyful moments / unforgettable memories<br>stood by one another / the toughest days<br>the greatest gift / always treasure</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">⑤ Something 句型</div><div class="flip-hint">表达值得珍藏的意义</div></div><div class="flip-face flip-back" style="text-align:left;align-items:flex-start"><div class="flip-ans">That bond is something I will always treasure.<br>Those memories are something I will carry with me long after leaving school.</div></div></div></div></div></section><section class="slide" data-title="✏️ Task 6B 翻译 1-3"><p class="sec-label">Task 6B · Sentence Translation (1–3)</p><h2 class="slide-h2">✏️ 句式练习（中 → 英）1–3</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:12px">先点「💡 词伙提示」，在输入框写翻译，再点「✅ 提交」看参考答案。</p><div class="ce-item"><div class="ce-cn">1. 这次毕业典礼不仅仅意味着离别(farewell)，更代表着成长与新的开始。</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>more than just ...; it marked ...</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans1" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans1','trans1-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans1-ans">The graduation ceremony was more than just a farewell; it marked growth and a new beginning.</div></div><div class="ce-item"><div class="ce-cn">2. 一次次的小组合作虽然充满压力，却让我明白了互相支持的重要性。</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>Although ... were often stressful, ...</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans2" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans2','trans2-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans2-ans">Although group projects were often stressful, they helped me understand the importance of supporting one another.</div></div><div class="ce-item"><div class="ce-cn">3. 有些同学陪我练习演讲，而其他同学则在考试前写下鼓励的话语。</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>Some ...; while others ...</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans3" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans3','trans3-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans3-ans">Some classmates practised speeches with me, while others wrote down words of encouragement before exams.</div></div></section><section class="slide" data-title="✏️ Task 6B 翻译 4-6"><p class="sec-label">Task 6B · Sentence Translation (4–6)</p><h2 class="slide-h2">✏️ 句式练习（中 → 英）4–6</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:12px">继续练习——注意 stronger language 与 something 句型。</p><div class="ce-item"><div class="ce-cn">4. 那些平凡的日子最终成为了我最珍贵、最难忘的回忆。</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>ordinary days → unforgettable and treasured memories</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans4" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans4','trans4-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans4-ans">Those ordinary days eventually became some of my most unforgettable and treasured memories.</div></div><div class="ce-item"><div class="ce-cn">5. 同学们给予我的善意，是我毕业后依然会珍藏在心中的东西。</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>The kindness ... is something I will always treasure.</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans5" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans5','trans5-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans5-ans">The kindness my classmates showed me is something I will always treasure after graduation.</div></div><div class="ce-item"><div class="ce-cn">6. 请把句子改写成 something 句型：I will never forget the friendship we built in 6C.</div><button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button><div class="ce-hints"><span>... is something I will never forget.</span></div><div style="margin-top:8px"><textarea class="student-ta" id="trans6" placeholder="Write your translation here..."></textarea><div style="display:flex;gap:8px;align-items:center;margin-top:6px"><button class="submit-btn" onclick="submitTrans(this,'trans6','trans6-ans')">✅ 提交</button></div></div><div class="ce-en" id="trans6-ans">The friendship we built in 6C is something I will never forget.</div></div></section><section class="slide" data-title="📝 作业">
+<p class="sec-label">Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成 Page 6 Task 5D 段落写作</h4>
+  <p>Write about one subject that you found challenging（除 English 以外任意学科）。运用「挑战与成就感 → 走出舒适圈 → 通过挑战获得成长」框架，字数约 150–180 词。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 复习语言库</h4>
+  <p>回顾 enjoy / challenging 语言库与 Reflective &amp; Nostalgic 工具箱，整理自己的句式笔记。</p>
+</div>
+<div class="notes-box mt-m"><b>💡 提示：</b>enjoy 与 challenging 本质都是「收获与成长」，只是侧重点不同。</div>
+</section><section class="slide" data-title="📋 总结">
+<p class="sec-label">Summary · Check Your Learning</p>
+<h2 class="slide-h2">📋 知识清单 Check Your Learning</h2>
+<div style="display:grid;gap:14px">
+  <div class="card accent"><h4>● 文体认知 Genre Awareness</h4><p>Yearbook Entry：回顾中学生活、记录成长、珍藏回忆；语气 reflective, nostalgic, sincere and appreciative。</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-gold)"><h4>● 内容组织 Content Development</h4><p>Academic Life → Challenges / Experiences → Growth；Student Life → Togetherness → Memories → Appreciation。共同核心：growth and learning。</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-blue)"><h4>● 语言特点 Language Features</h4><p>Challenge → Achievement；Growth through Challenges；Contrast (more than just..., not... but...)；Specific Details &amp; Small Moments；Something Structures。</p></div>
+</div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s19-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div id="s19-exp" class="ce-en" style="display:none;line-height:1.9">
+  At first, ..., but step by step, ...<br>
+  Every improvement gave me a sense of achievement.<br>
+  What I loved most about ... was that ...<br>
+  ... helped me grow as a person.<br>
+  It taught me that ...<br>
+  Although ... was demanding at times, ...<br>
+  ... pushed me out of my comfort zone.<br>
+  That bond is something I will always treasure.<br>
+  Those memories are something I will carry with me long after leaving school.
+</div>
+</section><section class="slide" data-title="📝 范文附录"><p class="sec-label">Appendix · Model Answer</p><h2 class="slide-h2">📝 范文附录 Model Answer</h2><p style="font-size:19px;color:var(--text-2);margin-bottom:6px">Task：Write a yearbook entry for Class 6C (1.1 + 1.2).</p><button class="reveal-btn mt-m" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">📖 显示范文</button><div class="ce-en" style="line-height:2"><p style="margin-bottom:14px"><b>1.1 A 版 — enjoyed studying (English)</b></p><p style="margin-bottom:14px">Looking back on my secondary school years, English was undoubtedly the subject I <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">enjoyed the most</span>. At first, speaking in English made me nervous, but <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">step by step</span>, I became more confident, and every improvement gave me <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">a sense of achievement</span>. What I loved most about English was that no two lessons ever felt the same. Stories, discussions and role plays always brought laughter and surprises. Most importantly, English <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">helped me grow as a person</span>. It taught me that progress does not happen overnight and that making mistakes is simply part of learning. These lessons have stayed with me long after I left the classroom.</p><p style="margin-bottom:14px"><b>1.1 B 版 — found challenging (English)</b></p><p style="margin-bottom:14px">Looking back on my secondary school years, English was undoubtedly the subject I <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">found the most challenging</span>. At first, speaking in English made me nervous, and I often worried about making mistakes. However, step by step, I became more confident, and every improvement gave me a sense of achievement. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Although English was demanding at times</span>, no two lessons ever felt the same. Stories, discussions and role plays constantly <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">pushed me out of my comfort zone</span> and encouraged me to try new things. Most importantly, English taught me that <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">growth often comes through challenges</span>. It reminded me not to give up when progress seems slow and to believe in my own potential. These lessons have stayed with me long after I left the classroom.</p><p style="margin-bottom:14px"><b>1.2 — Student Life (English)</b></p><p style="margin-bottom:10px">What I will miss most about Class 6C is the <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">sense of togetherness</span> we shared. 6C was <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">more than just a class</span>; it was a group of people who stood by one another through both stressful and joyful times. That bond is <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">something I will always treasure</span>.</p><p style="margin-bottom:10px">School life was not always easy. Projects, deadlines and exams often left us feeling stressed and overwhelmed. However, no one in 6C had to face these challenges alone. Some classmates patiently explained difficult homework problems, while others shared their notes or offered words of encouragement before exams. With such support, even the toughest days became easier.</p><p style="margin-bottom:10px">I will also miss the joyful moments we created together. We laughed at inside jokes, shared snacks under the stairs and sang together when PE lessons were cancelled by rain. These small moments turned ordinary school days into unforgettable memories.</p><p style="margin-bottom:6px">Looking back, the greatest gift of 6C was <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">not the lessons or the grades, but the people</span> who walked beside me throughout the journey. Those memories of standing side by side through both good times and difficult moments are <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">something I will carry with me long after leaving school</span>.</p><p style="font-size:18px;color:var(--text-3);text-align:right">✅ 字数：297 / 315 words</p></div></section><section class="slide" data-title="📖 拓展练习：全文翻译"><p class="sec-label">Extension · Full-text Translation</p><h2 class="slide-h2">📖 拓展练习：Green Business 范文全文翻译</h2><p style="font-size:18px;color:var(--text-2);margin-bottom:14px">根据中文提示写出英文句子。点击 <b style="color:var(--xdf-blue)">💡 词伙提示</b> 查看关键词，点击 <b style="color:var(--xdf-green)">✅ 看答案</b> 揭晓完整英文翻译。</p><div style="margin-bottom:10px"><span style="font-size:16px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gl);padding:4px 14px;border-radius:12px">📌 第一段 — Introduction</span></div><div class="ce-item"><div class="ce-cn">1. 我想首先说明，我理解在城市发展中建造儿童游乐场的重要性。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>begin by saying that</span><span>the importance of building</span><span>urban development</span></div><div class="ce-en">I would like to begin by saying that I understand the importance of building children's playgrounds in our urban development of the city.</div></div><div class="ce-item"><div class="ce-cn">2. 然而，我认为在城市中发展绿地远比发展儿童游乐场更重要。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>However</span><span>far more important than</span><span>developing green spaces</span></div><div class="ce-en">However, I believe that developing green spaces in the city is far more important than developing children's playgrounds.</div></div><div style="margin-bottom:10px;margin-top:16px"><span style="font-size:16px;font-weight:700;color:var(--xdf-red);background:#FFF5F5;padding:4px 14px;border-radius:12px">📌 第二段 — 儿童游乐场的弊端</span></div><div class="ce-item"><div class="ce-cn">3. 建造更多儿童游乐场有一些弊端。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>drawbacks</span><span>building more</span></div><div class="ce-en">There are some drawbacks of building more children's playgrounds.</div></div><div class="ce-item"><div class="ce-cn">4. 根据统计数据，过去五年里，市内超过一半的儿童游乐场已经被废弃。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>According to statistics</span><span>more than half of</span><span>have been abandoned</span><span>over the past five years</span></div><div class="ce-en">According to statistics, more than half of the children's playgrounds in the city have been abandoned over the past five years.</div></div><div class="ce-item"><div class="ce-cn">5. 这表明对儿童游乐场的需求确实在下降。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>It indicates that</span><span>demand for</span><span>is certainly decreasing</span></div><div class="ce-en">It indicates that the demand for children's playgrounds is certainly decreasing.</div></div><div class="ce-item"><div class="ce-cn">6. 这很可能是因为孩子们不再需要在户外玩耍，相反，他们可以待在家里玩电子游戏或看电影。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>has to do with the fact that</span><span>no longer need to</span><span>stay home and play</span></div><div class="ce-en">This probably has to do with the fact that children no longer need to have fun outside, instead they can stay home and play video games or watch films.</div></div><div class="ce-item"><div class="ce-cn">7. 因此，将资金和资源集中在这一城市发展领域是一种浪费。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>Therefore</span><span>a waste of money and resources</span><span>focus on</span></div><div class="ce-en">Therefore, it is a waste of money and resources to focus on this area of urban development.</div></div><div class="ce-item"><div class="ce-cn">8. 有人可能会说有必要为儿童提供户外娱乐，然而，如今很多活动都可以在室内进行。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>Some may argue that</span><span>there is a need to</span><span>outdoor entertainment</span><span>can be done indoor</span></div><div class="ce-en">Some may argue that there is a need to provide outdoor entertainment for children, however, a lot of activities can be done indoor nowadays.</div></div><div class="ce-item"><div class="ce-cn">9. 除了儿童的需求之外，我们还需要考虑成年人的需求，更重要的是，城市中老年人的需求。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>Besides</span><span>more importantly</span><span>the elderly</span></div><div class="ce-en">Besides the needs of children, we need to consider the needs of adults, and more importantly, the elderly of the city.</div></div><div style="margin-bottom:10px;margin-top:16px"><span style="font-size:16px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gl);padding:4px 14px;border-radius:12px">📌 第三段 — 绿地的社会与健康优势</span></div><div class="ce-item"><div class="ce-cn">10. 与儿童游乐场相比，绿地对城市的发展更为关键。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>Compared with</span><span>more vital to</span></div><div class="ce-en">Compared with children's playgrounds, green spaces are more vital to the development of a city.</div></div><div class="ce-item"><div class="ce-cn">11. 首先，从儿童到老年人，每个人都可以使用绿地。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>First of all</span><span>can be used by</span><span>from children to the elderly</span></div><div class="ce-en">First of all, green spaces can be used by everyone from children to the elderly.</div></div><div class="ce-item"><div class="ce-cn">12. 其次，绿地为城市中的人们提供了一个可以享受大自然和周边自然风光的地方。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>provide a place where</span><span>enjoy nature</span><span>natural scenery</span></div><div class="ce-en">Second, green spaces provide a place in the city where people can enjoy nature and the natural scenery around them.</div></div><div class="ce-item"><div class="ce-cn">13. 根据研究，拥有绿地的城市可以帮助市民更有效地应对压力，他们往往会感到更加放松。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>According to research</span><span>cope with stress</span><span>more effectively</span><span>tend to feel more relaxed</span></div><div class="ce-en">According to research, a city with green spaces can help citizens cope with stress more effectively and they tend to feel more relaxed.</div></div><div class="ce-item"><div class="ce-cn">14. 研究还发现，他们比那些生活在没有绿地的城市中的人身心更健康。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>It was also found that</span><span>physically and mentally healthier</span><span>those who live in</span></div><div class="ce-en">It was also found that they are physically and mentally healthier than those who live in a city without green spaces.</div></div><div style="margin-bottom:10px;margin-top:16px"><span style="font-size:16px;font-weight:700;color:var(--xdf-blue);background:#E3F2FD;padding:4px 14px;border-radius:12px">📌 第四段 — 绿地的环境优势</span></div><div class="ce-item"><div class="ce-cn">15. 更重要的是，树木和植物为我们提供生存所需的氧气，并带走空气中的二氧化碳。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>What's more</span><span>provide us with</span><span>oxygen we need to survive</span><span>take away carbon dioxide</span></div><div class="ce-en">What's more, trees and plants provide us with the oxygen we need to survive and take away the carbon dioxide in the air.</div></div><div class="ce-item"><div class="ce-cn">16. 由于空气污染一直是我们城市的一个严重问题，拥有绿地有助于减少空气污染，保持空气清新洁净，从而改善城市的空气质量。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>Since</span><span>has been a serious problem</span><span>reduce air pollution</span><span>keep our air fresh and clean</span><span>air quality</span></div><div class="ce-en">Since air pollution has been a serious problem in our city, having green spaces can help reduce air pollution and keep our air fresh and clean to improve the air quality of the city.</div></div><div class="ce-item"><div class="ce-cn">17. 这可以鼓励市民更频繁地外出，进行散步、跑步和户外运动等活动。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>encourage citizens to</span><span>go out there more often</span><span>such as</span><span>outdoor sports</span></div><div class="ce-en">This can encourage citizens to go out there more often for activities such as walking, running and doing outdoor sports.</div></div><div style="margin-bottom:10px;margin-top:16px"><span style="font-size:16px;font-weight:700;color:var(--xdf-gold);background:#FFF9C4;padding:4px 14px;border-radius:12px">📌 第五段 — Conclusion</span></div><div class="ce-item"><div class="ce-cn">18. 总而言之，所有市民都能从城市绿地的发展中受益，他们的生活质量也能在多个方面得到改善。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>To conclude</span><span>benefit from</span><span>quality of life</span><span>be improved in many ways</span></div><div class="ce-en">To conclude, all citizens can benefit from the development of green spaces in the city, and their quality of life can also be improved in many ways.</div></div><div class="ce-item"><div class="ce-cn">19. 另一方面，只有儿童和家长能从儿童游乐场的发展中受益。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>On the other hand</span><span>only... can benefit from</span></div><div class="ce-en">On the other hand, only children and parents can benefit from the development of children's playgrounds.</div></div><div class="ce-item"><div class="ce-cn">20. 基于这些理由，我认为拥有绿地比拥有儿童游乐场更为重要。</div><button class="ce-btn hint-btn" onclick="var d=this.parentElement.querySelector('.ce-hints');d.classList.toggle('show')">💡 词伙提示</button><button class="ce-btn" onclick="var d=this.parentElement.querySelector('.ce-en');d.classList.toggle('show')">✅ 看答案</button><div class="ce-hints"><span>For these reasons</span><span>I would argue that</span><span>having green spaces</span></div><div class="ce-en">For these reasons, I would argue that having green spaces are more important than having children's playgrounds.</div></div><div class="notes-box mt-l" style="font-size:17px"><b>💡 提示：</b>本题为 DSE Paper 2 Writing — Letter to the Editor 范文，共 404 words。全文采用经典的五段式结构：Introduction → 反方弊端 → 己方优势(社会/健康) → 己方优势(环境) → Conclusion。重点关注连接词的使用和论证逻辑。</div></section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 3！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:640px;line-height:1.8;margin-bottom:28px">你今天学习了：审题与构思 → Academic Life（enjoy / challenging 语言库）→ Student Life（反思与怀旧工具箱）→ 句式翻译练习 → 范文 → 拓展练习（Green Business 全文翻译）。核心始终是 <b style="color:var(--xdf-green)">growth and learning</b>。</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){var _t=e.target.tagName;if(_t==='INPUT'||_t==='TEXTAREA'||_t==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkMultiChoice(btn){
+  var item=btn.closest('.ce-item');
+  if(!item||item.classList.contains('checked'))return;
+  var boxes=item.querySelectorAll('input[type=checkbox][data-correct]');
+  var allRight=true, total=boxes.length;
+  boxes.forEach(function(bx){
+    var lab=bx.closest('label');
+    var correct=bx.dataset.correct==='true';
+    var sel=bx.checked;
+    if(sel===correct){lab.classList.add('mc-correct');}
+    else{lab.classList.add('mc-wrong');allRight=false;}
+  });
+  var res=item.querySelector('.mc-result');
+  if(res){res.textContent=allRight?('✅ 全部选对！共 '+total+' 项正确'):('❌ 有答错的，红色为需调整项、绿色为正确项（共 '+total+' 项）');res.classList.add(allRight?'pass':'fail');}
+  item.classList.add('checked');
+  btn.textContent='已检查 ✓';btn.disabled=true;
+  var ans=item.querySelector('.ce-en');if(ans)ans.classList.add('show');
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+function submitAnswer(btn, areaId, answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(text){
+    ans.textContent=text;
+    ta.style.display="none";
+    ans.classList.add("show");
+    btn.style.display="none";
+    var eb=document.getElementById(areaId+"-eb");
+    if(eb)eb.style.display="inline-flex";
+  }
+}
+function continueEdit(areaId, answerId, submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display="";
+  ans.classList.remove("show");
+  document.getElementById(areaId+"-eb").style.display="none";
+  sb.style.display="inline-flex";
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+function submitTrans(btn, areaId, answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display="none";
+  btn.style.display="none";
+  ans.classList.add("show");
+  var stuDiv=document.createElement("div");
+  stuDiv.style.cssText="background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)";
+  stuDiv.innerHTML="<b style='color:var(--xdf-blue)'>✏️ 你的翻译：</b><br>"+text.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u3',weakKey:'wordform',mode:'quiz'};</script>
+</body>
+</html>

@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 DSE Paper 1 阅读卷 · 网页课件 v1</title>
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Palette panel (body-level, JS-positioned, fullscreen-proof) -->
+  <div class="palette-panel" id="palettePanel">
+    <div class="pp-title">Theme Color</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+    <div class="pp-note">saved locally</div>
+  </div>
+
+<div class="deck">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">&lt;/&gt; DSE 2025</div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+    </div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 36 36">
+          <circle class="ring-bg" cx="18" cy="18" r="14"/>
+          <circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+        </svg>
+        <div class="ring-text">0%</div>
+      </div>
+      <div class="score-detail">
+        <div class="sd-label">Score</div>
+        <div class="sd-val">0/0</div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+      <span class="theme-label">Dark Mode</span>
+    </div>
+  </aside>
+
+  <button class="sb-edge-tab" onclick="toggleSidebar()" title="展开侧边栏 (S)">☰</button>
+
+  <!-- ===== Main Area ===== -->
+  <div class="main-area">
+
+    <!-- ===== Topbar ===== -->
+    <div class="topbar">
+      <span class="course-tag">2025 DSE · Paper 1</span>
+      <span class="slide-title mono" id="topbarTitle"></span>
+      <span class="page-counter page-counter-top" id="pageCounter">
+        <span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span>
+        <span class="pc-total" id="pcTotal"></span>
+      </span>
+      <span class="score-badge">
+        <span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span>
+      </span>
+      <span class="streak-badge" style="display:none">
+        <span class="streak-fire">🔥</span><span class="streak-count">0</span>
+      </span>
+      <span class="zoom-controls">
+        <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+        <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+        <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+      </span>
+      <span class="timer-wrap">
+        <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets (1/2/3/5/10 min)">
+          <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5">
+          <span class="t-colon">:</span>
+          <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00">
+          <span class="timer-done-label">TIME UP</span>
+        </span>
+        <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+        <button class="timer-reset" onclick="resetTimer()">Reset</button>
+      </span>
+      <button class="hint-toggle-btn" id="hintToggleBtn" onclick="toggleHints()" title="Show/hide all method tips (H)">💡 Show Tips</button>
+      <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode: show full passage">🔒 Easy</button>
+      <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+      <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">↺ Reset</button>
+      <span class="palette-wrap">
+        <button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">🎨</button>
+      </span>
+      <button class="clear-hl-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker — 随机点名">🎲</button>
+    </div>
+
+    <!-- Random picker overlay -->
+    <div class="rand-overlay" id="randOverlay" onclick="if(event.target===this)toggleRandPanel()">
+      <div class="rand-card">
+        <div class="rand-head">
+          <span class="rand-title">🎲 随机点名</span>
+          <span class="rand-range-wrap">1 – <input class="rand-max" id="randMax" type="number" min="2" max="999" value="40"></span>
+        </div>
+        <div class="rand-num" id="randNum">?</div>
+        <div class="rand-btns">
+          <button class="rand-go" onclick="drawRandom()">开始点名！</button>
+          <button class="rand-close" onclick="toggleRandPanel()">关闭</button>
+        </div>
+        <div class="rand-history" id="randHistory"></div>
+      </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ============================================================ -->
+    <!-- SLIDES BEGIN -->
+    <!-- ============================================================ -->
+    <!-- ============================================================
+         1. COVER
+         ============================================================ -->
+    <section class="slide is-active" data-title="封面" data-section="cover" data-part="开场">
+      <div class="s1-card-wrapper">
+        <div class="xdf-header-bar">
+          <div class="xdf-logo-text">DSE READING <span>// 2025 真题</span></div>
+          <div class="xdf-sub-text">Paper 1 · Reading</div>
+        </div>
+        <div style="padding:28px 32px">
+          <div class="slide-h1" style="text-align:center;margin-bottom:6px">2025 HKDSE 英语 Paper 1</div>
+          <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Celebrity Gossip · Quiet Quitting · Foraging</div>
+          <div style="display:flex;justify-content:center;margin-bottom:24px">
+            <div class="teacher-badge">
+              <div class="tb-avatar">成</div>
+              <div class="tb-name">成雨老师</div>
+              <div class="tb-tag">TEACHER</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;margin-bottom:20px">
+            <div class="class-badge">真题精讲 · 2025 阅读卷</div>
+          </div>
+          <div class="s1-meta-grid">
+            <div class="s1-meta-card"><div class="sm-label">Part A 必做</div><div class="sm-value">Text 1 · Q1–21</div><div class="sm-sub">Celebrity Gossip 名人八卦</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Part B1 简单（选做）</div><div class="sm-value">Q22–42 答案速览</div><div class="sm-sub">Foraging 野外觅食（官方答案）</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Part B2 困难（选做）</div><div class="sm-value">Text 5 · Q43–64</div><div class="sm-sub">Quiet Quitting 静默辞职</div></div>
+          </div>
+          <div class="timeline-row">
+            <div class="tl-seg c1"><div class="seg-ph">Part A</div><div class="seg-name">名人八卦</div><div class="sm-sub">MCQ · 填空 · TFNG · 匹配</div></div>
+            <div class="tl-seg c2"><div class="seg-ph">Part B1</div><div class="seg-name">官方答案</div><div class="sm-sub">难点题标注正确率</div></div>
+            <div class="tl-seg c3"><div class="seg-ph">Part B2</div><div class="seg-name">静默辞职</div><div class="sm-sub">指代 · 修辞 · 观点匹配</div></div>
+            <div class="tl-seg c4"><div class="seg-ph">考情分析</div><div class="seg-name">官方报告</div><div class="sm-sub">失分点 · 备考建议</div></div>
+          </div>
+        </div>
+        <div class="xdf-grid-pattern"><span>USE ARROW KEYS // SWIPE TO NAVIGATE</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. 试卷说明
+         ============================================================ -->
+    <section class="slide" data-title="试卷说明" data-section="intro" data-part="开场">
+      <div class="slide-h1">📋 试卷说明 <span class="h1-en">Paper Overview</span></div>
+      <div class="card-grid-2">
+        <div class="info-card">
+          <div class="ic-title">⏱ 考试结构</div>
+          <ul class="styled-list">
+            <li><strong>考试时间</strong>：1.5 小时</li>
+            <li><strong>Part A</strong>：必做，占 50% 分值</li>
+            <li><strong>Part B1 / B2</strong>：选做一个，占 50% 分值</li>
+            <li>B1 较简单 · B2 较困难</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="ic-title">📄 本课件内容</div>
+          <ul class="styled-list">
+            <li><strong>Part A</strong>：完整文章 + 题目 + 答案 + 正确率</li>
+            <li><strong>Part B2</strong>：完整文章 + 题目 + 答案 + 正确率</li>
+            <li><strong>Part B1</strong>：仅官方答案（文章/题目未收录）</li>
+            <li><strong>附</strong>：官方考生表现分析 + 备考建议</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-badge">
+        <span class="mb-key">🔑 官方建议</span>
+        <span>低分考生在 Part B2 很多题目留白 —— 基础薄弱的同学选考 <strong>Part B1</strong> 更容易得分；目标高分的同学再冲 B2。</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. PART A · TEXT 1 篇章（上）
+         ============================================================ -->
+    <section class="slide" data-title="Text 1 · 篇章（上）" data-section="parta" data-part="Part A · Celebrity Gossip">
+      <div class="slide-h1">📰 Text 1: Celebrity Gossip <span class="h1-en">Paragraphs 1–7</span></div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <p class="para"><span class="para-num">[1]</span> It's 2023 and Joe Jonas has filed for divorce from Sophie Turner after four years of marriage. Other personalities, including Taylor Swift and Joe Alwyn, Ariana Grande and Dalton Gomez, as well as Hugh Jackman and Deborra Lee all split up. In fact, so many high-profile pairs have called it quits that some people have deemed 2023 'The Year of Celebrity Breakups.'</p>
+          <p class="para"><span class="para-num">[2]</span> Logically speaking, we shouldn't be interested in this kind of scandalous speculation, this celebrity gossip. The inner lives of celebrities have next to nothing to do with us, after all: we're unlikely ever to meet them, and their romantic relationships have no bearing on how our own lives unravel, down here in the 'real' world. "And yet we are interested, even if we're reluctant to admit it," says Dr. Alice Leppert, a media and communications professor who focuses on stardom and celebrity culture.</p>
+          <p class="para"><span class="para-num">[3]</span> These public figures represent a lot of our highest goals, declares clinical psychologist and breakup coach Dr. Andrea Liner. They tend to be attractive, wealthy, and considered successful, which many people assume makes them invulnerable to a lot of life's problems. "So, when we find out that beautiful, gorgeous, wealthy celebrities are getting cheated on or divorcing or breaking up, it kind of humanizes them and can be validating for us to see that they have problems, too," she says. "But it can also confuse us because we think that they shouldn't be having problems like that if they've achieved these levels of success. Part of the problem is that celebrities may often perform an image or identity that doesn't always align with their authentic selves," she adds. Their marital problems can come as a shock if all the public saw was a happy family. Liner says that's especially true because celebrities share so much of their lives online, creating an "almost artificial sense of intimacy" that obscures what's happening behind the scenes.</p>
+          <p class="para"><span class="para-num">[4]</span> Gossip is so central to our cultural psyche that the American Psychological Association (APA) has its own definition. According to the APA, gossip consists of personal talk or communication about information that's often not proven to be true, and it may be (but is not necessarily) scandalous in content or malicious in intention. Gossip impacts group bonding and has big implications for the transmission and reinforcement of cultural norms, too.</p>
+          <p class="para"><span class="para-num">[5]</span> But why? What purpose does gossip serve? What function is it fulfilling in our society? Put simply, why do we care?</p>
+          <p class="para"><span class="para-num">[6]</span> "There are some people who try to classify gossip as negative or critical discussion about other people, but really, gossip is just sharing social information with each other," says author and professor of psychology Dr. David Ludden. "Anytime you're talking about people who aren't present, it's gossip," he says. "We're social animals and we need to be able to know what's going on in social environments, so gossip is very helpful," says Ludden, who studies the psychology of language and how it shapes and is shaped by our social world. Basically, gossip can help you go into social encounters more prepared for what's coming. "I don't have to have an encounter with someone directly to have some idea what they're like, because other people are telling me about their encounters with them," says Ludden.</p>
+          <p class="para"><span class="para-num">[7]</span> It can also be a way to build relationships: "Sharing gossip can bond people socially," says Dr. Stephen Benning from the University of Nevada, Las Vegas. Benning published a study in 2019 which found that gossip provides a currency of private information that creates a shared sense of the community holding that information. So, gossip is particularly compelling for people who are seeking to connect with others.</p>
+        </div>
+        <div class="split-right">
+          <div class="tip-card">
+            <div class="tc-title">💡 篇章结构（上）</div>
+            <ul class="styled-list">
+              <li><strong>[1]</strong> 引入：2023 名人分手年</li>
+              <li><strong>[2–3]</strong> 我们为何感兴趣（专家观点）</li>
+              <li><strong>[4]</strong> APA 对 gossip 的定义</li>
+              <li><strong>[5]</strong> 过渡：三连问</li>
+              <li><strong>[6–7]</strong> 八卦的社交功能</li>
+            </ul>
+          </div>
+          <div class="method-badge method-hidden">
+            <span class="mb-key">🔑 定位技巧</span>
+            <span>Q1–7 全部出自 1–3 段；Q8 出自第 4 段。先读题划关键词，再回原文定位段落。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. PART A · TEXT 1 篇章（下）
+         ============================================================ -->
+    <section class="slide" data-title="Text 1 · 篇章（下）" data-section="parta" data-part="Part A · Celebrity Gossip">
+      <div class="slide-h1">📰 Text 1: Celebrity Gossip <span class="h1-en">Paragraphs 8–14</span></div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <p class="para"><span class="para-num">[8]</span> But it's not all so innocent. Benning found that we're also attracted to gossip for some other reasons: attacking people's social standing and their position in social networks (what is called 'negative influence'), merely elevating our own social status, or simply trying to be included in a social network that we previously weren't. Similarly, Ludden says that "lots of the bad gossip is done in an attempt to make ourselves feel better than the person we're talking about, That's not a healthy approach to building a sense of self-esteem."</p>
+          <p class="para"><span class="para-num">[9]</span> Negative influence (talking badly about someone or trying to cut them down) was a clear motive for some people on certain occasions. Yet, the study found that this was actually the weakest motivation that led people to gossip. Gathering and validating information about the person being gossiped about was the strongest.</p>
+          <p class="para"><span class="para-num">[10]</span> There's also some evidence suggesting that negative gossip can have a positive impact on social groups and promote cooperation (though perhaps not in the most altruistic way). In an article published in the journal Psychological Science, researchers found that when people communicated reputational information about others (the researchers' definition of "gossiped'"), others tended to interact with people who were portrayed as cooperative and ostracize those who were portrayed as selfish. As a result, those who were ostracized tended to change their behavior and act more cooperatively.</p>
+          <p class="para"><span class="para-num">[11]</span> What motivates us to gossip about A-listers we don't socialize with?</p>
+          <p class="para"><span class="para-num">[12]</span> Ludden says that just because we've never met these celebrities doesn't mean we don't have relationships with them: "What we do is we create parasocial relationships — imaginary relationships with a singer or athlete whose successes we've followed and celebrated." Like gossip itself, these parasocial relationships can be healthy or unhealthy depending on the circumstances. They can fill the gaps in our real-world relationships, and they're a risk-free way to feel connected to others, since you can't be rejected by someone who's not actually in a relationship with you.</p>
+          <p class="para"><span class="para-num">[13]</span> Gossiping about these celebrities can be a similarly low-stakes way to feel connected, since the information you're sharing doesn't pose a risk to you or a member of your social circle. "It can feel uncomfortable and vulnerable to share information about your own worlds," Benning says. "Gossiping about celebrities is a safer way to interact with a date, to ingratiate yourself to a group at parties, or to feel part of a new team at work." It can also serve as a form of stress relief. "When life is overwhelming, focusing on celebrity gossip can be a way to numb out our feelings of dissatisfaction, unhappiness, or stress," says Benning. "Scrolling through celebrity gossip puts us in a dissociated state where we can take breaks from difficult feelings."</p>
+          <p class="para"><span class="para-num">[14]</span> But just like regular gossip, sometimes the motivation behind celebrity gossip is to make ourselves feel better than others. "Celebrity gossip is a safe way to snack on schadenfreude (the delight in the misfortune of others)," says Benning. "It feels a lot less shameful to admit we enjoy watching celebrity misfortunes than to admit we enjoy watching the misfortunes of family and friends."</p>
+        </div>
+        <div class="split-right">
+          <div class="tip-card">
+            <div class="tc-title">💡 篇章结构（下）</div>
+            <ul class="styled-list">
+              <li><strong>[8–9]</strong> 八卦的负面动机</li>
+              <li><strong>[10]</strong> 负面八卦竟能促进合作</li>
+              <li><strong>[11–12]</strong> parasocial relationships</li>
+              <li><strong>[13]</strong> 名人八卦 = 低风险社交</li>
+              <li><strong>[14]</strong> schadenfreude 幸灾乐祸</li>
+            </ul>
+          </div>
+          <div class="method-badge method-hidden">
+            <span class="mb-key">🔑 高频考点</span>
+            <span>Q11「对比词」、Q12「隐喻」、Q14「同义词」都出自 8–10 段；Q21 段落匹配范围是 6–14 段，<strong>不要</strong>选 1–5 段（官方明确指出的失分点）。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. PART A · Q1–Q3
+         ============================================================ -->
+    <section class="slide" data-title="A · Q1–3" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q1–3 · ¶1 细节 + 短语查找</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q1 · MCQ · ¶1 <span class="rate-chip">✅ 77%</span></div>
+        <div class="pmcq-q">1. According to paragraph 1, Joe Jonas...</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="原文首句：Joe Jonas has filed for divorce（已提交离婚申请）→ intends to divorce his wife。"><span class="opt-letter">A</span><span class="opt-text">intends to divorce his wife.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="¶1 并未提及他对名人分手潮的态度。"><span class="opt-letter">B</span><span class="opt-text">dislikes celebrity breakups.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="Taylor Swift 等人是 other personalities，并非他的朋友。"><span class="opt-letter">C</span><span class="opt-text">has many high-profile friends.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="¶1 未提及他喜欢追八卦。"><span class="opt-letter">D</span><span class="opt-text">loves following celebrity gossip.</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q2 · Short Answer · ¶1 <span class="rate-chip">✅ 63%</span></div>
+        <div class="pmcq-q">2. According to paragraph 1, why is 2023 called 'The Year of Celebrity Breakups'?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">many high-profile pairs / celebrities (have) called it quits / split up / broke up / filed for divorce (in 2023)</div>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q3 · 短语查找 ×2 · ¶1 <span class="rate-chip">✅ 79% / 71%</span></div>
+        <div class="pmcq-q">3. Find TWO phrases used in paragraph 1 to refer to 'Breakups' (line 4). (2 marks)</div>
+        <div class="cloze-line">(i) <span class="cloze" onclick="revealCloze(this)" data-answer="split up // (has) (filed for) divorce // (have) (called it) quits">＿＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) <span class="cloze" onclick="revealCloze(this)" data-answer="（任意两个上述短语即可）">＿＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 技巧</span><span>同义替换找 ¶1 中的动词短语：filed for divorce / split up / called it quits 任取两个。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. PART A · Q4–Q6
+         ============================================================ -->
+    <section class="slide" data-title="A · Q4–6" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q4–6 · ¶2–3 指代与推断</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q4 · Short Answer · ¶2 <span class="rate-chip hard">⚠️ 13% 难题</span></div>
+        <div class="pmcq-q">4. Who or what is the writer referring to when they use the phrase "down here in the 'real' world" (line 7)?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">the lives / life of ordinary / common / normal people</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>'real' world 与 celebrity world 对比 → 普通人的日常生活。全卷正确率仅 13%，注意问的是 lives 而不是 people 本身。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q5 · 指代 ×2 · ¶2–3 <span class="rate-chip hard">⚠️ 18% / 37%</span></div>
+        <div class="pmcq-q">5. What does 'it' refer to?</div>
+        <div class="cloze-line">(i) 'it' (line 8): <span class="cloze" onclick="revealCloze(this)" data-answer="(the fact that) we are interested in celebrity gossip / celebrities' romantic relationship(s)">＿＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) "it" (line 14): <span class="cloze" onclick="revealCloze(this)" data-answer="(finding out) (the fact that) celebrities have problems (too) / are (also) getting cheated on">＿＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 指代题步骤</span><span>① 回原文定位代词 ② 向前找最近的、语义通顺的名词/事实 ③ 代入原句验证。(i) 回 ¶2 末 "we are interested... it" → 对名人八卦感兴趣这件事。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q6 · Short Answer · ¶3 <span class="rate-chip">✅ 58%</span></div>
+        <div class="pmcq-q">6. Why would it 'come as a shock' (line 16) when the public realise a celebrity's family life is not as happy as they thought?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">they shouldn't be having problems if they've achieved (levels of) success // celebrities perform an image / identity that doesn't align with their authentic selves // because all the public sees is a 'happy family'</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. PART A · Q7 流程图填空
+         ============================================================ -->
+    <section class="slide" data-title="A · Q7 流程图" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q7 · ¶3 流程图填空（ONE word each, 5 marks）</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q7 · Flow Chart · 用 ¶3 原文单词 <span class="rate-chip hard">⚠️ (iii) 33% (iv) 23%</span></div>
+        <div class="pmcq-q">7. The flow chart shows the sequence of events described in paragraph 3. Fill in each blank with ONE word taken from paragraph 3.</div>
+        <div class="flow-box">
+          <div class="flow-step">The glamorous, rich and successful lifestyles of celebrities represent people's (i) <span class="cloze" onclick="revealCloze(this)" data-answer="goals ✅53%">＿＿＿＿</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">People believe such celebrities are untouched by ordinary people's (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="problems ✅47%">＿＿＿＿</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">The (iii) <span class="cloze" onclick="revealCloze(this)" data-answer="public // people ✅33%">＿＿＿＿</span> discover 'what's happening behind the scenes' with celebrities.</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">Seeing that celebrities have similar experiences as ordinary people (iv) <span class="cloze" onclick="revealCloze(this)" data-answer="humanizes // humanises ⚠️23% 很多人错写 humanize">＿＿＿＿</span> celebrities.</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">People are puzzled: if someone is successful he / she shouldn't (v) <span class="cloze" onclick="revealCloze(this)" data-answer="have ⚠️46% 很多人错写 has/having">＿＿＿＿</span> such problems.</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>必须用<strong>原文单词且形式正确</strong>：(iv) 主语是动名词短语（单数）→ humanizes；(v) shouldn't + 动词原形 → have，不是 has/having。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. PART A · Q8 TFNG
+         ============================================================ -->
+    <section class="slide" data-title="A · Q8 TFNG" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q8 · ¶4 True / False / Not Given（4 marks）</div>
+      <p style="margin-top:14px;font-weight:700">(i) The APA states all gossip is not supported by evidence. <span class="rate-chip">✅ 64%</span></p>
+      <div class="tfng-group" data-answer="F" data-explain="APA 定义说 gossip 'often not proven to be true'（经常未经证实）≠ all gossip 全部无证据，绝对化错误。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(ii) Some gossip may be harmful or upset people. <span class="rate-chip">✅ 57%</span></p>
+      <div class="tfng-group" data-answer="T" data-explain="'it may be scandalous in content or malicious in intention' → 有些八卦确实有害/令人不快。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(iii) Gossip is different in different cultures. <span class="rate-chip hard">⚠️ 46%</span></p>
+      <div class="tfng-group" data-answer="NG" data-explain="¶4 提到 gossip 影响 cultural norms 的传播，但并未比较不同文化中的差异。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(iv) Gossip doesn't play a role in developing relationships with others. <span class="rate-chip">✅ 60%</span></p>
+      <div class="tfng-group" data-answer="F" data-explain="'Gossip impacts group bonding' → 八卦对建立关系有作用，与题干相反。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <div class="method-badge method-hidden"><span class="mb-key">🔑 TFNG 铁律</span><span>⚠️ all / never / always 等绝对词 → 多半 False；原文完全没提 → NG，不要脑补。</span></div>
+    </section>
+
+    <!-- ============================================================
+         9. PART A · Q9–Q11
+         ============================================================ -->
+    <section class="slide" data-title="A · Q9–11" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q9–11 · 写作手法 + 细节</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q9 · MCQ · ¶5 <span class="rate-chip">✅ 60%</span></div>
+        <div class="pmcq-q">9. The writer uses the phrase 'Put simply' (line 23)...</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="后面不是例子，而是把前面三连问浓缩成一个问题。"><span class="opt-letter">A</span><span class="opt-text">to give an example.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="'Put simply' = 简单来说，把前面 What purpose / What function / Why 三个问题简化为 'why do we care' → 澄清复杂观点。"><span class="opt-letter">B</span><span class="opt-text">to clarify a complex point.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="前后没有对比关系。"><span class="opt-letter">C</span><span class="opt-text">to present a contrasting idea.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="并非挑战读者观点。"><span class="opt-letter">D</span><span class="opt-text">to challenge a reader's ideas about the topic.</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q10 · Short Answer · ¶6 <span class="rate-chip hard">⚠️ 24%</span></div>
+        <div class="pmcq-q">10. Why does gossip help people become 'more prepared for what's coming' (line 30)?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">because people can have some idea about someone without having to have an encounter with them // people don't have to have an encounter with someone directly to have some idea what they are like</div>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q11 · Short Answer · ¶8 <span class="rate-chip hard">⚠️ 24%</span></div>
+        <div class="pmcq-q">11. What words does the writer use in paragraph 8 to highlight contrasting ideas?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(But) it's not all so innocent</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>¶7 讲八卦好处 → ¶8 开头 'But it's not all so innocent' 话锋一转进入负面动机。问的是「哪些词」→ 答案必须是原文短语。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         10. PART A · Q12–Q14
+         ============================================================ -->
+    <section class="slide" data-title="A · Q12–14" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q12–14 · 隐喻 + 主旨 + 同义词</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q12 · Short Answer · ¶9 <span class="rate-chip hard">⚠️ 34%</span></div>
+        <div class="pmcq-q">12. Find the metaphor the writer uses in paragraph 9 to describe 'an attack on someone's social status.'</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(to) cut them down</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>'cut them down' 把人「砍倒」→ 隐喻攻击其社会地位。对应 ¶8 的 attacking people's social standing。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q13 · MCQ · ¶9 <span class="rate-chip hard">⚠️ 43%</span></div>
+        <div class="pmcq-q">13. According to paragraph 9, what is claimed to be the main reason for gossiping?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="交朋友是 ¶7 的功能，不是 ¶9 说的最强动机。"><span class="opt-letter">A</span><span class="opt-text">Making friends</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="贬低他人（negative influence）被明确说是 weakest motivation，陷阱项。"><span class="opt-letter">B</span><span class="opt-text">Putting down others</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="'Gathering and validating information about the person... was the strongest (motivation)' → 了解他人。"><span class="opt-letter">C</span><span class="opt-text">Learning about other people</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="抬高自己是 ¶8 的动机之一，但 ¶9 说不是最强的。"><span class="opt-letter">D</span><span class="opt-text">Wanting to look better than others</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q14 · 同义词 ×5 · ¶9–10 <span class="rate-chip">✅ 25%–55%</span></div>
+        <div class="pmcq-q">14. Find a word in paragraphs 9-10 which has a similar meaning to each word given below.</div>
+        <div class="cloze-line">i) 'reason' → <span class="cloze" onclick="revealCloze(this)" data-answer="motive // motivation ✅55%">＿＿＿＿</span></div>
+        <div class="cloze-line">ii) 'behave' → <span class="cloze" onclick="revealCloze(this)" data-answer="act ⚠️25%">＿＿＿＿</span></div>
+        <div class="cloze-line">iii) 'enhance' → <span class="cloze" onclick="revealCloze(this)" data-answer="promote ✅50%">＿＿＿＿</span></div>
+        <div class="cloze-line">iv) 'outcome' → <span class="cloze" onclick="revealCloze(this)" data-answer="impact // result ✅48%">＿＿＿＿</span></div>
+        <div class="cloze-line">v) 'described' → <span class="cloze" onclick="revealCloze(this)" data-answer="portrayed ⚠️ 拼写错误高发：protrayed/potrayed">＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>ii) 'act more cooperatively' 的 act = behave；v) portrayed 拼写错误率极高，默写三遍：por-tray-ed。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         11. PART A · Q15–Q17
+         ============================================================ -->
+    <section class="slide" data-title="A · Q15–17" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q15–17 · ¶11–12 词汇与概念</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q15 · Short Answer · ¶11 <span class="rate-chip">✅ 67%</span></div>
+        <div class="pmcq-q">15. Who or what does 'A-listers' (line 50) refer to?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">celebrities</div>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q16 · MCQ · ¶12 <span class="rate-chip">✅ 67%</span></div>
+        <div class="pmcq-q">16. According to paragraph 12, what are 'parasocial relationships' (line 52)?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="关注名人的成功只是背景描述，不是 parasocial relationship 的定义。"><span class="opt-letter">A</span><span class="opt-text">Following the successes of celebrities</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="是 imaginary relationships，不是真正交朋友。"><span class="opt-letter">B</span><span class="opt-text">Making friends with a singer or athlete</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="'imaginary relationships with a singer or athlete' → 只在脑海中与仰慕的人建立联系。"><span class="opt-letter">C</span><span class="opt-text">Having a connection only in our mind with people we admire</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="恰恰是不用见面、不会被拒绝，才是 risk-free。"><span class="opt-letter">D</span><span class="opt-text">Attempting to meet a celebrity in order to make friends with them</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q17 · Short Answer · ¶12 <span class="rate-chip">✅ 63%</span></div>
+        <div class="pmcq-q">17. With reference to paragraph 12, explain how 'parasocial relationships' (line 52) can be beneficial.</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">Parasocial relationships are a risk-free way to feel connected to others (as you can't be rejected by someone who is not actually in a relationship with you) // Parasocial relationships can fill gaps in our real world relationships</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>注意拼写与词性：是 fill（不是 feel），是 real-world relationships（不是 word）。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         12. PART A · Q18–Q19
+         ============================================================ -->
+    <section class="slide" data-title="A · Q18–19" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q18–19 · ¶13 细节 + 全文写作目的</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q18 · Short Answer · ¶13 <span class="rate-chip">✅ 50%</span></div>
+        <div class="pmcq-q">18. Find one example of 'difficult feelings' (line 63) Benning is referring to in paragraph 13.</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(feelings of) dissatisfaction / unhappiness / stress // (feeling) overwhelmed</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>词形错误高发：要 feeling overwhelm<strong>ed</strong>（过去分词），不是 overwhelming。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q19 · MCQ · 全文主旨 <span class="rate-chip hard">⚠️ 45%</span></div>
+        <div class="pmcq-q">19. Which of the following best describes the intention of the writer of Text 1?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="文章引用多项研究，但目的不是发布新研究。"><span class="opt-letter">A</span><span class="opt-text">To present new research</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="并非操作指南类文章。"><span class="opt-letter">B</span><span class="opt-text">To explain how to do something</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="全文核心问题 'why do we care / what motivates us' → 帮助读者理解人们八卦的动机。"><span class="opt-letter">C</span><span class="opt-text">To help understand people's motives</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="作者态度中立偏解释，不是批评现象。"><span class="opt-letter">D</span><span class="opt-text">To criticise a new social phenomenon</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         13. PART A · Q20 观点匹配
+         ============================================================ -->
+    <section class="slide" data-title="A · Q20 观点匹配" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q20 · 四位专家是否同意 'Celebrity gossip may benefit us'（4 marks）</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q20 · Views Matching · 全文 <span class="rate-chip">✅ 48%–73%</span></div>
+        <div class="pmcq-q">20. Decide whether each of the four people agrees, disagrees or neither agrees nor disagrees with the statement 'Celebrity gossip may benefit us.'</div>
+        <div class="match-table">
+          <!-- <div class="match-row match-head"><span>Person</span><span>Answer</span><span>Your answer</span><span>依据</span></div> -->
+          <div class="match-row match-quiz" data-answer="Neither">
+            <span>(i) Dr. Alice Leppert ✅48%</span>
+            <span class="match-opts">
+              <span class="match-opt" data-val="Agree" onclick="checkMatchOpt(this)">Agree</span>
+              <span class="match-opt" data-val="Disagree" onclick="checkMatchOpt(this)">Disagree</span>
+              <span class="match-opt" data-val="Neither" onclick="checkMatchOpt(this)">Neither</span>
+            </span>
+            <!-- <span class="cloze" onclick="revealCloze(this)" data-answer="Neither ✅48%">＿＿＿＿</span> -->
+            <span class="match-note">¶2 只说「我们感兴趣但不承认」，未表态利弊</span>
+          </div>
+          <div class="match-row"><span>(ii) Dr. Andrea Liner</span><span class="match-note show" colspan="3" style="display:block;opacity:.75">⚠️ 本题官方已删除（原答案 Agrees：她认为看到名人也有问题能 validating 普通人）</span></div>
+          <div class="match-row match-quiz" data-answer="Agree">
+            <span>(iii) Dr. David Ludden ✅73%</span>
+            <span class="match-opts">
+              <span class="match-opt" data-val="Agree" onclick="checkMatchOpt(this)">Agree</span>
+              <span class="match-opt" data-val="Disagree" onclick="checkMatchOpt(this)">Disagree</span>
+              <span class="match-opt" data-val="Neither" onclick="checkMatchOpt(this)">Neither</span>
+            </span>
+            <!-- <span class="cloze" onclick="revealCloze(this)" data-answer="Agrees ✅73%">＿＿＿＿</span> -->
+            <span class="match-note">¶6 'gossip is very helpful' 社交前更有准备</span>
+          </div>
+          <div class="match-row match-quiz" data-answer="Agree">
+            <span>(iv) Dr. Stephen Benning ✅70%</span>
+            <span class="match-opts">
+              <span class="match-opt" data-val="Agree" onclick="checkMatchOpt(this)">Agree</span>
+              <span class="match-opt" data-val="Disagree" onclick="checkMatchOpt(this)">Disagree</span>
+              <span class="match-opt" data-val="Neither" onclick="checkMatchOpt(this)">Neither</span>
+            </span>
+            <!-- <span class="cloze" onclick="revealCloze(this)" data-answer="Agrees ✅70%">＿＿＿＿</span> -->
+            <span class="match-note">¶7 'bond people socially' + ¶13 减压功能</span>
+          </div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 技巧</span><span>观点匹配题：先定位每位专家的引言，找「态度词」（helpful / bond / validating），无明确态度 → Neither。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         14. PART A · Q21 段落匹配
+         ============================================================ -->
+    <section class="slide" data-title="A · Q21 Paragraph Matching" data-section="parta" data-part="Part A · Celebrity Gossip" data-hard-group="gossip">
+      <div class="sec-label">Part A · Q21 · Paragraph Matching ¶6–14 (6 marks, each paragraph used ONCE only)</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q21 · Paragraph Matching <span class="rate-chip hard">⚠️ 35%–58%</span></div>
+        <div class="pmcq-q">21. Two friends are discussing Text 1. Use the information from paragraphs 6-14 to match each statement in the conversation below with a paragraph that contains similar ideas. Write the number of the paragraph (6-14) in the speech bubble. Use each paragraph number ONCE only. Some paragraph numbers are NOT used. The first has been done for you as an example. (6 marks)</div>
+        <div class="match-table">
+          <!-- <div class="match-row match-head"><span>Statement</span><span>¶</span><span>Analysis (click ¶ to reveal)</span></div> -->
+          <div class="match-row"><span>1. "My brother was telling me about his new job. He's made friends with his new colleagues whilst chatting about Taylor Swift." (example)</span><span>13</span><span class="match-note show">¶13 ingratiate yourself to a group / new team</span></div>
+          <div class="match-row"><span>2. "That reminds me of an article I've been reading about gossiping. You know, just sharing the latest news about people who are not in the room." → (i)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="6 ✅46%">＿</span><span class="match-note">¶6 'talking about people who aren't present'</span></div>
+          <div class="match-row"><span>3. "Gossiping? Isn't that bad mouthing people? That's not a good thing to do. It's not good for you or others." → (ii)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="8 ✅58%">＿</span><span class="match-note">¶8 'not all so innocent' — negative motives</span></div>
+          <div class="match-row"><span>4. "Well it can be but this article said that bad mouthing actually can have a positive outcome." → (iii)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="10 ⚠️38%">＿</span><span class="match-note">¶10 negative gossip → promote cooperation</span></div>
+          <div class="match-row"><span>5. "I guess so. Sometimes hearing about celebrities messing up does make me feel my life isn't that bad after all." → (iv)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="14 ⚠️35%">＿</span><span class="match-note">¶14 schadenfreude — taking pleasure in others' misfortune</span></div>
+          <div class="match-row"><span>6. "The article made me question why we do gossip about people like Taylor Swift." → (v)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="11 ⚠️43%">＿</span><span class="match-note">¶11 rhetorical question 'What motivates us...'</span></div>
+          <div class="match-row"><span>7. "I suppose for some it makes them feel like having connection with someone when they feel alone." → (vi)</span><span class="cloze" onclick="revealCloze(this);var n=this.parentElement.querySelector('.match-note');if(n)n.classList.add('show')" data-answer="12 ✅54%">＿</span><span class="match-note">¶12 parasocial relationships fill the gap</span></div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 Common Mistakes</span><span>The question is limited to <strong>¶6–14</strong>! Many candidates selected paragraphs 1–5 and lost marks. Unused paragraphs: 7, 9. Underline key words in each statement first, then scan the text.</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         15. PART B1 · 答案速览（上）
+         ============================================================ -->
+    <section class="slide" data-title="B1 · 答案速览（上）" data-section="partb1" data-part="Part B1 · Foraging（仅官方答案）">
+      <div class="slide-h1">🌿 Part B1 · Foraging <span class="h1-en">官方答案速览 Q22–33</span></div>
+      <div class="method-badge">
+        <span class="mb-key">📌 说明</span>
+        <span>本次资料<strong>未包含 B1 的文章与题目</strong>，以下为官方评分答案 + 官方报告明确提及的正确率。主题：野外觅食（采集野生植物/水果/蘑菇），共三篇：觅食指南 · 本地觅食者专访 · 资深觅食者问答。</span>
+      </div>
+      <div class="ans-table">
+        <div class="at-row at-head"><span>题号</span><span>官方答案</span><span>备注</span></div>
+        <div class="at-row"><span>22–24</span><span>（题目缺失，略）</span><span>—</span></div>
+        <div class="at-row"><span>25</span><span class="cloze" onclick="revealCloze(this)" data-answer="B">＿</span><span>✅ 81% 基础题</span></div>
+        <div class="at-row"><span>26 (i)</span><span class="cloze" onclick="revealCloze(this)" data-answer="video(s)">＿＿＿</span><span>✅ 73% 基础题</span></div>
+        <div class="at-row"><span>26 (ii)</span><span class="cloze" onclick="revealCloze(this)" data-answer="around">＿＿＿</span><span>⚠️ 38% 官方点名难点（副词）</span></div>
+        <div class="at-row"><span>26 (iii)</span><span class="cloze" onclick="revealCloze(this)" data-answer="recipe(s)">＿＿＿</span><span>✅ 70% 基础题</span></div>
+        <div class="at-row"><span>27</span><span class="cloze" onclick="revealCloze(this)" data-answer="C and D">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>28</span><span class="cloze" onclick="revealCloze(this)" data-answer="C">＿</span><span>—</span></div>
+        <div class="at-row"><span>29 (i)</span><span class="cloze" onclick="revealCloze(this)" data-answer="ecosystem">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>29 (ii)</span><span class="cloze" onclick="revealCloze(this)" data-answer="around">＿＿＿</span><span>✅ 76% 基础题</span></div>
+        <div class="at-row"><span>30</span><span class="cloze" onclick="revealCloze(this)" data-answer="learn to identify poisonous plants // do not eat anything you cannot positively identify // never start solo // begin by partnering up with a local expert">＿＿＿＿＿</span><span>🚨 仅 12% 答对 · 全卷最难之一</span></div>
+        <div class="at-row"><span>31</span><span class="cloze" onclick="revealCloze(this)" data-answer="B">＿</span><span>—</span></div>
+        <div class="at-row"><span>32 (i)–(iv)</span><span class="cloze" onclick="revealCloze(this)" data-answer="True / False / True / Not Given">＿＿＿＿</span><span>⚠️ 6%–15% 官方点名难点</span></div>
+        <div class="at-row"><span>33</span><span class="cloze" onclick="revealCloze(this)" data-answer="happen naturally">＿＿＿</span><span>需语法变形</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         16. PART B1 · 答案速览（下）
+         ============================================================ -->
+    <section class="slide" data-title="B1 · 答案速览（下）" data-section="partb1" data-part="Part B1 · Foraging（仅官方答案）">
+      <div class="slide-h1">🌿 Part B1 · Foraging <span class="h1-en">官方答案速览 Q34–42</span></div>
+      <div class="ans-table">
+        <div class="at-row at-head"><span>题号</span><span>官方答案</span><span>备注</span></div>
+        <div class="at-row"><span>34</span><span>（OCR 误差，原答案为野生食物相关描述词）</span><span>—</span></div>
+        <div class="at-row"><span>35</span><span class="cloze" onclick="revealCloze(this)" data-answer="D = high-end">＿＿＿</span><span>标题匹配</span></div>
+        <div class="at-row"><span>36 (i)</span><span class="cloze" onclick="revealCloze(this)" data-answer="industry">＿＿＿</span><span>原 OCR 错误已修正</span></div>
+        <div class="at-row"><span>36 (ii)</span><span>（略）</span><span>—</span></div>
+        <div class="at-row"><span>36 (iii)</span><span class="cloze" onclick="revealCloze(this)" data-answer="welcomed">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>37</span><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿</span><span>—</span></div>
+        <div class="at-row"><span>38</span><span class="cloze" onclick="revealCloze(this)" data-answer="tropical plant(s) // plant(s) that grow in colder climate(s) // (local) herbal tea / 24 flavours (tea)（任意两个）">＿＿＿＿＿</span><span>🚨 仅 7% 答对 · 需答出两个要点</span></div>
+        <div class="at-row"><span>39</span><span class="cloze" onclick="revealCloze(this)" data-answer="D = (long) hours">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>40</span><span>（OCR 误差，原答案为 foraging 相关动词）</span><span>—</span></div>
+        <div class="at-row"><span>41 (i)</span><span class="cloze" onclick="revealCloze(this)" data-answer="(local) knowledge">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>41 (ii)</span><span class="cloze" onclick="revealCloze(this)" data-answer="connection">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>42</span><span class="cloze" onclick="revealCloze(this)" data-answer="(the) mushroom(s)">＿＿＿</span><span>—</span></div>
+        <div class="at-row"><span>42 匹配</span><span class="cloze" onclick="revealCloze(this)" data-answer="i) D  ii) E  iii) C  iv) A">＿＿＿＿</span><span>观点匹配</span></div>
+      </div>
+      <div class="method-badge method-hidden">
+        <span class="mb-key">🔑 B1 考情</span>
+        <span>70%+ 考生答对 Q23(i)(iii)、Q25、Q29(ii)(iii)（第一篇指南的基础事实题）；难点集中在语法变形（Q30 happen naturally 12%）、同义词（Q32 6–15%）、双要点题（Q38 7%）。</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         17. PART B2 · TEXT 5 篇章（上）
+         ============================================================ -->
+    <section class="slide" data-title="Text 5 · 篇章（上）" data-section="partb2" data-part="Part B2 · Quiet Quitting">
+      <div class="slide-h1">💼 Text 5: Quiet Quitting <span class="h1-en">Paragraphs 1–6</span></div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <p class="para"><span class="para-num">[1]</span> Quiet quitting is a buzzy term doing the rounds today. In fact, a Google search produces hits from The Washington Post, The New York Times, The Wall Street Journal, and countless academic publications. At this moment, at least 50% of the North American workforce is engaged in a wave of disengagement dubbed quiet quitting. But what does it mean and how will it impact university graduates as they prepare to embark on 21st-century careers?</p>
+          <p class="para-sub">What is quiet quitting?</p>
+          <p class="para"><span class="para-num">[2]</span> As many have noted the term itself is misleading. No, it does not refer to wordlessly slipping out the door or logging out of the group chat without so much as a peace sign emoji. Nor does it mean an employee permanently abandoning their post. Quiet quitters believe a more accurate way to describe this is working your contract or acting your wage. Carrie Bulger, PhD, a professor of organizational psychology, defines quiet quitting as "a renewed effort to really focus on what a job is and isn't."</p>
+          <p class="para"><span class="para-num">[3]</span> No matter what terminology we use, quiet quitting is less a harbinger of widespread revolt and more of a long overdue reckoning with outdated practices and stale office culture. "For some people, it's probably a sign of dissatisfaction and a sign that they're going to leave," Bulger said. "But I think for others, it's something else."</p>
+          <p class="para"><span class="para-num">[4]</span> Being forced to work at home amid the tumult of 2020 was an eye-opening experience, one that emboldened even the most dedicated employees to set healthy boundaries. And enforcing those boundaries can appear, through the lens of leadership, like slacking. "But it is quite possible to be invested in your work and redirect that passion once you clock out for the day. Pursuing work-life enrichment prioritizes self-care in one area and tends to breed success in the other," Bulger said.</p>
+          <p class="para-sub">Going against the grind</p>
+          <p class="para"><span class="para-num">[5]</span> The signs are all around us — productivity is no longer seen as the badge of honor it once was, and Generation Z are starting to question how relevant it is while seeking better frameworks that support the kind of life they want to live. Launched in 2013, one online community that exists for people who 'want help with their own work-life related struggles' saw an upsurge in followers in late 2021. The Instagram account The Nap Ministry has a similar popularity arc and saw a huge explosion of followers since the start of the pandemic, numbering in the tens of thousands per day. Tricia Hersey, its creator, believes Gen Z work hard; they just don't want to live to work. To her, and to many others, it is about "not running ourselves into the ground."</p>
+          <p class="para"><span class="para-num">[6]</span> Quiet quitting is only one note in this growing chorus, and we should be careful not to dismiss it as just another trend or a singular occurrence. Instead, we should step back and look at the whole picture and what that means for the way we've been working and how we should move forward.</p>
+        </div>
+        <div class="split-right">
+          <div class="tip-card">
+            <div class="tc-title">💡 篇章结构（上）</div>
+            <ul class="styled-list">
+              <li><strong>[1]</strong> 热词引入 + 数据</li>
+              <li><strong>[2]</strong> 定义：working your contract</li>
+              <li><strong>[3–4]</strong> 本质：对陈旧职场文化的清算</li>
+              <li><strong>[5]</strong> Gen Z 反内卷浪潮</li>
+              <li><strong>[6]</strong> 不是孤立现象</li>
+            </ul>
+          </div>
+          <div class="method-badge method-hidden">
+            <span class="mb-key">🔑 定位</span>
+            <span>Q43–46 出自 ¶1–2；Q47–48 出自 ¶3；Q49–51 出自 ¶4；Q52 出自 ¶5；Q53–54 出自 ¶6。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         18. PART B2 · TEXT 5 篇章（下）+ 评论
+         ============================================================ -->
+    <section class="slide" data-title="Text 5 · 篇章（下）+ 评论" data-section="partb2" data-part="Part B2 · Quiet Quitting">
+      <div class="slide-h1">💼 Text 5: Quiet Quitting <span class="h1-en">Paragraphs 7–11 + Comments</span></div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <p class="para"><span class="para-num">[7]</span> There are, of course, divergent perspectives on quiet quitting. There's what it means for workers and what it means for panicked employers in a precarious economy, and the collision of those viewpoints can have drastic consequences for the former. Writing for The Wall Street Journal, columnist Callum Borchers outlined the perils of quiet quitting. Borchers has encountered a new term quiet firing in which reputations suffer as a result of perceived apathy; responsibilities are gradually diminished and a path toward actual termination materializes. "Companies have always had subtle ways to nudge people out the door," Borchers said. "Tactics include sidelining them by cutting responsibilities or denying promotions and raises to make someone miserable enough to leave."</p>
+          <p class="para"><span class="para-num">[8]</span> Gergo Vari, CEO of online job searching platform Lensa, also believes the decision won't serve employees long-term either. "Anytime that you silence your own voice in an organization, you may be depriving yourself of the opportunity to change that organization." Stepping away from hustle culture can also cause tension between employees and may result in a rift between fellow colleagues who may have to pick up the slack. "If people feel like their co-workers aren't committed to quality work there can be friction inside teams and organizations."</p>
+          <p class="para-sub">A generational divide</p>
+          <p class="para"><span class="para-num">[9]</span> Today's college students are rightly praised for their resiliency. But the same skills that made them so adaptable during the pandemic — they are digital natives who prefer Zoom lectures to the real thing — make them the target of generational disdain once they enter the workforce. Can't you just hear the grumbling: We wouldn't have to worry about quiet quitting if these kids would get off TikTok and do their jobs. Fittingly, the movement's origins can be traced to TikTok, the massively popular video-sharing app, where the influencer Zaid Khan uttered a phrase that's been quoted in countless news articles: "Your worth as a person is not defined by your labor."</p>
+          <p class="para"><span class="para-num">[10]</span> In an essay for The New Yorker, Cal Newport, an associate professor of computer science, posits that Gen Z is better equipped than its forebears to leverage technology to push back against workplace norms. Gen Z enters the workforce with "a mindset that is notably distinct from the millennials who preceded them," Newport writes. As the first group to fully come of age with smartphones and social media, Gen Z "formed an understanding of the world in which the boundaries between the digital and real are blurred." They have so thoroughly mixed work and self, the suffocating grimness of modern office life hits a more personal level and it has become clear to many that they need to separate their personhood from their jobs.</p>
+          <p class="para"><span class="para-num">[11]</span> Work, of course, remains essential within our current economic and social environment and trends like quiet quitting are inevitable during times of great upheaval. What we need to do is take a step back and take a critical look at how we can adapt the way we work to suit our current context while promoting a more modern and balanced way of life. As Barnaby Lashbrooke wrote in Forbes: "Of course we have to work: to put a roof overhead and food on the table. But life should come first, and work should be the enabler."</p>
+          <p class="para-sub">Comments:</p>
+          <p class="para comment"><strong>Nikia203</strong> · Figuring out how work fits into a life well lived is hard, but I think it's an evolution that has to happen. The question is what comes next.</p>
+          <p class="para comment"><strong>Lewis43</strong> · I'm not going to put in a sixty-hour workweek and pull myself up by my bootstraps for a job that doesn't care about me as a person.</p>
+          <p class="para comment"><strong>Jessef04</strong> · If you're doing this, you're a loser. This is like a virus. This is worse than COVID.</p>
+          <p class="para comment"><strong>Luna903_</strong> · I'd rather my kid was a quiet quitter than being unemployed just lounging about at home playing online games.</p>
+        </div>
+        <div class="split-right">
+          <div class="tip-card">
+            <div class="tc-title">💡 篇章结构（下）</div>
+            <ul class="styled-list">
+              <li><strong>[7]</strong> Borchers：quiet firing 的反击</li>
+              <li><strong>[8]</strong> Vari：对员工长期不利</li>
+              <li><strong>[9]</strong> 代际分歧 + TikTok 起源</li>
+              <li><strong>[10]</strong> Newport：Gen Z 善用科技</li>
+              <li><strong>[11]</strong> Lashbrooke：life first</li>
+              <li><strong>Comments</strong>：4 条读者评论（Q64）</li>
+            </ul>
+          </div>
+          <div class="method-badge method-hidden">
+            <span class="mb-key">🔑 定位</span>
+            <span>Q55–57 出自 ¶7；Q58–59 出自 ¶8；Q60 出自 ¶9；Q61–62 出自 ¶10；Q63 全文人物观点匹配；Q64 读评论区。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         19. PART B2 · Q43–Q46
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q43–46" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q43–46 · ¶1–2 词义与例子</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q43 · MCQ · ¶1 <span class="rate-chip">✅ 63% 基础细节题</span></div>
+        <div class="pmcq-q">43. What does the writer mean when he describes quiet quitting as 'buzzy' (line 1)? <br>Quiet quitting... </div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="buzzy 与批评无关。"><span class="opt-letter">A</span><span class="opt-text">attracts criticism.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="字面「充满活力的活动」是 buzzy 的干扰义，语境不符。"><span class="opt-letter">B</span><span class="opt-text">is full of lively activity.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="后句：Google 搜索满是各大报刊+学术出版物 → 受到大量关注。"><span class="opt-letter">C</span><span class="opt-text">receives a lot of attention.</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="intense excitement 程度过强，语境只是「热议」。"><span class="opt-letter">D</span><span class="opt-text">generates intense excitement.</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q44 · 例子 ×2 · ¶1 <span class="rate-chip hard">⚠️ 33% / 26% 开放题</span></div>
+        <div class="pmcq-q">44. Find TWO examples of quiet quitting 'doing the rounds today' (line 1). (2 marks)</div>
+        <div class="cloze-line">(i) <span class="cloze" onclick="revealCloze(this)" data-answer="countless / numerous / many (academic) publications / news journals discussing quiet quitting ⚠️33%">＿＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) <span class="cloze" onclick="revealCloze(this)" data-answer="at least / more than 50% of North American workforce (is) engaged in it ⚠️26%">＿＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>开放题不要大段抄原文！针对性答出「例证」：①媒体/学术大量报道 ②半数北美职场人在做。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q45 · 解释 ×2 · ¶2 <span class="rate-chip hard">⚠️ 19% / 26% 开放题</span></div>
+        <div class="pmcq-q">45. Explain why the term quiet quitting 'is misleading' (line 6). (2 marks)</div>
+        <div class="cloze-line">(i) 'quiet': <span class="cloze" onclick="revealCloze(this)" data-answer="does not mean silent / silently / wordlessly (slipping out the door / logging out of the group chat) ⚠️19%">＿＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) 'quitting': <span class="cloze" onclick="revealCloze(this)" data-answer="does not mean (an) employee(s) (permanently) abandoning their post(s) ⚠️26%">＿＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>拆开两个词解释：quiet ≠ 无声离开；quitting ≠ 永久离职。实际含义 = working your contract / acting your wage。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q46 · 例子 ×2 · ¶2 <span class="rate-chip">✅ 54% / 57%</span></div>
+        <div class="pmcq-q">46. Find TWO examples from paragraph 2 of focusing on 'what a job is and isn't' (line 10). (2 marks)</div>
+        <div class="cloze-line">(i) <span class="cloze" onclick="revealCloze(this)" data-answer="acting your/the wage(s) ✅54%">＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) <span class="cloze" onclick="revealCloze(this)" data-answer="working your/the contract(s) ✅57%">＿＿＿＿</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         20. PART B2 · Q47–Q49
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q47–49" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q47–49 · ¶3–4</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q47 · MCQ (NOT) · ¶3 <span class="rate-chip hard">⚠️ 44%</span></div>
+        <div class="pmcq-q">47. Which of the following is NOT mentioned in paragraph 3 as a cause of quiet quitting?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="'a sign of dissatisfaction' → 有提及（员工不满）。"><span class="opt-letter">A</span><span class="opt-text">Discontent in the workforce</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="'a sign that they're going to leave' → 有提及（考虑辞职）。"><span class="opt-letter">B</span><span class="opt-text">Staff considering resignation</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="'outdated practices and stale office culture' → 有提及（陈旧职场标准）。"><span class="opt-letter">C</span><span class="opt-text">Old-fashioned workplace standards</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="¶3 完全没有提到工作量增加 → NOT mentioned 选 D。"><span class="opt-letter">D</span><span class="opt-text">Staff experiencing increasing workloads</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q48 · MCQ · ¶3 段落目的 <span class="rate-chip">✅ 53%</span></div>
+        <div class="pmcq-q">48. What is the purpose of paragraph 3?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="定义在 ¶2 已完成。"><span class="opt-letter">A</span><span class="opt-text">Defining what quiet quitting is</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="¶3 说的是 long overdue（早该来的清算），恰恰不是「现代新现象」。"><span class="opt-letter">B</span><span class="opt-text">Indicating that quiet quitting is a modern issue</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="Bulger: 对一些人是不满的信号，'But I think for others, it's something else' → 提出其他可能的原因。"><span class="opt-letter">C</span><span class="opt-text">Suggesting alternative reasons for quiet quitting</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="¶3 并未展开辩论，只是 Bulger 一家之言。"><span class="opt-letter">D</span><span class="opt-text">Debating the possible explanations of quiet quitting</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q49 · Short Answer · ¶4 <span class="rate-chip">✅ 87% 全卷最高</span></div>
+        <div class="pmcq-q">49. Which word or phrase in paragraph 4 means to 'finish your work activity'?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(you) clock out (for the day)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         21. PART B2 · Q50–Q52
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q50–52" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q50–52 · ¶4–5 指代 + TFNG</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q50 · 指代 ×2 · ¶4 <span class="rate-chip hard">⚠️ 42% / 🚨 5%</span></div>
+        <div class="pmcq-q">50. Bulger says "work-life enrichment prioritizes self-care in one area and tends to breed success in the other" (lines 17-18). What does 'one area' and 'the other' refer to? (2 marks)</div>
+        <div class="cloze-line">(i) 'one area': <span class="cloze" onclick="revealCloze(this)" data-answer="personal life / lives // lives outside work ⚠️42%">＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) 'the other': <span class="cloze" onclick="revealCloze(this)" data-answer="work (life) // workplace 🚨5% 全卷最难之一">＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>self-care 发生在<strong>个人生活</strong>；breed success 发生在<strong>职场</strong>。work-life enrichment 的词序（work-life）是干扰项，别按顺序填。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q51 · 指代 · ¶5 <span class="rate-chip">✅ 73% 基础指代题</span></div>
+        <div class="pmcq-q">51. What does 'it' (line 21) refer to?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">productivity</div>
+        </div>
+      </div>
+
+      <p style="margin-top:14px;font-weight:700">52. (i) No one today believes Gen Z are hardworking. <span class="rate-chip">✅ 73%</span></p>
+      <div class="tfng-group" data-answer="F" data-explain="¶5 说 Gen Z question productivity 的价值，但 Hersey 明说 'Gen Z work hard' → 与「没人相信 Gen Z 勤奋」相反。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(ii) Online groups helping people to review different aspects of their lives bloomed during the pandemic. <span class="rate-chip">✅ 87%</span></p>
+      <div class="tfng-group" data-answer="T" data-explain="在线社区 2021 末粉丝激增 + The Nap Ministry 疫情后爆火 → 疫情期间蓬勃发展。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(iii) The Nap Ministry's growth in its number of followers is unique. <span class="rate-chip hard">⚠️ 54%</span></p>
+      <div class="tfng-group" data-answer="F" data-explain="'a similar popularity arc' → 增长并非独一无二（online community 也一样）。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      <p style="font-weight:700">(iv) Tens of thousands of people complain about their jobs every day. <span class="rate-chip">✅ 73%</span></p>
+      <div class="tfng-group" data-answer="NG" data-explain="'tens of thousands per day' 指新增粉丝数，原文没说这些人每天在抱怨工作。">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         22. PART B2 · Q53–Q56
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q53–56" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q53–56 · ¶6–7 修辞 + 填空 + 指代</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q53 · Short Answer · ¶6 <span class="rate-chip hard">⚠️ 26% 修辞理解 · 区分度高</span></div>
+        <div class="pmcq-q">53. What does 'only one note in this growing chorus' (line 27) suggest about the quiet quitting trend?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(the quiet quitting trend / it is) not a singular occurrence / not just another trend / one part of (a) growing trend / not unique // we should not dismiss it as a singular occurrence / just another trend // we should (step back and) look at the whole/bigger picture</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>隐喻拆解：chorus（合唱）有很多音符，quiet quitting 只是其中一个 → 它是更大趋势的一部分，不是孤立现象。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q54 · 指代 · ¶6 <span class="rate-chip hard">⚠️ 30% 区分度高</span></div>
+        <div class="pmcq-q">54. Who does 'we' (line 29) refer to?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">society // people // readers // public // everyone</div>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q55 · 填空 ×2 · ¶7 <span class="rate-chip">✅ 36% / 40%</span></div>
+        <div class="pmcq-q">55. Use a word or phrase in each blank to complete the following statement based on the information in paragraph 7. (2 marks)</div>
+        <div class="cloze-line">Employers have responded to workers' apparent 'slacking' by (i) <span class="cloze" onclick="revealCloze(this)" data-answer="reducing // restricting // limiting // cutting ⚠️36%">＿＿＿＿</span> the duties and opportunities of relevant staff, resulting in dire consequences.</div>
+        <div class="cloze-line">This has been labelled (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="(as) quiet firing ⚠️40%">＿＿＿＿</span>.</div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q56 · 指代 · ¶7 <span class="rate-chip hard">🚨 5% 全卷最难之一</span></div>
+        <div class="pmcq-q">56. Borchers says 'reputations suffer as a result of perceived apathy' (lines 33-34). Whose reputations does he refer to?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">quiet(-)quitters'</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>quiet firing 针对的是被认为 apathy（冷漠）的人 = quiet quitters。仅 5% 答对 —— 需要把 quiet firing 的定义和受害者连起来。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         23. PART B2 · Q57–Q59
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q57–59" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q57–59 · ¶7–8</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q57 · 短语 ×2 · ¶7 <span class="rate-chip">✅ 63% / 51%</span></div>
+        <div class="pmcq-q">57. In paragraph 7, what words or phrases mean 'ending someone's employment'?</div>
+        <div class="cloze-line">(i) <span class="cloze" onclick="revealCloze(this)" data-answer="termination // (quiet) firing // (to) nudge people out the door ✅63%">＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) <span class="cloze" onclick="revealCloze(this)" data-answer="(to) make someone miserable enough to leave ✅51%">＿＿＿＿＿</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q58 · 指代 · ¶8 <span class="rate-chip hard">⚠️ 23%</span></div>
+        <div class="pmcq-q">58. What 'decision' (line 37) does Vari discuss in paragraph 8?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">(the decision to be / of being) a quiet quitter // (the decision to) quiet quit / (go for) quiet quitting</div>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q59 · 图表填空 ×2 · ¶8 <span class="rate-chip hard">🚨 14% / 10%</span></div>
+        <div class="pmcq-q">59. With reference to paragraph 8, complete the following diagram describing the possible consequences of quiet
+quitting.</div>
+        <div class="q59-stem"><img src="assets/q59-diagram.png" alt="Q59 quiet quitting consequences diagram" class="q59-img"></div>
+        <div class="q59-blanks">
+          <div class="q59-blank-row"><span class="q59-tag">第 1 问 · (i)</span><span class="cloze q59-cloze" onclick="toggleCloze(this)" data-answer="Fellow colleagues / Colleagues (have to) complete / finish / cover">＿＿＿＿＿＿</span></div>
+          <div class="q59-blank-row"><span class="q59-tag">第 2 问 · (ii)</span><span class="cloze q59-cloze" onclick="toggleCloze(this)" data-answer="voice (out) / share / say / express their ideas / opinions (in an organisation)">＿＿＿＿＿＿</span></div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>需要<strong>用自己的话改写</strong>：(i) 对应 'pick up the slack' → colleagues cover the work；(ii) 对应 'silence your own voice' → do not voice their ideas。直接抄原文不给分。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         24. PART B2 · Q60 摘要填空
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q60 摘要填空" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q60 · ¶9 摘要填空（ONE word each, 5 marks）</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q60 · Summary Cloze · 语法必须正确 <span class="rate-chip hard">🚨 7%–55%</span></div>
+        <div class="pmcq-q">60. Based on the information in paragraph 9, complete the summary by writing ONE word in each blank. Your answers must be grammatically correct.</div>
+        <div class="flow-box">
+          <div class="flow-step">The youth of today are digital natives, which proved to be (i) <span class="cloze" onclick="revealCloze(this)" data-answer="beneficial // helpful // useful // essential // advantageous 🚨9% 很多人错抄原文 adaptable">＿＿＿＿</span> to them in their studies during the pandemic.</div>
+          <div class="flow-step">However, after starting (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="work // working ⚠️37%">＿＿＿＿</span>, this has resulted in some resentment from (iii) <span class="cloze" onclick="revealCloze(this)" data-answer="senior // older // elder ⚠️17%">＿＿＿＿</span> workers moaning about quiet quitters being on social media.</div>
+          <div class="flow-step">The fact is, many prefer studying and working (iv) <span class="cloze" onclick="revealCloze(this)" data-answer="online // digitally // virtually ✅55%">＿＿＿＿</span> rather than in 'real life.' Aptly, quiet quitting (v) <span class="cloze" onclick="revealCloze(this)" data-answer="began // started 🚨7%">＿＿＿＿</span> with an influencer's online quote: "Your worth as a person is not defined by your labor."</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>(i) 原文是 adaptable（形容人），但空格要 be + 形容词 + to them → 必须改写为 beneficial/advantageous，直接抄 adaptable 不给分；(v) 原文 origins can be traced → 改写为 began/started。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         25. PART B2 · Q61–Q62
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q61–62" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q61–62 · ¶10</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q61 · 指代 · ¶10 <span class="rate-chip hard">⚠️ 32% 区分度高</span></div>
+        <div class="pmcq-q">61. Who or what are the 'forebears' (line 50) mentioned in paragraph 10?</div>
+        <div class="sa-input-wrap">
+          <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+          <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+        </div>
+        <div class="sa-result">
+          <div class="sa-label">Your answer</div>
+          <div class="sa-your-ans"></div>
+          <div class="sa-label" style="margin-top:10px">Correct answer</div>
+          <div class="sa-correct-ans">the millennials (who preceded them)</div>
+        </div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 解析</span><span>forebears = 前辈。下文紧跟着 'the millennials who preceded them' → 答案就在同段。</span></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q62 · 解释 ×2 · ¶10 <span class="rate-chip hard">⚠️ 20% / 40% 开放题</span></div>
+        <div class="pmcq-q">62. Newport discusses quiet quitting in relation to Gen Z. With reference to paragraph 10, explain why Gen Z's use of technology can be both positive and negative. (2 marks)</div>
+        <div class="cloze-line">(i) Positive: <span class="cloze" onclick="revealCloze(this)" data-answer="Gen Z (is better equipped to) leverage technology to push back against workplace norms ⚠️20%">＿＿＿＿＿＿</span></div>
+        <div class="cloze-line">(ii) Negative: <span class="cloze" onclick="revealCloze(this)" data-answer="they have so thoroughly mixed work and self // there is no / little separation between work and personal lives / personhood ⚠️40%">＿＿＿＿＿＿</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 官方失分点</span><span>开放题要分正负两面作答，各答一个要点即可；大段抄原文是主要失分原因。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         26. PART B2 · Q63 观点匹配
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q63 观点匹配" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q63 · 全文人物观点匹配（6 marks，每人限用一次）</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q63 · Views Matching <span class="rate-chip">✅ 20%–66%</span></div>
+        <div class="pmcq-q">63. Use the information in Text 5 to match each of the following comments with a person (A-G) mentioned in the text. Write the letter of the person on the line next to the comment. Each letter can be used ONCE only. The first has been done as an example. (6 marks) — 把人物字母标签拖入对应评论框，再点「检查 Check」。</div>
+        <div class="q63-example"><span class="q63-eg-tag">Example</span><span class="q63-eg-text">"This is how I can connect with people with similar beliefs." → </span><span class="q63-eg-ans">B · Tricia Hersey</span></div>
+        <div class="word-pool" id="q63-pool">
+          <span class="draggable" draggable="true" data-word="Bulger" data-order="A">A · Carrie Bulger</span>
+          <span class="draggable" draggable="true" data-word="Borchers" data-order="C">C · Callum Borchers</span>
+          <span class="draggable" draggable="true" data-word="Vari" data-order="D">D · Gergo Vari</span>
+          <span class="draggable" draggable="true" data-word="Khan" data-order="E">E · Zaid Khan</span>
+          <span class="draggable" draggable="true" data-word="Newport" data-order="F">F · Cal Newport</span>
+          <span class="draggable" draggable="true" data-word="Lashbrooke" data-order="G">G · Barnaby Lashbrooke</span>
+        </div>
+        <div id="q63-zones" class="q63-zones">
+          <div class="drop-zone" data-accept="Vari"><div class="dz-label">(i) The repercussions impact those around you.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="D · Gergo Vari" data-explain="¶8 friction inside teams / colleagues pick up slack 🚨20% 最低"></div></div>
+          <div class="drop-zone" data-accept="Bulger"><div class="dz-label">(ii) Different people do this for different reasons.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="A · Carrie Bulger" data-explain="¶3 'For some... for others, it's something else' ⚠️40%"></div></div>
+          <div class="drop-zone" data-accept="Lashbrooke"><div class="dz-label">(iii) Let's be honest, work has its place in life.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="G · Barnaby Lashbrooke" data-explain="¶11 'we have to work... but life should come first' ✅61%"></div></div>
+          <div class="drop-zone" data-accept="Newport"><div class="dz-label">(iv) Of all of us, I think Gen Z can lead the way.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="F · Cal Newport" data-explain="¶10 Gen Z better equipped to push back ⚠️49%"></div></div>
+          <div class="drop-zone" data-accept="Borchers"><div class="dz-label">(v) Consider how this could have a downside for you.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="C · Callum Borchers" data-explain="¶7 quiet firing 的警告——用「静默解雇」反噬你来威胁 ✅66% 最高"></div></div>
+          <div class="drop-zone" data-accept="Khan"><div class="dz-label">(vi) We need to look beyond the daily for life's true value.</div><div class="drop-content" style="min-height:48px"></div><div class="q63-note" data-ans="E · Zaid Khan" data-explain="¶9 'Your worth... is not defined by your labor' ⚠️37%"></div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="reveal-btn" onclick="checkQ63()">检查</button>
+          <button class="reveal-btn q63-reset" onclick="resetQ63()">重置</button>
+        </div>
+        <div id="q63-result" style="display:none;margin-top:12px"></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 技巧</span><span>先给 7 个人各写一句「核心立场标签」，再把 comment 的语气往里套。Khan(E) 那句名言 = 超越劳动看人生价值（vi）；Borchers(C) ¶7 是「静默解雇反噬你」的警告 → 对应 (v) downside。Example 已用掉 Hersey(B)，剩 6 选 6（本题 6 条评论全用，无干扰项）。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         27. PART B2 · Q64 评论语气
+         ============================================================ -->
+    <section class="slide" data-title="B2 · Q64 评论语气" data-section="partb2" data-part="Part B2 · Quiet Quitting" data-hard-group="quietquit">
+      <div class="sec-label">Part B2 · Q64 · Comments 区语气判断</div>
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q64 · MCQ · Comments <span class="rate-chip hard">⚠️ 39%</span></div>
+        <div class="pmcq-q">64. Which of the following would be cynical towards the idea 'Quiet quitting is right for today'?</div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="Nikia203 认为这是必须发生的 evolution → 支持。"><span class="opt-letter">A</span><span class="opt-text">Nikia203</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="Lewis43 拒绝为不在乎自己的公司卖命 → 支持 quiet quitting。"><span class="opt-letter">B</span><span class="opt-text">Lewis43</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="true" data-explain="'you're a loser... like a virus... worse than COVID' → 强烈嘲讽/反对，cynical。"><span class="opt-letter">C</span><span class="opt-text">Jessef04</span></div>
+        <div class="pmcq-opt" onclick="checkMCAuto(this)" data-correct="false" data-explain="Luna903_ 宁可孩子 quiet quit 也别失业躺平 → 勉强支持。"><span class="opt-letter">D</span><span class="opt-text">Luna903_</span></div>
+        <div class="method-badge method-hidden"><span class="mb-key">🔑 词义</span><span>cynical = 愤世嫉俗、冷嘲热讽的。Jessef04 用 loser / virus / worse than COVID 三连贬，语气最明显。</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         28. 考生表现分析 · Part A
+         ============================================================ -->
+    <section class="slide" data-title="考情 · Part A" data-section="analysis" data-part="官方考情分析">
+      <div class="slide-h1">📊 官方考生表现 <span class="h1-en">整体 + Part A</span></div>
+      <div class="card-grid-2">
+        <div class="info-card">
+          <div class="ic-title">🧑‍🎓 整体数据</div>
+          <ul class="styled-list">
+            <li>总考生：<strong>49,293 人</strong></li>
+            <li>约 <strong>42%</strong> 选考 Part B1</li>
+            <li>约 <strong>58%</strong> 选考 Part B2</li>
+            <li>近一半题目 ≥50% 考生答对 → 基础阅读能力普遍具备</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="ic-title">📰 Part A · Celebrity Gossip</div>
+          <ul class="styled-list">
+            <li>≥70% 答对：Q1、Q3(i)(ii)、Q20(iii)(iv)</li>
+            <li>题型：MCQ / 简答 / 填空 / TFNG / 段落匹配 / 观点匹配</li>
+            <li>Q20(ii)（Dr. Liner）<strong>官方已删除</strong>，原答案 Agrees</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-badge">
+        <span class="mb-key">🚨 Part A 四大失分点</span>
+        <span>① 填空未用原文单词或形式错误（Q7 humanizes / have）② 拼写错误（Q14 portrayed → protrayed）③ 未仔细读题（Q21 多匹配了 1–5 段）④ 词性词义错误（Q17 word↔world、feel↔fill；Q18 overwhelming↔overwhelmed）</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         29. 考生表现分析 · Part B1 & B2
+         ============================================================ -->
+    <section class="slide" data-title="考情 · B1 & B2" data-section="analysis" data-part="官方考情分析">
+      <div class="slide-h1">📊 官方考生表现 <span class="h1-en">Part B1 & B2</span></div>
+      <div class="card-grid-2">
+        <div class="info-card">
+          <div class="ic-title">🌿 Part B1 · Foraging</div>
+          <ul class="styled-list">
+            <li>≥70% 答对：Q23(i)(iii)、Q25、Q29(ii)(iii)（第一篇指南基础题）</li>
+            <li>🚨 难点：Q26(ii) around 38% · Q30 happen naturally 仅 12% · Q32 同义词 6–15% · Q38 双要点仅 7%</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <div class="ic-title">💼 Part B2 · Quiet Quitting</div>
+          <ul class="styled-list">
+            <li>细节题 ≥60%：Q43、Q51、Q52(i)(ii)(iv)、Q57(i)</li>
+            <li>全局理解题 37%–66%：Q63 匹配题</li>
+            <li>🚨 难点：Q59/Q60 需改写（抄原文 adaptable 不给分）· Q50/53/54/56/61 修辞指代区分度高 · Q44/45/62 开放题大段抄原文</li>
+          </ul>
+        </div>
+      </div>
+      <div class="method-badge">
+        <span class="mb-key">💡 官方建议</span>
+        <span>低分考生选考 B2 时大量留白 —— <strong>基础薄弱选 B1 更容易得分</strong>；目标 5** 再冲 B2，重点攻克修辞指代题。</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         30. 备考建议
+         ============================================================ -->
+    <section class="slide" data-title="备考建议" data-section="analysis" data-part="官方考情分析">
+      <div class="slide-h1">🎯 官方备考建议 <span class="h1-en">Exam Strategies</span></div>
+      <div class="steps-flow">
+        <div class="step-card"><div class="step-num">1</div><div class="step-title">原文单词 + 形式正确</div><p>严格按题目要求用原文指定段落的单词，注意单复数/时态/词性（humanizes 不是 humanize）</p></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-title">匹配题锁定范围</div><p>只在题目指定的段落范围内匹配，不要额外多选（Q21 限 ¶6–14）</p></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-title">拼写零失误</div><p>抄词时核对拼写，避免词性错误改变意思（portrayed / overwhelmed）</p></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-title">开放题针对性作答</div><p>不要大段抄原文，答出全部要求要点即可（Q44/45/62）</p></div>
+        <div class="step-card"><div class="step-num">5</div><div class="step-title">抓语法提示</div><p>句子开头、填空上下文的词性要求都是线索（be + adj + to them）</p></div>
+        <div class="step-card"><div class="step-num">6</div><div class="step-title">改写要合语法</div><p>需要 paraphrase 时调整代词、动词形式（Q59/60 用自己的话）</p></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         31. DONE
+         ============================================================ -->
+    <section class="slide" data-title="完成" data-section="done" data-part="收尾">
+      <div class="s1-card-wrapper">
+        <div class="xdf-header-bar">
+          <div class="xdf-logo-text">DSE READING <span>// 2025 真题</span></div>
+          <div class="xdf-sub-text">Paper 1 · Complete</div>
+        </div>
+        <div style="padding:48px 32px;text-align:center">
+          <div style="font-size:64px;margin-bottom:16px">🏆</div>
+          <div class="slide-h1" style="margin-bottom:12px">2025 Paper 1 精讲完成！</div>
+          <div class="slide-h2" style="color:var(--fcc-purple-dark);margin-bottom:28px">Part A Q1–21 · Part B1 答案速览 · Part B2 Q43–64 · 官方考情</div>
+          <div class="s1-meta-grid">
+            <div class="s1-meta-card"><div class="sm-label">Part A</div><div class="sm-value">21 题</div><div class="sm-sub">全题型 + 正确率标注</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Part B1</div><div class="sm-value">答案速览</div><div class="sm-sub">难点题 7%–38% 高亮</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Part B2</div><div class="sm-value">22 题</div><div class="sm-sub">修辞指代 · 改写填空</div></div>
+          </div>
+          <div style="margin-top:28px;font-size:14px;opacity:.7">↺ 点击右上角 Reset 可清空全部作答记录，重新刷题</div>
+        </div>
+        <div class="xdf-grid-pattern"><span>DSE 2025 PAPER 1 // KEEP PRACTISING</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDES END -->
+    <!-- ============================================================ -->
+  </div><!-- /main-area -->
+</div><!-- /deck -->
+
+<!-- ===== Hard-mode passage templates ===== -->
+<div id="hard-template-gossip" style="display:none">
+  <p class="para"><span class="para-num">[1]</span> It's 2023 and Joe Jonas has filed for divorce from Sophie Turner after four years of marriage. Other personalities, including Taylor Swift and Joe Alwyn, Ariana Grande and Dalton Gomez, as well as Hugh Jackman and Deborra Lee all split up. In fact, so many high-profile pairs have called it quits that some people have deemed 2023 'The Year of Celebrity Breakups.'</p>
+  <p class="para"><span class="para-num">[2]</span> Logically speaking, we shouldn't be interested in this kind of scandalous speculation, this celebrity gossip. The inner lives of celebrities have next to nothing to do with us, after all: we're unlikely ever to meet them, and their romantic relationships have no bearing on how our own lives unravel, down here in the 'real' world. "And yet we are interested, even if we're reluctant to admit it," says Dr. Alice Leppert, a media and communications professor who focuses on stardom and celebrity culture.</p>
+  <p class="para"><span class="para-num">[3]</span> These public figures represent a lot of our highest goals, declares clinical psychologist and breakup coach Dr. Andrea Liner. They tend to be attractive, wealthy, and considered successful, which many people assume makes them invulnerable to a lot of life's problems. "So, when we find out that beautiful, gorgeous, wealthy celebrities are getting cheated on or divorcing or breaking up, it kind of humanizes them and can be validating for us to see that they have problems, too," she says. "But it can also confuse us because we think that they shouldn't be having problems like that if they've achieved these levels of success. Part of the problem is that celebrities may often perform an image or identity that doesn't always align with their authentic selves," she adds. Their marital problems can come as a shock if all the public saw was a happy family. Liner says that's especially true because celebrities share so much of their lives online, creating an "almost artificial sense of intimacy" that obscures what's happening behind the scenes.</p>
+  <p class="para"><span class="para-num">[4]</span> Gossip is so central to our cultural psyche that the American Psychological Association (APA) has its own definition. According to the APA, gossip consists of personal talk or communication about information that's often not proven to be true, and it may be (but is not necessarily) scandalous in content or malicious in intention. Gossip impacts group bonding and has big implications for the transmission and reinforcement of cultural norms, too.</p>
+  <p class="para"><span class="para-num">[5]</span> But why? What purpose does gossip serve? What function is it fulfilling in our society? Put simply, why do we care?</p>
+  <p class="para"><span class="para-num">[6]</span> "There are some people who try to classify gossip as negative or critical discussion about other people, but really, gossip is just sharing social information with each other," says author and professor of psychology Dr. David Ludden. "Anytime you're talking about people who aren't present, it's gossip," he says. "We're social animals and we need to be able to know what's going on in social environments, so gossip is very helpful," says Ludden. Basically, gossip can help you go into social encounters more prepared for what's coming.</p>
+  <p class="para"><span class="para-num">[7]</span> It can also be a way to build relationships: "Sharing gossip can bond people socially," says Dr. Stephen Benning from the University of Nevada, Las Vegas. Benning published a study in 2019 which found that gossip provides a currency of private information that creates a shared sense of the community holding that information.</p>
+  <p class="para"><span class="para-num">[8]</span> But it's not all so innocent. Benning found that we're also attracted to gossip for some other reasons: attacking people's social standing (what is called 'negative influence'), merely elevating our own social status, or simply trying to be included in a social network that we previously weren't. Similarly, Ludden says that "lots of the bad gossip is done in an attempt to make ourselves feel better than the person we're talking about. That's not a healthy approach to building a sense of self-esteem."</p>
+  <p class="para"><span class="para-num">[9]</span> Negative influence (talking badly about someone or trying to cut them down) was a clear motive for some people on certain occasions. Yet, the study found that this was actually the weakest motivation that led people to gossip. Gathering and validating information about the person being gossiped about was the strongest.</p>
+  <p class="para"><span class="para-num">[10]</span> There's also some evidence suggesting that negative gossip can have a positive impact on social groups and promote cooperation. In an article published in the journal Psychological Science, researchers found that when people communicated reputational information about others, others tended to interact with people who were portrayed as cooperative and ostracize those who were portrayed as selfish. As a result, those who were ostracized tended to change their behavior and act more cooperatively.</p>
+  <p class="para"><span class="para-num">[11]</span> What motivates us to gossip about A-listers we don't socialize with?</p>
+  <p class="para"><span class="para-num">[12]</span> Ludden says that just because we've never met these celebrities doesn't mean we don't have relationships with them: "What we do is we create parasocial relationships — imaginary relationships with a singer or athlete whose successes we've followed and celebrated." They can fill the gaps in our real-world relationships, and they're a risk-free way to feel connected to others, since you can't be rejected by someone who's not actually in a relationship with you.</p>
+  <p class="para"><span class="para-num">[13]</span> Gossiping about these celebrities can be a similarly low-stakes way to feel connected. "Gossiping about celebrities is a safer way to interact with a date, to ingratiate yourself to a group at parties, or to feel part of a new team at work," Benning says. It can also serve as a form of stress relief. "When life is overwhelming, focusing on celebrity gossip can be a way to numb out our feelings of dissatisfaction, unhappiness, or stress."</p>
+  <p class="para"><span class="para-num">[14]</span> But just like regular gossip, sometimes the motivation behind celebrity gossip is to make ourselves feel better than others. "Celebrity gossip is a safe way to snack on schadenfreude (the delight in the misfortune of others)," says Benning.</p>
+</div>
+
+<div id="hard-template-quietquit" style="display:none">
+  <p class="para"><span class="para-num">[1]</span> Quiet quitting is a buzzy term doing the rounds today. In fact, a Google search produces hits from The Washington Post, The New York Times, The Wall Street Journal, and countless academic publications. At this moment, at least 50% of the North American workforce is engaged in a wave of disengagement dubbed quiet quitting.</p>
+  <p class="para"><span class="para-num">[2]</span> As many have noted the term itself is misleading. No, it does not refer to wordlessly slipping out the door or logging out of the group chat. Nor does it mean an employee permanently abandoning their post. Quiet quitters believe a more accurate way to describe this is working your contract or acting your wage. Carrie Bulger, PhD, defines quiet quitting as "a renewed effort to really focus on what a job is and isn't."</p>
+  <p class="para"><span class="para-num">[3]</span> No matter what terminology we use, quiet quitting is less a harbinger of widespread revolt and more of a long overdue reckoning with outdated practices and stale office culture. "For some people, it's probably a sign of dissatisfaction and a sign that they're going to leave," Bulger said. "But I think for others, it's something else."</p>
+  <p class="para"><span class="para-num">[4]</span> Being forced to work at home amid the tumult of 2020 was an eye-opening experience, one that emboldened even the most dedicated employees to set healthy boundaries. And enforcing those boundaries can appear, through the lens of leadership, like slacking. "But it is quite possible to be invested in your work and redirect that passion once you clock out for the day. Pursuing work-life enrichment prioritizes self-care in one area and tends to breed success in the other," Bulger said.</p>
+  <p class="para"><span class="para-num">[5]</span> The signs are all around us — productivity is no longer seen as the badge of honor it once was, and Generation Z are starting to question how relevant it is. One online community for people who 'want help with their own work-life related struggles' saw an upsurge in followers in late 2021. The Instagram account The Nap Ministry has a similar popularity arc and saw a huge explosion of followers since the start of the pandemic, numbering in the tens of thousands per day. Tricia Hersey, its creator, believes Gen Z work hard; they just don't want to live to work.</p>
+  <p class="para"><span class="para-num">[6]</span> Quiet quitting is only one note in this growing chorus, and we should be careful not to dismiss it as just another trend or a singular occurrence. Instead, we should step back and look at the whole picture.</p>
+  <p class="para"><span class="para-num">[7]</span> There are, of course, divergent perspectives on quiet quitting. Writing for The Wall Street Journal, columnist Callum Borchers outlined the perils of quiet quitting. Borchers has encountered a new term quiet firing in which reputations suffer as a result of perceived apathy; responsibilities are gradually diminished and a path toward actual termination materializes. "Companies have always had subtle ways to nudge people out the door," Borchers said. "Tactics include sidelining them by cutting responsibilities or denying promotions and raises to make someone miserable enough to leave."</p>
+  <p class="para"><span class="para-num">[8]</span> Gergo Vari, CEO of online job searching platform Lensa, also believes the decision won't serve employees long-term either. "Anytime that you silence your own voice in an organization, you may be depriving yourself of the opportunity to change that organization." Stepping away from hustle culture can also cause tension between employees and may result in a rift between fellow colleagues who may have to pick up the slack.</p>
+  <p class="para"><span class="para-num">[9]</span> Today's college students are rightly praised for their resiliency. But the same skills that made them so adaptable during the pandemic — they are digital natives who prefer Zoom lectures to the real thing — make them the target of generational disdain once they enter the workforce. Fittingly, the movement's origins can be traced to TikTok, where the influencer Zaid Khan uttered a phrase that's been quoted in countless news articles: "Your worth as a person is not defined by your labor."</p>
+  <p class="para"><span class="para-num">[10]</span> In an essay for The New Yorker, Cal Newport posits that Gen Z is better equipped than its forebears to leverage technology to push back against workplace norms. Gen Z enters the workforce with "a mindset that is notably distinct from the millennials who preceded them." They have so thoroughly mixed work and self that it has become clear to many that they need to separate their personhood from their jobs.</p>
+  <p class="para"><span class="para-num">[11]</span> Work, of course, remains essential within our current economic and social environment. As Barnaby Lashbrooke wrote in Forbes: "Of course we have to work: to put a roof overhead and food on the table. But life should come first, and work should be the enabler."</p>
+  <p class="para comment"><strong>Comments:</strong> Nikia203: "it's an evolution that has to happen" · Lewis43: "I'm not going to put in a sixty-hour workweek... for a job that doesn't care about me" · Jessef04: "If you're doing this, you're a loser. This is like a virus." · Luna903_: "I'd rather my kid was a quiet quitter than being unemployed"</p>
+</div>
+
+<script src="js/main.js"></script>
+<script src="../../../assets/app.js"></script>
+<script src="../../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u106',weakKey:'general',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

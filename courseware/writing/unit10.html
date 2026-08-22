@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 10 · Global Food Festival · 香港加速班写作课 | 成雨</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head><body>
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Unit10</span>
+  <span class="slide-title" id="topbarTitle">Global Food Festival</span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 10">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">成</div><div class="tb-name">成雨</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">Global Food Festival<br><span class="accent">Introduction</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">Introduction / Promotional Text — 活动简介/宣传文</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 10 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Introduction</div><div class="sm-sub">Promotional text</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Global Food Festival</div><div class="sm-sub">Food · Culture · Activities</div></div>
+<div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~285 words</div><div class="sm-sub">3 paragraphs</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题构思</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">Section 1 介绍</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">Section 2 活动</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">Section 3 美食+总结</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 本节课目标</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">By the end of this lesson, students will be able to:</p>
+<div class="card accent" style="border-left:4px solid var(--xdf-red);margin-bottom:16px">
+<h4>1. 了解并初步掌握介绍宣传类文本的结构和语气特点</h4>
+<p>Understand the structure and tone of Introduction / Promotional Texts</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>2. 掌握介绍型文本的段落组织方式</h4>
+<p>Master the paragraph organization of promotional texts (About → Activities → Dishes)</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>3. 初步掌握活动介绍、活动内容及活动好处的常用句式</h4>
+<p>Learn common sentence patterns for event introduction, activities and benefits</p>
+</div>
+<div class="card accent">
+<h4>4. 初步掌握宣传和邀请读者参与活动的表达方式</h4>
+<p>Learn expressions for promoting events and inviting readers to participate</p>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Task 2A · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题分析</h2>
+<div class="task-quote" style="margin-top:0;margin-bottom:18px">Your school is holding a Global Food Festival. You have been asked to write an introduction to the festival. Write the introduction.<br><br><b>GLOBAL FOOD FESTIVAL · INTRODUCTION</b><br>• About the Global Food Festival<br>• Activities you can take part in<br>• Dishes you can try</div>
+<div class="ce-item">
+<div class="ce-cn">1. <b>Role</b>（你是谁）</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">The writer introducing the festival / Yourself</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn">2. <b>Audience</b>（写给谁）</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">Students, teachers and visitors interested in the festival</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn">3. <b>Purpose</b>（写作目的）</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">To introduce the Global Food Festival and encourage people to take part in it</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn">4. <b>Register</b>（正式程度）</div>
+<div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+</div>
+<div class="quiz-ans">✅ <b>semi-formal</b> — 校园活动简介面向师生和访客，语气正式但不刻板</div>
+</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>5. Tone</b>（语气，可多选）— 勾选后点击「检查答案」</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin:6px 0">
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Informative（提供信息、介绍性的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Engaging（吸引读者的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Positive（积极正面的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> Objective（客观中立的）</label>
+</div>
+<button class="ce-btn" onclick="checkTones(this)">✅ 检查答案</button>
+<div class="ce-en">✅ 应选：Informative / Engaging / Positive。Introduction 需要提供信息的同时吸引读者参与，语气积极正面。不选 Objective — 宣传文不是客观报告。</div>
+</div>
+</section><section class="slide" data-title="🧠 Brainstorming ①">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点 ①</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.1: "About the Global Food Festival" 里应该包括哪些信息？</span></div>
+<div class="ce-item">
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">活动简介（What）+ 时间与地点（Where &amp; When）+ 活动内容概况（Overview/What to experience）+ 邀请读者参加（Invitation）</div>
+</div>
+<div class="think-prompt" style="margin-top:16px"><span class="think-icon">📍</span><span class="think-text">思考3.2: 美食节期间，可以设计哪些活动？</span></div>
+<div class="ce-item">
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">① <b>Do sth</b> 制作美食 + 品尝美食<br>② <b>Learn sth</b> 了解美食（影视 films &amp; documentaries；展览 cultural exhibitions）<br>③ <b>Explore sth</b> 互动游戏 interactive games and quizzes</div>
+</div>
+</section><section class="slide" data-title="🧠 Brainstorming ②">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点 ②</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.3: 除了快乐以外，是否有其他收获？</span></div>
+<div class="ce-item">
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">活动类常见深层收获：<br>① <b>culture</b> 不同国家的文化<br>② <b>customs and traditions</b> 习俗与传统<br>③ <b>values and ways of life</b> 价值观和生活方式</div>
+</div>
+<div class="think-prompt" style="margin-top:16px"><span class="think-icon">📍</span><span class="think-text">思考3.4: "dish you can try" 可以按什么分类？</span></div>
+<div class="ce-item">
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+<div class="ce-en">根据题目关键词 <b>global</b>，按大洲、地区或国家分类会比较容易。</div>
+</div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:12px">Introduction / Promotional Text 采用三段式结构：</p>
+<table class="rule-table">
+<tr><th style="width:25%">Paragraph</th><th>Main Content</th></tr>
+<tr><td class="col-type">P1 About the Festival<br>介绍活动</td><td class="col-example">Event Information &amp; Highlights</td></tr>
+<tr><td class="col-type">P2 Activities<br>参与体验</td><td class="col-example">Activities &amp; Experiences</td></tr>
+<tr><td class="col-type">P3 Dishes<br>享受美食</td><td class="col-example">Featured Dishes from Around the World</td></tr>
+</table>
+<div class="notes-box mt-l">
+<b>📝 结构要点：</b>三段分别对应题目要求的三个 bullet points。每段有明确的功能定位：P1 介绍活动基本信息，P2 描述活动体验，P3 按地域分类介绍美食。
+</div>
+</section><section class="slide" data-title="📐 Section 1 结构模版">
+<p class="sec-label">Part 5 · Section One — Information</p>
+<h2 class="slide-h2">📐 Section 1 段落结构</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:8px">🌟 Task 5A: 按照以下结构模版完成 Section 1（About the Global Food Festival）</p>
+<table class="rule-table">
+<tr><th style="width:22%">Function</th><th style="width:28%">Sentence</th><th>Main Content</th></tr>
+<tr><td class="col-type">Engaging / Inviting<br>吸引/邀请</td><td>Hook / Inviting Opening</td><td class="col-example">Theme</td></tr>
+<tr><td class="col-type">Informative<br>信息介绍</td><td>Basic Information</td><td class="col-example">What + When + Where</td></tr>
+<tr><td class="col-type">Informative<br>信息介绍</td><td>Overview</td><td class="col-example">Activities &amp; Experiences</td></tr>
+<tr><td class="col-type">Engaging<br>吸引</td><td>Positive Summary</td><td class="col-example">Benefits</td></tr>
+<tr><td class="col-type">Engaging / Inviting<br>吸引/邀请</td><td>Invitation / Call to Action</td><td class="col-example">Invitation</td></tr>
+</table>
+</section><section class="slide" data-title="✍️ Section 1 范文">
+<p class="sec-label">Section 1 · Model Text</p>
+<h2 class="slide-h2">✍️ Section 1 范文精读</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">Section 1 >>>>>>>> About the Global Food Festival</p>
+<div class="para-quote">
+① <i>[复习Unit7 article内容：祈使句邀请→"准备好…吧"]</i><br>
+<span class="hl-chunk">Get ready for</span> a week full of flavor, culture and <span class="cloze" onclick="revealCloze(this)" data-answer="excitement">______</span>!<br><br>
+② The Global Food Festival <span class="cloze" onclick="revealCloze(this)" data-answer="is a special event held at Kowloon East Memorial School on March 15th.">______</span><br><br>
+③ During this exciting week, students can take part in <span class="cloze" onclick="revealCloze(this)" data-answer="a variety of fun activities">______</span> and enjoy <span class="cloze" onclick="revealCloze(this)" data-answer="delicious dishes from around the world, discovering">______</span> different cultures through food.<br><br>
+④ It is <span class="cloze" onclick="revealCloze(this)" data-answer="truly">______</span> a week of <span class="cloze" onclick="revealCloze(this)" data-answer="discovery, enjoyment and celebration">______</span>.<br><br>
+⑤ <i>[祈使句邀请 "快来….!"]</i><br>
+<span class="hl-chunk">Come and experience</span> a global journey <span class="cloze" onclick="revealCloze(this)" data-answer="right here on campus!">______</span>
+</div>
+<div class="notes-box mt-m">
+<b>📝 写作要点：</b>① 用祈使句 Hook 开场（复习 Unit 7）；② 定义活动句型 "is a ... event held at..."；③ Overview 句用 V-ing 补充收获；④ Positive Summary 用三个并列名词；⑤ 祈使句邀请收尾。
+</div>
+</section><section class="slide" data-title="🤔 思考5.1 A/B对比">
+<p class="sec-label">Part 5 · Think 5.1</p>
+<h2 class="slide-h2">🤔 A/B 对比：哪个更适合 Introduction？</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考5.1: 对比AB两个活动介绍的版本，为什么A更适合introduction？</span></div>
+<div class="split-compare mt-m">
+<div class="split-bad">
+<div class="split-label bad">B. 通知式</div>
+<p style="font-size:18px;line-height:1.8"><i>The Global Food Festival</i> is held / will be held at Kowloon East Memorial School on 12th March.</p>
+</div>
+<div class="split-good">
+<div class="split-label good">A. 介绍型 ✅</div>
+<p style="font-size:18px;line-height:1.8"><i>The Global Food Festival</i> is a special event held at Kowloon East Memorial School on 12th March.</p>
+</div>
+</div>
+<div class="ce-item mt-m">
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看解析</button>
+<div class="ce-en">因为 B 写法更适合《通知》，是直接提供活动的信息。而写 introduction 简介 / promotional texts 宣传文本的时候，是需要用 A 写法"介绍型"句子的，即需要定义"这是一个什么样的活动"：<b>a XX event.</b></div>
+</div>
+<div class="notes-box">
+<b>📌 Notes:</b> 对于已经确定的未来活动，<i>is held</i> 和 <i>will be held</i> 都可以。<br>• <i>is held</i> 较客观、简介式（常见于 introduction/leaflet）<br>• <i>will be held</i> 更强调未来即将发生的活动。
+</div>
+</section><section class="slide" data-title="🔘 Language Bank ①">
+<p class="sec-label">Language Bank · 活动总介绍型句式</p>
+<h2 class="slide-h2">🔘 Language Bank — 活动总介绍型句式</h2>
+<div class="card accent" style="margin-bottom:16px">
+<h4>Sentence 1 — 定义活动</h4>
+<p style="font-size:19px;line-height:1.8"><i>Activity Name + is a/an + adjective + event + </i>held<i> + 地点 + 时间</i></p>
+<p style="font-size:17px;color:var(--text-3);margin-top:4px">e.g. The Global Food Festival is a special event held at Kowloon East Memorial School on March 15th.</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>Sentence 2 — 介绍体验</h4>
+<p style="font-size:19px;line-height:1.8"><i>During this + adjective + event/week/day, participants</i> can + do A + and + do B, <i>V-ing</i> + result/benefit.</p>
+<p style="font-size:17px;color:var(--text-3);margin-top:4px">e.g. During this exciting week, students can take part in a variety of fun activities and enjoy delicious dishes, discovering different cultures through food.</p>
+</div>
+<div class="notes-box">
+<b>📌 Notes:</b><br>
+(1) 关于分词 done/doing 的用法：<br>
+• <i>held</i> + 地点/时间是一种更简洁的表达方式，相当于省略了 <i>which is held...</i><br>
+• <i>V-ing</i> + 收获/结果用来补充活动带来的体验、意义或收获，使句子更紧凑、更生动。<br><br>
+(2) 当介绍活动的基本资讯时，通常使用 <i>students / participants / visitors</i> 等较客观的人称。当直接邀请读者参与活动时，则更常使用第二人称 <i>you</i>。
+</div>
+</section><section class="slide" data-title="✏️ Task 5B 翻译练习">
+<p class="sec-label">Task 5B · Sentence Translation</p>
+<h2 class="slide-h2">✏️ Task 5B: 翻译练习（使用介绍型句式）</h2>
+<div class="ce-item">
+  <div class="ce-cn">1. 慈善义卖将于下周五在学校礼堂举行。这是一个有意义的校园活动。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>charity sale 慈善义卖</span><span>meaningful school event 有意义的校园活动</span><span>held in the school hall 在学校礼堂举行</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="ta5b1" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'ta5b1','ans5b1')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="ans5b1">The charity sale is a meaningful school event held in the school hall next Friday.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. 英语戏剧比赛将于六月在学校礼堂举行。这是一个令人兴奋的校内活动。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>English Drama Competition 英语戏剧比赛</span><span>exciting school event 令人兴奋的校内活动</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="ta5b2" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'ta5b2','ans5b2')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="ans5b2">The English Drama Competition is an exciting school event held in the school hall in June.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">3. 社区清洁日将于本周日在维多利亚公园举行。这是一个特别的社区活动。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>Community Clean-up Day 社区清洁日</span><span>special community event 特别的社区活动</span><span>Victoria Park 维多利亚公园</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="ta5b3" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'ta5b3','ans5b3')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="ans5b3">Community Clean-up Day is a special community event held at Victoria Park this Sunday.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. 慈善步行将于下周六在维多利亚公园举行。这是一项有意义的社区活动，旨在提高公众对有需要儿童的关注，并为他们提供支持。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>charity walk 慈善步行</span><span>raise awareness and support 提高关注并提供支持</span><span>children in need 有需要儿童</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="ta5b4" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'ta5b4','ans5b4')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="ans5b4">The charity walk is a meaningful community event held at Victoria Park next Saturday to raise awareness and support for children in need.</div>
+</div>
+</section><section class="slide" data-title="🔘 Language Bank ②">
+<p class="sec-label">Language Bank · 宣传/推广/邀请 — 祈使句</p>
+<h2 class="slide-h2">🔘 Language Bank — 祈使句邀请表达</h2>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:22%">中文</th><th style="width:28%">句式</th><th>例句</th></tr>
+<tr><td class="col-type">准备好迎接…</td><td><i>Get ready for…</i></td><td class="col-example"><i>Get ready for a week full of flavour and fun!</i></td></tr>
+<tr><td class="col-type">来体验…</td><td><i>Come and experience…</i></td><td class="col-example"><i>Come and experience dishes from around the world!</i></td></tr>
+<tr><td class="col-type">一起来参加…</td><td><i>Come along to…</i></td><td class="col-example"><i>Come along to enjoy a unique food journey!</i></td></tr>
+<tr><td class="col-type">不要错过…</td><td><i>Don't miss (out on)…</i></td><td class="col-example"><i>Don't miss the highlight of the festival!</i></td></tr>
+<tr><td class="col-type">加入我们…</td><td><i>Join us for…</i></td><td class="col-example"><i>Join us for an unforgettable food festival!</i></td></tr>
+<tr><td class="col-type">走进…</td><td><i>Step into…</i></td><td class="col-example"><i>Step into a world of global flavours!</i></td></tr>
+<tr><td class="col-type">试试…</td><td><i>Try (out)...</i></td><td class="col-example"><i>Try out some exciting cooking activities!</i></td></tr>
+<tr><td class="col-type">尝一尝…</td><td><i>Taste...</i></td><td class="col-example"><i>Taste flavours from around the world!</i></td></tr>
+<tr><td class="col-type">探索一下…</td><td><i>Explore...</i></td><td class="col-example"><i>Explore different cultures through food!</i></td></tr>
+<tr><td class="col-type">享受…</td><td><i>Enjoy...</i></td><td class="col-example"><i>Enjoy a unique food journey!</i></td></tr>
+</table>
+</section><section class="slide" data-title="📐 Section 2 结构句式">
+<p class="sec-label">Part 6 · Section Two — Activities</p>
+<h2 class="slide-h2">📐 Section 2 结构与句式</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:8px">🌟 Task 6A: 根据以下结构句式表格和内容提示完成 Section Two 段落</p>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:20%">Main Content</th><th>Sentence Structures</th></tr>
+<tr><td class="col-type">1. Activity overview</td><td class="col-example"><i>A wide range of + adj. + activities will take place + 时间/具体地点</i></td></tr>
+<tr><td class="col-type">2. DO STH 动手型活动<br>定语从句补充体验/收获</td><td class="col-example"><i>One of the highlights is ..., where you can…</i><br><i>You can also do sth, allowing you (to) do sth.</i></td></tr>
+<tr><td class="col-type">3. LEARN STH 看/听型学习活动<br>分词补充意义/收获</td><td class="col-example"><i>Sth will also be done, helping you (to) do sth.</i></td></tr>
+<tr><td class="col-type">4. EXPLORE STH 互动/娱乐型活动<br>不定式补充体验/探索</td><td class="col-example"><i>There will also be + sth + for you to do/explore/experience….</i></td></tr>
+<tr><td class="col-type">5. Invite readers</td><td class="col-example"><i>Do A, do B and do C.</i> 祈使句鼓励尝试<br><i>Whether + 从句 + or + 从句, there is something for everyone.</i></td></tr>
+<tr><td class="col-type">6. Engage readers<br>强调不同兴趣和需求的人都能找到适合自己的活动</td><td class="col-example"></td></tr>
+</table>
+</section><section class="slide" data-title="✍️ Section 2 范文">
+<p class="sec-label">Section 2 · Model Text</p>
+<h2 class="slide-h2">✍️ Section 2 范文精读</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">Section 2 >>>>>>>> Activities you can take part in</p>
+<div class="para-quote">
+① A wide range of fun and interactive activities will take place during lunchtime and after school.<br><br>
+② One of the highlights <span class="cloze" onclick="revealCloze(this)" data-answer="is the hands-on cooking classes, where you can learn how to prepare some of the world's most delicious dishes.">______</span> <i>(活动 hands-on cooking classes + 用定语从句写收获/好处)</i><br><br>
+③ <span class="hl-chunk">Popular food films and documentaries</span> will also be shown<span class="cloze" onclick="revealCloze(this)" data-answer=", helping you understand how food connects people and cultures.">______</span> <i>(活动 food films and documentaries + 用分词写收获/好处)</i><br><br>
+④ There will<span class="cloze" onclick="revealCloze(this)" data-answer=" also be interactive games and quizzes for you to explore different food traditions in an enjoyable way.">______</span> <i>(活动: interactive games and quizzes + 用to do不定式写收获/好处)</i><br><br>
+⑤ <span class="hl-chunk">Try out</span> new skills, <span class="hl-chunk">experience</span> new tastes and <span class="hl-chunk">explore</span> cultures through these engaging activities.<br><br>
+⑥ Whether you love <span class="cloze" onclick="revealCloze(this)" data-answer="cooking">______</span> or simply want to <span class="cloze" onclick="revealCloze(this)" data-answer="try something new">______</span>, there is something for everyone.
+</div>
+<div class="notes-box mt-m">
+<b>📝 写作要点：</b>②③④ 三句分别用 <b>定语从句</b>(where)、<b>分词</b>(V-ing)、<b>不定式</b>(to do) 三种结构补充活动收获。⑤ 用三个祈使动词并列鼓励尝试。⑥ "Whether... or..., there is something for everyone" 收尾，强调包容性。
+</div>
+</section><section class="slide" data-title="📝 Task 6B Homework">
+<p class="sec-label">Task 6B · Homework</p>
+<h2 class="slide-h2">📝 Task 6B: 课后作业</h2>
+<div class="hw-card">
+<h4>Homework: Film Festival Section 2</h4>
+<p>按照相同的 Section Two 段落结构模版完成 Film Festival 的 Section 2（Activities you can take part in）。</p>
+</div>
+<div class="task-quote">Your school is holding a Global Film Festival. You have been asked to write an introduction to the festival. Write the introduction.<br><br><b>GLOBAL FILM FESTIVAL · INTRODUCTION</b><br>• About the Global Film Festival<br>• Activities you can take part in<br>• Films you can enjoy</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s15-ans');a.classList.toggle('show')">📖 查看参考答案</button>
+<div class="ce-en" id="s15-ans" style="line-height:1.9"><i>A wide range of exciting and thought-provoking activities will take place during lunchtime and after school. One of the highlights is the film appreciation workshops, where students can learn how directors use visual language, music and symbolism to tell meaningful stories. A special Director's Talk will also be held, helping students understand the challenges filmmakers face and how passion and perseverance can turn dreams into reality. There will also be interactive games and quizzes for students to identify films from pictures, scenes and famous quotes. Explore the art of filmmaking, discover new perspectives and experience the power of storytelling through these engaging activities. Whether you are a film lover or simply curious about cinema, there is something for everyone.</i></div>
+</section><section class="slide" data-title="🧠 Section 3 Brainstorming">
+<p class="sec-label">Part 7 · Section Three — Food</p>
+<h2 class="slide-h2">🧠 思考7.1: 各大洲的特色美食</h2>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考7.1: 各大洲的特色美食都有什么？</span></div>
+<div class="flip-grid g2 mt-m">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">亚洲（日韩泰）</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">寿司 Sushi<br>韩国泡菜 Kimchi<br>冬阴功汤 tom yum soup<br>芒果糯米饭 mango sticky rice</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">美洲（美国墨西哥巴西）</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">美国 burger<br>墨西哥 tacos 玉米薄饼 / burrito 玉米卷饼<br>巴西烧烤 Brazilian-style barbecue</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">欧洲&澳洲（英法意）</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">西班牙海鲜饭 Spanish seafood rice<br>意大利面 spaghetti<br>炸鱼薯条 fish and chips</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">非洲</div><div class="flip-hint">点击查看</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">grilled kebabs（烤肉串）<br>boiled plantains（水煮大蕉/饭蕉）</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="🔘 Language Bank ③">
+<p class="sec-label">Language Bank · 食物介绍常用表达</p>
+<h2 class="slide-h2">🔘 Language Bank — 食物介绍常用表达</h2>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:40%">中文</th><th>英文</th></tr>
+<tr><td class="col-type">食物（总称）</td><td class="col-example">food</td></tr>
+<tr><td class="col-type">菜肴 / 具体菜品</td><td class="col-example">dishes</td></tr>
+<tr><td class="col-type">风味 / 特色风味</td><td class="col-example">flavours</td></tr>
+<tr><td class="col-type">受欢迎的美食</td><td class="col-example">favourites</td></tr>
+<tr><td class="col-type">经典美食</td><td class="col-example">classics</td></tr>
+<tr><td class="col-type">美味佳肴（宣传性表达）</td><td class="col-example">delights</td></tr>
+<tr><td class="col-type">菜系</td><td class="col-example">cuisine</td></tr>
+<tr><td class="col-type">特色菜</td><td class="col-example">speciality</td></tr>
+<tr><td class="col-type">美食 / 珍馐</td><td class="col-example">delicacy</td></tr>
+<tr><td class="col-type">饮品</td><td class="col-example">beverage / drink</td></tr>
+<tr><td class="col-type">小吃</td><td class="col-example">snack</td></tr>
+<tr><td class="col-type">甜品</td><td class="col-example">dessert</td></tr>
+</table>
+</section><section class="slide" data-title="✍️ Section 3 范文">
+<p class="sec-label">Section 3 · Model Text</p>
+<h2 class="slide-h2">✍️ Section 3 范文精读</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 Task 7A: Section 3 >>>>>>>> dishes you can try</p>
+<div class="para-quote" style="font-size:18px;line-height:2.0">
+Of course, no food festival would be complete without the food itself — and each day will <span class="hl-chunk">take you on a journey</span> across a different continent. <span class="hl-chunk">Start your week</span> with North American <span class="cloze" onclick="revealCloze(this)" data-answer="favorites">______</span> like <span class="cloze" onclick="revealCloze(this)" data-answer="juicy burgers and classic tacos.">______</span> Then <span class="cloze" onclick="revealCloze(this)" data-answer="travel">______</span> to South America <span class="cloze" onclick="revealCloze(this)" data-answer="to enjoy smoky Brazilian-style barbecue.">______</span> On Wednesday, <span class="hl-chunk">explore</span> African <span class="cloze" onclick="revealCloze(this)" data-answer="flavors">______</span> with dishes such as <span class="cloze" onclick="revealCloze(this)" data-answer="grilled kebabs and boiled plantains.">______</span> Thursday <span class="cloze" onclick="revealCloze(this)" data-answer="brings/offers/introduces">______</span> European <span class="cloze" onclick="revealCloze(this)" data-answer="classics,">______</span> including <span class="cloze" onclick="revealCloze(this)" data-answer="Spanish seafood rice, spaghetti and fish and chips.">______</span> Finally, <span class="hl-chunk">end the week with</span> Asian Food Day, featuring（以…为主要特色的）<span class="cloze" onclick="revealCloze(this)" data-answer="Korean kimchi, Japanese sushi">______</span> and Thai <span class="cloze" onclick="revealCloze(this)" data-answer="delights">______</span> like <span class="cloze" onclick="revealCloze(this)" data-answer="tom yum soup">______</span> and mango sticky rice<span class="cloze" onclick="revealCloze(this)" data-answer=".">______</span> From North America to Asia<span class="cloze" onclick="revealCloze(this)" data-answer=",">______</span> discover <span class="cloze" onclick="revealCloze(this)" data-answer="a world of flavors without">______</span> leaving our school!（不用走出学校就能品尝世界美味!）
+</div>
+<div class="notes-box mt-m">
+<b>📝 写作要点：</b>① "no... would be complete without..." 引入美食部分；② 按天/大洲顺序展开（Mon→Wed→Thu→Fri）；③ 每天用不同动词引入（Start / travel / explore / brings / end with）；④ 最后用 "From... to..., discover... without leaving..." 收尾，呼应"global"主题。
+</div>
+</section><section class="slide" data-title="🔘 Language Bank ④">
+<p class="sec-label">Language Bank · 积极/赞美/吸引人</p>
+<h2 class="slide-h2">🔘 Language Bank — 积极/赞美/吸引人</h2>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:45%">中文</th><th>英文</th></tr>
+<tr><td class="col-type">独特的</td><td class="col-example">Unique / special</td></tr>
+<tr><td class="col-type">独一无二</td><td class="col-example">Like no other</td></tr>
+<tr><td class="col-type">充满活力的</td><td class="col-example">Exciting / vibrant</td></tr>
+<tr><td class="col-type">难忘的</td><td class="col-example">(Truly) Unforgettable</td></tr>
+<tr><td class="col-type">无论…都有适合你的</td><td class="col-example">Whether…, there is something for everyone</td></tr>
+<tr><td class="col-type">非常适合…</td><td class="col-example">Perfect for…</td></tr>
+<tr><td class="col-type">绝佳机会</td><td class="col-example">A perfect opportunity to…</td></tr>
+<tr><td class="col-type">理想之选</td><td class="col-example">An ideal … for</td></tr>
+<tr><td class="col-type">带你踏上一段旅程</td><td class="col-example">Take you on a journey…</td></tr>
+<tr><td class="col-type">一个充满…的世界</td><td class="col-example">A world of</td></tr>
+<tr><td class="col-type">…的天堂</td><td class="col-example">a paradise of…</td></tr>
+</table>
+</section><section class="slide" data-title="📝 练习题 Film Festival">
+<p class="sec-label">Part 8 · Practice</p>
+<h2 class="slide-h2">📝 练习题: Global Film Festival</h2>
+<div class="task-quote">Your school is holding a Global Film Festival. You have been asked to write an introduction to the festival. Write the introduction.<br><br><b>GLOBAL FILM FESTIVAL · INTRODUCTION</b><br>• About the Global Film Festival<br>• Activities you can take part in<br>• Films you can enjoy</div>
+<h3 class="slide-h3" style="margin-top:16px">练习1: 完成 Section 1（About the Global Film Festival）</h3>
+<button class="ce-btn" onclick="var a=document.getElementById('s20-ans1');a.classList.toggle('show')">📖 查看参考答案</button>
+<div class="ce-en" id="s20-ans1" style="line-height:1.9"><i>Get ready for a week full of stories, creativity and inspiration! The Global Film Festival is a special annual event held at Kowloon East Memorial School in the first week of March. During this exciting week, students can take part in a variety of fun activities and enjoy films from around the world, discovering different cultures, perspectives and ideas through cinema. It is truly a week of discovery, learning and imagination. Come and experience the magic of cinema right here on campus!</i></div>
+</section><section class="slide" data-title="📝 练习题② + Content Bank">
+<p class="sec-label">Part 8 · Practice (cont.)</p>
+<h2 class="slide-h2">📝 练习题 ②③</h2>
+<h3 class="slide-h3">练习2 (Homework): 完成 Section 2 — 已在 Task 6B 布置</h3>
+<h3 class="slide-h3" style="margin-top:12px">练习3 (Optional): 完成 Section 3 — Films you can enjoy</h3>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px">根据 Section 3 范文结构及下方 Content Bank 完成电影介绍：</p>
+<button class="ce-btn" onclick="var a=document.getElementById('s21-content');a.classList.toggle('show')">📖 查看 Content Bank — 经典电影</button>
+<div class="ce-en" id="s21-content" style="display:none">
+<table class="rule-table" style="font-size:17px;margin-top:8px">
+<tr><th>Day</th><th>Theme</th><th>Films</th></tr>
+<tr><td class="col-type">Monday</td><td>English-language classics 英语经典电影</td><td class="col-example">The Shawshank Redemption 《肖申克的救赎》、Dead Poets Society 《死亡诗社》</td></tr>
+<tr><td class="col-type">Tuesday</td><td>Europe 欧洲电影</td><td class="col-example">Amélie 《天使爱美丽》（法）、The Intouchables 《触不可及》（法）</td></tr>
+<tr><td class="col-type">Wednesday</td><td>Asian cinema 亚洲电影</td><td class="col-example">Spirited Away 《千与千寻》（日）、Memories of Murder 《杀人回忆》（韩）</td></tr>
+<tr><td class="col-type">Thursday</td><td>Chinese-language masterpieces 华语电影经典</td><td class="col-example">Farewell My Concubine 《霸王别姬》、Yi Yi: A One and a Two... 《一一》</td></tr>
+<tr><td class="col-type">Friday</td><td>Black-and-white classics 黑白电影经典</td><td class="col-example">The Apartment 《桃色公寓》、Witness for the Prosecution 《控方证人》</td></tr>
+</table>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s21-ans3');a.classList.toggle('show')" style="margin-top:10px">📖 查看参考答案</button>
+<div class="ce-en" id="s21-ans3" style="line-height:1.9"><i>Of course, no film festival would be complete without great films — and each day will take you on a journey through different cultures, ideas and periods of cinema history. Start your week with English-language classics such as The Shawshank Redemption and Dead Poets Society. On Tuesday, travel to Europe through beloved French films like Amélie and The Intouchables. On Wednesday, explore Asian cinema with Spirited Away and the acclaimed Korean film Memories of Murder. Thursday brings Chinese-language masterpieces, including Farewell My Concubine and Yi Yi: A One and a Two.... Finally, end the week with black-and-white classics such as The Apartment and Witness for the Prosecution. From modern masterpieces to timeless classics, discover a world of cinema without leaving our school!</i></div>
+</section><section class="slide" data-title="📋 总结">
+<p class="sec-label">Part 10 · Summary</p>
+<h2 class="slide-h2">📋 知识清单 Check Your Learning</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">今天我们完成了 Introduction / Promotional Text（活动简介/宣传文）的初步学习。请对照以下清单回顾核心技能：</p>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 文体认知 Genre Awareness</h4>
+<p>了解 Introduction / Promotional Text 的基本特点：以介绍活动内容、吸引读者兴趣并鼓励参与为主要目的，语气特点：informative, engaging and positive</p>
+</div>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 内容组织 Content Development</h4>
+<p>掌握活动简介类文本的常见展开方式：Event Introduction → What is the event? → Activities → What can participants do? → Food / Films → Different themes + examples</p>
+</div>
+<div class="card accent" style="margin-bottom:14px">
+<h4>● 语言特点 Language Features</h4>
+<p>认识并初步运用介绍宣传类文本常见表达：Definition Sentences（定义活动）、Result V-ing（结果表达）、Invitation Expressions（邀请读者）、Positive Language（积极宣传用语）</p>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s22-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div class="ce-en" id="s22-exp" style="display:none;line-height:2.0">
+<b>常用表达 Useful Expressions:</b><br>
+• <i>Get ready for...</i><br>
+• <i>The ... is a special event held at ...</i><br>
+• <i>During this exciting week, students can ..., V-ing ...</i><br>
+• <i>There is something for everyone.</i><br>
+• <i>Start your week with ...</i><br>
+• <i>Explore ...</i><br>
+• <i>Come and experience ...</i><br>
+• <i>From ... to ..., discover a world of ... without leaving our school!</i>
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">Appendix · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Global Food Festival Introduction</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">Task: Write an introduction to the Global Food Festival. (~285 words, 3 paragraphs)</p>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:2.0">
+<p style="margin-bottom:14px"><b>Global Food Festival — Introduction</b></p>
+<p style="margin-bottom:14px"><i><span class="hl-chunk">Get ready for</span> a week full of flavor, culture and <span class="hl-chunk">excitement</span>! The Global Food Festival <span class="hl-chunk">is a special event held at</span> Kowloon East Memorial School on March 15th. During this exciting week, students can <span class="hl-chunk">take part in</span> a variety of fun activities and enjoy delicious dishes from around the world, <span class="hl-chunk">discovering</span> different cultures through food. It is truly a week of discovery, enjoyment and celebration. <span class="hl-chunk">Come and experience</span> a global journey right here on campus!</i></p>
+<p style="margin-bottom:14px"><i>A wide range of fun and interactive activities will take place during lunchtime and after school. <span class="hl-chunk">One of the highlights is</span> the hands-on cooking classes, where you can learn how to prepare some of the world's most delicious dishes. Popular food films and documentaries will also be shown, <span class="hl-chunk">helping you understand</span> how food connects people and cultures. <span class="hl-chunk">There will also be</span> interactive games and quizzes for you to explore different food traditions in an enjoyable way. Try out new skills, experience new tastes and explore cultures through these engaging activities. <span class="hl-chunk">Whether you love cooking or simply want to try something new, there is something for everyone</span>.</i></p>
+<p style="margin-bottom:8px"><i>Of course, no food festival would be complete without the food itself — and each day will <span class="hl-chunk">take you on a journey</span> across a different continent. <span class="hl-chunk">Start your week with</span> North American favorites like juicy burgers and classic tacos. Then travel to South America to enjoy smoky Brazilian-style barbecue. On Wednesday, explore African flavors with dishes such as grilled kebabs and boiled plantains. Thursday brings European classics, including Spanish seafood rice, spaghetti and fish and chips. Finally, <span class="hl-chunk">end the week with</span> Asian Food Day, featuring Korean kimchi, Japanese sushi and Thai delights like tom yum soup and mango sticky rice. From North America to Asia, <span class="hl-chunk">discover a world of flavors without leaving our school</span>!</i></p>
+</div>
+<p style="font-size:20px;color:var(--text-3);margin-top:10px;text-align:right">✅ 字数：约285词</p>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+<div style="font-size:72px;margin-bottom:24px">🎉</div>
+<h2 class="slide-h2">恭喜完成 Unit 10！</h2>
+<p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：审题分析 → Brainstorming → 三段式结构（About / Activities / Dishes）→ 介绍型句式 → 祈使句邀请 → 食物介绍表达 → 积极赞美语言 → Film Festival 练习</p>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握 Introduction / Promotional Text 文体特征</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握活动介绍型句式 (is a...event held at...)</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握祈使句邀请表达</span></div>
+<div class="check-item" style="justify-content:center"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握食物介绍与积极赞美语言</span></div>
+<button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px;margin-top:24px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── V7 enhanced keydown (arrows + ESC + input guard) ──
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='u10foodfestival_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u10',weakKey:'general',mode:'quiz'};</script>
+</body></html>

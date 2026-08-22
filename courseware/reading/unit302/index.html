@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加速班 阅读 Module 2 · 网页课件 v1</title>
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Palette panel (body-level, JS-positioned, fullscreen-proof) -->
+  <div class="palette-panel" id="palettePanel">
+    <div class="pp-title">Theme Color</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+    <div class="pp-note">saved locally</div>
+  </div>
+
+<div class="deck">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">&lt;/&gt; READING</div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+    </div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 36 36">
+          <circle class="ring-bg" cx="18" cy="18" r="14"/>
+          <circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+        </svg>
+        <div class="ring-text">0%</div>
+      </div>
+      <div class="score-detail">
+        <div class="sd-label">Score</div>
+        <div class="sd-val">0/0</div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+      <span class="theme-label">Dark Mode</span>
+    </div>
+  </aside>
+
+  <button class="sb-edge-tab" onclick="toggleSidebar()" title="展开侧边栏 (S)">☰</button>
+
+  <!-- ===== Main Area ===== -->
+  <div class="main-area">
+
+    <!-- ===== Topbar ===== -->
+    <div class="topbar">
+      <span class="course-tag">加速班 · Module 2</span>
+      <span class="slide-title mono" id="topbarTitle"></span>
+      <span class="page-counter page-counter-top" id="pageCounter">
+        <span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span>
+        <span class="pc-total" id="pcTotal"></span>
+      </span>
+      <span class="score-badge">
+        <span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span>
+      </span>
+      <span class="streak-badge" style="display:none">
+        <span class="streak-fire">🔥</span><span class="streak-count">0</span>
+      </span>
+      <span class="zoom-controls">
+        <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+        <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+        <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+      </span>
+      <span class="timer-wrap">
+        <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets (1/2/3/5/10 min)">
+          <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5">
+          <span class="t-colon">:</span>
+          <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00">
+          <span class="timer-done-label">TIME UP</span>
+        </span>
+        <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+        <button class="timer-reset" onclick="resetTimer()">Reset</button>
+      </span>
+      <button class="hint-toggle-btn" id="hintToggleBtn" onclick="toggleHints()" title="Show/hide all method tips (H)">💡 Show Tips</button>
+      <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode: show full passage">🔒 Easy</button>
+      <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+      <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">↺ Reset</button>
+      <span class="palette-wrap">
+        <button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">🎨</button>
+      </span>
+      <button class="clear-hl-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker — 随机点名">🎲</button>
+    </div>
+
+    <!-- Random picker overlay -->
+    <div class="rand-overlay" id="randOverlay" onclick="if(event.target===this)toggleRandPanel()">
+      <div class="rand-card">
+        <div class="rand-head">
+          <span class="rand-title">🎲 随机点名</span>
+          <span class="rand-range-wrap">1 – <input class="rand-max" id="randMax" type="number" min="2" max="999" value="40"></span>
+        </div>
+        <div class="rand-num" id="randNum">?</div>
+        <div class="rand-btns">
+          <button class="rand-go" onclick="drawRandom()">开始点名！</button>
+          <button class="rand-close" onclick="toggleRandPanel()">关闭</button>
+        </div>
+        <div class="rand-history" id="randHistory"></div>
+      </div>
+    </div>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- ============================================================ -->
+    <!-- SLIDES BEGIN -->
+    <!-- ============================================================ -->
+
+    <!-- 1. COVER -->
+    <section class="slide is-active" data-title="课程封面" data-section="cover" data-part="课程导入">
+      <div class="s1-card-wrapper">
+        <div class="xdf-header-bar">
+          <div class="xdf-logo-text">DSE READING <span>// 加速班（内地）</span></div>
+          <div class="xdf-sub-text">Module 2 · Rhetoric &amp; Evidence</div>
+        </div>
+        <div style="padding:28px 32px">
+          <div class="slide-h1" style="text-align:center;margin-bottom:6px">Module 2 · Rhetoric &amp; Evidence</div>
+          <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Rhetorical Devices · Opinions &amp; Attitudes · Quoting Evidence · Figurative Language</div>
+          <div style="display:flex;justify-content:center;margin-bottom:24px">
+            <div class="teacher-badge">
+              <div class="tb-avatar">成</div>
+              <div class="tb-name">成雨老师</div>
+              <div class="tb-tag">TEACHER</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;margin-bottom:20px">
+            <div class="class-badge">加速班（内地）· 阅读 Module 2</div>
+          </div>
+          <div class="s1-meta-grid">
+            <div class="s1-meta-card"><div class="sm-label">Reading Skills</div><div class="sm-value">4 大板块</div><div class="sm-sub">Rhetoric / Attitudes / Evidence / Figurative</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Challenge + Assessment</div><div class="sm-value">2 Texts</div><div class="sm-sub">Diving coach + Letter to editor (Q1–15)</div></div>
+            <div class="s1-meta-card"><div class="sm-label">Practice Paper</div><div class="sm-value">Part A+B1+B2</div><div class="sm-sub">Teen mental health · HK health care · Clean eating (Q1–72)</div></div>
+          </div>
+          <div class="timeline-row">
+            <div class="tl-seg c1"><div class="seg-ph">Skills</div><div class="seg-name">Rhetoric &amp; Attitude</div><div class="sm-sub">Simile · Metaphor · Irony</div></div>
+            <div class="tl-seg c2"><div class="seg-ph">Skills</div><div class="seg-name">Evidence &amp; Figurative</div><div class="sm-sub">Quoting · Strategy</div></div>
+            <div class="tl-seg c3"><div class="seg-ph">Challenge</div><div class="seg-name">Coach + Letter</div><div class="sm-sub">C1/C2 + Assessment Q1–15</div></div>
+            <div class="tl-seg c4"><div class="seg-ph">Practice Paper</div><div class="seg-name">A · B1 · B2</div><div class="sm-sub">Q1–72 全面实战</div></div>
+          </div>
+        </div>
+        <div class="xdf-grid-pattern"><span>USE ARROW KEYS // SWIPE TO NAVIGATE</span></div>
+      </div>
+    </section>
+
+    <!-- 2. COURSE OBJECTIVES -->
+    <section class="slide" data-title="课程目标" data-section="cover" data-part="课程导入">
+      <div class="sec-label">Course Objectives</div>
+      <div class="slide-h2" style="margin-bottom:18px">By the end of this module, you will be able to:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <h4>🎭 Spot rhetorical devices</h4>
+          <p>Identify simile, metaphor, personification and irony, and explain their intended effect in a text.</p>
+        </div>
+        <div class="card">
+          <h4>🧭 Evaluate opinions &amp; attitudes</h4>
+          <p>Judge a writer's stance from word choice, target audience and purpose — concerned/indifferent, objective/subjective.</p>
+        </div>
+        <div class="card">
+          <h4>📌 Quote evidence precisely</h4>
+          <p>Answer extended-response questions by locating key words, watching question words, and quoting completely.</p>
+        </div>
+        <div class="card">
+          <h4>🔍 Unpack figurative language</h4>
+          <p>Follow the 3-step strategy: locate → reflect on literal meaning → determine intended meaning from context.</p>
+        </div>
+        <div class="card">
+          <h4>⚡ Scan &amp; paraphrase</h4>
+          <p>Underline special/low-frequency/noun keywords, locate them, skip irrelevant info, and paraphrase at word &amp; sentence level.</p>
+        </div>
+        <div class="card">
+          <h4>🏆 Survive a full paper</h4>
+          <p>Complete Practice Paper Part A, B1 and B2 (72 questions) under timed conditions with exam stamina.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: RHETORICAL DEVICES
+         ============================================================ -->
+
+    <!-- 3. RHETORIC OVERVIEW -->
+    <section class="slide" data-title="Rhetorical Devices · 总览" data-section="theory" data-part="Skills 1 · Rhetorical Devices">
+      <div class="sec-label">Skills 1 · Rhetorical Devices</div>
+      <div class="slide-h2" style="margin-bottom:14px">What are rhetorical devices?</div>
+      <div class="card accent" style="margin-bottom:16px">
+        <p style="font-size:18px">Rhetorical devices are <strong>stylistic choices</strong> a writer makes to make a text more <strong>interesting, persuasive, creative or effective</strong>. Recognising them helps you catch the writer's real meaning — a must for DSE Reading.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card" style="border-left:4px solid var(--fcc-purple)">
+          <h4>🍎 Simile 明喻</h4>
+          <p>Compares two things of <strong>different categories</strong> using <code>like</code> or <code>as</code>.</p>
+          <p style="color:var(--text-3);font-size:14px;margin-top:6px">Tracey smokes <em>like a chimney</em>.</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--fcc-green-dark)">
+          <h4>🔄 Metaphor 暗喻</h4>
+          <p>Compares by saying one thing <strong>is</strong> the other — no "like/as".</p>
+          <p style="color:var(--text-3);font-size:14px;margin-top:6px">…the <em>slippery slope</em> of addiction.</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--brand-red)">
+          <h4>🧍 Personification 拟人</h4>
+          <p>Gives <strong>non-human things</strong> human qualities.</p>
+          <p style="color:var(--text-3);font-size:14px;margin-top:6px">I could hear the pizza <em>calling my name</em>.</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--fcc-yellow)">
+          <h4>🙃 Irony 反讽</h4>
+          <p>Words mean the <strong>opposite</strong> of their literal meaning.</p>
+          <p style="color:var(--text-3);font-size:14px;margin-top:6px">…his cardboard <em>palace</em> (a poor shelter).</p>
+        </div>
+      </div>
+      <span class="method-badge method-hidden">🔑 判断口诀：有 like/as → simile；说"A 是 B" → metaphor；物当人写 → personification；正话反说 → irony。</span>
+    </section>
+
+    <!-- 4. RHETORIC FLIP CARDS -->
+    <section class="slide" data-title="Rhetoric · 例句翻转卡" data-section="theory" data-part="Skills 1 · Rhetorical Devices">
+      <div class="sec-label">Skills 1 · Learn by examples</div>
+      <div class="slide-h2" style="margin-bottom:14px">Tap a card — guess the device &amp; the real meaning</div>
+      <div class="flip-grid g2">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">"Tracey smokes like a chimney."</div><div class="flip-hint">which device?</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans">Simile — she smokes <strong>a lot</strong>, like a chimney blowing out smoke. (health warning)</div></div>
+          </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">"People taking banned weight-loss pills are as mad as hatters."</div><div class="flip-hint">which device?</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans">Simile (idiom 'as mad as a hatter' = crazy) — shows <strong>disapproval</strong> of banned pills.</div></div>
+          </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">"…the slippery slope of addiction, low self-esteem, isolation…"</div><div class="flip-hint">which device?</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans">Metaphor — 'slippery slope' = an action that <strong>quickly leads into trouble</strong>.</div></div>
+          </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">"I could hear the pizza calling my name."</div><div class="flip-hint">which device?</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans">Personification — pizza can't speak; it means the speaker <strong>really wants to eat it</strong>.</div></div>
+          </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">"The homeless man survived the snowstorm in his cardboard palace."</div><div class="flip-hint">which device?</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans">Irony — 'palace' says the opposite; emphasises <strong>how poor</strong> his living conditions are.</div></div>
+          </div>
+        </div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-front"><div class="flip-q">Strategy 💡 "as mad as a hatter" is an…</div><div class="flip-hint">tap</div></div>
+            <div class="flip-face flip-back"><div class="flip-ans"><strong>Idiomatic expression</strong> — words whose meaning differs from the literal. Learning idioms helps you decode rhetorical devices.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ACTIVITY 2: OKINAWA -->
+    <section class="slide" data-title="Activity 2 · Okinawa 修辞标注" data-section="practice" data-part="Skills 1 · Rhetorical Devices">
+      <div class="sec-label">Activity 2 · Find &amp; underline the devices</div>
+      <div class="slide-h3" style="margin-bottom:10px">Longevity in Okinawa — one example done for you</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <h4>Long life on the islands (abridged)</h4>
+          <div class="passage-excerpt"><div class="para-num">¶1</div>The islands of Okinawa in Japan are one of the best places on Earth for ageing healthily. The Okinawans have the highest life expectancy — 84 for men and nearly 90 for women. It's long been thought that <mark>the islands have a secret to tell</mark> about ageing well.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div>Doctors have long tried to understand why the <mark>locals are as fit as fiddles</mark> and most agree their diet is key. The Okinawan purple sweet potato is the <mark>cornerstone of their dinner tables</mark>. It used to make up around 60% of what the islanders ate.</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>Old folks' refusal to move with the times has been one reason they have outlasted many younger people. As the islands' centenarians still <mark>smile and laugh like carefree teens</mark>, these islands could teach us a thing or two about leading a long life.</div>
+        </div>
+        <div class="split-right">
+          <div class="card">
+            <h4>Click each blank to reveal the device</h4>
+            <p style="line-height:2.2">
+              ① "the islands have a secret to tell" → <span class="cloze" onclick="revealCloze(this)" data-answer="personification">____</span><br>
+              ② "locals are as fit as fiddles" → <span class="cloze" onclick="revealCloze(this)" data-answer="simile">____</span><br>
+              ③ "cornerstone of their dinner tables" → <span class="cloze" onclick="revealCloze(this)" data-answer="metaphor">____</span><br>
+              ④ "smile and laugh like carefree teens" → <span class="cloze" onclick="revealCloze(this)" data-answer="simile">____</span>
+            </p>
+          </div>
+          <div class="card accent">
+            <h4>💬 Discuss</h4>
+            <p>Why does the writer use personification for the islands? What feeling does it create about Okinawa's "secret"?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: CORE READING SKILLS (cloze notes)
+         ============================================================ -->
+
+    <!-- 6. CORE SKILLS CLOZE -->
+    <section class="slide" data-title="Core Skills · 课堂笔记填空" data-section="theory" data-part="Skills 2 · Core Reading Skills">
+      <div class="sec-label">Skills 2 · Core Reading Skills · 笔记填空</div>
+      <div class="slide-h2" style="margin-bottom:14px">Scanning · Paraphrasing · Quoting evidence</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="card">
+          <h4>⚡ Scanning 核心 4 步</h4>
+          <p style="line-height:2.1">
+            1) 划关键词：<span class="cloze" onclick="revealCloze(this)" data-answer="特殊">____</span>词 / <span class="cloze" onclick="revealCloze(this)" data-answer="低频">____</span>词 / <span class="cloze" onclick="revealCloze(this)" data-answer="名">____</span>词<br>
+            2) 定位关键词<br>
+            3) 跳过无关信息<br>
+            4) 精读关键词上下文
+          </p>
+        </div>
+        <div class="card">
+          <h4>🔁 Paraphrasing 改写</h4>
+          <p style="line-height:2.1">
+            <strong>词汇层面</strong>：同义词 / <span class="cloze" onclick="revealCloze(this)" data-answer="近义词">____</span> / <span class="cloze" onclick="revealCloze(this)" data-answer="上下义">____</span> / <span class="cloze" onclick="revealCloze(this)" data-answer="相关词">____</span><br>
+            <strong>句子层面</strong>：<span class="cloze" onclick="revealCloze(this)" data-answer="主被动替换">____</span> / <span class="cloze" onclick="revealCloze(this)" data-answer="语义归纳">____</span>
+          </p>
+        </div>
+        <div class="card">
+          <h4>📌 Quoting evidence 引用</h4>
+          <p style="line-height:2.1">
+            1) 找<span class="cloze" onclick="revealCloze(this)" data-answer="关键词">____</span><br>
+            2) 关注<span class="cloze" onclick="revealCloze(this)" data-answer="疑问词">____</span>：Why/what/how…<br>
+            3) 完整引用
+          </p>
+        </div>
+      </div>
+      <div class="card accent" style="margin-top:14px">
+        <p><strong>EN recap:</strong> Scanning = underline key words → locate → skip irrelevant → read context. Paraphrasing = lexical (synonyms/hyponyms) + sentence (active↔passive, generalisation). Quoting = find key words → mind question words → quote completely.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: EVALUATING OPINIONS & ATTITUDES
+         ============================================================ -->
+
+    <!-- 7. OPINIONS THEORY -->
+    <section class="slide" data-title="Opinions &amp; Attitudes · 理论" data-section="theory" data-part="Skills 3 · Opinions &amp; Attitudes">
+      <div class="sec-label">Skills 3 · Evaluating opinions and attitudes</div>
+      <div class="slide-h2" style="margin-bottom:14px">Two questions to ask while reading</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card">
+          <h4>👥 Are other people's views mentioned?</h4>
+          <p>A writer may quote others to <strong>support or reject</strong> a claim. How those views are presented reveals the writer's <strong>attitude</strong> towards them.</p>
+        </div>
+        <div class="card">
+          <h4>🎯 Who is the target audience? What is the purpose?</h4>
+          <p>Ask <em>why</em> the writer wrote it (to inform / agree / disagree) and <em>for whom</em> (teens, parents…). Then you can guess what the writer wants readers to think.</p>
+        </div>
+      </div>
+      <div class="card accent" style="margin-top:14px">
+        <h4>🧰 Attitude word bank</h4>
+        <p>concerned · indifferent · shocked · sorry · objective · subjective · approving · frustrated · critical · persuasive · sympathetic · cautious · positive · negative · neutral</p>
+      </div>
+      <span class="method-badge method-hidden">🔑 态度词选择看"措辞+证据"：有数据/事实 → objective；只有个人看法 → subjective； luckily/encouraging → approving； sadly/shockingly → concerned。</span>
+    </section>
+
+    <!-- 8. ARTICLE A: OVERWEIGHT YOUTHS -->
+    <section class="slide" data-title="Article A · Overweight youths" data-section="practice" data-part="Skills 3 · Opinions &amp; Attitudes">
+      <div class="sec-label">Skills 3 · Article A · guided discussion</div>
+      <div class="slide-h3" style="margin-bottom:8px">Overweight youths may put US at risk, study shows</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Recent figures show US youths are <mark>dangerously unfit</mark> and must get in shape or face a lifetime <mark>fraught with illness</mark>. Worse, this will soon become a <mark>national security problem</mark> as the army struggles to find recruits. Parents, educators and society must <mark>heed this warning</mark> before it is too late.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div><mark>Shockingly</mark>, three-quarters of 17–24-year-olds are unfit for enlistment. Obesity is the primary reason. A <mark>staggering</mark> 60% could not pass the basic physical test — one minute of sit-ups, push-ups and a one-mile run — a <mark>sad picture</mark> of the nation's health.</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>Americans consume nearly 25% more calories than 50 years ago, and spend five hours watching TV and two online daily. By 2030, only 2 in 10 Americans will be fit enough to join the army.</div>
+          <div class="passage-excerpt"><div class="para-num">¶4</div><mark>Luckily</mark>, some institutions have acted: schools hire fitness instructors and nurses, promote healthy eating, and some have banned sugary drinks — <mark>encouraging</mark> first steps to safeguarding health and security.</div>
+        </div>
+        <div class="split-right">
+          <div class="card">
+            <h4>Guiding questions — click to reveal</h4>
+            <p style="line-height:2.1;font-size:15px">
+              ① Concerned or indifferent about children's health? → <span class="cloze" onclick="revealCloze(this)" data-answer="Concerned — negative word choices &amp; consequences if no action">____</span><br>
+              ② How does the writer feel about the figures? → <span class="cloze" onclick="revealCloze(this)" data-answer="Shocked and sorry ('shockingly', 'staggering', 'sad picture')">____</span><br>
+              ③ Worries objective or subjective? → <span class="cloze" onclick="revealCloze(this)" data-answer="Objective — facts &amp; statistics given">____</span><br>
+              ④ Does the writer approve of schools' actions? → <span class="cloze" onclick="revealCloze(this)" data-answer="Yes — 'luckily', 'encouraging', positive conclusion">____</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. ARTICLE B: SLEEP -->
+    <section class="slide" data-title="Article B · Think you sleep enough?" data-section="practice" data-part="Skills 3 · Opinions &amp; Attitudes">
+      <div class="sec-label">Skills 3 · Article B · guided discussion</div>
+      <div class="slide-h3" style="margin-bottom:8px">Think you sleep enough? Think again</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Secondary students often neglect an important aspect of health — <mark>sleep</mark>. How can they perform at school when they are dozing off before class begins? Teens have busy schedules, and their <mark>never-ending use of technology</mark> has made matters worse. Teens need to <mark>take responsibility</mark> for their well-being.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div>Besides diet and exercise, teens should know sleep matters. Yet a majority would rather <mark>hang out online</mark> than sleep.</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>Lack of sleep brings drowsiness, irritability, forgetfulness, poor concentration, weight gain and depression. Young people swipe on smartphones before bed. <mark>Frankly</mark>, this <mark>digital dependence</mark> makes proper rest impossible unless they take <mark>drastic action</mark>.</div>
+        </div>
+        <div class="split-right">
+          <div class="card">
+            <h4>Guiding questions — click to reveal</h4>
+            <p style="line-height:2.1;font-size:15px">
+              ① Target audience &amp; what should they do? → <span class="cloze" onclick="revealCloze(this)" data-answer="Secondary students — reconsider sleeping habits">____</span><br>
+              ② Claim backed by evidence? → <span class="cloze" onclick="revealCloze(this)" data-answer="No — only subjective reasoning, no facts or statistics">____</span><br>
+              ③ Balanced discussion? → <span class="cloze" onclick="revealCloze(this)" data-answer="No — mostly blames students despite mentioning busy schedules">____</span>
+            </p>
+          </div>
+          <div class="card accent">
+            <p><strong>Compare A vs B:</strong> Article A is <strong>objective</strong> (data-driven); Article B is <strong>subjective</strong> (opinion-driven). Which is more persuasive, and why?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ACTIVITY 1: ATTITUDE MCQ -->
+    <section class="slide" data-title="Activity 1 · 态度判断" data-section="practice" data-part="Skills 3 · Opinions &amp; Attitudes">
+      <div class="sec-label">Activity 1 · Identify the writers' attitudes</div>
+      <div class="slide-h3" style="margin-bottom:10px">Circle the best answer</div>
+
+      <div class="practice-mcq" id="act1a-box">
+        <div class="pmcq-label">Excerpt A · article</div>
+        <div class="pmcq-q" style="font-weight:400;font-size:15px;text-transform:none;letter-spacing:0">Researchers found a <strong>troubling link</strong> between teens' loneliness/depression and smartphone use. The long periods spent on digital devices daily had a <strong>negative impact</strong> on mental health.<br><br><strong>The writer's attitude towards teens' smartphone use:</strong></div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>negative</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The writer is clearly engaged ('troubling', 'negative impact') — not indifferent." onclick="checkMCAuto(this)"><span class="pl">B</span>indifferent</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Negative impact' is the opposite of supportive." onclick="checkMCAuto(this)"><span class="pl">C</span>supportive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The tone is warning, not positive." onclick="checkMCAuto(this)"><span class="pl">D</span>positive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Troubling link' signals a stance — not neutral." onclick="checkMCAuto(this)"><span class="pl">E</span>neutral</span>
+      </div>
+
+      <div class="practice-mcq" id="act1b-box">
+        <div class="pmcq-label">Excerpt B · personal blog</div>
+        <div class="pmcq-q" style="font-weight:400;font-size:15px;text-transform:none;letter-spacing:0">"Then I discovered a cure: <strong>cycling</strong>. The eight hours a week I spend biking calms me down and keeps me fit. Nothing beats the <strong>natural high</strong> after a challenging hill climb. I have found a <strong>new life</strong> on two wheels."<br><br><strong>The writer's attitude towards cycling:</strong></div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>positive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'cure', 'natural high', 'new life' are all positive — not negative." onclick="checkMCAuto(this)"><span class="pl">B</span>negative</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The writer is clearly enthusiastic — not neutral." onclick="checkMCAuto(this)"><span class="pl">C</span>neutral</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: QUESTION TYPES — QUOTING EVIDENCE
+         ============================================================ -->
+
+    <!-- 11. QUESTION TYPE THEORY -->
+    <section class="slide" data-title="题型 · 引用证据 ERQ" data-section="theory" data-part="Skills 4 · Question Types">
+      <div class="sec-label">Skills 4 · Extended response: quoting evidence</div>
+      <div class="slide-h2" style="margin-bottom:14px">How to answer "give evidence / quote" questions</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card">
+          <h4>📋 The question type</h4>
+          <p>Requires you to give <strong>reasons or information from the text</strong> to support an answer. Follow the instruction to <strong>quote or closely paraphrase</strong>.</p>
+          <p style="margin-top:8px">Often appears <strong>in text order</strong> — you get a rough idea where the answer sits. If not, <strong>scan</strong> the whole text.</p>
+        </div>
+        <div class="card">
+          <h4>🪜 Steps</h4>
+          <p>① Find <strong>key words</strong> in the question<br>② Mind the <strong>question word</strong> (Why/What/How)<br>③ <strong>Quote completely</strong> from the text</p>
+          <p style="margin-top:8px;color:var(--brand-red)">⚠️ Never use prior knowledge as evidence — always from the text.</p>
+        </div>
+      </div>
+      <span class="method-badge method-hidden">🔑 引号题四问四型：Q1 改述+直接引用；Q2 描述+文中证据（不需原句）；Q3 定位段落找全两点；Q4 正反论点扫描全文。</span>
+    </section>
+
+    <!-- 12. WHAT HARM CAN IT DO — PASSAGE -->
+    <section class="slide" data-title="What harm can it do? · 原文" data-section="reading" data-part="Skills 4 · Question Types" data-hard-group="tommy">
+      <div class="sec-label">Skills 4 · Read the story</div>
+      <div class="slide-h3" style="margin-bottom:8px">What harm can it do?</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Tommy had looked at his watch at least twenty times since the seminar began. A young nutritionist talked about how avoiding sugary drinks, staying away from fried foods and eating more fresh fruit and vegetables made people more energetic. <mark>This all sounded so bland.</mark> Was there anything healthy that tasted as good as his favourite tuck-shop snacks — freshly fried chicken wings and piping hot curry fish balls?</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div>'It's just food,' Tommy thought. 'What harm can it do?' The school tuck shop actually provides healthy choices like chicken salad and sandwiches, but Tommy decided not to switch.</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>At lunch Tommy dashed to the tuck shop. He weighed 150 pounds and his BMI showed he was overweight. He no longer enjoyed sport — he would pant, his chest would ache and his legs would get sore three minutes into a game.</div>
+          <div class="passage-excerpt"><div class="para-num">¶4</div>Tommy's parents both worked long hours and were often not home until after dinner. Tommy didn't know how to cook — but how many 14-year-old boys do? That was why he had to live on cheap street food or ready meals from convenience stores. How many school children are in Tommy's situation?</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>🧭 Before you answer</h4>
+            <p>Each question names its paragraph — scan there. Q4 is different: it asks for <strong>both sides</strong>, so scan the <strong>whole</strong> text.</p>
+          </div>
+          <div class="card">
+            <h4>Key vocab</h4>
+            <p><strong>bland</strong> = tasteless · <strong>tuck shop</strong> = school snack shop · <strong>BMI</strong> = body mass index · <strong>ready meals</strong> = pre-packaged food</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. WHAT HARM — Q1-4 -->
+    <section class="slide" data-title="What harm · Q1–Q4" data-section="practice" data-part="Skills 4 · Question Types" data-hard-group="tommy">
+      <div class="sec-label">Skills 4 · Extended response · 4 questions</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q1 · 2 marks · opinion + quote</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What was Tommy's opinion of healthy food (¶1)? Give a quote to support your answer.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Opinion + quote..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">Opinion: He didn't think it would taste good. Quote: "This all sounded so bland." (line 5)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q2 · describe + evidence (no quote needed)</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the state of Tommy's health? Support with evidence from ¶3.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">Tommy is unhealthy/overweight — his BMI shows it; he would pant, his chest would ache and his legs would get sore three minutes into a game. (lines 13-15)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q3 · two reasons</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶4, why did Tommy eat junk food? Give TWO reasons.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Reason 1 + Reason 2..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">His parents were too busy to cook for him, and he did not know how to cook. (lines 16-18)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q4 · both points of view</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Do you think Tommy is responsible for his weight problem? Give a reason for EACH point of view.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Yes: ... / No: ..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">Yes: the tuck shop provided healthy choices but Tommy didn't choose them (lines 8-10) / he learnt about a balanced diet at the seminar but didn't follow it (lines 2-3). No: he had to live on unhealthy food only because his parents were too busy to cook / he didn't know how to cook (lines 16-18).</div></div>
+      </div>
+      <span class="method-badge method-hidden">🔑 Q4 一定要"双向给证据"：写 Yes 给一条，写 No 给一条，各配行号，才能拿满分。</span>
+    </section>
+
+    <!-- ============================================================
+         SECTION: FIGURATIVE LANGUAGE
+         ============================================================ -->
+
+    <!-- 14. FIGURATIVE STRATEGY -->
+    <section class="slide" data-title="Figurative Language · 策略" data-section="theory" data-part="Skills 5 · Figurative Language">
+      <div class="sec-label">Skills 5 · Figurative language questions</div>
+      <div class="slide-h2" style="margin-bottom:14px">3-step strategy 🪜</div>
+      <div class="card accent" style="margin-bottom:14px">
+        <p style="font-size:17px">Figurative questions test the <strong>underlying meaning</strong> of figures of speech. You may need to: <strong>identify</strong> the device / what it refers to, and <strong>explain</strong> its intended meaning. Common types: <strong>simile, metaphor, irony</strong>.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="card"><h4>① Locate</h4><p>Find the figure of speech (a word or phrase) in the text.</p></div>
+        <div class="card"><h4>② Reflect</h4><p>Use what you know of the word/phrase to work out possible meanings <strong>beyond the literal</strong>.</p></div>
+        <div class="card"><h4>③ Determine</h4><p>From the <strong>context</strong>, pin down its <strong>intended meaning</strong>.</p></div>
+      </div>
+      <span class="method-badge method-hidden">🔑 比喻题不是问"字面意思"，而是问"作者想表达什么"。答案永远回到上下文找线索。</span>
+    </section>
+
+    <!-- 15. DR WU PASSAGE -->
+    <section class="slide" data-title="Happiness · Dr Wu 原文" data-section="reading" data-part="Skills 5 · Figurative Language" data-hard-group="drwu">
+      <div class="sec-label">Skills 5 · Feature article</div>
+      <div class="slide-h3" style="margin-bottom:8px">The philosophy of happiness — Dr Henry Wu</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Everyone knows moments when we can't help feeling blue. To many in Hong Kong, happiness is a <mark>lifelong chase</mark>, something amounting to <mark>reaching for the stars</mark>, and <mark>the jury is still out</mark> on the right way to it. In this issue, Dr Henry Wu, a retired professor and psychologist, shares his philosophy of happiness and may help <mark>solve the puzzle</mark>.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div>Dr Wu, bespectacled with silvery grey hair, cuts a kind fatherly figure. When asked whether he was happy he nodded: 'Sure, I have my health, <mark>a roof over my head</mark> and food on my table. What else could I ask for?'</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>According to the 62-year-old, happiness is <mark>just next door</mark>. The problem is that many people don't get it. 'They think it's about how much you earn and own.'</div>
+          <div class="passage-excerpt"><div class="para-num">¶4</div>For Dr Wu, chasing happiness this way has the opposite effect. 'There will always be more <mark>shiny new toys</mark> to buy, bigger flats and faster cars. You can buy all you want but you will never be truly happy. Focusing on what you don't have only makes you unhappy.'</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>🎯 Spot the figures</h4>
+            <p>6 highlighted phrases — for each, ask: what does it <em>literally</em> say vs what does the writer <em>mean</em>?</p>
+          </div>
+          <div class="card">
+            <h4>Cast</h4>
+            <p>Dr Henry Wu — 62, retired professor &amp; psychologist; content with simple life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. DR WU Q1-3 -->
+    <section class="slide" data-title="Happiness · Q1–Q3" data-section="practice" data-part="Skills 5 · Figurative Language" data-hard-group="drwu">
+      <div class="sec-label">Skills 5 · Figurative questions · set 1</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q1 · identify the metaphor</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What metaphor does the writer use in ¶1 to describe a conclusion that has NOT yet been reached?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the phrase..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">the jury is still out (line 3)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="drwu-q2">
+        <div class="pmcq-label">Q2 · interpret a metaphor</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'happiness is a lifelong chase' (line 2) suggest?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'lifelong' describes the chase, not happiness itself." onclick="checkMCAuto(this)"><span class="pl">A</span>Happiness is lifelong.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="A 'chase' implies effort — the opposite of easy." onclick="checkMCAuto(this)"><span class="pl">B</span>It's easy to feel happy.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>It's not easy to feel happy.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'chase' is figurative — fitness is irrelevant." onclick="checkMCAuto(this)"><span class="pl">D</span>You need to be fit to feel happy.</span>
+      </div>
+
+      <div class="practice-mcq" id="drwu-q3">
+        <div class="pmcq-label">Q3 · interpret an expression</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">The expression 'happiness is just next door' (line 8) means happiness is…</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>easy to attain.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The phrase is about distance/nearness, not spiritual vs material." onclick="checkMCAuto(this)"><span class="pl">B</span>spiritual rather than material.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'next door' = very near, not 'related to the problem'." onclick="checkMCAuto(this)"><span class="pl">C</span>closely related to the problem.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It does not mention misunderstanding — that is the next sentence's idea." onclick="checkMCAuto(this)"><span class="pl">D</span>often misunderstood by people.</span>
+      </div>
+    </section>
+
+    <!-- 17. DR WU Q4-6 -->
+    <section class="slide" data-title="Happiness · Q4–Q6" data-section="practice" data-part="Skills 5 · Figurative Language" data-hard-group="drwu">
+      <div class="sec-label">Skills 5 · Figurative questions · set 2</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q4 · metaphor for…</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is 'shiny new toys' (line 11) a metaphor for?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">new material possessions that people buy to try to make themselves happy</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q5 · metaphor for 'a place to live'</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What metaphor does Dr Wu use to describe 'a place to live'?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the phrase..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">a roof over my head (line 6)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q6 · identify the irony · complete the statement</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the irony in ¶4? Complete the statement below.</div>
+        <div class="card" style="margin-bottom:10px">
+          <p style="line-height:2.2">The more you chase after <span class="cloze" onclick="revealCloze(this)" data-answer="material comforts (line 11)">____</span> to become <span class="cloze" onclick="revealCloze(this)" data-answer="happy (line 10)">____</span>, the more unhappy you get because <span class="cloze" onclick="revealCloze(this)" data-answer="there are always more things to buy (lines 10-11)">____</span>.</p>
+        </div>
+        <button class="reveal-btn" onclick="toggleRev('drwu-q6-note')">Why is this ironic?</button>
+        <div class="ans-reveal" id="drwu-q6-note">
+          <p>Chasing happiness through buying things produces the <strong>opposite</strong> result (unhappiness) — that gap between intention and outcome is the irony.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18. WHAT YOU LEARNT -->
+    <section class="slide" data-title="Unit 2 · 学到了什么" data-section="theory" data-part="Skills 5 · Figurative Language">
+      <div class="sec-label">Recap</div>
+      <div class="slide-h2" style="margin-bottom:16px">What you have learnt in Unit 2</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card"><h4>① Evaluating opinions and attitudes</h4><p>Judge stance from word choice, audience and purpose.</p></div>
+        <div class="card"><h4>② Understanding rhetorical devices (1)</h4><p>Simile · metaphor · personification · irony.</p></div>
+        <div class="card"><h4>③ Extended response: quoting evidence</h4><p>Key words → question words → quote completely.</p></div>
+        <div class="card"><h4>④ Figurative language questions</h4><p>Locate → reflect → determine intended meaning.</p></div>
+      </div>
+      <div class="card accent" style="margin-top:16px;text-align:center">
+        <p style="font-size:18px">Next up: <strong>Challenge yourself</strong> — put all four skills to work on a real article. 💪</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: CHALLENGE YOURSELF
+         ============================================================ -->
+
+    <!-- 19. CHALLENGE PASSAGE -->
+    <section class="slide" data-title="Challenge · 跳水教练 原文" data-section="reading" data-part="Challenge Yourself" data-hard-group="diving">
+      <div class="sec-label">Challenge · C1 — scan for TWO ways to combat nerves</div>
+      <div class="slide-h3" style="margin-bottom:8px">Performance pressure: coach turned his team around</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Jim Henson has been a diving coach in the US for years. A diver himself, he won gold in the three-metre springboard at the 1998 NCAA Championships while studying at a state university.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2-3</div>Three years ago he coached Thomas Kuiper, then 13 — a fearless diver in practice with near-perfect form. But at his first national competition: 'My heart started racing and my vision went blurry. I freaked out.'</div>
+          <div class="passage-excerpt"><div class="para-num">¶4-5</div>Kuiper's form was messy and he missed a technical component. Henson read up on performance anxiety — 'choking' — knowing competition-day <mark>jitters</mark> often hurt performance.</div>
+          <div class="passage-excerpt"><div class="para-num">¶6</div><mark>Technique 1 — positive habit forming:</mark> Kuiper repeated the same simple dive — climb, walk forward, dive without pausing — until it was muscle memory.</div>
+          <div class="passage-excerpt"><div class="para-num">¶7</div><mark>Technique 2 — visualization:</mark> divers mentally picture their successful personal-best dive, to focus and to control pre-dive anxiety.</div>
+          <div class="passage-excerpt"><div class="para-num">¶8-9</div>The process was slow but worked. Two years after choking, Kuiper returned and landed a perfect dive — <mark>gold</mark>. Teammates Ann Jacqewicz and John Howard took <mark>bronze</mark> and <mark>silver</mark>.</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>C1 · Scan &amp; reveal</h4>
+            <p style="line-height:2.2">Two ways to combat nerves before a competition:<br>
+            ① <span class="cloze" onclick="revealCloze(this)" data-answer="positive habit forming">____</span><br>
+            ② <span class="cloze" onclick="revealCloze(this)" data-answer="visualization">____</span></p>
+          </div>
+          <div class="card">
+            <h4>Cast</h4>
+            <p>Jim Henson (coach) · Thomas Kuiper (diver, 13) · Ann Jacqewicz · John Howard</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20. CHALLENGE C2 Q1-2 -->
+    <section class="slide" data-title="Challenge · C2 Q1–Q2" data-section="practice" data-part="Challenge Yourself" data-hard-group="diving">
+      <div class="sec-label">Challenge · C2 · comprehension</div>
+
+      <div class="practice-mcq" id="c2-q1">
+        <div class="pmcq-label">C2 Q1 · detail</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What was Jim Henson's occupation when he won a gold medal in 1998?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="He BECAME a coach later; in 1998 he was still studying." onclick="checkMCAuto(this)"><span class="pl">A</span>diving coach</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He was at a state university, not high school." onclick="checkMCAuto(this)"><span class="pl">B</span>high school student</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He dived as a student-athlete, not a professional." onclick="checkMCAuto(this)"><span class="pl">C</span>professional diver</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>university student</span>
+      </div>
+
+      <div class="practice-mcq" id="c2-q2">
+        <div class="pmcq-label">C2 Q2 · vocab in context</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">If someone has 'jitters' (line 16), they are…</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Jitters undermine performance — not preparedness." onclick="checkMCAuto(this)"><span class="pl">A</span>prepared.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Jitters' is negative — linked to 'choking' and panic." onclick="checkMCAuto(this)"><span class="pl">B</span>excited.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>nervous.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite — jitters = lack of confidence." onclick="checkMCAuto(this)"><span class="pl">D</span>confident.</span>
+      </div>
+    </section>
+
+    <!-- 21. CHALLENGE C2 Q3 TFNG -->
+    <section class="slide" data-title="Challenge · C2 Q3 T/F/NG" data-section="practice" data-part="Challenge Yourself" data-hard-group="diving">
+      <div class="sec-label">Challenge · C2 Q3 · ¶2-5</div>
+      <div class="card">
+        <p style="font-weight:700">i) Thomas Kuiper's anxiety affected his performance during practice.</p>
+        <div class="tfng-group" data-answer="F" data-explain="¶2: he was 'a fearless diver in practice' — anxiety struck in competition, not practice.">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+        <p style="font-weight:700">ii) Kuiper started training at the age of 13.</p>
+        <div class="tfng-group" data-answer="NG" data-explain="The text says he was 13 when Henson coached him — it never says when he STARTED training.">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+        <p style="font-weight:700">iii) Coach Henson learnt about performance anxiety by attending a coaching seminar.</p>
+        <div class="tfng-group" data-answer="F" data-explain="¶5: he 'started reading up on performance anxiety' — self-study, not a seminar.">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+        <span class="method-badge method-hidden">🔑 ii 是 NG 陷阱：给了"13 岁时被执教"，但没给"几岁开始训练" —— 信息缺失即 NG。</span>
+      </div>
+    </section>
+
+    <!-- 22. CHALLENGE C2 Q4-5 -->
+    <section class="slide" data-title="Challenge · C2 Q4–Q5" data-section="practice" data-part="Challenge Yourself" data-hard-group="diving">
+      <div class="sec-label">Challenge · C2 · sequence &amp; reference</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">C2 Q4 · process detail</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Identify the step that was NOT part of the positive-habit-forming sequence.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the step..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">visualization (it was a separate, later technique — ¶7)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">C2 Q5 · reference word</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'This technique' (line 24) refer to?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">visualization</div></div>
+      </div>
+    </section>
+
+    <!-- 23. CHALLENGE C2 Q6-7 -->
+    <section class="slide" data-title="Challenge · C2 Q6–Q7" data-section="practice" data-part="Challenge Yourself" data-hard-group="diving">
+      <div class="sec-label">Challenge · C2 · results table + title</div>
+
+      <div class="card">
+        <h4>C2 Q6 · Tick the ranking at the most recent competition — click to reveal</h4>
+        <p style="line-height:2.3">
+          i) Thomas Kuiper → <span class="cloze" onclick="revealCloze(this)" data-answer="🥇 First place (gold)">____</span><br>
+          ii) Ann Jacqewicz → <span class="cloze" onclick="revealCloze(this)" data-answer="🥉 Third place (bronze)">____</span><br>
+          iii) John Howard → <span class="cloze" onclick="revealCloze(this)" data-answer="🥈 Second place (silver)">____</span>
+        </p>
+        <p style="color:var(--text-3);font-size:14px">⚠️ 注意原文顺序："Ann … and John …, received bronze and silver, <strong>respectively</strong>" — 按名字顺序对应。</p>
+      </div>
+
+      <div class="practice-mcq" id="c2-q7">
+        <div class="pmcq-label">C2 Q7 · best alternative title</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which is the best alternative title for the article?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>Training the mind of an athlete</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Positive thinking' is only part of it — the article is about mental training techniques." onclick="checkMCAuto(this)"><span class="pl">B</span>The power of positive thinking</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Too narrow — it covers the whole team and the coach's methods, not just one diver." onclick="checkMCAuto(this)"><span class="pl">C</span>A diver achieves his personal best</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Practice is only technique 1; the theme is mental, not physical, training." onclick="checkMCAuto(this)"><span class="pl">D</span>Practice makes perfect</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: READING ASSESSMENT (letter to editor)
+         ============================================================ -->
+
+    <!-- 24. ASSESSMENT PASSAGE -->
+    <section class="slide" data-title="Assessment · 致编辑信 原文" data-section="reading" data-part="Reading Assessment" data-hard-group="letter">
+      <div class="sec-label">Reading Assessment · Letter to the editor</div>
+      <div class="slide-h3" style="margin-bottom:8px">Penny-pinching on health care causes real pain</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div><mark>'To show how deeply he cares,'</mark> the Financial Secretary announced there would be no fresh funding for the health care voucher scheme for the over-70s. I felt compelled to register my displeasure.</div>
+          <div class="passage-excerpt"><div class="para-num">¶2</div>The scheme is <mark>starving</mark> on a <mark>mere</mark> HK$1,000 a year. An MRI scan and follow-up could cost HK$6,000 — far more than the annual allowance.</div>
+          <div class="passage-excerpt"><div class="para-num">¶3</div>The government has been too quiet. It's time to <mark>turn up the volume</mark>: distribute leaflets and posters, take out adverts — so vulnerable elderly people don't miss out.</div>
+          <div class="passage-excerpt"><div class="para-num">¶4</div>Advocates assume most over-70s can self-medicate, but they can't unless they're <mark>made of money</mark>. Maybe you enjoy queuing for treatment, but most people have better things to do.</div>
+          <div class="passage-excerpt"><div class="para-num">¶5</div>Some elderly don't use up their allocation (good health or gone private). I suggest using this unused cash to offer a more realistic <mark>HK$2,000 a year</mark> — transfer funds from the satisfied to the needy.</div>
+          <div class="passage-excerpt"><div class="para-num">¶6</div>We have a long tradition of respecting the elderly. Let's not <mark>short-change</mark> them for the sake of a <mark>meagre saving</mark> to the central budget.</div>
+          <div class="passage-excerpt"><div class="para-num">¶7</div>As a doctor here, I'm proud of my colleagues — our health service is the envy of many countries. But shouldn't they be doing what they were trained for — improving and saving lives? <em>— James (Jimmy) Tang, M.D., Kowloon Tong</em></div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>📖 Genre: letter to the editor</h4>
+            <p>A reader's letter to a newspaper, commenting on a previously covered issue — positive or negative. Here: <strong>negative</strong> (a complaint about underfunding).</p>
+          </div>
+          <div class="card">
+            <h4>Writer</h4>
+            <p>Dr James Tang — a Hong Kong doctor; criticises the voucher scheme but praises his colleagues.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25. ASSESSMENT Q1-4 -->
+    <section class="slide" data-title="Assessment · Q1–Q4" data-section="practice" data-part="Reading Assessment" data-hard-group="letter">
+      <div class="sec-label">Assessment · Figurative &amp; evidence</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q1 · irony</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find a phrase in ¶1 that uses irony to describe the Financial Secretary's attitude towards elderly citizens.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the phrase..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">'To show how deeply he cares' (line 1)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="ra-q2">
+        <div class="pmcq-label">Q2 · metaphor meaning</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does the writer mean by describing the scheme as 'starving' (line 5)?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Starving' is figurative — the scheme is not literally about food." onclick="checkMCAuto(this)"><span class="pl">A</span>The scheme is for hungry people.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>The scheme lacks serious funding.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It is about too little money given, not costing the elderly." onclick="checkMCAuto(this)"><span class="pl">C</span>The scheme costs the elderly money.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Literal misreading of 'starving'." onclick="checkMCAuto(this)"><span class="pl">D</span>The scheme makes people go hungry.</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q3 · word hunt</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which word in ¶2 shows the writer doesn't think the money is enough?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the word..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">mere (line 5)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q4 · evidence</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What evidence in ¶2 shows the allowance is not enough?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Quote the evidence..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">An MRI scan and follow-up meeting could cost HK$6,000, but the annual allowance is much less than that. (lines 8-9)</div></div>
+      </div>
+    </section>
+
+    <!-- 26. ASSESSMENT Q5-8 -->
+    <section class="slide" data-title="Assessment · Q5–Q8" data-section="practice" data-part="Reading Assessment" data-hard-group="letter">
+      <div class="sec-label">Assessment · reference &amp; attitude</div>
+
+      <div class="practice-mcq" id="ra-q5">
+        <div class="pmcq-label">Q5 · reference</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Whose 'ignorance' (line 10) is the writer referring to?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="¶3 criticises the government's silence, not doctors." onclick="checkMCAuto(this)"><span class="pl">A</span>doctors'</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The writer is the one complaining — not ignorant himself." onclick="checkMCAuto(this)"><span class="pl">B</span>the writer's</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>the government's</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The elderly are the victims here, not the ignorant party." onclick="checkMCAuto(this)"><span class="pl">D</span>the elderly people's</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q6 · find the metaphor</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find the metaphor used in ¶4.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the phrase..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">'made of money' (line 17)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q7 · two parts</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">i) Meaning of 'made of money'? &nbsp; ii) What does 'they' (line 17) refer to?</div>
+        <div class="card" style="margin-bottom:10px">
+          <p style="line-height:2.2">i) A real &nbsp; B <span class="cloze" onclick="revealCloze(this)" data-answer="very rich ✓ (B)">____</span> &nbsp; C expensive &nbsp; D can be bought<br>
+          ii) 'they' → <span class="cloze" onclick="revealCloze(this)" data-answer="retirees (line 16)">____</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="ra-q8">
+        <div class="pmcq-label">Q8 · attitude</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">The writer's attitude when he writes 'Maybe you enjoy queuing for treatment but most people have better things to do' (line 18):</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Sarcastic, not sorrowful." onclick="checkMCAuto(this)"><span class="pl">A</span>sad</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He is making a firm point — not unsure." onclick="checkMCAuto(this)"><span class="pl">B</span>unsure</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>frustrated</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The sarcasm shows annoyance, not admiration." onclick="checkMCAuto(this)"><span class="pl">D</span>impressed</span>
+      </div>
+    </section>
+
+    <!-- 27. ASSESSMENT Q9-12 -->
+    <section class="slide" data-title="Assessment · Q9–Q12" data-section="practice" data-part="Reading Assessment" data-hard-group="letter">
+      <div class="sec-label">Assessment · suggestions &amp; tone</div>
+
+      <div class="practice-mcq" id="ra-q9">
+        <div class="pmcq-label">Q9 · detail</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does the writer suggest the annual allowance should be?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="HK$1,000 is the CURRENT amount he criticises." onclick="checkMCAuto(this)"><span class="pl">A</span>HK$1,000 yearly</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>HK$2,000 yearly</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="HK$3,000 is never mentioned." onclick="checkMCAuto(this)"><span class="pl">C</span>HK$3,000 yearly</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="HK$6,000 is the MRI cost — evidence, not the suggestion." onclick="checkMCAuto(this)"><span class="pl">D</span>HK$6,000 yearly</span>
+      </div>
+
+      <div class="practice-mcq" id="ra-q10">
+        <div class="pmcq-label">Q10 · phrase meaning</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">'near but overlooked' describes…</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Nothing suggests 'attractive but wrong'." onclick="checkMCAuto(this)"><span class="pl">A</span>attractive but wrong</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>near but overlooked</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'imperfect but effective' does not match 'overlooked'." onclick="checkMCAuto(this)"><span class="pl">C</span>imperfect but effective</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The unused funds are not 'discussed but never used' — they are simply near yet ignored." onclick="checkMCAuto(this)"><span class="pl">D</span>discussed but never used</span>
+      </div>
+
+      <div class="practice-mcq" id="ra-q11">
+        <div class="pmcq-label">Q11 · tone of ¶6</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the writer's tone in paragraph 6?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="The appeal to tradition is emotional, not formal." onclick="checkMCAuto(this)"><span class="pl">A</span>formal</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He argues clearly — not confused." onclick="checkMCAuto(this)"><span class="pl">B</span>confused</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>persuasive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He appeals to readers' sense of duty — persuasion, not sympathy-seeking." onclick="checkMCAuto(this)"><span class="pl">D</span>sympathetic</span>
+      </div>
+
+      <div class="practice-mcq" id="ra-q12">
+        <div class="pmcq-label">Q12 · attitude in ¶7</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which best describes the writer's attitude in paragraph 7?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="He praises colleagues but ends with a challenging question — not wholly positive." onclick="checkMCAuto(this)"><span class="pl">A</span>positive</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>cautious</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He clearly cares about the system." onclick="checkMCAuto(this)"><span class="pl">C</span>indifferent</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He is hopeful about the service, not pessimistic." onclick="checkMCAuto(this)"><span class="pl">D</span>pessimistic</span>
+      </div>
+    </section>
+
+    <!-- 28. ASSESSMENT Q13-15 -->
+    <section class="slide" data-title="Assessment · Q13–Q15" data-section="practice" data-part="Reading Assessment" data-hard-group="letter">
+      <div class="sec-label">Assessment · qualification &amp; attitude</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q13 · evidence from ¶7</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Why is the writer qualified to comment on the Hong Kong health care system? Give a reason from ¶7.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">He is an experienced doctor/GP working in Hong Kong (lines 28-29)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="ra-q14">
+        <div class="pmcq-label">Q14 · attitude behind a phrase</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'a meagre saving to the central budget' (line 32) suggest about his attitude to the current voucher scheme?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Meagre' is one-sided criticism — not mixed." onclick="checkMCAuto(this)"><span class="pl">A</span>mixed</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>critical</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Meagre' mocks the saving — not supportive." onclick="checkMCAuto(this)"><span class="pl">C</span>supportive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He does not excuse the policy — he attacks it." onclick="checkMCAuto(this)"><span class="pl">D</span>understanding</span>
+      </div>
+
+      <div class="card accent">
+        <h4>📝 Q15 · open discussion</h4>
+        <p style="line-height:2.2">Do you agree with the writer's proposal to raise the voucher to HK$2,000 by redirecting unused funds? Use ONE quote from the letter to support your view.<br>
+        Model quote bank: <span class="cloze" onclick="revealCloze(this)" data-answer="'starving on a mere HK$1,000 a year' / 'transfer funds from the satisfied to the needy' / 'short-change them'">____</span></p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: PRACTICE PAPER — PART A
+         ============================================================ -->
+
+    <!-- 29. PART A TEXT 1 -->
+    <section class="slide" data-title="Part A · Text 1 原文" data-section="reading" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Practice Paper · Part A (Compulsory) · 43 marks</div>
+      <div class="slide-h3" style="margin-bottom:8px">Teenage mental-health crisis: rates of depression have soared in past 25 years</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1</div>Teenagers once 'acted out' — <mark>drinking, smoking and drug-taking</mark> (line 1). Today they are <mark>'turning in on themselves'</mark> (line 3). A 2016 Parent Zone survey: <mark>90%</mark> of teachers thought problems getting more severe, <mark>93%</mark> saw increased rates of mental illness, <mark>62%</mark> handled it monthly, <mark>20%</mark> weekly or daily (lines 5-7).</div>
+          <div class="passage-excerpt"><div class="para-num">¶3-4</div>Parents are <mark>not well-prepared</mark> (line 10): <mark>reluctant</mark> to act, wanting <mark>swift</mark> solutions. Causes: <mark>social inequality</mark> (line 12), <mark>competitiveness</mark> and <mark>materialism</mark> (line 13) — people feel <mark>buffeted by forces over which they have no control</mark> (line 14).</div>
+          <div class="passage-excerpt"><div class="para-num">¶5</div>The <mark>OECD</mark> (line 20) predicts economic <mark>growth</mark> near zero over the <mark>next 40 years</mark> (line 21); tweens already worry about future work — <mark>'They're probably worried that it's nowhere'</mark> (line 20). Career concerns affect <mark>students</mark> (line 19).</div>
+          <div class="passage-excerpt"><div class="para-num">¶6-7</div>The <mark>selfie culture</mark> (line 26) fuels body-image stress. Social media affects <mark>our moods, manners, feelings and ways of going about our lives</mark> (lines 27-28); the world in 20 years will be <mark>extremely different</mark> (line 24). In an experiment, photos were <mark>doctored</mark> (line 29); viewers felt <mark>wretched</mark> (line 32) — the writer was <mark>unsurprised</mark> (lines 30-31).</div>
+          <div class="passage-excerpt"><div class="para-num">¶8-12</div><mark>LGBT teens</mark> (lines 33-34) benefit from online support. Case study: Jordan Caldwell lost his place in the NI football team and felt <mark>stressed</mark>; he dieted to return to top-level matches (line 43), became <mark>'faddy'</mark> (line 44), wouldn't talk to anyone (line 45). His mother <mark>'was horrified'</mark> (line 46) at his scrawny figure. He stopped brushing his teeth — showing how serious the illness was. His family stayed <mark>supportive</mark> (line 49); his sister staying at home kept him from returning to hospital (line 52).</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>🗺 Question map</h4>
+            <p>Q1-2 ¶1 · Q3-5 ¶3 · Q6-8 ¶4-5 · Q9-10 ¶5 · Q11-18 ¶6-8 · Q19-27 ¶9-12 (case study + matching)</p>
+          </div>
+          <div class="card">
+            <h4>Cast for Q27</h4>
+            <p>Jordan Caldwell · Mrs Caldwell · William Davies · the writer · Sarah Brennan · Bill Deresiewicz</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 30. PART A Q1-3 -->
+    <section class="slide" data-title="Part A · Q1–Q3" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · ¶1-2</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q1 · 3 marks · list THREE</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Describe THREE examples of 'acting out' (line 3) behaviour in ¶1.</div>
+        <div class="card" style="margin-bottom:10px">
+          <p style="line-height:2.2">i) <span class="cloze" onclick="revealCloze(this)" data-answer="drinking (line 1)">____</span> &nbsp; ii) <span class="cloze" onclick="revealCloze(this)" data-answer="smoking (line 1)">____</span> &nbsp; iii) <span class="cloze" onclick="revealCloze(this)" data-answer="drug-taking (line 1)">____</span> <span style="color:var(--text-3)">(any order)</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q2">
+        <div class="pmcq-label">Q2 · phrase meaning</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'turning in on themselves' (line 3) mean?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Being active online is the old 'acting out' style, not turning inward." onclick="checkMCAuto(this)"><span class="pl">A</span>being very active online</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Turning in' = withdrawing, not connecting." onclick="checkMCAuto(this)"><span class="pl">B</span>connecting themselves to others</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="They blame themselves, not others." onclick="checkMCAuto(this)"><span class="pl">C</span>blaming others for their misfortune</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>developing mental-health problems</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q3 · 4 marks · significance of figures</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Explain the significance of the figures in the 2016 Parent Zone survey — click each.</div>
+        <div class="card">
+          <p style="line-height:2.3">
+            i) 90% → <span class="cloze" onclick="revealCloze(this)" data-answer="teachers who thought teen mental-health problems were getting more severe/worse (lines 5-6)">____</span><br>
+            ii) 93% → <span class="cloze" onclick="revealCloze(this)" data-answer="teachers seeing increased rates of mental illness among children and teenagers (lines 5-6)">____</span><br>
+            iii) 62% → <span class="cloze" onclick="revealCloze(this)" data-answer="teachers handling student mental illness at least once a month (lines 6-7)">____</span><br>
+            iv) 20% → <span class="cloze" onclick="revealCloze(this)" data-answer="teachers handling student mental illness on a weekly or daily basis (line 7)">____</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 31. PART A Q4-6 -->
+    <section class="slide" data-title="Part A · Q4–Q6" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · ¶3-4</div>
+
+      <div class="practice-mcq" id="pa-q4">
+        <div class="pmcq-label">Q4 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶3, parents are ______ to handle teens' mental illness.</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="The paragraph stresses they lack preparation." onclick="checkMCAuto(this)"><span class="pl">A</span>confident</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Not advised' is not the point — they are simply ill-equipped." onclick="checkMCAuto(this)"><span class="pl">B</span>not advised</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>not well-prepared (line 10)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Local authorities' expectations are not mentioned." onclick="checkMCAuto(this)"><span class="pl">D</span>expected by local authorities</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q5 · 2 marks · antonyms in ¶3</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find words in ¶3 with OPPOSITE meanings — click each.</div>
+        <div class="card">
+          <p style="line-height:2.3">i) willing → <span class="cloze" onclick="revealCloze(this)" data-answer="reluctant (line 10)">____</span> &nbsp;&nbsp; ii) slow → <span class="cloze" onclick="revealCloze(this)" data-answer="swift (line 10)">____</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q6 · 3 marks · tick the issues in ¶4</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which issues affect mental health, according to ¶4? Click to reveal the ticks.</div>
+        <div class="card">
+          <p style="line-height:2.3">
+            a) social inequality → <span class="cloze" onclick="revealCloze(this)" data-answer="✓ (line 12)">____</span><br>
+            b) domestic abuse → <span class="cloze" onclick="revealCloze(this)" data-answer="✗ not mentioned">____</span><br>
+            c) relationship problems → <span class="cloze" onclick="revealCloze(this)" data-answer="✗ not mentioned">____</span><br>
+            d) competitiveness → <span class="cloze" onclick="revealCloze(this)" data-answer="✓ (line 13)">____</span><br>
+            e) materialism → <span class="cloze" onclick="revealCloze(this)" data-answer="✓ (line 13)">____</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 32. PART A Q7-10 -->
+    <section class="slide" data-title="Part A · Q7–Q10" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · ¶4-5</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q7 · reference</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What or who does 'they' (line 15) refer to?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">people who feel buffeted by forces over which they have no control (line 14)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q8">
+        <div class="pmcq-label">Q8 · implication</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'They're probably worried that it's nowhere' (line 20) imply?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Nowhere' refers to their future prospects, not choosing a university." onclick="checkMCAuto(this)"><span class="pl">A</span>Students can't decide which university to apply for.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It is about the future looking bleak, not about being high achievers." onclick="checkMCAuto(this)"><span class="pl">B</span>Students feel stressed about being high achievers.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Too vague — the worry is specifically about the future." onclick="checkMCAuto(this)"><span class="pl">C</span>Students are unhappy about what's going on.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>Students feel anxious about their future.</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q9 · 3 marks · ONE word per blank</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Complete the sentence with information from ¶5.</div>
+        <div class="card">
+          <p style="line-height:2.3">The <span class="cloze" onclick="revealCloze(this)" data-answer="OECD (line 20)">____</span> sees a grim future for developed countries, with their economic <span class="cloze" onclick="revealCloze(this)" data-answer="growth (line 21)">____</span> predicted to be near zero over the <span class="cloze" onclick="revealCloze(this)" data-answer="next/coming (line 21)">____</span> 40 years.</p>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q10">
+        <div class="pmcq-label">Q10 · MC combination</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">In ¶5, career concerns have been shown to affect … (i students / ii adults / iii the elderly)</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>i only</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The paragraph focuses on students/tweens, not adults only." onclick="checkMCAuto(this)"><span class="pl">B</span>ii only</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Adults are not mentioned as affected in ¶5." onclick="checkMCAuto(this)"><span class="pl">C</span>i and ii</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The elderly are never mentioned." onclick="checkMCAuto(this)"><span class="pl">D</span>ii and iii</span>
+      </div>
+    </section>
+
+    <!-- 33. PART A Q11-14 -->
+    <section class="slide" data-title="Part A · Q11–Q14" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · ¶6-7</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q11 · SA</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶6, what causes people in the Internet age to stress over body image?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">the selfie culture (line 26)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q12 · list ALL aspects</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Name ALL the aspects of our lives in ¶7 affected by social media.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="List them..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">our moods, manners, feelings and ways of going about our lives (lines 27-28)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q13">
+        <div class="pmcq-label">Q13 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does the writer think about the world in 20 years' time?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="The tone is cautionary, not friendly." onclick="checkMCAuto(this)"><span class="pl">A</span>It will be a lot friendlier to young people.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Unemployment disappearing is never suggested." onclick="checkMCAuto(this)"><span class="pl">B</span>It will not have unemployed people anymore.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>It will be extremely different to the current world. (line 24)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Mental illness is on the rise, not disappearing." onclick="checkMCAuto(this)"><span class="pl">D</span>It will not be affected by mental illnesses anymore.</span>
+      </div>
+
+      <div class="practice-mcq" id="pa-q14">
+        <div class="pmcq-label">Q14 · writer's feeling</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">How does the writer feel about the results of the experiment in ¶7?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="No anger is expressed." onclick="checkMCAuto(this)"><span class="pl">A</span>angry</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He expected the outcome — not frightened." onclick="checkMCAuto(this)"><span class="pl">B</span>frightened</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>unsurprised (lines 30-31)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He accepts the results — not unconvinced." onclick="checkMCAuto(this)"><span class="pl">D</span>unconvinced</span>
+      </div>
+    </section>
+
+    <!-- 34. PART A Q15-18 -->
+    <section class="slide" data-title="Part A · Q15–Q18" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · ¶7-8</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q15 · 2 marks · synonyms in ¶7</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find words with SIMILAR meanings in ¶7 — click each.</div>
+        <div class="card">
+          <p style="line-height:2.3">i) changed → <span class="cloze" onclick="revealCloze(this)" data-answer="doctored (line 29)">____</span> &nbsp;&nbsp; ii) awful → <span class="cloze" onclick="revealCloze(this)" data-answer="wretched (line 32)">____</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q16 · main idea of ¶7</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the main idea of paragraph 7?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">Technology/Social media can cause changes to people's moods and feelings. (accept any reasonable answer)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q17 · social group</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Name a social group in ¶8 that benefits from social media.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">LGBT teens / young people who struggle with their sexuality / feel isolated (lines 33-34)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q18">
+        <div class="pmcq-label">Q18 · overall opinion</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which best summarizes the writer's overall opinion of social media?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="He denies it is the MAIN factor." onclick="checkMCAuto(this)"><span class="pl">A</span>Social media is the main factor in the recent growth in teen mental illness.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'More good than harm' is too strong — he lists many harms." onclick="checkMCAuto(this)"><span class="pl">B</span>Social media does more good than harm for vulnerable teenagers.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>Social media is unfairly targeted as a cause of teen problems.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="LGBT-friendliness is one example, not his overall opinion." onclick="checkMCAuto(this)"><span class="pl">D</span>Social media is always LGBT-friendly.</span>
+      </div>
+    </section>
+
+    <!-- 35. PART A Q19-22 -->
+    <section class="slide" data-title="Part A · Q19–Q22" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · case study ¶9-10</div>
+
+      <div class="practice-mcq" id="pa-q19">
+        <div class="pmcq-label">Q19 · feeling</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">How did Jordan Caldwell feel when he found out he could no longer play for Northern Ireland?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="The news hit him hard — not calm." onclick="checkMCAuto(this)"><span class="pl">A</span>calm</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The text describes stress, not anger." onclick="checkMCAuto(this)"><span class="pl">B</span>angry</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Too extreme — the text says 'stressed'." onclick="checkMCAuto(this)"><span class="pl">C</span>suicidal</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>stressed</span>
+      </div>
+
+      <div class="practice-mcq" id="pa-q20">
+        <div class="pmcq-label">Q20 · reason</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶9, why did Caldwell want to lose weight?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="The team never asked him." onclick="checkMCAuto(this)"><span class="pl">A</span>The football team asked him to.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Playing abroad is not mentioned." onclick="checkMCAuto(this)"><span class="pl">B</span>He wanted to play in foreign countries.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="His not-eating was driven by his goal, not sadness over matches." onclick="checkMCAuto(this)"><span class="pl">C</span>He was too sad to eat after losing matches.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>He wanted to get back to playing top-level matches. (line 43)</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q21 · inference</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Why do you think Caldwell's mother 'was horrified' (line 46)?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">She was unprepared for the sight of Caldwell's scrawny figure when he came out of the shower. (lines 45-46)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q22">
+        <div class="pmcq-label">Q22 · 'being faddy' · blacken ONE</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which quote is likely from someone 'being faddy' (line 44) with food?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Avoiding undercooked eggs is reasonable safety, not faddiness." onclick="checkMCAuto(this)"><span class="pl">A</span>'I never eat undercooked eggs as they can make you very sick.'</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Eating disliked-but-healthy food is the opposite of faddy." onclick="checkMCAuto(this)"><span class="pl">B</span>'I'm not keen on oranges but I eat them because they're good for you.'</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>'I would eat only fruit that has been cut into bite-size cubes.'</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Following a trend is different from fussy eating rituals." onclick="checkMCAuto(this)"><span class="pl">D</span>'Purple foods are the latest food trend, I'm all in!'</span>
+      </div>
+    </section>
+
+    <!-- 36. PART A Q23-26 -->
+    <section class="slide" data-title="Part A · Q23–Q26" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · case study ¶10-12</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q23 · reason</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶10, why wasn't Caldwell 'able to talk to someone' (line 44)?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">He didn't want to. (line 45)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q24">
+        <div class="pmcq-label">Q24 · example purpose</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">In ¶11, Caldwell uses the example of not brushing his teeth to show that…</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Rotting teeth is not the point of the example." onclick="checkMCAuto(this)"><span class="pl">A</span>anorexia causes teeth to rot.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>his illness was very serious.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He WAS dieting — the example shows severity, not absence of dieting." onclick="checkMCAuto(this)"><span class="pl">C</span>he wasn't dieting at that time.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Toothpaste and weight gain are irrelevant." onclick="checkMCAuto(this)"><span class="pl">D</span>toothpaste can cause weight gain.</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q25 · SA</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶12, what kept Caldwell from returning to the hospital?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">his desire for his sister to be able to stay at home (line 52)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="pa-q26">
+        <div class="pmcq-label">Q26 · family reaction</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which best describes how Caldwell's family reacted while he was in hospital?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="They faced the problem — not denial." onclick="checkMCAuto(this)"><span class="pl">A</span>denial</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The text emphasises support, not alarm." onclick="checkMCAuto(this)"><span class="pl">B</span>alarmed</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="They did not reject him." onclick="checkMCAuto(this)"><span class="pl">C</span>rejection</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>supportive (line 49)</span>
+      </div>
+    </section>
+
+    <!-- 37. PART A Q27 MATCHING -->
+    <section class="slide" data-title="Part A · Q27 引言匹配" data-section="practice" data-part="Practice Paper · Part A" data-hard-group="teenmh">
+      <div class="sec-label">Part A · Q27 · 6 marks · who says what?</div>
+      <div class="slide-h3" style="margin-bottom:10px">Match each quote to a person (A–F) — click to reveal</div>
+      <div class="card">
+        <p style="line-height:2.4;font-size:15px">
+          ① 'I vowed to prove the nurses wrong.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Jordan Caldwell">____</span><br>
+          ② 'I was a fool not to have sensed something was very wrong when he kept pushing the food away.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Mrs Caldwell">____</span><br>
+          ③ 'Life under an unfair and demanding economic system is highly stressful and can often cause mental illness.' → <span class="cloze" onclick="revealCloze(this)" data-answer="William Davies">____</span><br>
+          ④ 'The solution does not simply lie in undoing our addiction to social media.' → <span class="cloze" onclick="revealCloze(this)" data-answer="the writer">____</span><br>
+          ⑤ 'My organization has seen tweens worrying over their distant future work.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Sarah Brennan">____</span><br>
+          ⑥ 'Today's high-achieving youths work hard, but they lack meaningful goals.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Bill Deresiewicz">____</span>
+        </p>
+      </div>
+      <span class="method-badge method-hidden">🔑 匹配题三步：抓引言里的身份线索（职业/关系/立场关键词）→ 回原文定位说话人 → 逐一排除。</span>
+      <div class="card accent" style="margin-top:12px;text-align:center"><p style="font-size:18px">— END OF PART A —</p></div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: PRACTICE PAPER — PART B1
+         ============================================================ -->
+
+    <!-- 38. B1 TEXT 2 -->
+    <section class="slide" data-title="Part B1 · Text 2 原文" data-section="reading" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Practice Paper · Part B1 (Easy) · 40 marks</div>
+      <div class="slide-h3" style="margin-bottom:8px">Hong Kong health care system: 'equipped to tackle health fires once they are already ablaze'</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1-2</div>Sub-headline mentions two problems: <mark>understaffed</mark> and <mark>overstretched</mark>. The writer has lately spent much time <mark>visiting hospitals</mark> (line 1). His daughter was twice <mark>hospitalized</mark>: her leg <mark>was fractured</mark> (line 11), and she had stomach <mark>pain</mark> (line 4).</div>
+          <div class="passage-excerpt"><div class="para-num">¶3-5</div>At a <mark>public</mark> hospital (Queen Mary), the doctor removed her gall stone via a non-invasive <mark>procedure</mark> (lines 6-7) and <mark>suggested</mark> removing her gall bladder (line 7). She recovered fast — '<mark>out of her six-bed ward bright and well in three days</mark>' (lines 7-8); her bill would have been <mark>HK$8,280</mark> (line 9) — showing huge government subsidies. At Canossa (private), <mark>heaven knows how many screws</mark> were put in her leg (line 13). Service at both was pleasing (lines 15 &amp; 17); the private one was faster — packed <mark>'to the hilt'</mark> (line 18) is the public norm.</div>
+          <div class="passage-excerpt"><div class="para-num">¶6</div>Experiences: Hong Kong — <mark>first-hand</mark> (line 19); the UK — <mark>second-hand</mark> (lines 19-20); Canada — <mark>first-hand</mark> (lines 20-21). Not completely happy: '<mark>its clear shortcomings</mark>' (lines 22-23).</div>
+          <div class="passage-excerpt"><div class="para-num">¶7-8</div>¶7 outlines the <mark>key issues facing HK's health-care service</mark>. Solution: build a strong <mark>primary care system</mark> based on <mark>community-based clinics</mark> across the city (lines 28-29) — an advantage: <mark>cheap</mark> (line 32).</div>
+          <div class="passage-excerpt"><div class="para-num">¶9-10</div>A <mark>drug formulary</mark> keeps drug costs under control (line 34). Under <mark>'capitation'</mark> each patient pays a fixed amount regardless of treatment (line 37), discouraging unnecessary or <mark>exotic</mark> (line 36) procedures. On insurance: government opted for <mark>voluntary cover</mark> (line 38) — but that leaves the <mark>insurance pool too small</mark> (line 40). 'Thank heavens I have good insurance cover — <mark>for now</mark>' (line 44).</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>🗺 Question map</h4>
+            <p>Q28-32 ¶1-3 · Q33-35 ¶3-5 · Q36-38 ¶3-6 · Q39-42 ¶7-8 · Q43-46 ¶9-10 · Q47 matching</p>
+          </div>
+          <div class="card">
+            <h4>Two hospitals</h4>
+            <p><strong>Queen Mary</strong> (public) — gall stone, cheap, slower.<br><strong>Canossa</strong> (private) — leg implant, expensive, faster.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 39. B1 Q28-30 -->
+    <section class="slide" data-title="Part B1 · Q28–Q30" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶1-5</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q28 · 2 marks · sub-headline</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which TWO problems are mentioned in the sub-headline?</div>
+        <div class="card"><p style="line-height:2.2">i) <span class="cloze" onclick="revealCloze(this)" data-answer="understaffed">____</span> &nbsp; ii) <span class="cloze" onclick="revealCloze(this)" data-answer="overstretched">____</span> <span style="color:var(--text-3)">(any order)</span></p></div>
+      </div>
+
+      <div class="practice-mcq" id="b1-q29">
+        <div class="pmcq-label">Q29 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶1-2, the writer has recently spent a lot of time…</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="He writes from hospital visits, not research." onclick="checkMCAuto(this)"><span class="pl">A</span>researching health-care.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>visiting hospitals. (line 1)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Giving opinions is his writing, not how he spent time." onclick="checkMCAuto(this)"><span class="pl">C</span>giving opinions.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It was his daughter who was sick/injured, not him." onclick="checkMCAuto(this)"><span class="pl">D</span>sick or injured.</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q30 · 6 marks · summary cloze (MC) — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Complete the summary from ¶2-5.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            The writer's daughter was twice <b>(i)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="D hospitalized (lines 8 &amp; 11)">____</span> because her leg <b>(ii)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="A was fractured (line 11)">____</span> and because of the <b>(iii)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="C pain (line 4)">____</span> in her stomach. The latter was resolved at a <b>(iv)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="B public (line 15)">____</span> hospital, the doctor removing her gall stone via a non-invasive <b>(v)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="B procedure (lines 6-7)">____</span>. The doctor also <b>(vi)</b> <span class="cloze" onclick="revealCloze(this)" data-answer="D suggested (line 7)">____</span> removing her gall bladder.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 40. B1 Q31-33 -->
+    <section class="slide" data-title="Part B1 · Q31–Q33" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶3</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q31 · find the phrase</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find a phrase in ¶3 that shows the SPEED of the daughter's recovery.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Quote the phrase..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">she was out of her six-bed hospital ward bright and well in three days (lines 7-8)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="b1-q32">
+        <div class="pmcq-label">Q32 · purpose of a detail</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Why does the writer mention 'her bill would have been HK$8,280' (line 9)?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>to show the huge government subsidies for public health-care</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He is not attacking hospital charges." onclick="checkMCAuto(this)"><span class="pl">B</span>to show hospitals in Hong Kong charge unreasonable rates</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Would have been' — he did NOT pay that amount." onclick="checkMCAuto(this)"><span class="pl">C</span>to show the amount he paid for his daughter's treatment</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The point is how LITTLE it cost thanks to subsidy, not high costs." onclick="checkMCAuto(this)"><span class="pl">D</span>to show the high medical costs in Hong Kong</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q33 · implication</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'heaven knows how many screws in her leg' (line 13) suggest about the injury?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">The injury was serious.</div></div>
+      </div>
+    </section>
+
+    <!-- 41. B1 Q34-36 -->
+    <section class="slide" data-title="Part B1 · Q34–Q36" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶5 &amp; hospital comparison</div>
+
+      <div class="practice-mcq" id="b1-q34">
+        <div class="pmcq-label">Q34 · feeling</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">How does the writer feel about the service at BOTH hospitals (¶5)?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>pleased (lines 15 &amp; 17)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="No nervousness is expressed about the service." onclick="checkMCAuto(this)"><span class="pl">B</span>nervous</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="He is clear and positive, not confused." onclick="checkMCAuto(this)"><span class="pl">C</span>confused</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The tone is appreciative, not discouraged." onclick="checkMCAuto(this)"><span class="pl">D</span>discouraged</span>
+      </div>
+
+      <div class="practice-mcq" id="b1-q35">
+        <div class="pmcq-label">Q35 · phrase replacement</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which can replace 'to the hilt' (line 18)?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>to the maximum</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'To the hilt' is about degree, not duration." onclick="checkMCAuto(this)"><span class="pl">B</span>for a short time</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It is not about time at all." onclick="checkMCAuto(this)"><span class="pl">C</span>for a long time</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite — 'hilt' = fullest extent." onclick="checkMCAuto(this)"><span class="pl">D</span>to the least</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q36 · 4 marks · Canossa (private) vs Queen Mary (public) — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which hospital? Blacken ONE circle per question.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) Gave the daughter a metal implant (lines 11-13) → <span class="cloze" onclick="revealCloze(this)" data-answer="Canossa (private)">____</span><br>
+            ii) Was more expensive (lines 9 &amp; 13) → <span class="cloze" onclick="revealCloze(this)" data-answer="Canossa (private)">____</span><br>
+            iii) Proposed an organ removal (line 7) → <span class="cloze" onclick="revealCloze(this)" data-answer="Queen Mary (public)">____</span><br>
+            iv) Provided faster service (lines 16-18) → <span class="cloze" onclick="revealCloze(this)" data-answer="Canossa (private)">____</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 42. B1 Q37-39 -->
+    <section class="slide" data-title="Part B1 · Q37–Q39" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶6-7</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q37 · 3 marks · first-hand or second-hand? — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Are the ¶6 experiences first-hand or second-hand?</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) Hong Kong (line 19) → <span class="cloze" onclick="revealCloze(this)" data-answer="first-hand ✓">____</span><br>
+            ii) the UK (lines 19-20) → <span class="cloze" onclick="revealCloze(this)" data-answer="second-hand ✓">____</span><br>
+            iii) Canada (lines 20-21) → <span class="cloze" onclick="revealCloze(this)" data-answer="first-hand ✓">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q38 · 2 marks · answer + quote</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Is the writer completely happy with HK's health-care system (¶6)? Support with a quote.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Answer + quote..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">No, the writer is not completely happy with it. Quote: "its clear shortcomings" (lines 22-23)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="b1-q39">
+        <div class="pmcq-label">Q39 · main purpose of ¶7</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the main purpose of paragraph 7?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Economic issues of the government are not the focus." onclick="checkMCAuto(this)"><span class="pl">A</span>to describe the economic issues faced by the Hong Kong government</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>to outline the key issues facing Hong Kong's health-care service</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The debate over expenditure comes later (¶9-10)." onclick="checkMCAuto(this)"><span class="pl">C</span>to outline the debate over Hong Kong's medical expenditure</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Causes of high costs are not ¶7's purpose." onclick="checkMCAuto(this)"><span class="pl">D</span>to address the causes of high medical costs in Hong Kong</span>
+      </div>
+    </section>
+
+    <!-- 43. B1 Q40-42 -->
+    <section class="slide" data-title="Part B1 · Q40–Q42" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶8 &amp; TFNG</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q40 · SA</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does the writer suggest (¶8) would keep HK people healthy and out of hospitals?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">(by) building a strong primary care system based on community-based clinics spread across the city (lines 28-29)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="b1-q41">
+        <div class="pmcq-label">Q41 · advantage</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which is an advantage of community-based health care (¶8)?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Equipment is not the advantage named." onclick="checkMCAuto(this)"><span class="pl">A</span>well-equipped</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Staffing is not the advantage named." onclick="checkMCAuto(this)"><span class="pl">B</span>well-staffed</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Advanced' is not claimed." onclick="checkMCAuto(this)"><span class="pl">C</span>advanced</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>cheap (line 32)</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q42 · 3 marks · T/F/NG (¶7-8)</div>
+        <div class="card">
+          <p style="font-weight:700">i) The existing public health-care system may not be able to meet future needs.</p>
+          <div class="tfng-group" data-answer="T" data-explain="¶7 warns the system faces serious future challenges.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+          <p style="font-weight:700">ii) The writer thinks building new hospitals is not a solution.</p>
+          <div class="tfng-group" data-answer="T" data-explain="¶8: he advocates community clinics INSTEAD of more hospitals.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+          <p style="font-weight:700">iii) Community-based health-care services are uncommon in Hong Kong.</p>
+          <div class="tfng-group" data-answer="NG" data-explain="The paragraphs never comment on how common such services currently are in HK.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 44. B1 Q43-45 -->
+    <section class="slide" data-title="Part B1 · Q43–Q45" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · ¶9-10</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q43 · 3 marks · three SA parts — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Answer based on ¶9.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) Benefit of a drug formulary? → <span class="cloze" onclick="revealCloze(this)" data-answer="It keeps drug costs under control (to some extent). (line 34)">____</span><br>
+            ii) How are patients charged under 'capitation'? → <span class="cloze" onclick="revealCloze(this)" data-answer="Each patient pays a fixed amount no matter what treatment they require. (line 37)">____</span><br>
+            iii) Advantage of capitation-based charging? → <span class="cloze" onclick="revealCloze(this)" data-answer="It discourages medical staff from proposing unnecessary or exotic procedures. (lines 35-36)">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q44 · antonym</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find a word in ¶9-10 with the OPPOSITE meaning of 'common'.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the word..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">exotic (line 36)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q45 · 2 marks · insurance policy — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶10:</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) Government's policy on health insurance? → <span class="cloze" onclick="revealCloze(this)" data-answer="It has opted for voluntary cover. (line 38)">____</span><br>
+            ii) Why is it not a good policy? → <span class="cloze" onclick="revealCloze(this)" data-answer="Voluntary cover leaves the insurance pool too small. (line 40)">____</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 45. B1 Q46-47 -->
+    <section class="slide" data-title="Part B1 · Q46–Q47" data-section="practice" data-part="Practice Paper · Part B1" data-hard-group="hkhealth">
+      <div class="sec-label">Part B1 · implication &amp; matching</div>
+
+      <div class="practice-mcq" id="b1-q46">
+        <div class="pmcq-label">Q46 · implication of 'for now'</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'for now' in 'Thank heavens I have good insurance cover — for now' (line 44) imply?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'For now' signals worry, not satisfaction." onclick="checkMCAuto(this)"><span class="pl">A</span>The writer is satisfied with the health-care system.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>The writer is worried about losing his insurance coverage.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Becoming like the US is not the implication of these two words." onclick="checkMCAuto(this)"><span class="pl">C</span>The writer thinks Hong Kong will become more like the US.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite — 'for now' means the cover may not last." onclick="checkMCAuto(this)"><span class="pl">D</span>The writer believes there is no need to worry about his health needs.</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q47 · 3 marks · match comments to paragraphs — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Match each comment to the relevant paragraph.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) 'Yes, you're lucky to be covered by Hong Kong's health-care system.' → <span class="cloze" onclick="revealCloze(this)" data-answer="paragraph 6 (lines 22-23)">____</span><br>
+            ii) 'That's why I always get a second opinion before deciding on a procedure.' → <span class="cloze" onclick="revealCloze(this)" data-answer="paragraph 9 (lines 35-36)">____</span><br>
+            iii) 'I think you're wrong in saying insurance companies take advantage of the sick and the old.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Does NOT match any paragraph">____</span>
+          </p>
+        </div>
+      </div>
+      <div class="card accent" style="margin-top:12px;text-align:center"><p style="font-size:18px">— END OF PART B1 —</p></div>
+    </section>
+
+    <!-- ============================================================
+         SECTION: PRACTICE PAPER — PART B2
+         ============================================================ -->
+
+    <!-- 46. B2 TEXT 3 -->
+    <section class="slide" data-title="Part B2 · Text 3 原文" data-section="reading" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Practice Paper · Part B2 (Difficult) · Q48-69</div>
+      <div class="slide-h3" style="margin-bottom:8px">Bad fad — Ruby Tandoh on how clean eating turned toxic</div>
+      <div class="split-view">
+        <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+          <div class="passage-excerpt"><div class="para-num">¶1-2</div>The backlash against 'wellness' diets is in full swing. Ella Mills' <mark>debut</mark> (= <mark>first</mark>, line 3) book <mark>'Deliciously Ella'</mark> (lines 1-3) is about <mark>a fad diet</mark> (line 2). Speaking to <mark>viewers of Horizon</mark> (line 5), she distanced herself from <mark>'the trend'</mark> (= clean eating/fad diets, line 5): 'I most definitely don't see food as being clean or unclean' (line 9). The BBC documentary's tone: <mark>critical</mark> (lines 10-11).</div>
+          <div class="passage-excerpt"><div class="para-num">¶3-4</div>'You might think' (line 14) warns readers things aren't as they seem. To bloggers, health = <mark>a slim body</mark> (line 15). Madeleine Shaw avoids <mark>'the dreaded D-word'</mark> (= diet, line 18) and says <mark>'lifestyle'</mark> (line 20) instead; 'It's so not about calculating…calories!' (line 20). The Hemsley sisters, <mark>eschewing</mark> (= rejecting, line 18) sugar, dairy and gluten, pose as <mark>gurus</mark> (= experts, line 19).</div>
+          <div class="passage-excerpt"><div class="para-num">¶5-6</div>Attitudes shifted from <mark>trusting to doubtful</mark>. Natasha Corrett (Honestly Healthy, alkaline diet) was '<mark>in total shock</mark>' learning the truth about her inspiration (lines 25-26): Dr Robert O Young — <mark>not a qualified medical professional</mark>; his patient Naima Houder-Mohammed's health <mark>did not improve</mark> under his care. A <mark>'fall from grace'</mark> (line 33) = loss of respect.</div>
+          <div class="passage-excerpt"><div class="para-num">¶7-9</div>Three groups drove wellness diets: <mark>young female gurus</mark> (line 32), <mark>male doctors (self-styled or otherwise)</mark> (lines 33-34) and <mark>publishers</mark> (line 36) — '<mark>editors are digging deep to offer book deals to wellness gurus, no matter the credibility of their claims</mark>' (lines 36-37). 'The faces of wellness' look <mark>young, thin and white</mark> (line 39); many just want <mark>'a quick buck'</mark> (line 41) = money made quickly/easily.</div>
+          <div class="passage-excerpt"><div class="para-num">¶10-11</div>Is common sense enough? <mark>No</mark> (lines 43-44) — '<mark>the truth about food is very muddled</mark>' (line 44). Examples playing on 'food is medicine' (line 42): <mark>wheatgrass</mark> (line 45), a superfood that can 'cure' a dodgy knee (line 46). Stop the spread by <mark>holding the wellness gurus accountable for what they preach</mark> (line 50).</div>
+        </div>
+        <div class="split-right">
+          <div class="card accent">
+            <h4>🗺 Question map</h4>
+            <p>Q48-53 ¶1-2 · Q54-57 ¶3-4 · Q58-60 ¶5-6 · Q61-64 ¶7-9 · Q65-67 ¶10-11 · Q68 comments · Q69 headings</p>
+          </div>
+          <div class="card">
+            <h4>Wellness gurus</h4>
+            <p>Ella Mills · Madeleine Shaw · Hemsley sisters · Natasha Corrett · Dr Robert O Young</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 47. B2 Q48-51 -->
+    <section class="slide" data-title="Part B2 · Q48–Q51" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶1-2</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q48 · synonym in same paragraph</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does 'debut' (line 3) mean? Find a word in the same paragraph with a similar meaning.</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type the word..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">first (line 3)</div></div>
+      </div>
+
+      <div class="practice-mcq" id="b2-q49">
+        <div class="pmcq-label">Q49 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Who is Mills speaking to in paragraph 2?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="She is interviewed on TV, not by the writer directly." onclick="checkMCAuto(this)"><span class="pl">A</span>the writer</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The host asks questions; she addresses the audience." onclick="checkMCAuto(this)"><span class="pl">B</span>a show host</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="She is distancing herself from fad diet followers." onclick="checkMCAuto(this)"><span class="pl">C</span>fad diet followers</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>viewers of Horizon</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q50 · 2 marks · title + subject — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the title of Ella Mills's first book and what is its subject?</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            Title → <span class="cloze" onclick="revealCloze(this)" data-answer="Deliciously Ella (lines 1-3)">____</span><br>
+            Subject → <span class="cloze" onclick="revealCloze(this)" data-answer="a fad diet (line 2)">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q51 · reference</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is 'the trend' (line 6)?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">clean eating / fad diets (line 5)</div></div>
+      </div>
+    </section>
+
+    <!-- 48. B2 Q52-55 -->
+    <section class="slide" data-title="Part B2 · Q52–Q55" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶2-3</div>
+
+      <div class="practice-mcq" id="b2-q52">
+        <div class="pmcq-label">Q52 · tone of the documentary</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is the most likely tone of the BBC documentary when discussing clean eating?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="It exposes the trend — not understanding." onclick="checkMCAuto(this)"><span class="pl">A</span>understanding</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Nothing sentimental/backward-looking." onclick="checkMCAuto(this)"><span class="pl">B</span>nostalgic</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The backlash context rules out 'positive'." onclick="checkMCAuto(this)"><span class="pl">C</span>positive</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>critical (lines 10-11)</span>
+      </div>
+
+      <div class="practice-mcq" id="b2-q53">
+        <div class="pmcq-label">Q53 · writer's intent</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Why does the writer say 'you might think' (line 14)?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="She is not doubting readers' comprehension." onclick="checkMCAuto(this)"><span class="pl">A</span>She is not sure whether readers will understand the logic behind clean eating.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="She rejects this view — she does not endorse it." onclick="checkMCAuto(this)"><span class="pl">B</span>She thinks such an approach to food is sensible while diets are bad.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="She is not recommending diets." onclick="checkMCAuto(this)"><span class="pl">C</span>She wants readers to pick the most sensible diet to follow.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>She is warning readers that things aren't as they seem.</span>
+      </div>
+
+      <div class="practice-mcq" id="b2-q54">
+        <div class="pmcq-label">Q54 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is health to the bloggers mentioned in paragraph 3?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>a slim body (line 15)</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Avoiding junk food is a method, not their definition of health." onclick="checkMCAuto(this)"><span class="pl">B</span>no junk food</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="A special diet is their tool, not their idea of health itself." onclick="checkMCAuto(this)"><span class="pl">C</span>a special diet</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Philosophy' is too abstract — the text is concrete: a slim body." onclick="checkMCAuto(this)"><span class="pl">D</span>a new philosophy</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q55 · 2 marks · the D-word — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What is 'the dreaded D-word' (line 17) and what does Madeleine Shaw use instead?</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            (a) The word → <span class="cloze" onclick="revealCloze(this)" data-answer="diet (line 18)">____</span><br>
+            (b) Replacement → <span class="cloze" onclick="revealCloze(this)" data-answer="lifestyle (line 20)">____</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 49. B2 Q56-58 -->
+    <section class="slide" data-title="Part B2 · Q56–Q58" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶4-6</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q56 · 2 marks · synonyms in ¶4 — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find words with similar meanings in ¶4.</div>
+        <div class="card">
+          <p style="line-height:2.3">i) rejecting → <span class="cloze" onclick="revealCloze(this)" data-answer="eschewing (line 18)">____</span> &nbsp;&nbsp; ii) expert → <span class="cloze" onclick="revealCloze(this)" data-answer="guru (line 19)">____</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q57 · 2 marks · mark with a cross (X)</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which food items would the Hemsley sisters suggest avoiding (¶3-4)?</div>
+        <div class="card">
+          <p style="line-height:2.3">✗ <span class="cloze" onclick="revealCloze(this)" data-answer="processed foods, sugar, dairy, gluten (eschewing sugar, dairy and gluten)">click to reveal the full list</span></p>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="b2-q58">
+        <div class="pmcq-label">Q58 · change of attitude over time (¶5-6)</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">How have attitudes towards clean eating changed over time?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Bored' undersells it — people turned sceptical." onclick="checkMCAuto(this)"><span class="pl">A</span>excited &gt; bored</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The movement went the other way: support → opposition." onclick="checkMCAuto(this)"><span class="pl">B</span>opposed &gt; supportive</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Despairing' is too emotional; the shift is about trust." onclick="checkMCAuto(this)"><span class="pl">C</span>hopeful &gt; despairing</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>trusting &gt; doubtful</span>
+      </div>
+    </section>
+
+    <!-- 50. B2 Q59-60 -->
+    <section class="slide" data-title="Part B2 · Q59–Q60" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶5-6 · T/F/NG + idiom</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q59 · 4 marks · T/F/NG (¶5-6)</div>
+        <div class="card">
+          <p style="font-weight:700">i) There is a lot of competition among the lifestyle gurus.</p>
+          <div class="tfng-group" data-answer="NG" data-explain="The paragraphs never discuss rivalry between the gurus.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+          <p style="font-weight:700">ii) Honestly Healthy is a book on the alkaline diet.</p>
+          <div class="tfng-group" data-answer="T" data-explain="Directly stated in ¶5.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+          <p style="font-weight:700">iii) Dr Robert O Young is a qualified medical professional.</p>
+          <div class="tfng-group" data-answer="F" data-explain="¶6 reveals his qualifications were fake/self-styled.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+          <p style="font-weight:700">iv) Naima Houder-Mohammed's health improved while under Dr Young's care.</p>
+          <div class="tfng-group" data-answer="F" data-explain="Her condition worsened — the opposite of the statement.">
+            <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+            <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="b2-q60">
+        <div class="pmcq-label">Q60 · idiom</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">What does the idiom 'fall from grace' (line 33) mean?</div>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>to lose respect</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite — a 'fall' is downwards." onclick="checkMCAuto(this)"><span class="pl">B</span>to gain respect</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It is about reputation, not self-harm." onclick="checkMCAuto(this)"><span class="pl">C</span>to harm oneself</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Hatred between people is not the idiom's meaning." onclick="checkMCAuto(this)"><span class="pl">D</span>to hate one another</span>
+      </div>
+    </section>
+
+    <!-- 51. B2 Q61-64 -->
+    <section class="slide" data-title="Part B2 · Q61–Q64" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶7-9</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q61 · 3 marks · THREE groups — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶7-8, what THREE groups have driven the popularity of wellness diets?</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) <span class="cloze" onclick="revealCloze(this)" data-answer="young female personalities/gurus (line 32)">____</span><br>
+            ii) <span class="cloze" onclick="revealCloze(this)" data-answer="male doctors (, self-styled or otherwise) (lines 33-34)">____</span><br>
+            iii) <span class="cloze" onclick="revealCloze(this)" data-answer="publishers (line 36)">____</span> <span style="color:var(--text-3)">(any order)</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q62 · find the quote</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find a quote in ¶8 describing 'the unprincipled driftings of the publishing houses' (line 40).</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Quote it..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">editors are digging deep to offer book deals to wellness gurus, no matter the credibility of their claims (lines 36-37)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q63 · SA</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶9, how do most people with 'the faces of wellness' (line 38) look?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">young, thin and white (line 39)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q64 · phrase meaning</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">The phrase 'a quick buck' (line 41) means…</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">money made quickly/easily</div></div>
+      </div>
+    </section>
+
+    <!-- 52. B2 Q65-67 -->
+    <section class="slide" data-title="Part B2 · Q65–Q67" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · ¶10-11</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q65 · 2 marks · answer + reason — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Does the writer think common sense is enough to avoid fad diets (¶10)? Give a reason.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            (a) Answer → <span class="cloze" onclick="revealCloze(this)" data-answer="No, she does not think it is enough. (lines 43-44)">____</span><br>
+            (b) Reason → <span class="cloze" onclick="revealCloze(this)" data-answer="because the truth about food is very muddled (line 44)">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q66 · example</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Find ONE example in ¶10 that plays on 'the idea that food is medicine' (line 42).</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">wheatgrass (line 45) / some superfood that can 'cure' a dodgy knee (line 46)</div></div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q67 · SA</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to ¶11, how can the spread of fad diets be stopped?</div>
+        <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+        <div class="sa-result"><div class="sa-label">Your answer</div><div class="sa-your-ans"></div><div class="sa-label" style="margin-top:10px">Correct answer</div><div class="sa-correct-ans">by holding the wellness gurus accountable for what they preach (line 50)</div></div>
+      </div>
+    </section>
+
+    <!-- 53. B2 Q68-69 -->
+    <section class="slide" data-title="Part B2 · Q68–Q69" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="cleaneat">
+      <div class="sec-label">Part B2 · comments &amp; headings</div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q68 · 3 marks · who said it? — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Match each comment to a wellness guru.</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) 'I most definitely don't see food as being clean or unclean.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Ella Mills (line 9)">____</span><br>
+            ii) 'I was in total shock when I discovered the awful truth about my inspiration.' → <span class="cloze" onclick="revealCloze(this)" data-answer="Natasha Corrett (lines 25-26)">____</span><br>
+            iii) 'It's so not about calculating the intake and burning of calories!' → <span class="cloze" onclick="revealCloze(this)" data-answer="Madeleine Shaw (line 20)">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q69 · 5 marks · match subheadings A–F (one NOT used) — click each</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Match the subheadings to the outline of Text 3.</div>
+        <div class="card" style="margin-bottom:10px">
+          <p style="font-size:14px;color:var(--text-2)">A Who is to blame? · B Health is happiness · C Not-a-diet diets · D A break from 'clean' · E Facing our confusion · F A victim of wellness</p>
+        </div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            Section I → <span class="cloze" onclick="revealCloze(this)" data-answer="D — A break from 'clean'">____</span><br>
+            Section II → <span class="cloze" onclick="revealCloze(this)" data-answer="C — Not-a-diet diets">____</span><br>
+            Section III → <span class="cloze" onclick="revealCloze(this)" data-answer="F — A victim of wellness">____</span><br>
+            Section IV → <span class="cloze" onclick="revealCloze(this)" data-answer="A — Who is to blame?">____</span><br>
+            Section V → <span class="cloze" onclick="revealCloze(this)" data-answer="E — Facing our confusion">____</span><br>
+            <span style="color:var(--brand-red)">NOT used: B (Health is happiness)</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 54. B2 TEXT 4 + Q70-72 -->
+    <section class="slide" data-title="Part B2 · Text 4 + Q70–Q72" data-section="practice" data-part="Practice Paper · Part B2" data-hard-group="superfood">
+      <div class="sec-label">Part B2 · Text 4 (121 words) · superfood myths</div>
+
+      <div class="card" style="margin-bottom:12px" oncontextmenu="handleHighlight(event, this)">
+        <h4>Text 4 · Coconut oil &amp; matcha — the myths (abridged)</h4>
+        <p style="line-height:1.9;font-size:15px">Butter has <mark>as much</mark> saturated fat as coconut oil; a banana has <mark>as much</mark> potassium as 200 ml of coconut water; coconut water is <mark>as</mark> hydrating as tap water but has <mark>more</mark> calories. Health claims about matcha powder <mark>may not be used in ads</mark> (lines 54 &amp; 55).</p>
+      </div>
+
+      <div class="practice-mcq" id="b2-q70">
+        <div class="pmcq-label">Q70 · MC</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">According to Text 4, health claims made about matcha powder…</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Will be disproved' predicts the future — not stated." onclick="checkMCAuto(this)"><span class="pl">A</span>will be disproved.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite — they are restricted, not approved." onclick="checkMCAuto(this)"><span class="pl">B</span>have been approved.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Being investigated' is not what the text says." onclick="checkMCAuto(this)"><span class="pl">C</span>are being investigated.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>may not be used in ads. (lines 54 &amp; 55)</span>
+      </div>
+
+      <div class="practice-mcq">
+        <div class="pmcq-label">Q71 · 4 marks · less than / as much as / more than — click each</div>
+        <div class="card">
+          <p style="line-height:2.4;font-size:15px">
+            i) Butter has ______ saturated fat as coconut oil → <span class="cloze" onclick="revealCloze(this)" data-answer="as much as ✓">____</span><br>
+            ii) A banana has ______ potassium as 200 ml coconut water → <span class="cloze" onclick="revealCloze(this)" data-answer="as much as ✓">____</span><br>
+            iii) Coconut water is ______ hydrating as tap water → <span class="cloze" onclick="revealCloze(this)" data-answer="as much as ✓">____</span><br>
+            iv) Coconut water has ______ calories than tap water → <span class="cloze" onclick="revealCloze(this)" data-answer="more than ✓">____</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-mcq" id="b2-q72">
+        <div class="pmcq-label">Q72 · alternative title</div>
+        <div class="pmcq-q" style="text-transform:none;letter-spacing:0;font-size:16px">Which is a suitable alternative title for Text 4?</div>
+        <span class="pmcq-opt" data-correct="false" data-explain="Too neutral — the text actively debunks claims." onclick="checkMCAuto(this)"><span class="pl">A</span>Food for wellness</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Cures for all' is the myth being attacked, not the message." onclick="checkMCAuto(this)"><span class="pl">B</span>Food cures for all</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Highways to wellness' endorses the superfood hype." onclick="checkMCAuto(this)"><span class="pl">C</span>Superfoods: highways to wellness</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>Debunking some myths about superfoods</span>
+      </div>
+      <div class="card accent" style="margin-top:12px;text-align:center"><p style="font-size:18px">— END OF PART B2 · END OF PAPER —</p></div>
+    </section>
+
+    <!-- 55. DONE -->
+    <section class="slide" data-title="Done!" data-section="done" data-part="">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+        <div style="font-size:72px;margin-bottom:24px">🎉</div>
+        <h2 class="slide-h2">Well Done!</h2>
+        <p style="font-size:20px;color:var(--text-2);max-width:640px;line-height:1.8;margin-bottom:28px">
+          You completed Module 2 — Rhetoric &amp; Evidence: 4 skill blocks + Challenge + Reading Assessment + full Practice Paper (Part A · B1 · B2, Q1–72).
+        </p>
+        <div class="score-badge" style="font-size:18px;padding:10px 24px;margin-bottom:20px">
+          <span class="sb-correct" id="finalScore">0</span><span class="sb-divider">/</span><span class="sb-total" id="finalTotal">0</span>
+        </div>
+        <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 Celebrate!</button>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDES END -->
+    <!-- ============================================================ -->
+
+  </div><!-- /main-area -->
+</div><!-- /deck -->
+
+<!-- ============================================================ -->
+<!-- HARD MODE FULL-PASSAGE TEMPLATES -->
+<!-- ============================================================ -->
+
+<div id="hard-template-tommy" style="display:none">
+  <h4>What harm can it do? (Full)</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>Tommy had looked at his watch at least twenty times since the seminar had begun that morning. A young nutritionist had been invited to talk to students about a balanced diet. Tommy yawned as the speaker went on about how avoiding sugary drinks, staying away from fried foods and eating more fresh fruit and vegetables made people more energetic. This all sounded so bland. Was there anything healthy that tasted as good as his favourite snacks at the tuck shop? He was already picturing them in his mind — the freshly fried chicken wings and piping hot curry fish balls.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>'It's just food,' Tommy thought. 'What harm can it do?' The school tuck shop actually provides a variety of healthy food choices like chicken salad and sandwiches, but Tommy decided not to switch to them.</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>As soon as the bell rang for lunch, Tommy dashed to the tuck shop. As he waited in line, he watched some boys play basketball and wished he could join them. Tommy weighed 150 pounds now and his body mass index (BMI) showed that he was overweight. He no longer enjoyed playing sport like he used to do because he would pant, his chest would ache and his legs would get sore three minutes into a game.</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>Tommy's parents both worked long hours and would often not be home until long after dinner time. Tommy didn't know how to cook, but how many 14-year-old boys do? That was why he had to live on cheap street food or ready meals from convenience stores. How many school children out there are in Tommy's situation?</div>
+</div>
+
+<div id="hard-template-drwu" style="display:none">
+  <h4>The philosophy of happiness — Dr Henry Wu (Full)</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>Everyone is familiar with those moments in life when we just can't help feeling blue. To many people in Hong Kong, happiness is a lifelong chase, something amounting to reaching for the stars, and the jury is still out on the right way to it. In this issue, Dr Henry Wu, a retired professor and psychologist, shares his philosophy of happiness and may help solve the puzzle for many.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>Dr Wu, bespectacled with silvery grey hair, cuts a kind fatherly figure in his suit and tie. When asked whether he was happy he nodded and said, 'Sure, I have my health, a roof over my head and food on my table. What else could I ask for?'</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>According to the 62-year-old, happiness is just next door. The problem is that many people don't get it. 'They think it's about how much you earn and own.'</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>For Dr Wu, chasing happiness this way will only have the opposite effect. 'There will always be more shiny new toys to buy, bigger flats to live in and faster cars to drive. You can buy all you want but you will never be truly happy. In fact, focusing on what you don't have only makes you unhappy.'</div>
+</div>
+
+<div id="hard-template-diving" style="display:none">
+  <h4>Performance pressure: coach turned his team around (Full)</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>Jim Henson has been a diving coach in the United States for years. He has coached girls and boys, men and women, and high school athletes. A diver himself, he achieved a gold medal win for the three-metre springboard dive at the NCAA Division I Swimming &amp; Diving Championships in 1998 when he was studying at a state university.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2-4</div>Three years ago, Henson was coaching Thomas Kuiper, then 13 years old. Kuiper was a fearless diver in practice. He trained daily and he had near-perfect form. The problem came during Kuiper's first major national competition. 'My heart started racing and my vision went a bit blurry. I freaked out.' When Kuiper eventually dived, his form was messy and he missed one of the technical components of his dive.</div>
+  <div class="passage-excerpt"><div class="para-num">¶5-7</div>Henson started reading up on performance anxiety, sometimes known as 'choking'. One technique was positive habit forming: Kuiper repeated the same simple dive — climb on to the board, walk forward and dive without pausing — until it was muscle memory. Next came visualization: divers find a comfortable position and mentally visualize their dives. This technique helped divers envision their successful personal best dive, to focus and to control pre-dive anxiety.</div>
+  <div class="passage-excerpt"><div class="para-num">¶8-9</div>The process was slow and repetitive, but eventually it worked. Two years after Kuiper first 'choked', he returned to that very same diving competition. He climbed on to the diving board, walked steadily forward and landed a perfect dive. He got a gold medal. His teammates, Ann Jacqewicz and John Howard, received bronze and silver, respectively.</div>
+</div>
+
+<div id="hard-template-letter" style="display:none">
+  <h4>Penny-pinching on health care causes real pain (Full)</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>'To show how deeply he cares,' the Financial Secretary announced in his recent statement that there would be no fresh injection of funding into the health care voucher scheme for the over-70s. When I read the details of the statement in this newspaper I felt compelled to register my displeasure.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>The scheme is currently starving on a mere HK$1,000 a year. An MRI scan and follow-up meeting could cost HK$6,000, but the annual allowance is much less than that.</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>The government has been too quiet about the scheme. It's time to turn up the volume. May I suggest that new leaflets and posters highlighting its availability be distributed in the community, and adverts taken out in newspapers such as this one? We don't want vulnerable elderly people to miss out on the scheme — even if the funding level is too low.</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>Additionally, those advocating the scheme in its current form appear to assume that most over-70s can self-medicate to avoid discomfort, but they can't unless they're made of money. In fact, as our bodies battle the effects of ageing, more of us will need to see doctors. Maybe you enjoy queuing for treatment but most people have better things to do.</div>
+  <div class="passage-excerpt"><div class="para-num">¶5</div>I am aware that some elderly people fail to use up their health care allocation because they are in good health or have decided to become private patients. I suggest the authorities access some of this unused cash and thereafter offer a more realistic HK$2,000 a year. Is it really so unreasonable to transfer funds from the satisfied to the needy? I hope the logic of my argument will prompt the Financial Secretary to reconsider the current arrangement.</div>
+  <div class="passage-excerpt"><div class="para-num">¶6</div>We have a long and famous tradition of respecting and caring for the elderly in this part of the world. Let's make sure we don't short-change them for the sake of a meagre saving to the central budget.</div>
+  <div class="passage-excerpt"><div class="para-num">¶7</div>As a doctor working in this city I am proud of the commitment shown by my colleagues each day. We have a health service that is the envy of many countries. But shouldn't they be doing the job they were trained to do — improving and saving people's lives?</div>
+  <div class="passage-excerpt"><div class="para-num">§Sign-off</div>James (Jimmy) Tang, M.D., Kowloon Tong</div>
+</div>
+
+<div id="hard-template-teenmh" style="display:none">
+  <h4>Teenage mental-health crisis (Summary + line refs)</h4>
+  <div class="passage-excerpt"><div class="para-num">NOTE</div>The MD source omits the original article text (placeholder in teacher's edition). This hard-mode view reproduces the line-referenced summary used in Easy mode: ¶1 acting out (drinking/smoking/drug-taking, line 1) vs turning in on themselves (line 3); Parent Zone 2016: 90% / 93% / 62% / 20% (lines 5-7). ¶3 parents not well-prepared; reluctant/swift (line 10). ¶4 social inequality (line 12), competitiveness &amp; materialism (line 13); buffeted by forces (line 14). ¶5 OECD (line 20), growth near zero over next 40 years (line 21); students affected (line 19). ¶6 selfie culture (line 26). ¶7 moods, manners, feelings, ways of going about our lives (lines 27-28); doctored (line 29); wretched (line 32). ¶8 LGBT teens (lines 33-34). ¶9-12 Jordan Caldwell case study (stressed; top-level matches line 43; faddy line 44; didn't want to talk line 45; mother horrified line 46; supportive line 49; sister line 52).</div>
+</div>
+
+<div id="hard-template-hkhealth" style="display:none">
+  <h4>Hong Kong health care system (Summary + line refs)</h4>
+  <div class="passage-excerpt"><div class="para-num">NOTE</div>The MD source omits the original article text (placeholder). Line-referenced summary: understaffed/overstretched (sub-headline); visiting hospitals (line 1); hospitalized twice (lines 8 &amp; 11); leg fractured (line 11); stomach pain (line 4); public hospital (line 15); non-invasive procedure (lines 6-7); suggested gall bladder removal (line 7); 'bright and well in three days' (lines 7-8); HK$8,280 (line 9); 'heaven knows how many screws' (line 13); pleased (lines 15 &amp; 17); 'to the hilt' (line 18); first-hand HK (line 19), second-hand UK (lines 19-20), first-hand Canada (lines 20-21); 'its clear shortcomings' (lines 22-23); primary care / community-based clinics (lines 28-29); cheap (line 32); drug formulary (line 34); capitation fixed amount (line 37), discourages exotic procedures (lines 35-36); voluntary cover (line 38); pool too small (line 40); 'for now' (line 44).</div>
+</div>
+
+<div id="hard-template-cleaneat" style="display:none">
+  <h4>Bad fad — how clean eating turned toxic (Summary + line refs)</h4>
+  <div class="passage-excerpt"><div class="para-num">NOTE</div>The MD source omits the original article text (placeholder). Line-referenced summary: debut=first (line 3); Deliciously Ella (lines 1-3), a fad diet (line 2); viewers of Horizon (line 5); the trend=clean eating (line 5); 'not clean or unclean' (line 9); critical documentary (lines 10-11); 'you might think' (line 14); health=a slim body (line 15); D-word=diet (line 18), replacement=lifestyle (line 20); eschewing=re rejecting (line 18); guru=expert (line 19); Corrett 'total shock' (lines 25-26); Dr Young unqualified; Naima worsened; 'fall from grace' (line 33); young female gurus (line 32), male doctors (lines 33-34), publishers (line 36); 'editors are digging deep…' (lines 36-37); young, thin and white (line 39); 'a quick buck' (line 41); 'food is medicine' (line 42); common sense not enough (lines 43-44); truth muddled (line 44); wheatgrass (line 45); dodgy knee (line 46); hold gurus accountable (line 50).</div>
+</div>
+
+<div id="hard-template-superfood" style="display:none">
+  <h4>Text 4: Superfood myths (Summary + line refs)</h4>
+  <div class="passage-excerpt"><div class="para-num">NOTE</div>The MD source omits the original 121-word text (placeholder). Summary: butter = as much saturated fat as coconut oil; banana = as much potassium as 200 ml coconut water; coconut water = as hydrating as tap water, but more calories; matcha health claims may not be used in ads (lines 54 &amp; 55). Theme: debunking superfood myths.</div>
+</div>
+
+  <script src="js/main.js"></script>
+<script src="../../../assets/app.js"></script>
+<script src="../../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u302',weakKey:'pronoun',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

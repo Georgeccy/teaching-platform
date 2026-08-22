@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 7 · Discover Tai Chi in Hong Kong · 香港加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive ── */
+@media(max-width:900px){
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .flip-grid.g5{grid-template-columns:repeat(2,1fr)}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Unit7</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 7">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">G</div><div class="tb-name">陈成寓 George</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">Discover Tai Chi<br><span class="accent">in Hong Kong</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">Travel Magazine Article — 旅游杂志文章写作</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 7 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Article</div><div class="sm-sub">International Travel magazine</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Tai Chi</div><div class="sm-sub">Benefits for tourists</div></div>
+<div class="s1-meta-card"><div class="sm-label">Model Essay</div><div class="sm-value">413 words</div><div class="sm-sub">Intro + 3 Body + Conclusion</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题构思</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">标题+开头</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段×3</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">结尾+总结</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 今天你将学会</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">By the end of this lesson, you will be able to…</p>
+<div class="card accent" style="border-left:4px solid var(--xdf-red);margin-bottom:16px">
+<h4>1. 文体认知 Genre Awareness</h4>
+<p>了解并初步掌握 <b>article</b> 的文体结构和语气特征（informative · engaging · positive）</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>2. 段落框架 Paragraph Framework</h4>
+<p>初步掌握介绍型 article 主体段的展开框架：<b>WHAT → HOW → EXPERIENCE → IMPACT</b></p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+<h4>3. 句式运用 Sentence Patterns</h4>
+<p>复习并运用介绍活动或文化体验<b>好处</b>的常用句式（benefit expressions）</p>
+</div>
+<div class="card accent" style="border-left:4px solid var(--xdf-blue)">
+<h4>4. 语言表达 Engaging Language</h4>
+<p>了解并初步掌握介绍型 article 常见的<b>积极、吸引读者</b>类表达</p>
+</div>
+</section><section class="slide" data-title="📋 审题 Task 2A">
+<p class="sec-label">Part 1 · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题：分析写作要求</h2>
+<div class="task-quote">While tai chi is a popular activity in Hong Kong, it is less known in some parts of the world. Write an article for International Travel magazine introducing the benefits of tai chi to tourists.</div>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:14px">🌟 <b>Task 2A:</b> 先自己想，再点击揭晓 ↓</p>
+<div class="ce-item">
+  <div class="ce-cn"><b>1. Role</b>（你是谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A writer for <b>International Travel</b> magazine（旅游杂志撰稿人）</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>2. Audience</b>（写给谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">International travellers / tourists who <b>may not be familiar with tai chi</b>（对太极不熟悉的国际游客）</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>3. Purpose</b>（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To <b>introduce</b> the benefits of tai chi and <b>encourage</b> tourists to try it（介绍好处 + 鼓励尝试）</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>4. Register</b>（正式程度）</div>
+<div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+<button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+</div>
+<div class="quiz-ans">✅ <b>semi-formal</b> — 杂志文章面向大众读者，语气自然友好、不过于随意，也不过于学术。</div>
+</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>5. Tone</b>（语气，可多选）— 勾选后点击「检查答案」</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin:6px 0">
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Informative（提供信息、介绍性的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Engaging（吸引读者的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> Objective（客观中立的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Positive（积极正面的）</label>
+<label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> Vivid / descriptive（生动、有画面感）</label>
+</div>
+<button class="ce-btn" onclick="checkTones(this)">✅ 检查答案</button>
+<div class="ce-en">✅ 应选：<b>Informative / Engaging / Positive / Vivid &amp; descriptive</b>。<br>✗ Objective 不合适——travel article 要「夸夸模式」吸引读者来体验，不是中立报道。<br>△ 注意：与 blog 相比，travel article 的生动描写较为<b>克制</b>，主要作用是增强 engaging 的效果，而非表达强烈个人情感。</div>
+</div>
+</section><section class="slide" data-title="🧠 想论点 ①">
+<p class="sec-label">Part 2 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点：铺垫 &amp; 太极的好处</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">先思考，再揭晓——这些论点将组成文章的主体段！</span></div>
+<div class="ce-item">
+  <div class="ce-cn"><b>思考 3.1</b> 对游客来说，来香港的常规操作是做什么？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Shopping, food, famous landmarks / tourist spots（购物、美食、著名地标）<br><br>△ <b>写作技巧</b>：利用读者熟悉的旅游活动作铺垫，再引出意想不到的体验（<b>unexpected alternative</b>），是 travel article 常见开头。</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>思考 3.2</b> 打太极对人自身有哪些好处？</div>
+<div class="student-input-wrap" style="margin-top:8px">
+<label style="font-size:18px;font-weight:600;display:block;margin-bottom:6px">✍️ 先用英文或中文写下你的想法：</label>
+<textarea class="student-ta" id="s4-think" placeholder="在此输入你的想法…"></textarea>
+<div style="margin-top:6px"><button class="submit-btn" id="s4-think-sb" onclick="submitAnswer(this,'s4-think','s4-think-ans')">✏️ 提交我的回答</button></div>
+<div class="student-answer" id="s4-think-ans"></div>
+<button class="edit-btn" id="s4-think-eb" onclick="continueEdit('s4-think','s4-think-ans','s4-think-sb')" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:10px">✅ 看参考答案</button>
+<div class="ce-en">● <b>reduce stress, restore energy, improve well-being</b>（降压、充电、促进健康）<br>● <b>relax the body and mind, enjoy the peaceful / present moment</b>（放松身心、放慢节奏、享受平静）</div>
+</div>
+</section><section class="slide" data-title="🧠 想论点 ②">
+<p class="sec-label">Part 2 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点：文化 · 社交 · 吸引力</h2>
+<div class="ce-item">
+  <div class="ce-cn"><b>思考 3.3</b> 旅行除了娱乐，还有其他目的吗？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">① 拓宽眼界 / 获取知识；② 了解当地文化与价值观。<br>这就是利弊通用论点第4点 information &amp; knowledge，准确说是 <b>cultural understanding</b>。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>思考 3.4</b> 旅行过程中与当地人互动有什么好处？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en"><b>connect with local people, experience everyday life / lifestyle, make travel more enjoyable and meaningful</b><br><br>⭐ 最重要：通过互动，游客才能真正深入了解当地人的日常生活和生活方式——而不是像跟旅行团那样只是景点打卡（最表层的旅行，很难真正了解文化）。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>思考 3.5</b> 一篇旅行杂志的文章，作者可以用什么方法吸引读者？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">① 用<b>积极正面的词汇</b>（benefits「夸夸模式」）→ 让读者觉得这种体验很美好，产生尝试的兴趣；<br>② 用<b>较为生动的表达</b>（如感官描写、祈使句）→ 让读者身临其境，更容易投入。</div>
+</div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 3 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构：五段式</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:6px">先自己想一想每段该写什么，点击「点击查看」揭晓各段功能 ↓</p>
+<table class="rule-table mt-m">
+<tr><th style="width:32%">Paragraph</th><th>Main content（点击查看）</th></tr>
+<tr><td class="col-type">Introduction</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Introduce the topic + recommend tai chi as a unique activity（引出太极并推荐）">点击查看</span></td></tr>
+<tr><td class="col-type">Body 1<br><span style="font-size:14px;color:var(--text-3)">Well-being 身心健康</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain how tai chi helps travellers relax and recharge（放松身心、恢复精力）">点击查看</span></td></tr>
+<tr><td class="col-type">Body 2<br><span style="font-size:14px;color:var(--text-3)">Culture 文化体验</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain how tai chi helps visitors understand Chinese culture and values（了解中国文化与价值观）">点击查看</span></td></tr>
+<tr><td class="col-type">Body 3<br><span style="font-size:14px;color:var(--text-3)">Social 社交互动</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain how tai chi allows travellers to connect with local people（与当地人建立联系）">点击查看</span></td></tr>
+<tr><td class="col-type">Conclusion</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Restate the value of tai chi + encourage readers to give it a try（重申价值 + 鼓励尝试）">点击查看</span></td></tr>
+</table>
+<div class="notes-box"><b>📝 框架记忆：</b>Introduction → <b>Benefit 1</b> (Well-being) → <b>Benefit 2</b> (Culture) → <b>Benefit 3</b> (Social) → Conclusion。三个主体段 = 三个角度的好处。</div>
+</section><section class="slide" data-title="✏️ 标题 Title">
+<p class="sec-label">Part 4 · Title</p>
+<h2 class="slide-h2">✏️ Travel Article 标题写法（活动型文化）</h2>
+<div class="grid g2 mt-m" style="margin-bottom:16px">
+<div class="card accent">
+<h4>① 体验推荐型</h4>
+<p style="margin-bottom:6px"><b>Discover / Experience / Explore</b> + 主题项目</p>
+<p style="color:var(--xdf-green);font-weight:700">e.g. <i>Discover Tai Chi in Hong Kong</i></p>
+</div>
+<div class="card accent" style="border-left:4px solid var(--xdf-gold)">
+<h4>② 独特体验型</h4>
+<p style="margin-bottom:6px">主题项目: <b>A Unique Way to</b> + do sth</p>
+<p style="color:var(--xdf-green);font-weight:700">e.g. <i>Tai Chi: A Unique Way to Experience Hong Kong Culture</i></p>
+</div>
+</div>
+<div class="ce-item">
+<div class="ce-cn">🌟 <b>Task 5.1</b> 如果是介绍<b>龙舟 (dragon boat)</b> 的文章，可以怎样起标题？（两种写法各试一个）</div>
+<div style="margin-top:8px">
+<textarea class="student-ta" id="s7-title" placeholder="Write your answer here..."></textarea>
+<div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+  <button class="submit-btn" onclick="submitTrans(this,'s7-title','s7-titleAns')">✅ 提交</button>
+</div></div>
+<div class="ce-en" id="s7-titleAns">① <i>Discover / Experience Dragon Boat in Hong Kong</i><br>② <i>Dragon Boat: A Unique Way to Experience Hong Kong Culture</i></div>
+</div>
+</section><section class="slide" data-title="📖 开头段 P1">
+<p class="sec-label">Part 5 · Introduction</p>
+<h2 class="slide-h2">📖 开头段：为什么不一上来就介绍太极？</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 6.1：阅读下面开头段，作者为什么没有一开始就直接介绍太极？</span></div>
+<div class="para-quote">
+① <i>When traveling, many people focus on famous landmarks, shopping and food.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="与常规期待形成对比">作用？</span><br>
+② <i>However, to truly understand a place, it is equally important to experience its culture and lifestyle.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="However 转折：文化体验同样重要">作用？</span><br>
+③ <i>In Hong Kong, one unique activity that offers both relaxation and cultural insight is tai chi.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="点明将介绍的活动：tai chi">作用？</span><br>
+④ <i>Often seen in public parks and along the waterfront, this traditional practice provides visitors with a refreshing alternative to the fast-paced rhythm of typical travel.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="强调独特价值与吸引力">作用？</span>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">💡 思考 6.1 答案</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">先写游客<b>熟悉的旅游活动</b>，再引出较少人想到的独特体验，与常规做法<b>形成对比</b>，从而吸引读者继续阅读。</div>
+</div>
+</section><section class="slide" data-title="📐 开头三类写法">
+<p class="sec-label">Part 5 · Introduction — 3 Openings</p>
+<h2 class="slide-h2">📐 介绍型 Article 开头的三类写法</h2>
+<table class="rule-table mt-m" style="font-size:18px">
+<tr><th style="width:24%">方法</th><th style="width:30%">作用</th><th>例句</th></tr>
+<tr>
+<td class="col-type">1. 与常规期待形成对比<br><span style="font-size:13px;color:var(--text-3)">Expectation → However</span></td>
+<td class="col-example" style="font-size:17px">先提及读者熟悉的常规体验，再用 <i>However</i> 引出意想不到、更特别的体验。</td>
+<td class="col-example" style="font-size:17px"><i>When traveling, many people focus on famous landmarks, shopping and food. However, to truly understand a place, it is equally important to experience its culture and lifestyle.</i><br><span style="color:var(--text-3);font-size:15px">当……时，很多人往往会…。然而，……同样重要。</span></td>
+</tr>
+<tr>
+<td class="col-type">2. 提问式开头<br><span style="font-size:13px;color:var(--text-3)">Question Opening</span></td>
+<td class="col-example" style="font-size:17px">用 <i>Have you ever...?</i> 邀请读者思考或想象，拉近与读者的距离。</td>
+<td class="col-example" style="font-size:17px"><i>Have you ever wondered how to experience a quieter side of Hong Kong?</i> 你是否曾想过如何……？<br><i>Have you ever wondered what it feels like to…?</i> 你是否曾想过…是一种怎样的体验？</td>
+</tr>
+<tr>
+<td class="col-type">3. 强烈表达／祈使句开头<br><span style="font-size:13px;color:var(--text-3)">Imperative</span></td>
+<td class="col-example" style="font-size:17px">用祈使句或充满感染力的表达，立即吸引读者的注意。</td>
+<td class="col-example" style="font-size:17px"><i>Prepare your taste buds for a feast as you explore Hong Kong's vibrant food culture.</i> 准备好…吧，当…时。<br><i>Get ready for the excitement as the dragon boats race across the water.</i> 准备好迎接…吧，当…时。</td>
+</tr>
+</table>
+</section><section class="slide" data-title="✍️ Task 6A 开头练习">
+<p class="sec-label">Part 5 · Practice — Dragon Boat</p>
+<h2 class="slide-h2">✍️ Task 6A：为 Dragon Boat 写开头</h2>
+<div class="ce-item">
+<div class="ce-cn"><b>写法 1</b>（对比式）：补全句子 — <i>When traveling, many people focus on famous landmarks, shopping and food. <b>However</b>, to truly understand a place, it is equally important to experience its</i> <span class="cloze" onclick="revealCloze(this)" data-answer="traditional festivals and celebrations.">______</span></div>
+</div>
+<div class="ce-item">
+<div class="ce-cn"><b>写法 2</b>（提问式）：<i>Have you ever wondered what it feels like to…</i> — 试写出后半句，越有画面感越好！</div>
+<div style="margin-top:8px">
+<textarea class="student-ta" id="s10-q" placeholder="Write your answer here..."></textarea>
+<div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+  <button class="submit-btn" onclick="submitTrans(this,'s10-q','s10-qAns')">✅ 提交</button>
+</div></div>
+<div class="ce-en" id="s10-qAns"><i>…race in a dragon boat?</i><br>或更有画面感：<i>…race in a dragon boat <b>while thousands of spectators cheer from the shore</b>?</i>（数千观众在岸边欢呼）</div>
+</div>
+<div class="notes-box"><b>📝 记住：</b>提问式开头 = <i>Have you ever wondered what it feels like to + do sth</i>，加入感官细节（声音、画面）会更生动。</div>
+</section><section class="slide" data-title="🔍 分词短语 + 开头句式">
+<p class="sec-label">Part 5 · 生动表达技巧</p>
+<h2 class="slide-h2">🔍 思考 6.2：哪句更有画面感？</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">对比 A、B 两句，哪一句表达更生动、让读者更有画面感？为什么？</span></div>
+<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px" data-ans-id="s11-ans">
+<button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)">A. <i>This traditional practice provides visitors with a refreshing alternative to the fast-paced rhythm of typical travel.</i></button>
+<button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)">B. <i><b>Often seen in public parks and along the waterfront</b>, this traditional practice provides visitors with a refreshing alternative to the fast-paced rhythm of typical travel.</i></button>
+</div>
+<div id="s11-ans" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:19px;line-height:1.8">✅ <b>B</b> 更生动！主句前加入<b>过去分词短语</b>（<i>Often seen in …</i>），让读者仿佛看见人们在公园和海滨练习太极的场景。<br>△ 介绍型 article 常用这类 <b>participle phrases</b> 补充场景信息——生动有代入感，又不像 blog 那样夸张。再如：<i>Often seen in …, …</i> / <i>Surrounded by …, …</i></div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s11-tpl');a.classList.toggle('show')">📖 开头段结构与句式模版</button>
+<div id="s11-tpl" class="ce-en" style="display:none">
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:36%">结构</th><th>句式</th></tr>
+<tr><td class="col-type">1&amp;2 与常规形成对比，引出独特体验</td><td class="col-example"><i>When traveling, many people focus on …<br>However, to …, it is equally important to…</i></td></tr>
+<tr><td class="col-type">3 点明将介绍的活动／项目</td><td class="col-example"><i>In ..., one unique activity that offers ... is ....</i><br>在……，一种能够带来……的独特体验是……。</td></tr>
+<tr><td class="col-type">4 强调其独特价值与吸引力</td><td class="col-example"><i>Often seen in ..., this ... provides visitors with ....</i><br>常见于……，这一……能为游客带来……。</td></tr>
+</table>
+<p style="margin-top:10px;font-size:17px;color:var(--xdf-gd)">🌟 <b>Task 6B</b>：按此模版完成 Part 11 练习1 — dragon boat 完整版开头段。</p>
+</div>
+</section><section class="slide" data-title="✍️ 主体段1 · Well-being">
+<p class="sec-label">Part 6 · Body Paragraph 1</p>
+<h2 class="slide-h2">✍️ Task 7A：标注 P2 各句功能</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">主体段 = 介绍某项活动的通用结构。点击「功能？」揭晓每句话的作用 ↓</p>
+<div class="para-quote">
+① <i>Unlike high-intensity sports, tai chi is a gentle form of exercise that involves slow and controlled movements.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="WHAT — 总括介绍 tai chi">功能？</span><br>
+② <i>It is especially suitable for travellers who may not be used to intense physical activity.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="WHO — 说明适合的人群">功能？</span><br>
+③ <i>For those who feel tired after long days of sightseeing, a short tai chi session can help relax the body, release tension and restore energy.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="HOW — 说明如何带来好处">功能？</span><br>
+④ <i>Imagine practicing tai chi by Victoria Harbour as the sun rises, feeling the cool breeze on your face and moving gently with the rhythm of your breath.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="EXPERIENCE — 描绘具体体验场景">功能？</span><br>
+⑤ <i>Such moments allow travelers to slow down, appreciate a quieter side of Hong Kong and fully enjoy the present moment.</i> <span class="cloze" onclick="revealCloze(this)" data-answer="IMPACT — 总结收获意义">功能？</span>
+</div>
+<div class="notes-box"><b>📝 Notes：</b><br>① P2 同样适用 <b>PEER</b> 论证结构（Point–Explanation–Example–Result），但它更是一个通用的<b>「介绍某项活动」</b>结构，travel magazine 中很常用。<br>② 句④使用 <b>Imagine + -ing</b> 结构（<i>feeling…, moving…</i>）补充动作和感官体验 → 更生动、更有画面感。类似的动词还有 watch / walk / listen / smell 等。</div>
+</section><section class="slide" data-title="📐 P2 句式资源">
+<p class="sec-label">Part 6 · Sentence Patterns — P2</p>
+<h2 class="slide-h2">📐 主体段1 句式模版</h2>
+<table class="rule-table mt-m" style="font-size:18px">
+<tr><th style="width:22%">功能</th><th>句式</th></tr>
+<tr><td class="col-type">1 WHAT<br><span style="font-size:13px;color:var(--text-3)">总括介绍</span></td><td class="col-example"><i>Unlike ..., ... is a form of ... that ...</i><br><span style="font-size:15px;color:var(--text-3)">不同于……，……是一种……，它……。</span></td></tr>
+<tr><td class="col-type">2 WHO<br><span style="font-size:13px;color:var(--text-3)">适合对象</span></td><td class="col-example"><i>It is (especially) suitable for + 人群 who …<br>It is (especially) appealing to + 人群 who …</i></td></tr>
+<tr><td class="col-type">3 HOW<br><span style="font-size:13px;color:var(--text-3)">具体作用</span></td><td class="col-example"><i>For those who ..., ... can help ....</i><br><span style="font-size:15px;color:var(--text-3)">对于……的人来说，……能够帮助……。</span></td></tr>
+<tr><td class="col-type">4 EXPERIENCE<br><span style="font-size:13px;color:var(--text-3)">体验场景</span></td><td class="col-example"><i>Imagine doing sth.., (feeling ... and moving)<br>By doing sth, …</i></td></tr>
+<tr><td class="col-type">5 IMPACT<br><span style="font-size:13px;color:var(--text-3)">收获意义</span></td><td class="col-example"><i>Such moments allow people to ..., ..., and ....</i><br><span style="font-size:15px;color:var(--text-3)">这样的时刻让人们能够……、……并……。</span></td></tr>
+</table>
+<div class="hw-card mt-l">
+<h4>📝 Task 7B（Homework）</h4>
+<p>按照同样的段落结构模版，完成 <b>Part 11 练习2 — dragon boat P2 段落</b>。</p>
+</div>
+</section><section class="slide" data-title="🧠 主体段2 · 文化关键词">
+<p class="sec-label">Part 7 · Body Paragraph 2 — Culture</p>
+<h2 class="slide-h2">🧠 Task 8A：太极文化理念关键词</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 → 记住它们，下一页要用它们完成 P3 写作！</p>
+<div class="flip-grid g5">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">身与心之间的平衡与和谐</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">balance and harmony between the body and the mind</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">控制感</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">a sense of control</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">耐心</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">patience</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">觉察</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">awareness</div></div>
+  </div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">传统中国价值观</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">traditional Chinese values</div></div>
+  </div>
+</div>
+</div>
+<div class="notes-box mt-l"><b>📝 主体段逻辑：</b>主体段通常遵循 <b>WHAT → HOW → EXPERIENCE → IMPACT</b>；其中 <b>WHO</b>（适合谁）可根据论点需要灵活增减，其他部分也可以适当调整。</div>
+</section><section class="slide" data-title="✍️ 主体段2 · P3 写作">
+<p class="sec-label">Part 7 · P3 Guided Writing</p>
+<h2 class="slide-h2">✍️ Task 8A：完成 P3（文化体验段）</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">根据结构提示补全段落，点击 ______ 揭晓 ↓</p>
+<div class="para-quote">
+<span class="fn-tag">WHAT</span>① <i>What makes tai chi even more special is its cultural significance.</i><br>
+<span class="fn-tag">HOW</span>② <i>It is deeply rooted in</i>（深植于）<i> Chinese philosophy, particularly the idea of</i> <span class="cloze" onclick="revealCloze(this)" data-answer="balance and harmony between the body and the mind">______</span><br>
+<span class="fn-tag">HOW</span>③ <i>Each movement reflects</i> <span class="cloze" onclick="revealCloze(this)" data-answer="a sense of control, patience">______</span> <i>and awareness.</i><br>
+<span class="fn-tag">EXPERIENCE</span>④ <span class="cloze" onclick="revealCloze(this)" data-answer="By learning a few simple movements,">______</span> <i>visitors are not only exercising but also</i> <span class="cloze" onclick="revealCloze(this)" data-answer="gaining a deeper understanding of traditional Chinese values">______</span><br>
+<span style="font-size:15px;color:var(--text-3)">（提示：使用 by doing 句式，不仅锻炼而且理解传统中国价值观）</span><br>
+<span class="fn-tag">IMPACT</span>⑤ <span class="cloze" onclick="revealCloze(this)" data-answer="In this way, tai chi offers a more meaningful cultural experience than simply visiting historical sites or taking photos.">______</span><br>
+<span style="font-size:15px;color:var(--text-3)">（提示：提供了比访古迹或拍照更有意义的文化体验）</span>
+</div>
+</section><section class="slide" data-title="🔘 Language Bank 好处句型">
+<p class="sec-label">Part 8 · Language Bank</p>
+<h2 class="slide-h2">🔘 Benefits Expressions 好处句型（复习 Unit 2）</h2>
+<table class="rule-table mt-m" style="font-size:18px">
+<tr><th style="width:38%">中文</th><th>英文</th></tr>
+<tr><td class="col-type" style="white-space:normal">1. 让某人能够……</td><td class="col-example"><i>allow sb to do sth<br>help sb do sth</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">2. 通过做……，某人不仅……，还能……</td><td class="col-example"><i>By doing ..., sb can do sth</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">3. 通过……，某人能够……</td><td class="col-example"><i>Through ..., sb can ...</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">4. 提供……的机会／带来……的体验</td><td class="col-example"><i>offer a chance / opportunity to do sth<br>offer a/an ... experience</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">5. 使这种体验更加……（对某人来说）</td><td class="col-example"><i>make the experience + adj. (+ for sb)</i><br><span style="font-size:15px;color:var(--text-3)">e.g. enjoyable / meaningful / memorable / rewarding</span></td></tr>
+<tr><td class="col-type" style="white-space:normal">6. 使某人觉得（更）…</td><td class="col-example"><i>make sb feel (more) + adj.</i><br><span style="font-size:15px;color:var(--text-3)">e.g. refreshed / relaxed</span></td></tr>
+</table>
+</section><section class="slide" data-title="✍️ 主体段3 · Social">
+<p class="sec-label">Part 9 · Body Paragraph 3 — Social Connection</p>
+<h2 class="slide-h2">✍️ Task 9A：完成 P4（社交互动段）</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">根据功能与句式提示补全段落，点击 ______ 揭晓 ↓</p>
+<div class="para-quote">
+<span class="fn-tag">WHAT</span>① <i>Tai chi also</i> <span class="cloze" onclick="revealCloze(this)" data-answer="offers visitors a valuable chance">______</span> <i>to connect with local people.</i><br>
+<span class="fn-tag">WHO</span>② <span class="cloze" onclick="revealCloze(this)" data-answer="It is especially suitable for travellers who want to experience everyday life beyond the usual tourist attractions.">______</span><br>
+<span style="font-size:15px;color:var(--text-3)">（提示：不只是想体验旅游景点的人，用 <i>It is especially suitable for ...</i>）</span><br>
+<span class="fn-tag">HOW</span>③ <span class="cloze" onclick="revealCloze(this)" data-answer="Locals are often welcoming and willing to guide beginners through basic movements, allowing visitors to interact with the community in a natural way.">______</span><br>
+<span style="font-size:15px;color:var(--text-3)">（提示：当地人如何帮助游客融入社区，用 <i>willing to</i> 和 <i>allow sb to do</i>）</span><br>
+<span class="fn-tag">EXPERIENCE</span>④ <i>By</i> <span class="cloze" onclick="revealCloze(this)" data-answer="joining small groups in public spaces and following along,">______</span> <i>visitors can not only</i> <span class="cloze" onclick="revealCloze(this)" data-answer="learn simple movements">______</span> <i>but also</i> <span class="cloze" onclick="revealCloze(this)" data-answer="build connections with local people.">______</span><br>
+<span class="fn-tag">IMPACT</span>⑤ <i>Through</i> <span class="cloze" onclick="revealCloze(this)" data-answer="these small, authentic encounters,">______</span> <i>travellers can</i> <span class="cloze" onclick="revealCloze(this)" data-answer="truly experience everyday life in Hong Kong.">______</span><br>
+<span style="font-size:15px;color:var(--text-3)">（总结最终收获：真正了解香港人的日常生活）</span>
+</div>
+</section><section class="slide" data-title="📊 主体段结构小结">
+<p class="sec-label">Part 9 · Structure Summary</p>
+<h2 class="slide-h2">📊 介绍型 Article 主体段结构总表</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px">三个主体段，同一套骨架 —— 对比记忆每个功能位的常用句式：</p>
+<div style="overflow-x:auto">
+<table class="rule-table mt-m" style="font-size:16px;min-width:760px">
+<tr><th style="width:14%">Function</th><th>Paragraph 2 (Well-being)</th><th>Paragraph 3 (Culture)</th><th>Paragraph 4 (Social)</th></tr>
+<tr><td class="col-type">WHAT</td><td class="col-example"><i>Unlike..., tai chi is...</i></td><td class="col-example"><i>What makes tai chi more special is…</i></td><td class="col-example"><i>Tai chi also offers visitors a chance to…</i></td></tr>
+<tr><td class="col-type">WHO</td><td class="col-example"><i>It is especially suitable for...</i></td><td class="col-example" style="color:var(--text-3)">（可省略）</td><td class="col-example"><i>It is especially suitable for...</i></td></tr>
+<tr><td class="col-type">HOW</td><td class="col-example"><i>...can help...</i></td><td class="col-example"><i>...is deeply rooted in... / ...reflects...</i></td><td class="col-example"><i>...allowing visitors to...</i></td></tr>
+<tr><td class="col-type">EXPERIENCE</td><td class="col-example"><i>Imagine doing sth</i></td><td class="col-example"><i>By learning...</i></td><td class="col-example"><i>By joining...</i></td></tr>
+<tr><td class="col-type">IMPACT</td><td class="col-example"><i>Such moments allow travellers to...</i></td><td class="col-example"><i>...offers a more + adj. + experience.</i></td><td class="col-example"><i>Through..., travellers can...</i></td></tr>
+</table>
+</div>
+</section><section class="slide" data-title="📖 结尾段 P5">
+<p class="sec-label">Part 10 · Conclusion</p>
+<h2 class="slide-h2">📖 结尾段：三步收尾</h2>
+<div class="para-quote">
+<i>In conclusion, tai chi is far more than just a form of exercise—it is a relaxing, cultural and deeply memorable experience. For travellers seeking something beyond typical sightseeing, trying tai chi offers a unique way to engage both the body and the mind. It may well become one of the most rewarding and meaningful moments of their journey.</i>
+</div>
+<table class="rule-table mt-m" style="font-size:18px">
+<tr><th style="width:34%">Structure</th><th>Sentence Pattern</th></tr>
+<tr><td class="col-type">1 VALUE<br><span style="font-size:13px;color:var(--text-3)">总结整体价值</span></td><td class="col-example"><i>In conclusion, ... is far more than just ... — it is a/an ..., ..., and ... experience.</i></td></tr>
+<tr><td class="col-type">2 RECOMMENDATION<br><span style="font-size:13px;color:var(--text-3)">推荐读者尝试</span></td><td class="col-example"><i>For travellers seeking ..., trying ... offers a unique way to ...</i></td></tr>
+<tr><td class="col-type">3 FINAL IMPACT<br><span style="font-size:13px;color:var(--text-3)">强调最终意义</span></td><td class="col-example"><i>It may well become one of the most + adj. + moments of their journey.</i></td></tr>
+</table>
+</section><section class="slide" data-title="📝 练习1 · Dragon Boat 开头段">
+<p class="sec-label">Part 11 · Practice 1</p>
+<h2 class="slide-h2">📝 练习1：Dragon Boat 开头段</h2>
+<div class="task-quote">While dragon boat racing is a popular tradition in Hong Kong, it is less well known in some parts of the world. Write an article for International Travel magazine introducing the benefits of dragon boat racing to tourists.</div>
+<p style="font-size:18px;color:var(--text-2)">参考 Part 6 范文与结构模版，完成 dragon boat 的开头段。标题：<i>Experience Dragon Boat Racing in Hong Kong</i></p>
+<button class="ce-btn" onclick="var a=document.getElementById('s20-ref');a.classList.toggle('show')" style="margin-top:10px">📖 Part 6 范文与结构模版（点击展开对照）</button>
+<div id="s20-ref" class="ce-en" style="display:none">
+<div class="para-quote" style="margin-top:10px">
+① <i>When traveling, many people focus on famous landmarks, shopping and food.</i> <span class="fn-tag">对比常规</span><br>
+② <i>However, to truly understand a place, it is equally important to experience its culture and lifestyle.</i> <span class="fn-tag">However 转折</span><br>
+③ <i>In Hong Kong, one unique activity that offers both relaxation and cultural insight is tai chi.</i> <span class="fn-tag">点明活动</span><br>
+④ <i>Often seen in public parks and along the waterfront, this traditional practice provides visitors with a refreshing alternative to the fast-paced rhythm of typical travel.</i> <span class="fn-tag">强调价值</span>
+</div>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:36%">结构</th><th>句式</th></tr>
+<tr><td class="col-type">1&amp;2 与常规形成对比，引出独特体验</td><td class="col-example"><i>When traveling, many people focus on …<br>However, to …, it is equally important to…</i></td></tr>
+<tr><td class="col-type">3 点明将介绍的活动／项目</td><td class="col-example"><i>In ..., one unique activity that offers ... is ....</i><br>在……，一种能够带来……的独特体验是……。</td></tr>
+<tr><td class="col-type">4 强调其独特价值与吸引力</td><td class="col-example"><i>Often seen in ..., this ... provides visitors with ....</i><br>常见于……，这一……能为游客带来……。</td></tr>
+</table>
+</div>
+<div class="ce-item" style="margin-top:10px">
+<div class="ce-cn">✍️ 先在下方写出你的开头段（4 句结构：对比常规 → However 转折 → 点明活动 → 强调价值）</div>
+<div class="student-input-wrap" style="margin-top:8px">
+<label style="font-size:18px;font-weight:600;display:block;margin-bottom:6px"></label>
+<textarea class="student-ta" id="s20-p1" placeholder="在此输入你的想法…"></textarea>
+<div style="margin-top:6px"><button class="submit-btn" id="s20-p1-sb" onclick="submitAnswer(this,'s20-p1','s20-p1-ans')">✏️ 提交我的回答</button></div>
+<div class="student-answer" id="s20-p1-ans"></div>
+<button class="edit-btn" id="s20-p1-eb" onclick="continueEdit('s20-p1','s20-p1-ans','s20-p1-sb')" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:10px">📖 看参考范文（两个版本）</button>
+<div class="ce-en" style="font-weight:600">
+<b>Version A — 对比式开头：</b><br>
+<i>When traveling, many people focus on famous landmarks, shopping and food. However, to truly understand a place, it is equally important to experience its traditional festivals and celebrations. In Hong Kong, one unique activity that offers <span class="hl-chunk">both excitement and cultural insight is dragon boat racing</span>. Often seen <span class="hl-chunk">on rivers and along the waterfront during the Dragon Boat Festival</span>, this traditional event provides visitors with <span class="hl-chunk">a chance to experience Hong Kong's festive atmosphere and strong sense of community</span>.</i><br><br>
+<b>Version B — 问句式开头：</b><br>
+<i>Have you ever wondered what it feels like to take part in a traditional race while thousands of spectators cheer from the shore? In Hong Kong, one unique activity that offers both excitement and cultural insight is dragon boat racing. Often seen on rivers and along the waterfront during the Dragon Boat Festival, this traditional event provides visitors with a chance to experience Hong Kong's festive atmosphere and strong sense of community.</i>
+</div>
+</div>
+</section><section class="slide" data-title="📝 练习2 · Homework">
+<p class="sec-label">Part 11–12 · Practice 2 &amp; Homework</p>
+<h2 class="slide-h2">📝 练习2（Homework）：Dragon Boat P2 段落</h2>
+<div class="hw-card">
+<h4>📌 作业要求</h4>
+<p>参考 <b>Part 7</b> 范文与结构模版（WHAT → WHO → HOW → EXPERIENCE → IMPACT），以及 <b>Part 8</b> 好处句式，完成 dragon boat 的 P2 段落。</p>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s21-ref7');a.classList.toggle('show')">📖 Part 7 P2 范文 + 结构模版</button>
+<button class="ce-btn" onclick="var a=document.getElementById('s21-ref8');a.classList.toggle('show')" style="margin-left:8px">🔘 Part 8 好处句式</button>
+<div id="s21-ref7" class="ce-en" style="display:none">
+<div class="para-quote" style="margin-top:10px">
+<span class="fn-tag">WHAT</span>① <i>Unlike high-intensity sports, tai chi is a gentle form of exercise that involves slow and controlled movements.</i><br>
+<span class="fn-tag">WHO</span>② <i>It is especially suitable for travellers who may not be used to intense physical activity.</i><br>
+<span class="fn-tag">HOW</span>③ <i>For those who feel tired after long days of sightseeing, a short tai chi session can help relax the body, release tension and restore energy.</i><br>
+<span class="fn-tag">EXPERIENCE</span>④ <i>Imagine practicing tai chi by Victoria Harbour as the sun rises, feeling the cool breeze on your face and moving gently with the rhythm of your breath.</i><br>
+<span class="fn-tag">IMPACT</span>⑤ <i>Such moments allow travelers to slow down, appreciate a quieter side of Hong Kong and fully enjoy the present moment.</i>
+</div>
+<table class="rule-table" style="font-size:18px">
+<tr><th style="width:22%">功能</th><th>句式</th></tr>
+<tr><td class="col-type">1 WHAT</td><td class="col-example"><i>Unlike ..., ... is a form of ... that ...</i><br><span style="font-size:15px;color:var(--text-3)">不同于……，……是一种……，它……。</span></td></tr>
+<tr><td class="col-type">2 WHO</td><td class="col-example"><i>It is (especially) suitable for + 人群 who …<br>It is (especially) appealing to + 人群 who …</i></td></tr>
+<tr><td class="col-type">3 HOW</td><td class="col-example"><i>For those who ..., ... can help ....</i><br><span style="font-size:15px;color:var(--text-3)">对于……的人来说，……能够帮助……。</span></td></tr>
+<tr><td class="col-type">4 EXPERIENCE</td><td class="col-example"><i>Imagine doing sth.., (feeling ... and moving)<br>By doing sth, …</i></td></tr>
+<tr><td class="col-type">5 IMPACT</td><td class="col-example"><i>Such moments allow people to ..., ..., and ....</i><br><span style="font-size:15px;color:var(--text-3)">这样的时刻让人们能够……、……并……。</span></td></tr>
+</table>
+</div>
+<div id="s21-ref8" class="ce-en" style="display:none">
+<table class="rule-table" style="font-size:18px;margin-top:10px">
+<tr><th style="width:38%">中文</th><th>英文</th></tr>
+<tr><td class="col-type" style="white-space:normal">1. 让某人能够……</td><td class="col-example"><i>allow sb to do sth<br>help sb do sth</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">2. 通过做……，某人不仅……，还能……</td><td class="col-example"><i>By doing ..., sb can do sth</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">3. 通过……，某人能够……</td><td class="col-example"><i>Through ..., sb can ...</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">4. 提供……的机会／带来……的体验</td><td class="col-example"><i>offer a chance / opportunity to do sth<br>offer a/an ... experience</i></td></tr>
+<tr><td class="col-type" style="white-space:normal">5. 使这种体验更加……（对某人来说）</td><td class="col-example"><i>make the experience + adj. (+ for sb)</i><br><span style="font-size:15px;color:var(--text-3)">e.g. enjoyable / meaningful / memorable / rewarding</span></td></tr>
+<tr><td class="col-type" style="white-space:normal">6. 使某人觉得（更）…</td><td class="col-example"><i>make sb feel (more) + adj.</i><br><span style="font-size:15px;color:var(--text-3)">e.g. refreshed / relaxed</span></td></tr>
+</table>
+</div>
+<div class="ce-item" style="margin-top:14px">
+<div class="ce-cn">✍️ 在下方写出你的 dragon boat P2 段落（WHAT → WHO → HOW → EXPERIENCE → IMPACT）</div>
+<div class="student-input-wrap" style="margin-top:8px">
+<textarea class="student-ta" id="s21-p2" placeholder="Write your paragraph here..."></textarea>
+<div style="margin-top:6px"><button class="submit-btn" id="s21-p2-sb" onclick="submitAnswer(this,'s21-p2','s21-p2-ans')">✏️ 提交我的回答</button></div>
+<div class="student-answer" id="s21-p2-ans"></div>
+<button class="edit-btn" id="s21-p2-eb" onclick="continueEdit('s21-p2','s21-p2-ans','s21-p2-sb')" style="display:none">✏️ 继续输入</button>
+</div>
+</div>
+<button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案（先自己写！）</button>
+<div class="ce-en" style="font-weight:600;line-height:2">
+<span class="fn-tag">WHAT</span><i>Unlike ordinary sightseeing activities, dragon boat racing is a <span class="hl-chunk">traditional celebration filled with excitement, energy and joy</span>.</i><br>
+<span class="fn-tag">WHO</span><i><span class="hl-chunk">It is especially appealing to travellers who enjoy lively festivals and want to experience local traditions firsthand.</span></i><br>
+<span class="fn-tag">HOW</span><i>Whether watching from the shore or joining a beginner-friendly activity, <span class="hl-chunk">visitors can feel the excitement of the event and appreciate the teamwork and passion behind it</span>.</i><br>
+<span class="fn-tag">EXPERIENCE</span><i><span class="hl-chunk">Imagine standing by the harbour, listening to the beating of drums and cheering as brightly coloured dragon boats race across the water.</span></i><br>
+<span class="fn-tag">IMPACT</span><i>Such moments <span class="hl-chunk">allow travellers to step away from ordinary sightseeing, immerse themselves in the festive atmosphere and create lasting memories of their journey</span>.</i>
+</div>
+</section><section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Part 13 · Summary</p>
+<h2 class="slide-h2">✅ Check Your Learning 知识清单</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px">今天我们完成了 travel magazine article 的初步学习。逐项打勾，回顾你掌握的核心技能：</p>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>文体认知 Genre Awareness</b> — 了解 travel magazine article 的基本特点：介绍当地文化、活动或体验，帮助读者了解一个地方并鼓励亲身尝试；语气特点 <i>informative, engaging and positive</i></span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>文章结构 Overall Structure</b> — <i>Introduction → Benefit 1 → Benefit 2 → Benefit 3 → Conclusion</i></span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>内容组织 Content Development</b> — <i>Well-being → Culture → Social Connection</i>；主体段结构 <i>WHAT → HOW → EXPERIENCE → IMPACT</i></span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>语言特点 Language Features</b> — Positive Language（积极评价词）· Benefit Expressions（好处句型）· Participles（分词短语）· Sensory / Experience-based Language（体验感表达）</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>常用表达 Useful Expressions</b> — 见下方列表，能口头造句 ✅</span></div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s22-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div id="s22-exp" class="ce-en" style="display:none;font-size:18px;line-height:2">
+<i>Unlike ..., ... is a form of ... that ...<br>
+It is especially suitable for ...<br>
+For those who ..., ... can help ...<br>
+By doing ..., visitors can ...<br>
+Such moments allow travelers to ...<br>
+Through ..., travelers can ...<br>
+offer a chance / opportunity to do sth<br>
+make the experience more enjoyable / meaningful / memorable</i>
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">附录 · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Discover Tai Chi in Hong Kong</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:6px">Task: Write an article for International Travel magazine introducing the benefits of tai chi to tourists.</p>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文（413 words）</button>
+<div class="ce-en" style="line-height:2;font-weight:500;color:var(--text-1)">
+<p style="margin-bottom:14px"><b style="font-size:22px">Slow Down and Breathe: Discover Tai Chi in Hong Kong</b></p>
+<p style="margin-bottom:12px"><i>When travelling, many people focus on famous landmarks, shopping and food. However, to truly understand a place, it is equally important to experience its culture and lifestyle. In Hong Kong, <span class="hl-chunk">one unique activity that offers both relaxation and cultural insight is tai chi</span>. Often seen in public parks and along the waterfront, this traditional practice provides visitors with <span class="hl-chunk">a refreshing alternative to the fast-paced rhythm of typical travel</span>.</i></p>
+<p style="margin-bottom:12px"><i>Unlike high-intensity sports, tai chi is <span class="hl-chunk">a gentle form of exercise</span> that involves slow and controlled movements. It is <span class="hl-chunk">especially suitable for travellers</span> who may not be used to intense physical activity. For those who feel tired after long days of sightseeing, a short tai chi session can help <span class="hl-chunk">relax the body, release tension and restore energy</span>. Imagine practising tai chi by Victoria Harbour as the sun rises, feeling the cool breeze on your face and moving gently with the rhythm of your breath. Such moments allow travellers to <span class="hl-chunk">slow down, appreciate a quieter side of Hong Kong</span> and fully enjoy the present moment.</i></p>
+<p style="margin-bottom:12px"><i>What makes tai chi even more special is its cultural significance. It is <span class="hl-chunk">deeply rooted in Chinese philosophy</span>, particularly the idea of <span class="hl-chunk">balance and harmony between the body and the mind</span>. Each movement reflects a sense of control, patience and awareness. By learning a few simple movements, visitors are not only exercising but also <span class="hl-chunk">gaining a deeper understanding of traditional Chinese values</span>. In this way, tai chi <span class="hl-chunk">offers a more meaningful cultural experience</span> than simply visiting historical sites or taking photos.</i></p>
+<p style="margin-bottom:12px"><i>Tai chi also <span class="hl-chunk">offers visitors a valuable chance to connect with local people</span>. It is especially suitable for travellers who want to experience everyday life beyond the usual tourist attractions. Locals are often welcoming and <span class="hl-chunk">willing to guide beginners through basic movements</span>, allowing visitors to interact with the community in a natural way. By joining small groups in public spaces and following along, visitors can not only learn simple movements but also <span class="hl-chunk">build connections with local people</span>. Through these small, authentic encounters, travellers can <span class="hl-chunk">truly experience everyday life in Hong Kong</span>.</i></p>
+<p><i>In conclusion, tai chi is <span class="hl-chunk">far more than just a form of exercise</span>—it is a relaxing, cultural and deeply memorable experience. For travellers seeking something beyond typical sightseeing, trying tai chi offers a unique way to engage both the body and the mind. It may well become <span class="hl-chunk">one of the most rewarding and meaningful moments of their journey</span>.</i></p>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:10px;text-align:right">✅ 字数：413 words</p>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+<div style="font-size:72px;margin-bottom:24px">🎉</div>
+<h2 class="slide-h2">恭喜完成 Unit 7！</h2>
+<p style="font-size:20px;color:var(--text-2);max-width:640px;line-height:1.8;margin-bottom:28px">你今天学习了：审题五要素 → Brainstorming 论点 → 五段式结构 → 标题两种写法 → 开头三类写法与分词短语 → 主体段 WHAT·HOW·EXPERIENCE·IMPACT → 好处句型 → 结尾三步法</p>
+<p style="font-size:18px;color:var(--xdf-gold);font-weight:700;margin-bottom:20px">📝 别忘了作业：完成 Part 11 练习2 — dragon boat 的 P2 段落！</p>
+<button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+
+// ── wrap updateUI to sync TOC + notes ──
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  var items=document.querySelectorAll('.toc-item');
+  items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  loadNote();
+};
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+// ── Notes (per-slide, localStorage) ──
+var NOTE_KEY='u7taichi_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p)p.textContent='第 '+(current+1)+' 页 · '+document.querySelectorAll('.slide')[current].dataset.title;
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  document.getElementById('npTa').value='';
+  document.getElementById('npSaved').textContent='已清空';
+  updateNoteDot();
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u7',weakKey:'general',mode:'quiz'};</script>
+</body>
+</html>

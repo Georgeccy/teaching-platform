@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 3 · Work, Play & Beyond · 加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head><body>
+
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Module3</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide" data-title="封面 · Module 3">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">G</div>
+      <div class="tb-name">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">加速班</div>
+  </div>
+  <div class="slide-h1">Work, Play<br>& Beyond<br><span class="accent">Module 3</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Memos & Reports</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Module 3 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Memo + Report</div><div class="sm-sub">备忘录 + 报告</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Work & Play</div><div class="sm-sub">Job satisfaction, Volunteer, Balance</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">160-180 + 320-350 words</div><div class="sm-sub">Part A + Part B</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">备忘录格式</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">备忘录词伙</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">报告写作</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">范文+实战</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Learning Objectives</p>
+<h2 class="slide-h2">🎯 本课学习目标</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>① 掌握 Memo 格式</h4>
+    <p>学会写备忘录：To / From / Date / Subject + Opening + Body，掌握 Part A 160-180词写作要求</p>
+  </div>
+  <div class="card accent">
+    <h4>② 积累备忘录词伙</h4>
+    <p>掌握 I would like to inform you of... / let you know about... 等正式通知句式，以及简洁、客观的语气</p>
+  </div>
+  <div class="card accent">
+    <h4>③ 掌握 Report 框架</h4>
+    <p>理解 Report 结构：Title → Introduction → Body (headings) → Conclusion → Recommendations，学会使用被动语态和第三人称</p>
+  </div>
+  <div class="card accent">
+    <h4>④ 完成实战写作</h4>
+    <p>通过翻译练习、大意写作、范文分析、互动练习，完成从输入到输出的完整训练</p>
+  </div>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Task Analysis</p>
+<h2 class="slide-h2">📋 审题：Memo 考什么？</h2>
+<div class="task-quote">The following memo is written to inform the Head of English of Poetry Society's entries in a poetry writing competition. However, there are formatting errors and some sentences are redundant. Rewrite the memo in a more concise manner using the correct format.</div>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）——你是谁？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A member of the Poetry Society（诗歌社成员）— 需要向英语科主任汇报</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）——写给谁看？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Head of English（英语科主任）— 因此语气要正式、简洁、专业</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）——为什么写？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To inform about the poetry competition entries（通知诗歌比赛报名事宜）— 内部沟通，只传递必要信息</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. Register（语域）——用什么语气？</div>
+  <div class="quiz-card" data-correct="0" style="border:none;padding:0;margin:0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal / semi-formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">casual</button>
+    </div>
+    <div class="quiz-ans">✅ <b>formal / semi-formal</b> — 备忘录是 workplace 内部文件，语气正式或半正式，简洁不冗余</div>
+  </div>
+</div>
+</section><section class="slide" data-title="📐 Memo 格式">
+<p class="sec-label">Format</p>
+<h2 class="slide-h2">📐 Memo 的标准格式</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Memo = memorandum，是<b>内部文件</b>（internal document），只用于同一组织内沟通。</p>
+<table class="rule-table">
+  <tr><th style="width:30%">部分</th><th>内容与要求</th></tr>
+  <tr><td class="col-type">To:</td><td class="col-example">收件人（如：Mr. Ho）</td></tr>
+  <tr><td class="col-type">From:</td><td class="col-example">发件人（如：Chris Wong）</td></tr>
+  <tr><td class="col-type">Date:</td><td class="col-example">日期（如：15 May 20__）</td></tr>
+  <tr><td class="col-type">Subject:</td><td class="col-example">主题（如：Poetry writing competition）</td></tr>
+  <tr><td class="col-type">Opening</td><td class="col-example">直接说明目的：I would like to inform you of...</td></tr>
+  <tr><td class="col-type">Body</td><td class="col-example">传递必要信息，简洁不冗余</td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>⚠️ 注意：</b>Memo 没有 salutation（称呼）、没有 closing remark（结尾客套）、没有 complimentary close（敬语结尾）。这是与 letter/email 最大的区别。
+</div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s4-compare');a.classList.toggle('show')">📖 查看 Letter/Email/Memo 格式对比</button>
+<div id="s4-compare" class="ce-en" style="display:none">
+  <b>Letter:</b> date → address → salutation → opening → body → closing remark → sender's name<br><br>
+  <b>Email:</b> Date: → To: → From: → Re/Subject: → salutation → opening → body → closing remark → sender's name<br><br>
+  <b>Memo:</b> To: → From: → Date: → Subject: → opening → body<br><br>
+  <b>关键区别：</b>Memo 无 salutation、无 closing remark、无 complimentary close。
+</div>
+</section><section class="slide" data-title="🧠 Memo 词伙">
+<p class="sec-label">Part One · 通知句式</p>
+<h2 class="slide-h2">🧠 备忘录核心句式（中→英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我想通知您……（正式）</div><div class="flip-hint">Inform</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I would like to inform you of...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我想让您知道……</div><div class="flip-hint">Inform</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I would like to let you know about/that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我想告诉您……</div><div class="flip-hint">Inform</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I would like to tell you about...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">关于……</div><div class="flip-hint">Reference</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Regarding... / With regard to...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">截止日期是……</div><div class="flip-hint">Details</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">The deadline for entries is...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">结果将于……公布</div><div class="flip-hint">Details</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">The results will be released on...</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="✍️ 翻译练习 · Memo">
+<p class="sec-label">Part Two · 中翻英</p>
+<h2 class="slide-h2">✍️ 逐句翻译：备忘录写作</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据中文提示，将句子翻译成英文。先思考，再看答案！</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：我想通知您诗歌社有五位成员将参加这次比赛。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>I would like to inform you</span><span>five members</span><span>enter this competition</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">I would like to inform you that five members of the Poetry Society are going to enter this competition.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：报名截止日期是 5 月 30 日。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>The deadline for entries</span><span>is 30 May</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">The deadline for entries is 30 May.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：结果将于 6 月 15 日公布。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>The results</span><span>will be released</span><span>on 15 June</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">The results will be released on 15 June.</div>
+</div>
+</section><section class="slide" data-title="🔴 大意写作 · Memo">
+<p class="sec-label">Part Two · Guided Writing</p>
+<h2 class="slide-h2">🔴 大意提示写作：更正后的备忘录</h2>
+<div class="gw-card">
+  <div class="gw-main-idea">📌 整段大意：请用正确的备忘录格式重写以下信息——诗歌社有五名成员将参加诗歌比赛，截止日期 5 月 30 日，结果 6 月 15 日公布。要求：简洁、正式、无冗余。</div>
+  <div style="margin-bottom:12px"><b style="font-size:20px">🔧 必用句式：</b></div>
+  <div class="gw-pattern" style="margin-bottom:6px">「I would like to inform you that...」我想通知您……</div>
+  <div class="gw-pattern" style="margin-bottom:6px">「The deadline for entries is...」报名截止日期是……</div>
+  <div class="gw-pattern" style="margin-bottom:12px">「The results will be released on...」结果将于……公布</div>
+  <div style="margin-bottom:10px"><b style="font-size:20px">📋 必用词伙（先看中文，点击显示英文）：</b></div>
+  <p style="font-size:20px;line-height:2.4;padding:10px 16px;background:#f8f9fb;border-radius:8px">
+<button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">诗歌社成员</span><span class="vr-en">members of the Poetry Society</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">参加比赛</span><span class="vr-en">enter this competition</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">截止日期</span><span class="vr-en">the deadline for entries</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">公布结果</span><span class="vr-en">the results will be released</span></button>
+  </p>
+  <button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案</button>
+  <div class="gw-answer">To: Mr. Ho<br>From: Chris Wong<br>Date: 15 May 20__<br>Subject: Poetry writing competition<br><br>I would like to inform you that five members of the Poetry Society are going to enter this competition. The deadline for entries is 30 May 20__. The results will be released on 15 June 20__.</div>
+</div>
+</section><section class="slide" data-title="📐 Report 引入">
+<p class="sec-label">Part Three · Report Writing</p>
+<h2 class="slide-h2">📐 什么是 Report？</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">先想一想：下面哪段话更符合报告的特点？点击你的选择！</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px" data-ans-id="s8-ans1">
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)">A. I think job satisfaction is really important. We all want to be happy at work, right? I feel that companies should care more about their workers.</button>
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)">B. A survey on job satisfaction was conducted and 1031 people aged 18-45 participated in it. The findings show that job nature and job security are the top two contributing factors.</button>
+</div>
+<div id="s8-ans1" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;line-height:1.8">✅ <b>B</b> 是正确的！报告需要使用 <b>facts</b>（事实）、<b>passive voice</b>（被动语态）、<b>third person</b>（第三人称），保持 <b>objective</b>（客观）和 <b>impersonal</b>（非个人化）。</div>
+<div class="notes-box mt-l">
+  <b>📖 定义：</b>A report presents information to readers; it should be well-organized and easy to understand. Reports can be written to present survey findings, explain a problem, or relate how an event went.
+</div>
+</section><section class="slide" data-title="📊 Report 结构">
+<p class="sec-label">Part Three · Structure</p>
+<h2 class="slide-h2">📊 Report 的标准结构</h2>
+<table class="rule-table">
+  <tr><th style="width:25%">部分</th><th>功能与要求</th></tr>
+  <tr><td class="col-type">Title</td><td class="col-example">给出报告主题（如：Report on factors contributing to job satisfaction）</td></tr>
+  <tr><td class="col-type">Introduction</td><td class="col-example">提供背景信息；说明写作目的（如：This report aims at presenting the findings of the survey...）</td></tr>
+  <tr><td class="col-type">Body</td><td class="col-example">用 headings 和 subheadings 分段；每段有 clear topic sentence + supporting sentences + connectives；只呈现 facts，不呈现 opinions</td></tr>
+  <tr><td class="col-type">Conclusion</td><td class="col-example">总结 Body 的主要发现</td></tr>
+  <tr><td class="col-type">Recommendations*</td><td class="col-example">基于 Conclusion 提出建议（*部分报告不含此部分）</td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>📝 语言特点：</b>被动语态（passive voice）+ 第三人称（third person）→ 使报告客观、非个人化。常用时态：past simple / present perfect / present simple / present continuous。
+</div>
+</section><section class="slide" data-title="🧠 Report 词伙">
+<p class="sec-label">Part Three · 核心表达</p>
+<h2 class="slide-h2">🧠 报告必备词伙（中→英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">本报告旨在……</div><div class="flip-hint">Purpose</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">This report aims at presenting...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">进行了一项调查</div><div class="flip-hint">Passive</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">A survey was conducted</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">有……人参与</div><div class="flip-hint">Passive</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">...people participated in it</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">结果显示……</div><div class="flip-hint">Findings</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">The findings show that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">被认为是最重要的因素</div><div class="flip-hint">Findings</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">...was rated as the top contributor...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">建议……</div><div class="flip-hint">Recommendations</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">It is recommended that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">总的来说</div><div class="flip-hint">Conclusion</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Overall,...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">总而言之</div><div class="flip-hint">Conclusion</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">In sum,...</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="✍️ 翻译练习 · Report">
+<p class="sec-label">Part Three · 中翻英</p>
+<h2 class="slide-h2">✍️ 逐句翻译：报告写作</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据中文提示，将句子翻译成英文。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：近年来，员工流失率高的问题在各行业的公司和组织中变得更加严重。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>In recent years</span><span>high staff turnover</span><span>become more acute</span><span>various sectors</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">In recent years, the problem of high staff turnover has become more acute in companies and organizations of various sectors.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：一项关于工作满意度的调查已经进行，共有 1031 名 18-45 岁的人参与。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>A survey on job satisfaction</span><span>was conducted</span><span>participated in it</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">A survey on job satisfaction was conducted and 1031 people aged 18-45 participated in it.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：总体而言，调查结果显示，工作性质和工作保障被认为是本地劳动力整体工作满意度的两大贡献因素。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>Overall</span><span>the findings show that</span><span>job nature and job security</span><span>contributing to overall job satisfaction</span><span>local workforce</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">Overall, the findings show that job nature and job security are considered the top two aspects contributing to overall job satisfaction among the local workforce.</div>
+</div>
+</section><section class="slide" data-title="📝 Report 分析">
+<p class="sec-label">Part Three · Analysis</p>
+<h2 class="slide-h2">📝 报告分析：语言特点判断</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">阅读以下报告片段，判断其语言特点。</p>
+<div class="para-quote">
+  <b>Report on factors contributing to job satisfaction</b><br><br>
+  In recent years, the problem of high staff turnover has become more acute in companies and organizations of various sectors. To engage and retain employees, boosting job satisfaction is increasingly viewed as a key strategy. In light of this, a survey on job satisfaction was conducted and 1031 people aged 18-45 participated in it. This report aims at presenting the findings of the survey, i.e. factors that contribute most to overall job satisfaction among the local workforce.<br><br>
+  <b>1.1 Job nature</b><br>
+  Job nature refers to how interesting, challenging or exciting a job is. A remarkable difference was noted among different employee demographics, with Gen-Zers touting it as the most important job aspect.
+</div>
+<div class="quiz-card" data-correct="1">
+  <div class="quiz-q">这段报告使用了什么语言特点？（多选）</div>
+  <div class="quiz-opts">
+    <button class="quiz-opt" onclick="checkQuiz(this)">First person (I/we)</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Passive voice + third person</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Informal tone</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Emotional language</button>
+  </div>
+  <div class="quiz-ans">✅ <b>Passive voice + third person</b> — 例如 "a survey was conducted"（被动）、"1031 people participated"（第三人称）、"It is recommended"（被动+非人称）。报告必须 objective + impersonal。</div>
+</div>
+</section><section class="slide" data-title="⚠️ 常见错误">
+<p class="sec-label">Part Three · Common Mistakes</p>
+<h2 class="slide-h2">⚠️ 报告写作常见错误</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看解析 →</p>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}" style="margin-bottom:16px">
+<div class="flip-card-inner">
+  <div class="flip-face flip-front" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:#e53935;margin-bottom:8px">错误 1：这句话哪里错了？</div>
+    <p style="font-size:20px;line-height:1.8">I think job satisfaction is very important. We should all try to be happy at work. I feel that companies need to do more.</p>
+    <p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 点击卡片查看解析</p>
+  </div>
+  <div class="flip-face flip-back" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:var(--xdf-green);margin-bottom:8px">✅ 解析</div>
+    <p style="font-size:20px;line-height:1.8;margin-bottom:8px">问题：使用第一人称（I/we），语气主观、个人化。报告必须 objective + impersonal，用 passive voice + third person。</p>
+    <p style="font-size:20px;color:var(--xdf-green)">✓ Job satisfaction is considered a key factor in employee retention. It has been found that companies with higher job satisfaction levels tend to have lower turnover rates.</p>
+  </div>
+</div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}" style="margin-bottom:16px">
+<div class="flip-card-inner">
+  <div class="flip-face flip-front" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:#e53935;margin-bottom:8px">错误 2：这句话哪里错了？</div>
+    <p style="font-size:20px;line-height:1.8">Dear Mr. Ho, How are you today? I'm so excited about the competition! Can't wait! Fingers crossed!</p>
+    <p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 点击卡片查看解析</p>
+  </div>
+  <div class="flip-face flip-back" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:var(--xdf-green);margin-bottom:8px">✅ 解析</div>
+    <p style="font-size:20px;line-height:1.8;margin-bottom:8px">问题：这是 memo，不是 letter。Memo 无 salutation、无 closing remark、语气要 formal/semi-formal、简洁不冗余。"How are you today?" / "I'm so excited" / "Can't wait" 都是冗余或过于随意。</p>
+    <p style="font-size:20px;color:var(--xdf-green)">✓ To: Mr. Ho / From: Chris Wong / Date: 15 May 20__ / Subject: Poetry writing competition / I would like to inform you that five members of the Poetry Society are going to enter this competition.</p>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="📝 范文翻译 · Part A">
+<p class="sec-label">附录 · Model Translation</p>
+<h2 class="slide-h2">📝 范文翻译：Part A — Memo</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">更正后的备忘录 · 共 7 句 · 逐句中译英。 中文已直接显示。先尝试自行翻译，再用<b style="color:var(--xdf-gold)">词伙提示</b>辅助，最后<b style="color:var(--xdf-green)">对照原文</b>检查。</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">收件人：何先生</div>
+  <div class="ce-hints" style="margin-top:10px"><span>To: Mr. Ho</span></div>
+  <div class="ce-en"><span class="hl-chunk">To:</span> Mr. Ho</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">发件人：黄志强</div>
+  <div class="ce-hints" style="margin-top:10px"><span>From: Chris Wong</span></div>
+  <div class="ce-en"><span class="hl-chunk">From:</span> Chris Wong</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">日期：20__ 年 5 月 15 日</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Date: 15 May 20__</span></div>
+  <div class="ce-en"><span class="hl-chunk">Date:</span> 15 May 20__</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">主题：诗歌写作比赛</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Subject: Poetry writing competition</span></div>
+  <div class="ce-en"><span class="hl-chunk">Subject:</span> Poetry writing competition</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">我想通知您，诗歌社有五名成员将参加这次比赛。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>I would like to inform you that</span><span>five members</span><span>enter this competition</span></div>
+  <div class="ce-en"><span class="hl-chunk">I would like to inform you that</span> five members of the Poetry Society are going to <span class="hl-chunk">enter this competition</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">报名截止日期是 20__ 年 5 月 30 日。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>The deadline for entries</span><span>is 30 May 20__</span></div>
+  <div class="ce-en"><span class="hl-chunk">The deadline for entries</span> is <span class="hl-chunk">30 May 20__</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">结果将于 20__ 年 6 月 15 日公布。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>The results</span><span>will be released</span><span>on 15 June 20__</span></div>
+  <div class="ce-en"><span class="hl-chunk">The results</span> will be <span class="hl-chunk">released</span> on <span class="hl-chunk">15 June 20__</span>.</div>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 简洁 · 正式 · 无冗余</p>
+</section><section class="slide" data-title="📝 范文翻译 · Part B">
+<p class="sec-label">附录 · Model Translation</p>
+<h2 class="slide-h2">📝 范文翻译：Part B — Report on Job Satisfaction</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">工作报告 · 共 10 句 · 逐句中译英。 中文已直接显示。先尝试自行翻译，再用<b style="color:var(--xdf-gold)">词伙提示</b>辅助，最后<b style="color:var(--xdf-green)">对照原文</b>检查。</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">近年来，员工流失率高的问题在各行业的公司和组织中变得更加严重。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>In recent years</span><span>high staff turnover</span><span>become more acute</span><span>various sectors</span></div>
+  <div class="ce-en"><span class="hl-chunk">In recent years</span>, the problem of <span class="hl-chunk">high staff turnover</span> has <span class="hl-chunk">become more acute</span> in companies and organizations of <span class="hl-chunk">various sectors</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">为了吸引和留住员工，提升工作满意度越来越被视为一项关键策略。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>To engage and retain employees</span><span>boosting job satisfaction</span><span>increasingly viewed as a key strategy</span></div>
+  <div class="ce-en"><span class="hl-chunk">To engage and retain employees</span>, <span class="hl-chunk">boosting job satisfaction</span> is <span class="hl-chunk">increasingly viewed as a key strategy</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">有鉴于此，一项关于工作满意度的调查已经进行，共有 1031 名 18-45 岁的人参与。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>In light of this</span><span>A survey on job satisfaction</span><span>was conducted</span><span>participated in it</span></div>
+  <div class="ce-en"><span class="hl-chunk">In light of this</span>, <span class="hl-chunk">a survey on job satisfaction</span> was <span class="hl-chunk">conducted</span> and 1031 people aged 18-45 <span class="hl-chunk">participated in it</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">本报告旨在呈现调查结果，即对本地劳动力整体工作满意度贡献最大的因素。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>This report aims at presenting</span><span>the findings of the survey</span><span>factors that contribute most to</span><span>overall job satisfaction</span><span>local workforce</span></div>
+  <div class="ce-en"><span class="hl-chunk">This report aims at presenting</span> <span class="hl-chunk">the findings of the survey</span>, i.e. <span class="hl-chunk">factors that contribute most to</span> <span class="hl-chunk">overall job satisfaction</span> among the <span class="hl-chunk">local workforce</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">工作性质指的是一份工作有多有趣、多具挑战性或多令人兴奋。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Job nature refers to</span><span>how interesting, challenging or exciting</span></div>
+  <div class="ce-en"><span class="hl-chunk">Job nature refers to</span> <span class="hl-chunk">how interesting, challenging or exciting</span> a job is.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">不同员工群体之间存在显著差异，其中 Z 世代将其视作最重要的工作考量因素。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>A remarkable difference</span><span>was noted</span><span>employee demographics</span><span>Gen-Zers</span><span>touting it as</span></div>
+  <div class="ce-en"><span class="hl-chunk">A remarkable difference</span> was <span class="hl-chunk">noted</span> among different <span class="hl-chunk">employee demographics</span>, with <span class="hl-chunk">Gen-Zers</span> <span class="hl-chunk">touting it as</span> the most important job aspect.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这一方面也被全职高管和中层管理人员比按小时计薪的员工更高度地重视。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>more highly valued by</span><span>full-time executives</span><span>middle management</span><span>employees paid hourly</span></div>
+  <div class="ce-en">This aspect was also <span class="hl-chunk">more highly valued by</span> <span class="hl-chunk">full-time executives</span> and <span class="hl-chunk">middle management</span> than <span class="hl-chunk">employees paid hourly</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">8</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">工作保障被 23% 的受访员工评为工作满意度的最大贡献因素。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Rated as</span><span>the top contributor to job satisfaction</span><span>23% of employees interviewed</span></div>
+  <div class="ce-en"><span class="hl-chunk">Rated as</span> <span class="hl-chunk">the top contributor to job satisfaction</span> by <span class="hl-chunk">23% of employees interviewed</span>, job security was found to be more important to employees without a university degree than to those who hold at least one.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">9</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">总体而言，调查结果显示，工作性质和工作保障被认为是本地劳动力整体工作满意度的两大贡献因素。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Overall</span><span>the findings show that</span><span>job nature and job security</span><span>the top two aspects contributing to</span><span>overall job satisfaction</span><span>local workforce</span></div>
+  <div class="ce-en"><span class="hl-chunk">Overall</span>, <span class="hl-chunk">the findings show that</span> <span class="hl-chunk">job nature and job security</span> are considered <span class="hl-chunk">the top two aspects contributing to</span> <span class="hl-chunk">overall job satisfaction</span> among the <span class="hl-chunk">local workforce</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">10</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">建议各组织的人力资源专业人士密切关注这两个因素，因为保持员工的高工作满意度有助于解决高流失率问题。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>It is recommended that</span><span>human resources professionals</span><span>pay close attention to</span><span>maintaining a high level of job satisfaction</span><span>help tackle high turnover</span></div>
+  <div class="ce-en"><span class="hl-chunk">It is recommended that</span> <span class="hl-chunk">human resources professionals</span> in organizations <span class="hl-chunk">pay close attention to</span> these two factors, as <span class="hl-chunk">maintaining a high level of job satisfaction</span> among employees can <span class="hl-chunk">help tackle high turnover</span>.</div>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 全篇约 320-350 词</p>
+</section>
+
+<section class="slide" data-title="🗂️ 真题范文翻译 · 2023 Report">
+<p class="sec-label">Section · Model Essay Translation</p>
+<h2 class="slide-h2">🗂️ 2023 DSE · Retirement Attitudes Survey</h2>
+<p style="font-size:17px;color:var(--text-2);margin-top:4px">2023 Q7 · Social Issues — <em>Shifting Views on Retirement: A Generational Divide</em> (1/2)</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">近期一项调查突显了日益扩大的代际鸿沟。调查显示，香港大多数六十多岁的人希望在传统的65岁退休年龄之后继续工作。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>a widening generational gap</span> <span>the conventional retirement age</span> <span>wish to work past</span></div>
+  <div class="ce-en">In recent findings that highlight <span class="hl-chunk">a widening generational gap</span>, a new survey has revealed that the majority of Hong Kong's population in their 60s <span class="hl-chunk">wish to work past</span> <span class="hl-chunk">the conventional retirement age</span> of 65.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">与此同时，香港年轻一代中有越来越多人表示想在三十多岁甚至四十出头就提早退休。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>a growing number of</span> <span>the younger demographic</span> <span>expressing a desire to retire early</span></div>
+  <div class="ce-en">Meanwhile, <span class="hl-chunk">a growing number of</span> the city's <span class="hl-chunk">younger demographic</span> are <span class="hl-chunk">expressing a desire to retire early</span> as early as their 30s or 40s.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这项由香港退休协会进行的调查发现，超过六成的60岁以上受访者倾向于在65岁后继续工作。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>conducted by</span> <span>preferred to continue working beyond</span></div>
+  <div class="ce-en">The survey, <span class="hl-chunk">conducted by</span> the Hong Kong Retirement Association, found that over 60% of participants aged 60 and above <span class="hl-chunk">preferred to continue working beyond</span> the age of 65.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">许多人表示，保持思维活跃、维持社交联系和经济独立，是他们对退休持这种看法的主要原因。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>stay mentally active</span> <span>socially engaged</span> <span>financially independent</span> <span>the primary reasons</span></div>
+  <div class="ce-en">Many cited the desire to <span class="hl-chunk">stay mentally active</span>, <span class="hl-chunk">socially engaged</span>, and <span class="hl-chunk">financially independent</span> as <span class="hl-chunk">the primary reasons</span> behind this preference.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">在代际鸿沟的另一边，越来越多的年轻人渴望提早退休。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>On the other side of the generational divide</span> <span>aspiring to retire early</span></div>
+  <div class="ce-en"><span class="hl-chunk">On the other side of the generational divide</span>, an increasing number of young people are <span class="hl-chunk">aspiring to retire early</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这股被称为FIRE（经济独立、提早退休）运动的趋势，鼓励人们积极储蓄和投资，以实现经济独立、比传统标准提早几十年退休。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>aggressive saving and investing</span> <span>achieving financial independence</span> <span>traditional norms</span></div>
+  <div class="ce-en">The rising trend, often referred to as the FIRE (Financial Independence, Retire Early) movement, encourages <span class="hl-chunk">aggressive saving and investing</span> with the goal of <span class="hl-chunk">achieving financial independence</span> and retiring decades earlier than <span class="hl-chunk">traditional norms</span> suggest.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这两种截然不同的观点，反映了人们对工作与退休的态度正在发生广泛转变，同时也折射出经济格局的变化。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>contrasting viewpoints</span> <span>a broader shift in attitudes</span> <span>the changing economic landscape</span></div>
+  <div class="ce-en">The <span class="hl-chunk">contrasting viewpoints</span> reflect <span class="hl-chunk">a broader shift in attitudes</span> towards work and retirement, as well as <span class="hl-chunk">the changing economic landscape</span>.</div>
+</div>
+</section>
+<section class="slide" data-title="🗂️ 真题范文翻译 · 2023 Report (续)">
+<p class="sec-label">Section · Model Essay Translation</p>
+<h2 class="slide-h2">🗂️ 2023 DSE · Retirement (续)</h2>
+<p style="font-size:17px;color:var(--text-2);margin-top:4px">2023 Q7 · Social Issues — <em>Shifting Views on Retirement: A Generational Divide</em> (2/2)</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">对于年长一代来说，更长的预期寿命、更高的生活成本，以及继续追求人生意义和参与社会的愿望，都是促使他们希望延长工作年限的因素。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>longer life expectancies</span> <span>a desire for purpose</span> <span>contributing factors</span> <span>extend their working years</span></div>
+  <div class="ce-en">For the older generation, <span class="hl-chunk">longer life expectancies</span>, higher living costs, and <span class="hl-chunk">a desire for purpose</span> and social engagement are <span class="hl-chunk">contributing factors</span> towards their wish to <span class="hl-chunk">extend their working years</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">对于年轻一代而言，想要提早退休，反映的其实是他们对更灵活、更平衡的生活方式的追求。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>the aspiration to retire early</span> <span>a more flexible and balanced lifestyle</span></div>
+  <div class="ce-en">For the younger generation, <span class="hl-chunk">the aspiration to retire early</span> reflects a desire for <span class="hl-chunk">a more flexible and balanced lifestyle</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">许多年轻人把人生体验和个人成就感看得比长期职业发展更重要。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>prioritising...over</span> <span>personal fulfilment</span></div>
+  <div class="ce-en">Many young people are <span class="hl-chunk">prioritising</span> experiences and <span class="hl-chunk">personal fulfilment over</span> long-term careers.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">然而，这样的抱负也伴随着一系列挑战，包括需要严格自律地储蓄、精明地投资，还要应对意料之外的支出。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>come with their own set of challenges</span> <span>disciplined saving</span> <span>astute investing</span> <span>unforeseen expenses</span></div>
+  <div class="ce-en">However, such aspirations also <span class="hl-chunk">come with their own set of challenges</span>, including the need for <span class="hl-chunk">disciplined saving</span>, <span class="hl-chunk">astute investing</span>, and the handling of <span class="hl-chunk">unforeseen expenses</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">的确，随着人们对退休的态度不断演变，政策制定者和雇主有必要调整政策、满足这些多样化的退休愿望。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>attitudes towards retirement continue to evolve</span> <span>adapt and accommodate</span> <span>diverse aspirations</span></div>
+  <div class="ce-en">Indeed, as people's <span class="hl-chunk">attitudes towards retirement continue to evolve</span>, it is crucial for policymakers and employers to <span class="hl-chunk">adapt and accommodate</span> these <span class="hl-chunk">diverse aspirations</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">很明显，一刀切的退休模式已经行不通了，更灵活、更个性化的方式可能才是未来的出路。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>a one-size-fits-all approach</span> <span>no longer applicable</span> <span>a more flexible and individualised approach</span></div>
+  <div class="ce-en">It is clear that <span class="hl-chunk">a one-size-fits-all approach</span> to retirement is <span class="hl-chunk">no longer applicable</span>, and <span class="hl-chunk">a more flexible and individualised approach</span> may be the way forward.</div>
+</div>
+</section>
+<section class="slide" data-title="🗂️ 真题范文翻译 · 2019 Report">
+<p class="sec-label">Section · Model Essay Translation</p>
+<h2 class="slide-h2">🗂️ 2019 DSE · International Talent</h2>
+<p style="font-size:17px;color:var(--text-2);margin-top:4px">2019 Q2 · Social Issues — <em>Balancing International Talent and Local Workforce</em> (1/2)</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">在21世纪的全球化经济中，企业越来越倾向于跨越地理界限去招募最优秀的人才。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>the globalized economy</span> <span>looking beyond geographical boundaries</span> <span>recruit the best talent</span></div>
+  <div class="ce-en">In <span class="hl-chunk">the globalized economy</span> of the 21st century, companies are increasingly <span class="hl-chunk">looking beyond geographical boundaries</span> to <span class="hl-chunk">recruit the best talent</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这个国际人才库给香港社会既带来了诸多好处，也带来了挑战。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>international talent pool</span> <span>brings with it</span> <span>benefits as well as challenges</span></div>
+  <div class="ce-en">This <span class="hl-chunk">international talent pool</span> <span class="hl-chunk">brings with it</span> numerous <span class="hl-chunk">benefits as well as challenges</span> to Hong Kong society.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">至关重要的是，必须在善用全球专才和培养本地人才之间找到平衡。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>strike a balance between</span> <span>leveraging global expertise</span> <span>nurturing local talent</span></div>
+  <div class="ce-en">It is essential to <span class="hl-chunk">strike a balance between</span> <span class="hl-chunk">leveraging global expertise</span> and <span class="hl-chunk">nurturing local talent</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">国际人才的涌入带来了丰富的好处。首先，它带来了多元化的技能和视角，促进了创新、提升了竞争力。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>a wealth of benefits</span> <span>introduces diverse skills and perspectives</span> <span>fostering innovation and competitiveness</span></div>
+  <div class="ce-en">The infusion of international talent brings <span class="hl-chunk">a wealth of benefits</span>. Firstly, it <span class="hl-chunk">introduces diverse skills and perspectives</span>, <span class="hl-chunk">fostering innovation and competitiveness</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">来自不同文化和专业背景的人带来了独特的见解和想法，既丰富了工作环境，也为解决问题和做决策做出了贡献。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>cultural and professional backgrounds</span> <span>unique insights and ideas</span> <span>enriching the work environment</span> <span>problem-solving and decision-making</span></div>
+  <div class="ce-en">Individuals from different <span class="hl-chunk">cultural and professional backgrounds</span> bring <span class="hl-chunk">unique insights and ideas</span>, <span class="hl-chunk">enriching the work environment</span> and contributing to <span class="hl-chunk">problem-solving and decision-making</span> processes.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">其次，国际专才有助建立全球网络、促进国际合作与伙伴关系，从而提升香港在全球经济中的地位。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>build global networks</span> <span>facilitating international collaborations</span> <span>boosting Hong Kong's standing</span></div>
+  <div class="ce-en">Secondly, international professionals help to <span class="hl-chunk">build global networks</span>, <span class="hl-chunk">facilitating international collaborations</span> and partnerships, thereby <span class="hl-chunk">boosting Hong Kong's standing</span> in the global economy.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">然而，国际人才的涌入也带来了挑战——它可能加剧就业市场的竞争，甚至令本地人才被边缘化。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>the influx of international talent</span> <span>presents challenges</span> <span>potentially marginalizing local talent</span></div>
+  <div class="ce-en">However, <span class="hl-chunk">the influx of international talent</span> also <span class="hl-chunk">presents challenges</span>. It can lead to increased competition in the job market, <span class="hl-chunk">potentially marginalizing local talent</span>.</div>
+</div>
+</section>
+<section class="slide" data-title="🗂️ 真题范文翻译 · 2019 Report (续)">
+<p class="sec-label">Section · Model Essay Translation</p>
+<h2 class="slide-h2">🗂️ 2019 DSE · International Talent (续)</h2>
+<p style="font-size:17px;color:var(--text-2);margin-top:4px">2019 Q2 · Social Issues — <em>Balancing International Talent and Local Workforce</em> (2/2)</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">这种情况可能会加剧社会不平等，引发不满；此外，语言和文化差异也可能造成融入障碍，进而导致社会分化。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>exacerbate social inequalities</span> <span>pose integration challenges</span> <span>social fragmentation</span></div>
+  <div class="ce-en">This situation could <span class="hl-chunk">exacerbate social inequalities</span> and lead to resentment. Moreover, language and cultural differences might <span class="hl-chunk">pose integration challenges</span>, potentially leading to <span class="hl-chunk">social fragmentation</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">为了确保本地社群不被忽视，实施包容性的就业政策至关重要。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>the local community is not neglected</span> <span>implement inclusive employment policies</span></div>
+  <div class="ce-en">To ensure that <span class="hl-chunk">the local community is not neglected</span>, it is crucial to <span class="hl-chunk">implement inclusive employment policies</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">应该鼓励企业投资本地员工的培训与发展，让他们具备在全球市场竞争所需的技能。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>invest in the training and development of</span> <span>equipping them with the skills</span> <span>compete in the global market</span></div>
+  <div class="ce-en">Companies should be encouraged to <span class="hl-chunk">invest in the training and development of</span> local employees, <span class="hl-chunk">equipping them with the skills</span> needed to <span class="hl-chunk">compete in the global market</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">实习和导师计划可以为本地人才提供宝贵机会，让他们向国际同行学习，促进知识和技能的双向交流。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>internship and mentorship programs</span> <span>valuable opportunities</span> <span>a mutually beneficial exchange of knowledge and skills</span></div>
+  <div class="ce-en"><span class="hl-chunk">Internship and mentorship programs</span> could provide <span class="hl-chunk">valuable opportunities</span> for local talent to learn from their international counterparts, fostering <span class="hl-chunk">a mutually beneficial exchange of knowledge and skills</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">总的来说，虽然引进国际人才为香港社会带来了显著好处，但也带来了一些挑战。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>In conclusion</span> <span>brings significant benefits</span> <span>presents certain challenges</span></div>
+  <div class="ce-en"><span class="hl-chunk">In conclusion</span>, while the recruitment of international talent <span class="hl-chunk">brings significant benefits</span> to Hong Kong society, it also <span class="hl-chunk">presents certain challenges</span>.</div>
+</div>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="font-size:18px;color:var(--text-1);line-height:1.75;margin-top:10px">通过制定战略性政策和措施，我们可以在善用全球人才和培养本地劳动力之间取得平衡，从而建设一个既在多元中蓬勃发展、又坚守公平原则的和谐包容社会。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>strategic policies and initiatives</span> <span>strike a balance</span> <span>a harmonious and inclusive society</span> <span>thrives on diversity</span> <span>upholds the principle of fairness</span></div>
+  <div class="ce-en">Through <span class="hl-chunk">strategic policies and initiatives</span>, it is possible to <span class="hl-chunk">strike a balance</span> between leveraging global talent and nurturing local workforce, thereby ensuring <span class="hl-chunk">a harmonious and inclusive society</span> that <span class="hl-chunk">thrives on diversity</span> and <span class="hl-chunk">upholds the principle of fairness</span>.</div>
+</div>
+</section>
+<section class="slide" data-title="📝 互动练习 · Memo">
+<p class="sec-label">Part Four · Practice</p>
+<h2 class="slide-h2">📝 备忘录填空练习</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据提示完成备忘录内容。</p>
+<div class="ce-item">
+  <div class="ce-cn"><b>Format:</b> Memo 的开头四个部分分别是 To: / ______: / ______: / ______:</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">From / Date / Subject</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Inform:</b> I would like to ______ you of the upcoming event. (通知)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">inform</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Deadline:</b> The ______ for entries is 30 May. (截止日期)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">deadline</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Release:</b> The results will be ______ on 15 June. (公布)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">released</div>
+</div>
+</section><section class="slide" data-title="📝 互动练习 · 选择题">
+<p class="sec-label">Part Four · Practice</p>
+<h2 class="slide-h2">📝 写作知识选择题</h2>
+<div class="quiz-card" data-correct="1">
+  <div class="quiz-q">Memo 与 Letter/Email 最大的区别是什么？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Memo 更正式</button><button class="quiz-opt" onclick="checkQuiz(this)">Memo 没有 salutation 和 closing remark</button><button class="quiz-opt" onclick="checkQuiz(this)">Memo 只能手写</button><button class="quiz-opt" onclick="checkQuiz(this)">Memo 必须很长</button></div>
+  <div class="quiz-ans">✅ <b>Memo 没有 salutation 和 closing remark</b> — 这是 memo 格式的核心特点，直接 To/From/Date/Subject + opening + body。</div>
+</div><div class="quiz-card" data-correct="1">
+  <div class="quiz-q">Report 应该使用什么语态和人称？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Active voice + first person</button><button class="quiz-opt" onclick="checkQuiz(this)">Passive voice + third person</button><button class="quiz-opt" onclick="checkQuiz(this)">Active voice + second person</button><button class="quiz-opt" onclick="checkQuiz(this)">Passive voice + first person</button></div>
+  <div class="quiz-ans">✅ <b>Passive voice + third person</b> — 使报告 objective + impersonal。</div>
+</div><div class="quiz-card" data-correct="1">
+  <div class="quiz-q">Report 的 Body 部分应该用什么来组织内容？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">只写一段</button><button class="quiz-opt" onclick="checkQuiz(this)">headings and subheadings</button><button class="quiz-opt" onclick="checkQuiz(this)">bullet points only</button><button class="quiz-opt" onclick="checkQuiz(this)">no structure</button></div>
+  <div class="quiz-ans">✅ <b>headings and subheadings</b> — 每段一个 heading，有 clear topic sentence + supporting sentences。</div>
+</div>
+</section><section class="slide" data-title="✏️ 学生作品提交">
+<p class="sec-label">Part Five · Submission</p>
+<h2 class="slide-h2">✏️ 学生作品提交与反馈</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">完成以下练习，提交你的写作成果。</p>
+<div class="student-input-wrap">
+<label>📌 <b>Task 1: Memo Practice</b><br>假设你是学生会成员，需要向学生会主席写一份备忘录，通知以下事项：<br>① 下周五将举办义卖活动 ② 需要 10 名志愿者 ③ 报名截止日期为下周一<br>请用正确的 memo 格式写出 To / From / Date / Subject + Opening + Body。</label>
+<textarea class="student-ta" id="my-ta1" placeholder="在此输入你的 Memo..."></textarea>
+<button class="submit-btn" id="my-sb1" onclick="submitAnswer(this,'my-ta1','my-ans1')">✏️ 提交我的回答</button>
+<div class="student-answer" id="my-ans1"></div>
+<button class="edit-btn" id="my-ta1-eb" onclick="continueEdit('my-ta1','my-ans1','my-sb1')" style="display:none">✏️ 继续输入</button>
+</div>
+<div class="student-input-wrap mt-l">
+<label>📌 <b>Task 2: Report Introduction</b><br>请为以下报告题目写一个 Introduction（2-3 句话）：<br><i>"Report on students' use of social media"</i><br>要求：提供背景信息 + 说明写作目的，使用 passive voice + third person。</label>
+<textarea class="student-ta" id="my-ta2" placeholder="在此输入你的 Introduction..."></textarea>
+<button class="submit-btn" id="my-sb2" onclick="submitAnswer(this,'my-ta2','my-ans2')">✏️ 提交我的回答</button>
+<div class="student-answer" id="my-ans2"></div>
+<button class="edit-btn" id="my-ta2-eb" onclick="continueEdit('my-ta2','my-ans2','my-sb2')" style="display:none">✏️ 继续输入</button>
+</div>
+</section><section class="slide" data-title="📝 作业布置">
+<p class="sec-label">Part Six · Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成 Memo（Part A 模拟）</h4>
+  <p>假设你是学校环保社成员，需要向校长写一份备忘录，通知以下事项：<br>① 下月将举办环保周活动 ② 需要招募 20 名志愿者 ③ 活动预算为 $5000<br>要求：正确格式 + 简洁正式 + 约 160-180 词。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 完成 Report 大纲（Part B 准备）</h4>
+  <p>从以下题目任选一个，写出完整的 Title + Introduction + 2 个 Body section 的 heading 和 topic sentence + Conclusion：<br>
+  ① "Report on students' sleep habits"<br>
+  ② "Report on the use of smartphones in class"<br>
+  ③ "Report on students' part-time job experience"</p>
+</div>
+<div class="hw-card">
+  <h4>3. 词伙背诵</h4>
+  <p>背诵本课 14 个核心词伙（Memo 句式 6 个 + Report 句式 8 个），下节课抽查。</p>
+</div>
+</section><section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Summary</p>
+<h2 class="slide-h2">✅ 本课知识清单</h2>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Memo 格式：To / From / Date / Subject + Opening + Body（无 salutation / closing）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Memo 通知句式：I would like to inform you of... / let you know about...</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Report 结构：Title → Introduction → Body (headings) → Conclusion → Recommendations</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Report 语言特点：passive voice + third person → objective + impersonal</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Report 常用时态：past simple / present perfect / present simple / present continuous</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Report 句式：This report aims at... / It is recommended that...</span>
+</div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s20-exp');a.classList.toggle('show')">📖 查看常用表达汇总</button>
+<div id="s20-exp" class="ce-en" style="display:none">
+  <b>Memo 句式：</b>I would like to inform you of... / I would like to let you know about... / I would like to tell you about... / The deadline for entries is... / The results will be released on...<br><br>
+  <b>Report 句式：</b>This report aims at presenting... / A survey was conducted... / The findings show that... / It is recommended that... / Overall,... / In sum,...
+</div>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Module 3！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：Memo 格式 → Memo 词伙 → 逐句翻译 → 大意写作 → Report 引入 → Report 结构 → Report 词伙 → 翻译练习 → Report 分析 → 常见错误 → 范文逐句翻译 → 互动练习 → 实战写作</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+
+
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── Basic keydown (arrows only, for V4–V6 courseware) ──
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='m3work_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u303',weakKey:'wordform',mode:'quiz'};</script>
+</body></html>

@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparatory Class Unit 5 &middot; Reading &amp; Writing Web Courseware v1</title>
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="palette-panel" id="palettePanel">
+  <div class="pp-title">Theme Color</div>
+  <div class="palette-grid" id="paletteGrid"></div>
+  <div class="pp-note">saved locally</div>
+</div>
+<div class="deck">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">&lt;/&gt; READING</div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+    </div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-score">
+      <div class="score-ring">
+        <svg viewBox="0 0 36 36"><circle class="ring-bg" cx="18" cy="18" r="14"/><circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/></svg>
+        <div class="ring-text">0%</div>
+      </div>
+      <div class="score-detail"><div class="sd-label">Score</div><div class="sd-val">0/0</div></div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+      <span class="theme-label">Dark Mode</span>
+    </div>
+  </aside>
+  <button class="sb-edge-tab" onclick="toggleSidebar()" title="Expand sidebar (S)">&#9776;</button>
+  <div class="main-area">
+    <div class="topbar">
+      <span class="course-tag">Preparatory &middot; Unit 5</span>
+      <span class="slide-title mono" id="topbarTitle"></span>
+      <span class="page-counter page-counter-top" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span><span class="pc-total" id="pcTotal"></span></span>
+      <span class="score-badge"><span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span></span>
+      <span class="streak-badge" style="display:none"><span class="streak-fire">🔥</span><span class="streak-count">0</span></span>
+      <span class="zoom-controls">
+        <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+        <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+        <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+      </span>
+      <span class="timer-wrap">
+        <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets">
+          <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5"><span class="t-colon">:</span><input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00"><span class="timer-done-label">TIME UP</span>
+        </span>
+        <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+        <button class="timer-reset" onclick="resetTimer()">Reset</button>
+      </span>
+      <button class="hint-toggle-btn" id="hintToggleBtn" onclick="toggleHints()" title="Show/hide all method tips (H)">💡 Show Tips</button>
+      <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode">🔒 Easy</button>
+      <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+      <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">↺ Reset</button>
+      <span class="palette-wrap"><button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">🎨</button></span>
+      <button class="clear-hl-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker">🎲</button>
+    </div>
+    <div class="rand-overlay" id="randOverlay" onclick="if(event.target===this)toggleRandPanel()">
+      <div class="rand-card">
+        <div class="rand-head"><span class="rand-title">🎲 Random Picker</span><span class="rand-range-wrap">1 – <input class="rand-max" id="randMax" type="number" min="2" max="999" value="40"></span></div>
+        <div class="rand-num" id="randNum">?</div>
+        <div class="rand-btns"><button class="rand-go" onclick="drawRandom()">Pick!</button><button class="rand-close" onclick="toggleRandPanel()">Close</button></div>
+        <div class="rand-history" id="randHistory"></div>
+      </div>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
+<section class="slide is-active" data-title="Cover" data-section="cover" data-part="Course intro">
+
+<div class="s1-card-wrapper">
+  <div class="xdf-header-bar">
+    <div class="xdf-logo-text">DSE READING <span>// Preparatory</span></div>
+    <div class="xdf-sub-text">Unit 5 · Happy travels</div>
+  </div>
+  <div style="padding:28px 32px">
+    <div class="slide-h1" style="text-align:center;margin-bottom:6px">Unit 5 · Happy travels</div>
+    <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Positive &amp; Negative Language · Tone &amp; Attitude · Conditionals</div>
+    <div style="display:flex;justify-content:center;margin-bottom:24px">
+      <div class="teacher-badge"><div class="tb-avatar">C</div><div class="tb-name">Teacher Chengyu</div><div class="tb-tag">TEACHER</div></div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:20px"><div class="class-badge">Preparatory &middot; Reading &amp; Writing Unit 5</div></div>
+    <div class="s1-meta-grid">
+      <div class="s1-meta-card"><div class="sm-label">Textbook &middot; Reading</div><div class="sm-value">5 Texts + Q1&ndash;47</div><div class="sm-label">Textbook &middot; Writing</div><div class="sm-value">Cohesive devices + Rhetorical devices + Diary + Reflective</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Skill Builder</div><div class="sm-value">Reading article + Grammar conditionals + Language practice + Writing feedback email</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Skill Builder · Reading</div><div class="sm-value">Travel + Q1–12</div><div class="sm-sub">Tone / Attitude / Matching</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Skill Builder · Writing</div><div class="sm-value">Conditionals + Feedback email</div><div class="sm-sub">Cloze / Rewrite / Email</div></div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-item"><div class="tl-num">1</div><div class="tl-text">Textbook Reading skills</div></div><div class="tl-arrow">&rarr;</div>
+      <div class="tl-item"><div class="tl-num">2</div><div class="tl-text">Textbook Exam practice</div></div><div class="tl-arrow">&rarr;</div>
+      <div class="tl-item"><div class="tl-num">3</div><div class="tl-text">Skill Builder Reading</div></div><div class="tl-arrow">→</div>
+      <div class="tl-item"><div class="tl-num">4</div><div class="tl-text">Writing + Grammar</div></div>
+    </div>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Intro &middot; Reading skills Booster" data-section="intro" data-part="Textbook &middot; Reading skills">
+
+<div class="slide-h1">✈️ Unit 5 Happy travels <span class="h1-en">Reading skills Booster</span></div>
+<div class="method-badge"><span class="mb-key">Two key reading skills</span><span><strong>Understanding positive and negative language</strong> + <strong>Identifying tone and attitude</strong>. First, familiarize yourself with the theme vocabulary and warm-up questions (textbook pages 84&ndash;85).</span></div>
+<div class="card">
+  <h4>Reading skills Booster</h4>
+  <p>To familiarize yourself with the theme of this unit, go to pages 84–85 for theme-related vocabulary and warm-up questions.</p>
+</div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Skill 1 &middot; Positive &amp; negative language</div><p>Identify positive or negative language the writer uses to understand their opinions and attitude.</p></div>
+  <div class="info-card"><div class="ic-title">Skill 2 &middot; Tone and attitude</div><p>Through word choice, details, style and punctuation, identify the writer's tone (e.g. positive, sarcastic) and attitude (e.g. critical, supportive).</p></div>
+</div>
+
+</section>
+<section class="slide" data-title="Skill 1 &middot; Positive &amp; negative language" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="slide-h1">&#128161; Reading skill 1: Positive &amp; negative language <span class="h1-en">Positive &amp; negative language</span></div>
+<div class="card">
+  <p>When you read a text, pay attention to the language the writer uses. Is there a lot of positive language or a lot of negative language? This will help you understand the writer's opinions and attitude, as well as the tone of the writing.</p>
+</div>
+<div class="sec-label">To decide whether a text contains positive or negative language, pay particular attention to:</div>
+<div class="card">
+  <ul class="styled-list">
+    <li><strong>Adjectives:</strong> positive (beautiful, warm) or negative (ugly, cold)</li>
+    <li><strong>Nouns:</strong> positive (advantage, neatness) or negative (disadvantage, mess)</li>
+    <li><strong>Figurative language:</strong> positive (as bright as a button) or negative (as dull as ditchwater)</li>
+    <li><strong>Other language:</strong> verbs (disappoint), adverbs of manner and degree (depressingly, exorbitantly), negatives (not inviting, didn't impress)</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="A1 &middot; Italian restaurant ad vs negative review" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="sec-label">A1 &middot; Exercise</div>
+<div class="slide-h2">🇮🇹 Santorini's: The best pizza in Rome! vs The worst pizza in Rome!</div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Positive language in the advertisement</div>
+    <p><span class="cloze" onclick="revealCloze(this)" data-answer="warm welcome">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="freshest ingredients">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="most talented chefs">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="finger-licking good">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="delicious">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="mouth-watering">＿＿＿＿＿＿</span></p>
+  </div>
+  <div class="info-card"><div class="ic-title">Negative language in the review</div>
+    <p><span class="cloze" onclick="revealCloze(this)" data-answer="rude">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="long wait">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="cold">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="tasteless">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="reluctantly">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="extortionate">＿＿＿＿＿＿</span>,
+       <span class="cloze" onclick="revealCloze(this)" data-answer="overrated tourist trap">＿＿＿＿＿＿</span></p>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="A2 &middot; Hotel review tone identification" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="sec-label">A2 &middot; Exercise</div>
+<div class="slide-h2">🏨 Hotel reviews: tone identification</div>
+<div class="card">
+  <h4>1. Tower Bridge Hotel, London</h4>
+  <p>Overall tone: <span class="cloze" onclick="revealCloze(this)" data-answer="negative">＿＿＿＿＿＿</span></p>
+  <p>Negative language: <span class="cloze" onclick="revealCloze(this)" data-answer="disappointment, ugly alley, rubbish, depressing, small, claustrophobic">＿＿＿＿＿＿</span></p>
+</div>
+<div class="card">
+  <h4>2. Trysil Ski Lodge, Norway</h4>
+  <p>Overall tone: <span class="cloze" onclick="revealCloze(this)" data-answer="positive">＿＿＿＿＿＿＿＿</span></p>
+  <p>Positive language: <span class="cloze" onclick="revealCloze(this)" data-answer="amazing, great, modern, cosy, big, clean, wonderful view, highly recommended">＿＿＿＿＿＿</span></p>
+</div>
+<div class="card">
+  <h4>3. Mayan Dreams Resort, Mexico</h4>
+  <p>Overall tone: <span class="cloze" onclick="revealCloze(this)" data-answer="negative">＿＿＿＿＿＿＿＿</span></p>
+  <p>Negative language: <span class="cloze" onclick="revealCloze(this)" data-answer="cannot recommend, stale, dirty, no one came, like talking to a brick wall, not enough sun loungers">＿＿＿＿＿＿＿＿</span></p>
+</div>
+
+</section>
+<section class="slide" data-title="Skill 2 &middot; Tone and attitude" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="slide-h1">&#128161; Reading skill 2: Identifying tone and attitude <span class="h1-en">Identifying tone and attitude</span></div>
+<div class="card">
+  <p>Some questions in the exam will ask you about the writer's tone or attitude. If you can identify whether the language in a text is positive or negative, this will give you an indication of the writer's tone. The tone shows the writer's attitude towards the subject.</p>
+</div>
+<div class="sec-label">A writer's tone may be positive, negative, serious, sarcastic, etc. His/her attitude may be ashamed, confident, confused, critical, enthusiastic, indifferent, positive, playful, negative, reflective, serious, supportive, sympathetic, worried, etc.</div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Tone</div><p>positive, negative, serious, sarcastic...</p></div>
+  <div class="info-card"><div class="ic-title">Attitude</div><p>ashamed, confident, confused, critical, enthusiastic, indifferent, playful, reflective, supportive, sympathetic, worried...</p></div>
+</div>
+<div class="sec-label">To identify the tone or the writer's attitude, think about:</div>
+<div class="card">
+  <ol class="styled-list">
+    <li>The writer's choice of words. Are they positive or negative?</li>
+    <li>The details the writer includes. Does he/she use specific images or descriptions? What message do they send?</li>
+    <li>The style of the writing. Is it very formal or informal?</li>
+    <li>The punctuation the writer uses. Are there a lot of exclamation marks (!), dashes (&mdash;) and question marks (?)?</li>
+  </ol>
+</div>
+
+</section>
+<section class="slide" data-title="B1 &middot; Ladies Market review" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="sec-label">B1 &middot; Exercise</div>
+<div class="slide-h2">🛍️ Ladies Market reviews</div>
+<table class="ans-table">
+  <tr class="at-head"><td>Review no.</td><td>Language</td><td>Tone/Attitude</td></tr>
+  <tr class="at-row"><td>1</td><td>positive</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="positive, pleased, enthusiastic, impressed">＿＿＿＿＿＿</span></td></tr>
+  <tr class="at-row"><td>2</td><td>negative</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="negative, critical, disapproving, displeased, angry">＿＿＿＿＿＿</span></td></tr>
+  <tr class="at-row"><td>3</td><td>neutral/slightly negative</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="neutral, indifferent, unimpressed, unenthusiastic">＿＿＿＿＿＿</span></td></tr>
+</table>
+
+</section>
+<section class="slide" data-title="B2 &middot; Antarctica travel forum post" data-section="skills" data-part="Textbook &middot; Reading skills">
+
+<div class="sec-label">B2 &middot; Exercise</div>
+<div class="slide-h2">🐧 Antarctica travel forum posts</div>
+<div class="card">
+  <h4>1. Patty_17</h4>
+  <p>Tone/Attitude: <span class="cloze" onclick="revealCloze(this)" data-answer="critical, worried, serious, reflective">＿＿＿＿＿＿</span></p>
+</div>
+<div class="card">
+  <h4>2. Cruella</h4>
+  <p>Tone/Attitude: <span class="cloze" onclick="revealCloze(this)" data-answer="positive, excited, enthusiastic, impressed">＿＿＿＿＿＿</span></p>
+</div>
+<div class="card">
+  <h4>3. PeteD</h4>
+  <p>Tone/Attitude: <span class="cloze" onclick="revealCloze(this)" data-answer="negative, critical, disgusted, angry">＿＿＿＿＿＿</span></p>
+</div>
+
+</section>
+<section class="slide" data-title="Part A &middot; Text 1 intro" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="slide-h1">🍽️ Exam practice Part A <span class="h1-en">My life as a restaurant intern</span></div>
+<div class="method-badge"><span class="mb-key">&#128214; Read Texts 1&ndash;2</span><span>Read Texts 1&ndash;2 and answer questions 1&ndash;23. Text 1 is a restaurant intern&rsquo;s diary (Week 1 + Week 17); Text 2 is an article explaining the benefits of a culinary internship.</span></div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Text 1 · Restaurant intern diary</div><p>Week 1 §1–§5 + Week 17 §6–§10 → Q1–14。</p></div>
+  <div class="info-card"><div class="ic-title">Text 2 · Recipe for success</div><p>§1–§5 → Q15–23。</p></div>
+</div>
+
+</section>
+<section class="slide" data-title="Text 1 &middot; Restaurant intern diary §1&ndash;5" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Text 1: My life as a restaurant intern（§1–§5 · Week 1）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§1</div>Well, I've made it through to the end of my first week as a kitchen intern &mdash; or <em>stagiaire</em> as I've learnt we're called! I'm working for Vegelicious, a chain of restaurants in Australia specializing in gluten-free and vegan food. They use only the freshest ingredients. I've tried some of the dishes and they're really mouth-watering! It almost makes me want to become a vegan ... almost! The internship lasts four months, and the first stage is in Sydney. After two months, I'll be moving to another restaurant in Perth.</div>
+  <div class="passage-excerpt"><div class="para-num">§2</div>I have to say, I'm feeling a bit shocked right now. I'm not used to manual labour, so working in a hot, cramped kitchen for ten hours a day takes some getting used to. Last night, my legs were throbbing because I'd been on my feet for so long!</div>
+  <div class="passage-excerpt"><div class="para-num">§3</div>The job itself is far from glamorous. There are lots of repetitive tasks to do, like washing salad leaves or peeling potatoes, which can be as dull as ditchwater. If you're thinking of getting into the restaurant business for excitement and an easy life, you can forget it!</div>
+  <div class="passage-excerpt"><div class="para-num">§4</div>I've also struggled a little bit with the language barrier this week. I'm the only non-native speaker in the kitchen, and my co-workers speak fast and use slang. I can't always understand their accent. I'm worried I'm going to miss an important instruction! I feel a bit foolish when I have to ask someone to repeat what they've said for the second or third time. It also makes me feel a bit homesick &mdash; I've never been away from home before and I miss being able to chat effortlessly to my friends and family in Cantonese.</div>
+  <div class="passage-excerpt"><div class="para-num">§5</div>To be honest, I'm not sure how I'm going to make it through the next four months. I'm counting down the hours until my internship ends &mdash; 830 to go!</div>
+</div>
+
+</section>
+<section class="slide" data-title="Text 1 &middot; Restaurant intern diary §6&ndash;10" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Text 1: My life as a restaurant intern（§6–§10 · Week 17）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§6</div>Wow! I can't believe it's all over! My life as a stagiaire has come to an end. It's an experience I'll never forget.</div>
+  <div class="passage-excerpt"><div class="para-num">§7</div>I'll admit that I struggled for about the first six weeks. I'm something of a perfectionist, and I was making a lot of mistakes. Of course I was &mdash; I didn't know anything at that stage! I kept preparing the wrong vegetables or misunderstanding my boss's instructions. Then one day, I put a load of apple peelings in the bin because I thought they were rubbish. It turned out one of the sous-chefs had been slaving over them for the past two hours for a special new dessert. He was rightly furious with me, and I burst into tears.</div>
+  <div class="passage-excerpt"><div class="para-num">§8</div>I probably would have quit right there and then, but my boss took me aside and gave me some advice. &lsquo;I still make mistakes,&rsquo; he said. &lsquo;We all make mistakes. The important thing is to learn from them, and try not to make the same mistake again.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§9</div>Then something extraordinary happened. It was as if a light bulb had gone on in my brain. I realized that in order to grow and learn, I had to step out of my comfort zone. After that little pep talk, I started to work hard to learn everything I could about how a professional kitchen works. I learnt cooking and baking techniques, I learnt about ingredients, and I learnt which dishes make the most profit. I threw myself into my work and I loved it. I got promoted, and on the last day the head chef presented me with a letter of recommendation. I couldn't have been more proud!</div>
+  <div class="passage-excerpt"><div class="para-num">§10</div>Above all, my experience has taught me empathy for other people who work in the service industry. Next time I go out for dim sum or a pizza with my friends, I'll appreciate the work that has gone into preparing my meal. And I'll definitely leave a tip.</div>
+</div>
+
+</section>
+<section class="slide" data-title="Text 2 &middot; Recipe for success §1&ndash;5" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Text 2: How a culinary internship can be the recipe for success（§1–§5）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§1</div>You might think that an internship with a restaurant kitchen is only useful for those aiming to build a career in the catering industry, but you'd be wrong. The fast-paced, demanding world of the professional kitchen is a great place to learn many transferable skills that can serve you well no matter what industry you end up working in.</div>
+  <div class="passage-excerpt"><div class="para-num">§2</div>The first rule of the kitchen is not to keep the customer waiting. According to Michel S&eacute;vres, an award-winning chef, professional kitchens are run at a breakneck speed. &lsquo;It&rsquo;s important our interns learn how to judge how long a task will take to complete, prioritize urgent tasks and make sure they meet deadlines.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§3</div>If you&rsquo;re a disorganized kind of person, a culinary internship will whip you into shape, and fast. &lsquo;You&rsquo;ll need to know where all your ingredients and tools are, and you&rsquo;ll be continually cleaning up as you go along,&rsquo; explains Wendy Chung, who interned at a gourmet pizza restaurant last summer. &lsquo;If you don&rsquo;t, you&rsquo;ll be working in chaos.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§4</div>Also, don&rsquo;t underestimate the social skills that this kind of work experience can nurture. Alice Kwah, HR manager for a Michelin-starred restaurant, explains: &lsquo;You&rsquo;ll need to be able to understand orders, ask for help when necessary (and offer help if you can), and take on board any criticism. You may well be working with people from around the world, which offers a unique chance to hone your language skills and become more open to foreign cultures.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§5</div>At the end of your internship, whether you decide to pursue a career in catering or not, you'll have some valuable experience that looks great on your CV, and you'll be more employable. And if you manage to get a personal letter of recommendation from the head chef, the world is your oyster.</div>
+</div>
+<div class="method-badge"><span class="mb-key">🏁 END OF READING PASSAGES</span><span>End of Text 2 &mdash; now move on to Questions 1&ndash;23.</span></div>
+
+</section>
+<section class="slide" data-title="Q1&ndash;Q5 &middot; Text 1 details &amp; vocabulary" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Part A · Q1–Q5（Text 1）</div>
+<div class="practice-mcq" id="q1-box">
+  <div class="pmcq-label">Q1 · Vocabulary · ¶2</div>
+  <div class="pmcq-q">Which word in paragraph 2 means &lsquo;with not enough space to move around freely&rsquo;?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="cramped">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q2-box">
+  <div class="pmcq-label">Q2 · Tone · ¶2</div>
+  <div class="pmcq-q">What is the tone of paragraph 2?</div>
+  <div class="pmcq-options" id="q2-opts">
+    <span class="pmcq-opt" data-correct="false" data-explain="The writer says 'shocked', not calm." onclick="checkMCAuto(this)"><span class="pl">A</span>peaceful</span>
+    <span class="pmcq-opt" data-correct="false" data-explain="'Shocked' is not the same as 'excited'." onclick="checkMCAuto(this)"><span class="pl">B</span>excited</span>
+    <span class="pmcq-opt" data-correct="false" data-explain="There is no angry language." onclick="checkMCAuto(this)"><span class="pl">C</span>angry</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="&para;2: 'I'm feeling a bit shocked' = surprised." onclick="checkMCAuto(this)"><span class="pl">D</span>surprised</span>
+  </div>
+  <div class="method-wrap" style="display:none"><span class="method-badge method-hidden">Key word 'shocked' corresponds to 'surprised'.</span></div>
+</div>
+<div class="practice-mcq" id="q3-box">
+  <div class="pmcq-label">Q3 · Language feature · ¶3</div>
+  <div class="pmcq-q">In paragraph 3, what simile does the writer use for describing the tasks often done in a professional kitchen?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="(can be) as dull as ditchwater">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q4-box">
+  <div class="pmcq-label">Q4 · Synonym · ¶4</div>
+  <div class="pmcq-q">Find a word in paragraph 4 which has a similar meaning to &lsquo;easily&rsquo;.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="effortlessly">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q5-box">
+  <div class="pmcq-label">Q5 · Summary cloze · ¶4 · 3 marks</div>
+  <div class="pmcq-q">Complete the summary of paragraph 4 by using a word or phrase taken from paragraph 4 for each gap. Communication is not easy because the writer is (i) <span class="cloze" onclick="revealCloze(this)" data-answer="the only non-native speaker">＿＿＿＿＿＿</span>; also, other people in the kitchen speak with an (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="accent">＿＿＿＿＿＿</span> and they all talk (iii) <span class="cloze" onclick="revealCloze(this)" data-answer="fast / use slang">＿＿＿＿＿＿</span>.</div>
+</div>
+
+</section>
+<section class="slide" data-title="Q6&ndash;Q10 &middot; Text 1 tone &amp; reference &amp; matching" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Part A · Q6–Q10（Text 1）</div>
+<div class="practice-mcq" id="q6-box">
+  <div class="pmcq-label">Q6 · Tone · ¶5</div>
+  <div class="pmcq-q">What is the tone of paragraph 5?</div>
+  <div class="pmcq-options" id="q6-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>optimistic</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="&para;5 The writer worries about enduring the internship." onclick="checkMCAuto(this)"><span class="pl">B</span>worried</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>frightened</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>jealous</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q7-box">
+  <div class="pmcq-label">Q7 · Tone · ¶6</div>
+  <div class="pmcq-q">Which of the following best describes the tone of paragraph 6?</div>
+  <div class="pmcq-options" id="q7-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>sad</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The internship is over; the writer is relieved." onclick="checkMCAuto(this)"><span class="pl">B</span>relieved</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>hopeful</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>decisive</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q8-box">
+  <div class="pmcq-label">Q8 · Reference · ¶7</div>
+  <div class="pmcq-q">Who does &lsquo;He&rsquo; (line 28) refer to?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="one of the sous-chefs">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q9-box">
+  <div class="pmcq-label">Q9 &middot; Character view matching (TWO not used)</div>
+  <div class="pmcq-q">Using information from paragraphs 4&ndash;9, match the person on the left with the statement which best represents their thoughts listed on the right. Write the letter (A&ndash;F) on the line next to the person's name. TWO of the statements are not used. Each letter can be used only once. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Person</td><td>Answer</td><td>Statements</td></tr>
+    <tr class="at-row"><td>i) The writer's boss</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="E">＿＿＿＿＿＿</span></td><td>A. 'The job was tough at first but I'm glad I stayed with it.'</td></tr>
+    <tr class="at-row"><td>ii) The writer</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿＿＿＿＿＿</span></td><td>B. 'You'll never get a job if you don't work hard.'</td></tr>
+    <tr class="at-row"><td>iii) One of the sous-chefs</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="C">＿＿＿＿＿＿</span></td><td>C. 'Oh my god! What have you done?'</td></tr>
+    <tr class="at-row"><td>iv) The writer's co-worker</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿＿＿＿＿＿</span></td><td>D. 'I can make a delicious pizza.'</td></tr>
+    <tr class="at-row"><td></td><td></td><td>E. 'Don't worry. You can learn from this.'</td></tr>
+    <tr class="at-row"><td></td><td></td><td>F. 'What I said was: could you get me some ice from the freezer?'</td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q10-box">
+  <div class="pmcq-label">Q10 · Synonym · ¶9</div>
+  <div class="pmcq-q">Find a word or phrase in paragraph 9 which has a similar meaning to &lsquo;encouragement&rsquo;.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="pep talk">＿＿＿＿＿＿</span></div>
+</div>
+
+</section>
+<section class="slide" data-title="Q11&ndash;Q14 &middot; Text 1 details &amp; main idea &amp; text type" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Part A · Q11–Q14（Text 1）</div>
+<div class="practice-mcq" id="q11-box">
+  <div class="pmcq-label">Q11 · Detail · ¶9–10</div>
+  <div class="pmcq-q">Which of the following is NOT mentioned in paragraphs 9-10 as a skill the writer learnt?</div>
+  <div class="pmcq-options" id="q11-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>baking techniques</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>making money from a restaurant</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="There is no mention of managing other people." onclick="checkMCAuto(this)"><span class="pl">C</span>managing people</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>seeing things from others' perspective</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q12-box">
+  <div class="pmcq-label">Q12 · Tone · ¶10</div>
+  <div class="pmcq-q">What is the tone of paragraph 10?</div>
+  <div class="pmcq-options" id="q12-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="The writer reflects and shows empathy for service industry workers." onclick="checkMCAuto(this)"><span class="pl">A</span>thoughtful</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>confused</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>reluctant</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>amused</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q13-box">
+  <div class="pmcq-label">Q13 &middot; Paragraph main idea matching (ONE not used)</div>
+  <div class="pmcq-q">Below are statements summarizing the main ideas of paragraphs 7-10. Match the most appropriate idea (A-E) with each of the paragraphs. Write the letter of the main idea next to the paragraph number given. Use each letter ONCE only. One of the ideas is not used. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Paragraph</td><td>Answer</td><td>Main Idea</td></tr>
+    <tr class="at-row"><td>7</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="C">＿＿＿＿＿＿</span></td><td>A. A turning point</td></tr>
+    <tr class="at-row"><td>8</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="D">＿＿＿＿＿＿</span></td><td>B. Friends for life</td></tr>
+    <tr class="at-row"><td>9</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿＿＿＿＿＿</span></td><td>C. A terrible mistake</td></tr>
+    <tr class="at-row"><td>10</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="E">＿＿＿＿＿＿</span></td><td>D. Some good advice</td></tr>
+    <tr class="at-row"><td></td><td></td><td>E. Empathy for others</td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q14-box">
+  <div class="pmcq-label">Q14 · Text type</div>
+  <div class="pmcq-q">The text is taken from ______</div>
+  <div class="pmcq-options" id="q14-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>a novel</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The text is reflective with weekly subheadings, so it is a diary." onclick="checkMCAuto(this)"><span class="pl">B</span>a diary</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>a review</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>a travel article</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Q15&ndash;Q18 &middot; Text 2 tone &amp; vocabulary &amp; TFNG" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Part A · Q15–Q18（Text 2）</div>
+<div class="practice-mcq" id="q15-box">
+  <div class="pmcq-label">Q15 · Tone · ¶1</div>
+  <div class="pmcq-q">What is the tone of paragraph 1?</div>
+  <div class="pmcq-options" id="q15-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="Paragraph 1 simply introduces the idea without a strong opinion." onclick="checkMCAuto(this)"><span class="pl">A</span>neutral</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>negative</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>adventurous</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>sarcastic</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q16-box">
+  <div class="pmcq-label">Q16 · TFNG · ¶1–3</div>
+  <div class="pmcq-q">According to paragraphs 1-3, are the following statements True (T), False (F) or Not Given (NG)? (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td></td><td>Statement</td><td>Answer</td></tr>
+    <tr class="at-row"><td>i)</td><td>You need to work at a fast pace in a professional kitchen.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="T">＿</span></td></tr>
+    <tr class="at-row"><td>ii)</td><td>Interns are punished if they arrive late for work.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="NG">＿</span></td></tr>
+    <tr class="at-row"><td>iii)</td><td>Interns have to wash up diners' dirty plates.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="NG">＿</span></td></tr>
+    <tr class="at-row"><td>iv)</td><td>Culinary internships are only suitable for wannabe chefs.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿</span></td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q17-box">
+  <div class="pmcq-label">Q17 · Synonym · ¶4</div>
+  <div class="pmcq-q">Find a phrase in paragraph 4 which has a similar meaning to &lsquo;accept&rsquo;.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="take on board">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q18-box">
+  <div class="pmcq-label">Q18 · Tone · ¶5</div>
+  <div class="pmcq-q">What is the tone of paragraph 5?</div>
+  <div class="pmcq-options" id="q18-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>peaceful</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>critical</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The writer lists reasons to encourage people to do an internship." onclick="checkMCAuto(this)"><span class="pl">C</span>encouraging</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>humorous</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Q19&ndash;Q23 &middot; Text 2 views &amp; purpose &amp; dialogue matching" data-section="parta" data-part="Textbook &middot; Exam practice Part A" data-hard-group="u5a">
+
+<div class="sec-label">Part A · Q19–Q23（Text 2）</div>
+<div class="practice-mcq" id="q19-box">
+  <div class="pmcq-label">Q19 · Open response · ¶5</div>
+  <div class="pmcq-q">How does the writer think a culinary internship can improve your chances of getting a job? Give two reasons from paragraph 5. (2 marks)</div>
+  <div class="sa-block">(i) <span class="cloze" onclick="revealCloze(this)" data-answer="You'll have (some) valuable experience (that looks good on your CV)">＿＿＿＿＿＿</span></div>
+  <div class="sa-block">(ii) <span class="cloze" onclick="revealCloze(this)" data-answer="You'll be more employable">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q20-box">
+  <div class="pmcq-label">Q20 &middot; Character view matching (ONE not applicable)</div>
+  <div class="pmcq-q">Below are comments made by some of the people mentioned in Text 2. Match each person with one comment. Use each letter ONCE only. One comment is not used and you should select &lsquo;Not Applicable&rsquo;. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Comment</td><td>Person</td></tr>
+    <tr class="at-row"><td>i) You need to be good at project management.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="D (Not Applicable)">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>ii) Having good time-management skills is essential.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="A (Michel S&eacute;vres)">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iii) You need to be a good team player.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="C (Alice Kwah)">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iv) It&rsquo;s important to be organized and keep the kitchen clean.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="B (Wendy Chung)">＿＿＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q21-box">
+  <div class="pmcq-label">Q21 · Attitude · ¶5</div>
+  <div class="pmcq-q">What does the phrase &lsquo;valuable experience that looks great on your CV&rsquo; (line 19) suggest about the writer&rsquo;s attitude towards culinary internships for students who intend to work outside the catering industry?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="encouraging / positive / hopeful / optimistic">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q22-box">
+  <div class="pmcq-label">Q22 · Purpose</div>
+  <div class="pmcq-q">Which of the following best describes the intention of the writer of Text 2?</div>
+  <div class="pmcq-options" id="q22-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>To make a business proposal</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>To amuse the reader with a personal story</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>To explain a technical process</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The writer explains the benefits of a culinary internship as career advice." onclick="checkMCAuto(this)"><span class="pl">D</span>To provide career advice</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q23-box">
+  <div class="pmcq-label">Q23 · Dialogue-paragraph matching</div>
+  <div class="pmcq-q">Two friends are discussing Text 2 (paragraphs 1-5). Use the information from the text to match each statement in the speech bubbles with a paragraph that contains similar ideas. Write the number of the paragraph next to the speech bubble. Each paragraph number can be used once only. (5 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Statement</td><td>Paragraph</td></tr>
+    <tr class="at-row"><td>Janice: &lsquo;I prefer to take my time with things. Constantly fighting against the clock would really stress me out.&rsquo;</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="2">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Peter: &lsquo;Yeah, same! And there&rsquo;s no way I&rsquo;d be able to keep track of all those pots and pans, and keep my workspace tidy!&rsquo;</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="3">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Janice: &lsquo;But I can certainly see how the skills you pick up aren&rsquo;t useful only in the kitchen. It might actually help our careers if we tried it out for a while.&rsquo;</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="1">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Peter: &lsquo;Yes, perhaps. My people skills aren&rsquo;t the best, so it&rsquo;d be great to learn how to get on with others in a stressful and possibly international workplace.&rsquo;</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="4">＿＿＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Janice: &lsquo;Yes, for sure. A career in the kitchen is definitely out of the question, though. There&rsquo;s no way I&rsquo;d impress the boss to the point that he&mdash;or she&mdash;would give me a reference!&rsquo;</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="5">＿＿＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Part B1 &middot; Intro" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="slide-h1">🌍 Exam practice Part B1 <span class="h1-en">Travel texts</span></div>
+<div class="method-badge"><span class="mb-key">&#128214; Read Texts 3&ndash;5</span><span>Read Texts 3&ndash;5 and answer questions 24&ndash;47. Text 3 is a travel diary about India, Text 4 is about Generation Z travel habits, and Text 5 is about top 5 gap year destinations.</span></div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Text 3 · India travel diary</div><p>§1–§6 → Q24–33。</p></div>
+  <div class="info-card"><div class="ic-title">Text 4 &middot; Gen Z travel habits</div><p>Bullet-point list &rarr; Q34&ndash;35.</p></div>
+</div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Text 5 &middot; Gap year top 5</div><p>Slide-style country introductions &rarr; Q36&ndash;47.</p></div>
+  <div class="info-card"><div class="ic-title">Focus</div><p>Attitude/tone, vocabulary, main idea, chart information extraction.</p></div>
+</div>
+
+</section>
+<section class="slide" data-title="Text 3 &middot; India travel diary §1&ndash;6" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Text 3 (§1&ndash;§6)</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§1</div>After I finished high school, I worked as a receptionist in a hotel for six months. It wasn't my dream job, but it enabled me to save up enough money to go travelling across India for three months.</div>
+  <div class="passage-excerpt"><div class="para-num">§2</div>I'll never forget the shock I felt when I took my first hesitant steps onto the streets of New Delhi. The bustling city assaulted my senses from all sides: the raging heat that made my shirt stick to my back almost the second I stepped out of the air-conditioned hotel, the bright colours of traditional saris shimmering in the sunshine, and the constant noise and fumes from traffic that never stops and seems to obey no rules.</div>
+  <div class="passage-excerpt"><div class="para-num">§3</div>I had chosen India because I wanted to go somewhere that would take me outside my comfort zone. My parents thought I was naive, but I wanted to experience a different cuisine, a different culture and a different language. India definitely didn't disappoint: it was like stepping onto an alien planet.</div>
+  <div class="passage-excerpt"><div class="para-num">§4</div>In the second month, I was visiting a city called Jaipur. My tour guide, a man called Raj, showed me the Amber Fort and the Water Palace, and told me all about the city's history. Since we got on so well, he asked me if I would like to go to his home for some tea. I could not refuse my host's kind invitation. When I saw where Raj &mdash; who was so immaculately dressed and well groomed &mdash; lived, I was shocked. Somehow, nine people were squeezed into two tiny rooms, with only a single electric light bulb hanging precariously from the ceiling. The floor was made of dirt. And yet, Raj and his family were some of the happiest people I have ever met, and they were so welcoming that they treated me like one of the family.</div>
+  <div class="passage-excerpt"><div class="para-num">§5</div>After meeting Raj and his family, I began to reassess my life. Did I really need so many possessions? Did I really need designer clothes and the latest phone to be happy? The answer was no, and yet I was looking forward to getting home to my comfortable flat with its air conditioning and big-screen TV.</div>
+  <div class="passage-excerpt"><div class="para-num">§6</div>Travelling to India taught me something about myself that no textbook or school lesson ever could: I am incredibly blessed to live in a sophisticated and modern city like Hong Kong. My trip to India wasn't always easy, but it was worth it. It opened my mind and forced me to grow as a person. For that, and to Raj, I will always be grateful.</div>
+</div>
+
+</section>
+<section class="slide" data-title="Text 4 &middot; Gen Z travel habits &amp; Text 5 &middot; Gap year destinations" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Text 4 &amp; Text 5</div>
+<div class="card">
+  <h4>Text 4: Travel habits of Generation Z</h4>
+  <ul class="styled-list">
+    <li>Born between 1995 and 2010</li>
+    <li>2.8 leisure trips a year</li>
+    <li>90% say their international travel decisions are influenced by social media</li>
+  </ul>
+</div>
+<div class="card">
+  <h4>Text 5: Top 5 gap-year destinations</h4>
+  <p>A gap year is more than just an extended holiday &mdash; it can have some real benefits:</p>
+  <ul class="styled-list">
+    <li>66 per cent of students who took a gap year said they took their studies more seriously.</li>
+    <li>88 per cent thought it made them more employable.</li>
+    <li>Taking a gap year might even help you make up your mind about what university course to choose or what career to follow. And it'll certainly make you more open to different cultures and cuisines.</li>
+  </ul>
+</div>
+<div class="card">
+  <table class="ans-table">
+    <tr class="at-head"><td>Country</td><td>Pros</td><td>Cons</td></tr>
+    <tr class="at-row"><td>Japan</td><td>Unique culture and special customs; very safe; easy and cheap to travel around (bullet train)</td><td>Japanese language is difficult; not all signs include English translations</td></tr>
+    <tr class="at-row"><td>Thailand</td><td>Easy to get to; cheap food and accommodation; beautiful beaches; interesting temples; mouth-watering food</td><td>Petty theft from tourists is very common; keep valuables safe</td></tr>
+    <tr class="at-row"><td>Peru</td><td>Rich culture and varied landscapes; trekking along the Inca Trail to Machu Picchu</td><td>Travelling around can be slow and uncomfortable; sights often overrun with tourists</td></tr>
+    <tr class="at-row"><td>Australia</td><td>Easy to get a working visa; combine working with travelling; low-cost hostels; perfect place to improve English</td><td>Suffocatingly hot in summer; farm work is very hard work</td></tr>
+    <tr class="at-row"><td>Norway</td><td>Skiing, Northern Lights; wide open spaces, snow and mountains; among the happiest countries in the world</td><td>One of the most expensive countries in Europe; expect up to HK$100 for one drink</td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Q24&ndash;Q28 &middot; Text 3 vocabulary &amp; tone &amp; summary" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Part B1 · Q24–Q28（Text 3）</div>
+<div class="practice-mcq" id="q24-box">
+  <div class="pmcq-label">Q24 · Vocabulary · ¶2</div>
+  <div class="pmcq-q">Which word/phrase in paragraph 2 means &lsquo;shining with a soft light that seems to move slightly&rsquo;?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="shimmering">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q25-box">
+  <div class="pmcq-label">Q25 · Tone · ¶2</div>
+  <div class="pmcq-q">Which of the following best describes the tone of paragraph 2?</div>
+  <div class="pmcq-options" id="q25-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>disappointed</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Inferred from 'I'll never forget the shock I felt...'" onclick="checkMCAuto(this)"><span class="pl">B</span>surprised</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>amused</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>bored</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q26-box">
+  <div class="pmcq-label">Q26 · Reference · ¶3</div>
+  <div class="pmcq-q">What does &lsquo;it&rsquo; in line 11 refer to?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="the writer's trip to India">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q27-box">
+  <div class="pmcq-label">Q27 · TFNG · ¶1–3</div>
+  <div class="pmcq-q">According to paragraphs 1-3, are the following statements True (T), False (F) or Not Given (NG)? (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td></td><td>Statement</td><td>Answer</td></tr>
+    <tr class="at-row"><td>i)</td><td>The writer worked as a cleaner in a hotel.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿</span></td></tr>
+    <tr class="at-row"><td>ii)</td><td>India is the hottest place the writer has ever been to.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="NG">＿</span></td></tr>
+    <tr class="at-row"><td>iii)</td><td>The writer felt overwhelmed upon arriving in India.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="T">＿</span></td></tr>
+    <tr class="at-row"><td>iv)</td><td>The writer expected to feel at home in India.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿</span></td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q28-box">
+  <div class="pmcq-label">Q28 · Synonym · ¶4</div>
+  <div class="pmcq-q">Find a word in paragraph 4 which has a similar meaning to &lsquo;neatly&rsquo;.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="immaculately">＿＿＿＿＿＿</span></div>
+</div>
+
+</section>
+<section class="slide" data-title="Q29&ndash;Q33 &middot; Text 3 summary &amp; main idea &amp; title" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Part B1 · Q29–Q33（Text 3）</div>
+<div class="practice-mcq" id="q29-box">
+  <div class="pmcq-label">Q29 · Summary cloze · ¶4 · 5 marks</div>
+  <div class="pmcq-q">Complete the summary of paragraph 4 by using ONE word taken from paragraph 4 for each gap. (5 marks) On a tour to Jaipur, the writer learnt about the (i) <span class="cloze" onclick="revealCloze(this)" data-answer="history">＿＿＿＿＿＿</span> of the city. After that, the tour guide invited the writer to have (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="tea">＿＿＿＿＿＿</span> at his home. Although the writer was (iii) <span class="cloze" onclick="revealCloze(this)" data-answer="shocked">＿＿＿＿＿＿</span> by the living conditions of his home&mdash;it was cramped and poorly lit, with only one (iv) <span class="cloze" onclick="revealCloze(this)" data-answer="(light) bulb">＿＿＿＿＿＿</span> precariously dangling for the entire place&mdash;the family still looked very happy with their situation. And they were so hospitable that they (v) <span class="cloze" onclick="revealCloze(this)" data-answer="treated">＿＿＿＿＿＿</span> the writer as one of their own.</div>
+</div>
+<div class="practice-mcq" id="q30-box">
+  <div class="pmcq-label">Q30 · Main idea · ¶5</div>
+  <div class="pmcq-q">What is the main idea of paragraph 5?</div>
+  <div class="pmcq-options" id="q30-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Home is always where people feel the happiest</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Material comfort does not always bring happiness, but people still long for it." onclick="checkMCAuto(this)"><span class="pl">B</span>Material comfort does not always bring happiness, but people still long for it</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>Living in a big family has many unexpected benefits</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Getting rid of unnecessary possessions is very important</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q31-box">
+  <div class="pmcq-label">Q31 · Tone · ¶6</div>
+  <div class="pmcq-q">What is the tone of paragraph 6?</div>
+  <div class="pmcq-options" id="q31-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>worried</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The writer is looking back on the trip and reflecting." onclick="checkMCAuto(this)"><span class="pl">B</span>reflective</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>critical</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>annoyed</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q32-box">
+  <div class="pmcq-label">Q32 &middot; Character-quote matching (THREE not used)</div>
+  <div class="pmcq-q">Using information from Text 3, match each person with one of the quotes below. Choose from A-F and write the letter in the box next to each person. Three of the quotes will NOT be used. (3 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Person</td><td>Answer</td><td>Quotes</td></tr>
+    <tr class="at-row"><td>The writer's father</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="C">＿＿＿＿＿＿</span></td><td>A. 'It's not big but we are happy to give you something to drink.'</td></tr>
+    <tr class="at-row"><td>The writer</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="E">＿＿＿＿＿＿</span></td><td>B. 'I wish I could stay in India longer.'</td></tr>
+    <tr class="at-row"><td>Raj</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿＿＿＿＿＿</span></td><td>C. 'You don't know how difficult the experience will be.'</td></tr>
+    <tr class="at-row"><td></td><td></td><td>D. 'The hot temperatures are too much to bear.'</td></tr>
+    <tr class="at-row"><td></td><td></td><td>E. 'I didn't realize what a comfortable life I have.'</td></tr>
+    <tr class="at-row"><td></td><td></td><td>F. 'I know that I need expensive electronics to be happy.'</td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="q33-box">
+  <div class="pmcq-label">Q33 · Best title</div>
+  <div class="pmcq-q">Which of the following is the best title for this text?</div>
+  <div class="pmcq-options" id="q33-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>My most difficult travel experience</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Making a new friend</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>Tourism in India</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The writer learnt that people can be happy without owning much." onclick="checkMCAuto(this)"><span class="pl">D</span>How I learnt that less is more</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Q34&ndash;Q38 &middot; Text 4 &amp; 5 charts &amp; main idea" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Part B1 · Q34–Q38（Text 4 &amp; 5）</div>
+<div class="practice-mcq" id="q34-box">
+  <div class="pmcq-label">Q34 · Detail · Text 4</div>
+  <div class="pmcq-q">What is the leading factor in Generation Z's choice of travel destinations?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="social media">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q35-box">
+  <div class="pmcq-label">Q35 · Best alternative title · Text 4</div>
+  <div class="pmcq-q">Which of the following is the best alternative title for this text?</div>
+  <div class="pmcq-options" id="q35-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Travel becoming too expensive for Generation Z</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Young people look to their phones for travel inspiration." onclick="checkMCAuto(this)"><span class="pl">B</span>Young people look to their phones for travel inspiration</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>Young people travel more than ever</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Online deals make exotic holidays more attractive</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q36-box">
+  <div class="pmcq-label">Q36 · Tone · Text 5 Slide 1</div>
+  <div class="pmcq-q">What is the tone of Slide 1?</div>
+  <div class="pmcq-options" id="q36-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>cautious</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>anxious</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>confused</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The text encourages people to consider a gap year." onclick="checkMCAuto(this)"><span class="pl">D</span>encouraging</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q37-box">
+  <div class="pmcq-label">Q37 · Summary cloze · Text 5 Slide 1</div>
+  <div class="pmcq-q">Using the information in Slide 1, complete the following sentence by writing ONE word taken from Slide 1 for each gap. (3 marks) There are some major (i) <span class="cloze" onclick="revealCloze(this)" data-answer="benefits">＿＿＿＿＿＿</span> of taking a gap year, as it can help you decide what to study at (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="university">＿＿＿＿＿＿</span> and make you more understanding of other people's (iii) <span class="cloze" onclick="revealCloze(this)" data-answer="cultures">＿＿＿＿＿＿</span>.</div>
+</div>
+<div class="practice-mcq" id="q38-box">
+  <div class="pmcq-label">Q38 · Country choice · Australia / Norway</div>
+  <div class="pmcq-q">Read Slides 2-3 and answer the following questions by choosing either 'Australia' or 'Norway'. Blacken the correct circles. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td></td><td>Question</td><td>Answer</td></tr>
+    <tr class="at-row"><td>i)</td><td>Where do basic things cost a lot of money?</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Norway">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>ii)</td><td>Where can you become more fluent in English?</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Australia">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iii)</td><td>Where can you work on a farm?</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Australia">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iv)</td><td>Where can you try a new sport?</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Norway">＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Q39&ndash;Q43 &middot; Text 5 country slide details" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Part B1 · Q39–Q43（Text 5）</div>
+<div class="practice-mcq" id="q39-box">
+  <div class="pmcq-label">Q39 · Main idea · Japan slide</div>
+  <div class="pmcq-q">What is the main idea of Slide 4?</div>
+  <div class="pmcq-options" id="q39-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="An interesting place to visit although there may be a language barrier." onclick="checkMCAuto(this)"><span class="pl">A</span>It's an interesting place to visit although there may be a language barrier</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Few people speak English and there are many criminals who rob tourists</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>The maps for transport systems are often incomplete</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Japanese people have very little interest in tourists</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q40-box">
+  <div class="pmcq-label">Q40 · Tone · Thailand slide</div>
+  <div class="pmcq-q">What is the tone of Slide 5?</div>
+  <div class="pmcq-options" id="q40-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>poetic</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="The slide discusses the pros and cons in an honest way." onclick="checkMCAuto(this)"><span class="pl">B</span>honest</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>careful</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>sad</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q41-box">
+  <div class="pmcq-label">Q41 · Idiom · Thailand slide</div>
+  <div class="pmcq-q">What does the writer mean by &lsquo;the food really packs a punch&rsquo; (Slide 5)?</div>
+  <div class="pmcq-options" id="q41-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>is difficult to make</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="'Packs a punch' means to have a powerful effect; the food is very impressive." onclick="checkMCAuto(this)"><span class="pl">B</span>is very impressive</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>is served in lunch boxes</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>gives you lots of energy</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q42-box">
+  <div class="pmcq-label">Q42 · Vocabulary · Thailand slide</div>
+  <div class="pmcq-q">Find a word or phrase on Slide 5 (Thailand) that means &lsquo;not very serious&rsquo;.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="petty">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q43-box">
+  <div class="pmcq-label">Q43 · Picture-country matching</div>
+  <div class="pmcq-q">Match the following photos with the countries mentioned in the text. Write the name of the country under each photo. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td></td><td>Photo</td><td>Country</td></tr>
+    <tr class="at-row"><td>i)</td><td>Farm / agriculture</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Australia">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>ii)</td><td>Bullet train</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Japan">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iii)</td><td>Skiing</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Norway">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iv)</td><td>Beaches</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Thailand">＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Q44&ndash;Q47 &middot; Text 5 open response &amp; text type" data-section="partb1" data-part="Textbook &middot; Exam practice Part B1" data-hard-group="u5b1">
+
+<div class="sec-label">Part B1 · Q44–Q47（Text 5）</div>
+<div class="practice-mcq" id="q44-box">
+  <div class="pmcq-label">Q44 · Open response · Norway</div>
+  <div class="pmcq-q">Which country is probably the most suitable for someone who loves nature and values mental wellness? Give a reason for your answer from the text.</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="Norway, because it has wide open spaces, snow and mountains and has (consistently) ranked among the happiest countries (in the world).">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="q45-box">
+  <div class="pmcq-label">Q45 · Summary cloze · Peru slide</div>
+  <div class="pmcq-q">With reference to Slide 6, in what ways is travelling around Peru not a fun thing to do? Complete the sentences below by using ONE word taken from Slide 6 for each gap. (2 marks) Reason 1: Famous sites are (i) <span class="cloze" onclick="revealCloze(this)" data-answer="overrun">＿＿＿＿＿＿</span> with visitors. Reason 2: The trips could take a long time and are (ii) <span class="cloze" onclick="revealCloze(this)" data-answer="uncomfortable">＿＿＿＿＿＿</span>.</div>
+</div>
+<div class="practice-mcq" id="q46-box">
+  <div class="pmcq-label">Q46 · Purpose</div>
+  <div class="pmcq-q">What is the main purpose of this text?</div>
+  <div class="pmcq-options" id="q46-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>to explain how best to plan a gap year</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>to tell an amusing story about some personal experiences</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Every slide provides a balanced view of what is good and bad about each destination." onclick="checkMCAuto(this)"><span class="pl">C</span>to provide a balanced view of some tourist destinations</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>to discourage young people from visiting some countries</span>
+  </div>
+</div>
+<div class="practice-mcq" id="q47-box">
+  <div class="pmcq-label">Q47 · Text type</div>
+  <div class="pmcq-q">This text is ...</div>
+  <div class="pmcq-options" id="q47-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="The text is organized into different slides, indicating a presentation." onclick="checkMCAuto(this)"><span class="pl">A</span>a presentation</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>an extract from a book</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>a formal email</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>a travel document</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Skill Builder &middot; Intro" data-section="sb" data-part="Skill Builder &middot; Reading">
+
+<div class="slide-h1">🧳 Skill Builder · Reading <span class="h1-en">Travel: good for your mind, too</span></div>
+<div class="method-badge"><span class="mb-key">Featured skill</span><span><strong>Understanding positive and negative language; Identifying tone and attitude</strong>. Key question types: identifying views, tone/attitude, table completion, MCQs, extended open-ended questions.</span></div>
+<div class="card">
+  <h4>Diagnostic practice</h4>
+  <p>Read an article about how travel is good for your mental health and answer Q1&ndash;12.</p>
+</div>
+
+</section>
+<section class="slide" data-title="SB &middot; Article §1&ndash;4" data-section="sb" data-part="Skill Builder &middot; Reading" data-hard-group="u5sb">
+
+<div class="sec-label">Diagnostic article: Travel: Now it's good for your mind, too（§1–§4）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§1</div>It seems fairly obvious that travel is good for us physically: whether we're strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.</div>
+  <div class="passage-excerpt"><div class="para-num">§2</div>One of the key benefits of taking a trip abroad is that it takes us away from our everyday lives and allows us to focus on different things. &lsquo;We are so busy in our daily lives&mdash;working, paying the bills, doing chores, looking after family members&mdash;that we don&rsquo;t have time to stop and think about what is really meaningful to us,&rsquo; says Dr Barbara McCary, a psychologist. &lsquo;A holiday or&mdash;even better&mdash;an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&rsquo; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &lsquo;And not one of them regretted it.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§3</div>Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.</div>
+  <div class="passage-excerpt"><div class="para-num">§4</div>Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &lsquo;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy&rsquo; he says with a grin. &lsquo;When I left the hospital, my confidence was at an all-time low,&rsquo; he explains. &lsquo;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&rsquo;</div>
+</div>
+
+</section>
+<section class="slide" data-title="SB &middot; Article §5&ndash;8" data-section="sb" data-part="Skill Builder &middot; Reading" data-hard-group="u5sb">
+
+<div class="sec-label">Diagnostic article（§5–§8）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§5</div>As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &lsquo;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&rsquo; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &lsquo;They didn&rsquo;t know anything about my motorbike accident, so to them I wasn&rsquo;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§6</div>Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.</div>
+  <div class="passage-excerpt"><div class="para-num">§7</div>Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &lsquo;It made me grow up,&rsquo; she says. &lsquo;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§8</div>Francis Tam experienced every skier&rsquo;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &lsquo;At the time it was a living hell,&rsquo; he recalls. &lsquo;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&rsquo;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&rsquo; Although the experience was awful, Francis says it has made him more resilient. &lsquo;If I&rsquo;m ever in trouble again when overseas, I&rsquo;ll know what to do and it won&rsquo;t faze me.&rsquo;</div>
+</div>
+
+</section>
+<section class="slide" data-title="SB &middot; Article §9&ndash;11" data-section="sb" data-part="Skill Builder &middot; Reading" data-hard-group="u5sb">
+
+<div class="sec-label">Diagnostic article（§9–§11）</div>
+<div class="card">
+  <div class="passage-excerpt"><div class="para-num">§9</div>Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.</div>
+  <div class="passage-excerpt"><div class="para-num">§10</div>Joe Burrill, an expert in mindfulness, explains: &lsquo;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&rsquo; says Burrill. &lsquo;Now, if I feel like I&rsquo;m starting to get a bit anxious about something, I just stop what I&rsquo;m doing for 30 seconds, close my eyes and imagine I&rsquo;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&rsquo;</div>
+  <div class="passage-excerpt"><div class="para-num">§11</div>If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div>
+</div>
+<div class="method-badge"><span class="mb-key">🏁 END OF SB PASSAGE</span><span>Now move on to Questions 1&ndash;12.</span></div>
+
+</section>
+<section class="slide" data-title="SB Q1&ndash;Q6 &middot; attitude &amp; vocabulary &amp; details" data-section="sb" data-part="Skill Builder &middot; Reading" data-hard-group="u5sb">
+
+<div class="sec-label">Skill Builder · Q1–Q6</div>
+<div class="practice-mcq" id="sbq1-box">
+  <div class="pmcq-label">Q1 · Attitude · line 4</div>
+  <div class="pmcq-q">What does the phrase &lsquo;Increasingly though&rsquo; (line 4) suggest about the writer&rsquo;s attitude towards expert opinion on travel?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="It suggests that the latest opinions are quite a recent development and/or that more and more people support this view.">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="sbq2-box">
+  <div class="pmcq-label">Q2 · Attitude · line 10</div>
+  <div class="pmcq-q">What does the phrase &lsquo;even better&rsquo; (line 10) suggest about Dr McCary&rsquo;s attitude towards the length of a trip?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="It suggests that she thinks the longer a trip is, the better.">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="sbq3-box">
+  <div class="pmcq-label">Q3 · MC · lines 15–16</div>
+  <div class="pmcq-q">When the writer says &lsquo;if you are prepared to go solo&rsquo; (lines 15&ndash;16), he/she means ...</div>
+  <div class="pmcq-options" id="sbq3-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>solo travellers usually pay more for their holidays</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>solo travellers miss out on social interactions</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Most people would not choose to travel this way." onclick="checkMCAuto(this)"><span class="pl">C</span>most people would not choose to travel this way</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>most solo travellers do a lot of research before a trip</span>
+  </div>
+</div>
+<div class="practice-mcq" id="sbq4-box">
+  <div class="pmcq-label">Q4 · MC · line 23</div>
+  <div class="pmcq-q">When the writer says that Liam&rsquo;s world &lsquo;shrunk&rsquo; (line 23), he/she means ...</div>
+  <div class="pmcq-options" id="sbq4-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="Liam could not do as much as he used to." onclick="checkMCAuto(this)"><span class="pl">A</span>Liam could not do as much as he used to</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Liam stayed at home most of the time</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>Liam was shorter after the motorbike accident</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Liam became frustrated with his life</span>
+  </div>
+</div>
+<div class="practice-mcq" id="sbq5-box">
+  <div class="pmcq-label">Q5 · MC · line 29</div>
+  <div class="pmcq-q">When the writer says &lsquo;He was gone for just six weeks&rsquo; (line 29), he/she means ...</div>
+  <div class="pmcq-options" id="sbq5-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Liam should have travelled to more countries</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Liam organized his trip quickly</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>Liam's trip was not expensive</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="Liam's trip was not very long." onclick="checkMCAuto(this)"><span class="pl">D</span>Liam's trip was not very long</span>
+  </div>
+</div>
+<div class="practice-mcq" id="sbq6-box">
+  <div class="pmcq-label">Q6 · MC · line 36</div>
+  <div class="pmcq-q">When Liam says that the people he spoke to at the hostel did not think of him as &lsquo;poor Liam&rsquo; (line 36), he means ...</div>
+  <div class="pmcq-options" id="sbq6-opts">
+    <span class="pmcq-opt" data-correct="true" data-explain="Many people who knew about his accident pitied him." onclick="checkMCAuto(this)"><span class="pl">A</span>many people who knew about his accident pitied him</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>people often found it difficult to talk to him about his accident</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>his friends and family knew how little money he had</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>the medical staff appreciated how brave he had been</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="SB Q7&ndash;Q12 &middot; attitude &amp; matching &amp; purpose" data-section="sb" data-part="Skill Builder &middot; Reading" data-hard-group="u5sb">
+
+<div class="sec-label">Skill Builder · Q7–Q12</div>
+<div class="practice-mcq" id="sbq7-box">
+  <div class="pmcq-label">Q7 · MC · line 51</div>
+  <div class="pmcq-q">When the writer says Francis Tam &lsquo;experienced every skier&rsquo;s nightmare&rsquo; (line 51), he/she means ...</div>
+  <div class="pmcq-options" id="sbq7-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Francis was feeling frightened when he fell</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="No one would want to experience what Francis went through." onclick="checkMCAuto(this)"><span class="pl">B</span>no one would want to experience what Francis went through</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>lack of sleep was the cause of Francis's accident</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>Francis had been worrying about having an accident</span>
+  </div>
+</div>
+<div class="practice-mcq" id="sbq8-box">
+  <div class="pmcq-label">Q8 · Open response</div>
+  <div class="pmcq-q">Why should we be positive about even a short holiday?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="because our stress levels fall when we are on holiday, and we can tap into feelings of calm when we get back">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="sbq9-box">
+  <div class="pmcq-label">Q9 · Attitude · line 69</div>
+  <div class="pmcq-q">What does the phrase &lsquo;If you were ever unsure&rsquo; (line 69) suggest about the writer&rsquo;s attitude towards evidence related to the benefits of travel?</div>
+  <div class="sa-block"><span class="cloze" onclick="revealCloze(this)" data-answer="It suggests that there is no longer any reason to feel unsure.">＿＿＿＿＿＿</span></div>
+</div>
+<div class="practice-mcq" id="sbq10-box">
+  <div class="pmcq-label">Q10 &middot; Quote-character matching (TWO not used)</div>
+  <div class="pmcq-q">Match each person with one of the quotes below. Choose from A-F and write the letter in the box next to each person. Two of the quotes will NOT be used. (4 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td></td><td>Quote</td><td></td></tr>
+    <tr class="at-row"><td>A</td><td colspan="2">This bad experience has prepared me for any future problems I might encounter.</td></tr>
+    <tr class="at-row"><td>B</td><td colspan="2">'I had to tell myself to stop being so emotional.'</td></tr>
+    <tr class="at-row"><td>C</td><td colspan="2">'It's best to do a job that you feel passionate about.'</td></tr>
+    <tr class="at-row"><td>D</td><td colspan="2">'Travelling made me feel like a new person.'</td></tr>
+    <tr class="at-row"><td>E</td><td colspan="2">'Whenever I feel stressed, I book a holiday.'</td></tr>
+    <tr class="at-row"><td>F</td><td colspan="2">People who make big changes in their lives rarely feel sorry about it afterwards.</td></tr>
+    <tr class="at-head"><td>Person</td><td colspan="2">Answer</td></tr>
+    <tr class="at-row"><td>Dr Barbara McCary</td><td colspan="2"><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Liam Thomas</td><td colspan="2"><span class="cloze" onclick="revealCloze(this)" data-answer="D">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Amelia Wong</td><td colspan="2"><span class="cloze" onclick="revealCloze(this)" data-answer="B">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>Francis Tam</td><td colspan="2"><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="sbq11-box">
+  <div class="pmcq-label">Q11 &middot; Comment-character matching (ONE not applicable)</div>
+  <div class="pmcq-q">Below are comments made by some of the people mentioned in the text. Match each person with one comment. Use each letter ONCE only. One comment is not used and you should select 'Not Applicable'. (6 marks)</div>
+  <table class="ans-table">
+    <tr class="at-head"><td>Comment</td><td>Person (A-F)</td></tr>
+    <tr class="at-row"><td>i) After I dealt with a difficult experience, I felt more mature.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="C">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>ii) Accomplishing simple things can bring great satisfaction.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="B">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iii) I'm aware of when I start to feel nervous and I act to change how I feel.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="E">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>iv) Learning how to handle different currencies is useful for developing maths skills.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="F">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>v) Our everyday responsibilities prevent us from thinking about the important things in life.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="A">＿＿＿＿＿＿</span></td></tr>
+    <tr class="at-row"><td>vi) I needed to change my flight reservation.</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="D">＿＿＿＿＿＿</span></td></tr>
+  </table>
+</div>
+<div class="practice-mcq" id="sbq12-box">
+  <div class="pmcq-label">Q12 · Purpose</div>
+  <div class="pmcq-q">Which of the following best describes the writer's intention?</div>
+  <div class="pmcq-options" id="sbq12-opts">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>To pressurize the reader into changing his/her lifestyle</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="To persuade the reader of the benefits of a course of action." onclick="checkMCAuto(this)"><span class="pl">B</span>To persuade the reader of the benefits of a course of action</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>To explain the findings of recent scientific research</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>To defend his reasons for the way he spends his money</span>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Cohesive devices" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="slide-h1">&#9999;&#65039; Writing skill &middot; Cohesive devices <span class="h1-en">Cohesive devices</span></div>
+<div class="card">
+  <p>We use cohesive devices to connect ideas between sentences, between paragraphs and throughout a piece of writing as a whole. When you write, it is important to use cohesive devices correctly so that your writing is logical and the reader can follow it.</p>
+</div>
+<div class="sec-label">Connectives are commonly used in reflective writing to describe:</div>
+<div class="card">
+  <ul class="styled-list">
+    <li><strong>Sequence in time:</strong> after, before, then, until, when, while</li>
+    <li><strong>Reason:</strong> as, because, since</li>
+    <li><strong>Purpose:</strong> in order to, so that, to</li>
+    <li><strong>Result:</strong> therefore, as a result, consequently</li>
+    <li><strong>Example:</strong> for example, such as, for instance</li>
+    <li><strong>Other cohesive devices:</strong> repetition, references, paraphrasing, contrast, comparison, condition, summary</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Exercise E Venice postcard" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="sec-label">Exercise: Venice postcard cloze</div>
+<div class="slide-h2">🇮🇹 Venice postcard cloze</div>
+<div class="card">
+  <p>1. I chose this postcard <span class="cloze" onclick="revealCloze(this)" data-answer="because / as">＿＿＿＿＿＿</span> I wanted you to see how beautiful this place is.</p>
+  <p>2. <span class="cloze" onclick="revealCloze(this)" data-answer="When">＿＿＿＿＿＿</span> I first arrived, I couldn't believe my eyes!</p>
+  <p>3. And there is an emergency medical boat, <span class="cloze" onclick="revealCloze(this)" data-answer="so that">＿＿＿＿＿＿</span> sick people can be taken to hospital.</p>
+  <p>4. It's quite expensive here though, <span class="cloze" onclick="revealCloze(this)" data-answer="for example / for instance">＿＿＿＿＿＿</span> I took a trip on a gondola and it cost $800.</p>
+  <p>5. <span class="cloze" onclick="revealCloze(this)" data-answer="Therefore / As a result">＿＿＿＿＿＿</span>, we're only staying a couple of days before we move on to somewhere cheaper.</p>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Alliteration" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="slide-h1">&#127925; Writing rhetoric &middot; Alliteration <span class="h1-en">Alliteration</span></div>
+<div class="card">
+  <p>When we use the same letters or sounds at the start of words that are close together, it is called alliteration.</p>
+</div>
+<div class="card">
+  <h4>Example</h4>
+  <p><em>different cuisine, different culture, different language, India definitely didn't disappoint</em></p>
+  <p>The repetition of the consonant sound /d/ creates a rhythm and adds emphasis.</p>
+</div>
+<div class="sec-label">Using alliteration can help you:</div>
+<div class="card">
+  <ul class="styled-list">
+    <li>draw the reader's attention</li>
+    <li>create a particular mood</li>
+    <li>make descriptions more vivid</li>
+    <li>make your writing flow better</li>
+    <li>create catchy titles</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Personification" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="slide-h1">&#127917; Writing rhetoric &middot; Personification <span class="h1-en">Personification</span></div>
+<div class="card">
+  <p>When we give human qualities, feelings or characteristics to things or ideas, it is called personification. In other words, we use personification to describe non-human things as if they were human.</p>
+</div>
+<div class="card">
+  <h4>Example</h4>
+  <p><em>The bustling city assaulted my senses from all sides</em></p>
+  <p>To <em>assault</em> someone means to attack someone violently. Clearly, this is not something that a city can do. The writer is using personification to creatively describe how the city made him or her feel.</p>
+</div>
+<div class="sec-label">Using personification can help you:</div>
+<div class="card">
+  <ul class="styled-list">
+    <li>create images in the mind of the reader</li>
+    <li>show creativity in your writing</li>
+    <li>make your writing more lively and interesting</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Exam Part A diary" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="slide-h1">&#128221; Exam practice &middot; Part A <span class="h1-en">Diary writing (180&ndash;200 words)</span></div>
+<div class="card">
+  <h4>Question</h4>
+  <p>Recently, you decided to become a vegetarian. You are looking back on the experience and are writing about how you feel about your decision. Write a diary entry about your experience. Describe your feelings, reflect on the challenges you have faced and discuss any plans for the future. (180-200 words)</p>
+</div>
+<div class="method-badge"><span class="mb-key">Diary writing tips</span><span>Use first person, mix past and present tenses, express genuine feelings, reflect on challenges, and discuss future plans.</span></div>
+<div class="card">
+  <button class="reveal-btn" onclick="toggleRev('diary-ans')">Show model answer</button>
+  <div class="ans-reveal" id="diary-ans">
+    <h4>Model answer</h4>
+    <p>Dear Diary,</p>
+    <p>It's been a month now since I decided to become vegetarian, and I haven't eaten a single piece of meat since. I still feel like it's the right decision because I'm a real animal lover and I hate to think of animals suffering. I'm glad I decided to stop eating meat.</p>
+    <p>So far I haven't missed eating meat at all. I never really enjoyed eating meat that much anyway, so giving up meat has been quite easy for me. I haven't experienced any cravings for fried chicken or char siu bao! I must admit I like the smell of bacon frying, but the thought of eating it turns my stomach.</p>
+    <p>Most of my friends accept my choice and are understanding, but some of the comments from other students are already starting to wear thin. They'll make silly remarks like "You say you're vegetarian, but you're wearing leather shoes!" and "Why don't you stop eating eggs?" I just try to ignore them. Hopefully the novelty will soon wear off and they'll get bored of constantly teasing me about being veggie.</p>
+    <p>There've been some other challenges in the last month. My mum's concerned because she thinks I need meat to help me grow, and she's worried I'm not getting all the vitamins I need, even though I tell her I am! No matter how many articles by doctors I show her, she still thinks a diet without meat is unbalanced. Plus, dad's not very keen on eating vegetarian food, so I often have to make my own, different food to eat. It takes me a long time to cook a vegetarian meal for myself, because I don't know a lot about cooking, but I'm getting better at it every day. My sister bought me a cookbook full of delicious and delectable vegetarian recipes, which is really thoughtful of her. It has helped me a lot. One of the tips in the cookbook is to cook double the amount you need, then freeze half, so you always have a microwave dinner in the freezer if you need it.</p>
+    <p>I think being a vegetarian is probably going to get easier, especially because there are more and more veggie cafes and restaurants in Hong Kong now. I don't think I'll ever go back to eating meat. I've got to go now; I can hear a bowl of tofu and noodles calling my name...</p>
+  </div>
+</div>
+
+</section>
+<section class="slide" data-title="Writing &middot; Exam Part B choose one" data-section="writing" data-part="Textbook &middot; Writing">
+
+<div class="slide-h1">&#128221; Exam practice &middot; Part B <span class="h1-en">Choose one (320&ndash;400 words)</span></div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Q2 &middot; Reflective essay</div><p>Describe your experience of living in a cage home for one night and what you have learnt from it. (320-400 words)</p></div>
+  <div class="info-card"><div class="ic-title">Q3 &middot; Reflective report</div><p>Write a reflective report about your hotel internship, explaining what has been positive and negative, what you have learnt and how the experience could be improved for future interns. (320-400 words)</p></div>
+</div>
+<div class="method-badge"><span class="mb-key">Reflective writing structure</span><span>Description (experience) &rarr; Feelings &rarr; Evaluation (pros/cons) &rarr; Analysis (what you learnt) &rarr; Conclusion / Action plan (future suggestions).</span></div>
+<div class="card">
+  <h4>Useful cohesive devices and rhetoric</h4>
+  <ul class="styled-list">
+    <li>Connectives: because, since, therefore, as a result, however, in addition, finally</li>
+    <li>Alliteration: create catchy titles / smooth rhythm</li>
+    <li>Personification: the city taught me... / the experience shaped me...</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Conditionals intro" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="slide-h1">&#128208; Grammar &middot; Conditionals <span class="h1-en">Conditionals</span></div>
+<div class="method-badge"><span class="mb-key">Learning objectives</span><span>Master zero, first, second, and third conditionals, as well as other conditional expressions and unreal situations.</span></div>
+<div class="card">
+  <p>A conditional sentence consists of an <strong>if-clause</strong> (condition) and a <strong>main clause</strong> (result). Different tenses are used depending on whether the situation is real or unreal, and whether it refers to the present, past, or future.</p>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Zero &amp; First conditional" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">1. Zero conditional</div>
+<div class="card">
+  <p><strong>Use:</strong> general truths, scientific facts, imperatives</p>
+  <p><strong>Structure:</strong> if + present simple, main clause + present simple</p>
+  <ul class="styled-list">
+    <li>If we eat contaminated food, we become ill.</li>
+    <li>If you heat water to 100&deg;C, it boils.</li>
+    <li>If you don't feel well, see a doctor.</li>
+  </ul>
+</div>
+<div class="sec-label">2. First conditional</div>
+<div class="card">
+  <p><strong>Use:</strong> things which may be true in the present, or which may happen in the future</p>
+  <p><strong>Structure:</strong> if + present simple, main clause + will + bare infinitive</p>
+  <ul class="styled-list">
+    <li>If it rains tomorrow morning, we will cancel the picnic.</li>
+    <li>If you are hungry now, I will make you some pancakes.</li>
+  </ul>
+</div>
+<div class="card">
+  <h4>Special uses</h4>
+  <ul class="styled-list">
+    <li>Main clause: can/may for permission, may/might/could for possibility, can/could for ability</li>
+    <li>If-clause: present perfect or present continuous can be used</li>
+    <li>If-clause: should for less certain possibility (can omit if, invert with should)</li>
+    <li>If-clause: would for polite requests</li>
+    <li>Main clause: advice/suggestion expressions: you'd better, you should, why don't you, would you like...</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Second &amp; Third conditional" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">3. Second conditional</div>
+<div class="card">
+  <p><strong>Use:</strong> something which is not true or not real in the present or unlikely in the future</p>
+  <p><strong>Structure:</strong> if + past simple, main clause + would + bare infinitive</p>
+  <ul class="styled-list">
+    <li>If I had a car, I would take you for a ride around town. (= I don't have a car)</li>
+    <li>If he knew, I would ask him. (= he doesn't know)</li>
+  </ul>
+</div>
+<div class="card">
+  <h4>Special uses</h4>
+  <ul class="styled-list">
+    <li>If-clause: past continuous can be used</li>
+    <li>Main clause: might/could for possible results or abilities</li>
+    <li>Main clause: would be + -ing for what would be in progress now</li>
+    <li>Formal: always use were in if-clause; informal: was is acceptable; if I were you for advice</li>
+  </ul>
+</div>
+<div class="sec-label">4. Third conditional</div>
+<div class="card">
+  <p><strong>Use:</strong> something which did not happen in the past (often expresses regret)</p>
+  <p><strong>Structure:</strong> if + past perfect, main clause + would + have + past participle</p>
+  <ul class="styled-list">
+    <li>If we had gone out, we would have been caught in the rain. (= we didn't go out)</li>
+    <li>If I had invested in the company, I would have made a lot of money. (= I didn't invest)</li>
+  </ul>
+</div>
+<div class="card">
+  <h4>Special uses</h4>
+  <ul class="styled-list">
+    <li>If-clause: past perfect continuous can be used</li>
+    <li>Main clause: might/could + have + past participle</li>
+    <li>Can omit if, put had at the beginning (formal, more common in writing)</li>
+  </ul>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Other conditional expressions &amp; subjunctive" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">5. Other conditional expressions</div>
+<div class="card">
+  <table class="ans-table">
+    <tr class="at-head"><td>Expression</td><td>Meaning</td><td>Example</td></tr>
+    <tr class="at-row"><td>unless</td><td>if not</td><td>Unless we hurry, we'll miss our flight.</td></tr>
+    <tr class="at-row"><td>otherwise</td><td>or else</td><td>You must rest. Otherwise, you'll be tired tonight.</td></tr>
+    <tr class="at-row"><td>as long as / so long as / provided that / providing that / on condition that</td><td>on the condition that</td><td>You can borrow my camera as long as you look after it carefully.</td></tr>
+    <tr class="at-row"><td>even if</td><td>whether or not</td><td>Even if she knows the answer, she won't tell us.</td></tr>
+    <tr class="at-row"><td>and / or (else)</td><td>imperative + and/or</td><td>Take your medication and you'll feel better. Hurry up or you'll be late.</td></tr>
+    <tr class="at-row"><td>suppose / supposing / imagine / what if</td><td>hypothetical</td><td>Suppose it rained tomorrow, what would we do?</td></tr>
+    <tr class="at-row"><td>if it were not for / if it had not been for</td><td>but for</td><td>If it weren't for her, I wouldn't be here.</td></tr>
+    <tr class="at-row"><td>without</td><td>if not for</td><td>Without your help, I would have struggled.</td></tr>
+    <tr class="at-row"><td>if so / if not</td><td>if yes / if no</td><td>Do you want this book? If so, you can borrow it. If not, I'll lend it to Mel.</td></tr>
+  </table>
+</div>
+<div class="sec-label">Unreal situations</div>
+<div class="card">
+  <table class="ans-table">
+    <tr class="at-head"><td>Present unreal situations</td><td>Past unreal situations</td></tr>
+    <tr class="at-row"><td>I wish he were here now. (He is not here now.)</td><td>I wish he had been here yesterday. (He was not here yesterday.)</td></tr>
+    <tr class="at-row"><td>If only I knew the answer now! (I do not know the answer now.)</td><td>If only I had known the answer before the test yesterday! (I did not know the answer before the test yesterday.)</td></tr>
+    <tr class="at-row"><td>She looks as if/as though she had something to hide from us. (She does not have something to hide.)</td><td>She looks as if/as though she had had a great shock. (She did not have a great shock earlier.)</td></tr>
+    <tr class="at-row"><td>It is time/It is high time/It is about time we told her the truth. (Now it is time for us to tell her the truth.)</td><td>-</td></tr>
+  </table>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Practice A verb fill-in" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">Practice A &middot; Complete the sentences using the correct forms of the words given in brackets</div>
+<div class="card">
+  <p>1. The team are playing well. If we score another goal, we <span class="cloze" onclick="revealCloze(this)" data-answer="will/may win">＿＿＿＿＿＿</span> the match.</p>
+  <p>2. Thanks, Bob. If you <span class="cloze" onclick="revealCloze(this)" data-answer="hadn't reminded">＿＿＿＿＿＿</span> me yesterday, I <span class="cloze" onclick="revealCloze(this)" data-answer="would/might have forgotten">＿＿＿＿＿＿</span> Jimmy's birthday.</p>
+  <p>3. I don't trust him. If I <span class="cloze" onclick="revealCloze(this)" data-answer="were">＿＿＿＿＿＿</span> you, I <span class="cloze" onclick="revealCloze(this)" data-answer="wouldn't/would not believe">＿＿＿＿＿＿</span> a word he says.</p>
+  <p>4. He wasn't at Jill's party last night. If he <span class="cloze" onclick="revealCloze(this)" data-answer="had been">＿＿＿＿＿＿</span> there, I <span class="cloze" onclick="revealCloze(this)" data-answer="would have seen">＿＿＿＿＿＿</span> him.</p>
+  <p>5. If you <span class="cloze" onclick="revealCloze(this)" data-answer="pour">＿＿＿＿＿＿</span> oil on water, it <span class="cloze" onclick="revealCloze(this)" data-answer="floats">＿＿＿＿＿＿</span>.</p>
+  <p>6. Wear your padded jacket, or you <span class="cloze" onclick="revealCloze(this)" data-answer="will catch">＿＿＿＿＿＿</span> a cold.</p>
+  <p>7. Imagine you <span class="cloze" onclick="revealCloze(this)" data-answer="were given/had been given">＿＿＿＿＿＿</span> such an opportunity, would you take it?</p>
+  <p>8. Supposing what he said <span class="cloze" onclick="revealCloze(this)" data-answer="were">＿＿＿＿＿＿</span> true, what <span class="cloze" onclick="revealCloze(this)" data-answer="would you do">＿＿＿＿＿＿</span> about it?</p>
+  <p>9. You mustn't use the lifts if there <span class="cloze" onclick="revealCloze(this)" data-answer="is">＿＿＿＿＿＿</span> a fire.</p>
+  <p>10. "Can I watch television?" "Yes, if you <span class="cloze" onclick="revealCloze(this)" data-answer="have/have finished">＿＿＿＿＿＿</span> your homework."</p>
+  <p>11. You can keep the book for as long as you like, provided that no one <span class="cloze" onclick="revealCloze(this)" data-answer="requests">＿＿＿＿＿＿</span> it.</p>
+  <p>12. If you <span class="cloze" onclick="revealCloze(this)" data-answer="are">＿＿＿＿＿＿</span> hungry, help yourself to some fruit.</p>
+  <p>13. "If you <span class="cloze" onclick="revealCloze(this)" data-answer="have finished">＿＿＿＿＿＿</span> your homework, you can go to your friend's house," Mrs Lai said to her son.</p>
+  <p>14. I won't go to the cinema unless you <span class="cloze" onclick="revealCloze(this)" data-answer="are going/go">＿＿＿＿＿＿</span>, too.</p>
+  <p>15. If it <span class="cloze" onclick="revealCloze(this)" data-answer="was/were not">＿＿＿＿＿＿</span> for her, I <span class="cloze" onclick="revealCloze(this)" data-answer="would not be">＿＿＿＿＿＿</span> getting this award today.</p>
+  <p>16. I don't like the dress the actress is wearing. I <span class="cloze" onclick="revealCloze(this)" data-answer="wouldn't buy">＿＿＿＿＿＿</span> it even if it only <span class="cloze" onclick="revealCloze(this)" data-answer="cost">＿＿＿＿＿＿</span> $1.</p>
+  <p>17. These shoes are so pretty. I wish they <span class="cloze" onclick="revealCloze(this)" data-answer="were">＿＿＿＿＿＿</span> less pricey, though.</p>
+  <p>18. I'm going out to meet a client. If anyone <span class="cloze" onclick="revealCloze(this)" data-answer="calls">＿＿＿＿＿＿</span> while I'm out, would you please tell them I'll be back by four?</p>
+  <p>19. It's high time we <span class="cloze" onclick="revealCloze(this)" data-answer="got">＿＿＿＿＿＿</span> together and <span class="cloze" onclick="revealCloze(this)" data-answer="worked">＿＿＿＿＿＿</span> on the project. The deadline is coming soon.</p>
+  <p>20. I was on that flight. <span class="cloze" onclick="revealCloze(this)" data-answer="Had it not been">＿＿＿＿＿＿</span> for my seat belt, I <span class="cloze" onclick="revealCloze(this)" data-answer="would have injured">＿＿＿＿＿＿</span> myself badly.</p>
+  <p>21. <span class="cloze" onclick="revealCloze(this)" data-answer="If the manufacturer had carefully checked / Had the manufacturer carefully checked">＿＿＿＿＿＿</span> all the components of their products, the accident would not have happened.</p>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Practice B error correction" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">Practice B &middot; Correct errors (√ if correct, write correction if wrong)</div>
+<div class="card">
+  <p>1. Unless you help me, I won't be able to finish the job on time. <span class="cloze" onclick="revealCloze(this)" data-answer="√">＿＿＿＿＿＿</span></p>
+  <p>2. <span class="cloze" onclick="revealCloze(this)" data-answer="Unless">＿＿＿＿＿＿</span> my father lends me the money, I won't be able to afford that book.</p>
+  <p>3. Take this umbrella <span class="cloze" onclick="revealCloze(this)" data-answer="or/otherwise/or else">＿＿＿＿＿＿</span> you'll get wet.</p>
+  <p>4. If you add just a touch of colour there, your painting will be perfect. <span class="cloze" onclick="revealCloze(this)" data-answer="√">＿＿＿＿＿＿</span></p>
+  <p>5. We'll go to the beach tomorrow <span class="cloze" onclick="revealCloze(this)" data-answer="so long as/if">＿＿＿＿＿＿</span> it doesn't rain.</p>
+  <p>6. I'll buy that dress in the window as long as it's not too expensive. <span class="cloze" onclick="revealCloze(this)" data-answer="√">＿＿＿＿＿＿</span></p>
+  <p>7. You can use my car <span class="cloze" onclick="revealCloze(this)" data-answer="provided/providing/if">＿＿＿＿＿＿</span> you drive it carefully.</p>
+  <p>8. He took the MTR. Otherwise, he would have been stuck in traffic. <span class="cloze" onclick="revealCloze(this)" data-answer="√">＿＿＿＿＿＿</span></p>
+  <p>9. I'll probably go for a walk after lunch <span class="cloze" onclick="revealCloze(this)" data-answer="if/providing">＿＿＿＿＿＿</span> the weather is good.</p>
+  <p>10. She'll come as long as your sister comes too. <span class="cloze" onclick="revealCloze(this)" data-answer="√">＿＿＿＿＿＿</span></p>
+</div>
+
+</section>
+<section class="slide" data-title="Grammar &middot; Practice C sentence transformation" data-section="grammar" data-part="Skill Builder &middot; Grammar">
+
+<div class="sec-label">Practice C &middot; Rewrite the sentences following the instructions given in brackets</div>
+<div class="card">
+  <p>1. If you don't study hard, you won't pass your exams. (Use unless.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="You won't pass your exams unless you study hard. / Unless you study hard, you won't pass your exams.">＿＿＿＿＿＿</span></p>
+  <p>2. If you go to bed early, you'll feel refreshed in the morning. (Use <strong>and</strong> and begin with <strong>Go</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Go to bed early and you'll feel refreshed in the morning.">＿＿＿＿＿＿</span></p>
+  <p>3. You'll enter the next round of the competition if you secure support from the four judges. (Use <strong>provided</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="You'll enter the next round of the competition provided you secure support from the four judges. / Provided you secure support from the four judges, you'll enter the next round of the competition.">＿＿＿＿＿＿</span></p>
+  <p>4. If you don't train before the football match, you'll perform badly. (Use <strong>or else</strong> and begin with <strong>Train</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Train before the football match, or else you'll perform badly/won't perform well.">＿＿＿＿＿＿</span></p>
+  <p>5. If you don't hurry up, you'll be late for school. (Use <strong>or</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Hurry up or you'll be late for school.">＿＿＿＿＿＿</span></p>
+  <p>6. You can get back the deposit in full if you return the device before the deadline. (Use <strong>on condition that</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="You can get back the deposit in full on condition that you return the device before the deadline. / On condition that you return the device before the deadline, you can get back the deposit in full.">＿＿＿＿＿＿</span></p>
+  <p>7. If I had got up earlier, I would have been able to buy the tickets. (Use <strong>if only</strong> and the words given.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="If only I had got up earlier, I would have been able to buy the tickets.">＿＿＿＿＿＿</span></p>
+  <p>8. If I am able to reach her, I'll pass on your message. (Begin the sentence with <strong>Should</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Should I be able to reach her, I'll pass on your message.">＿＿＿＿＿＿</span></p>
+  <p>9. You can stay and watch us rehearse if you are very quiet. (Begin the sentence with <strong>As long as</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="As long as you are very quiet, you can stay and watch us rehearse.">＿＿＿＿＿＿</span></p>
+  <p>10. If I hadn't checked the dictionary, I wouldn't have learnt the meaning of that tricky word. (Begin the sentence with <strong>Without</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Without checking/having checked the dictionary, I wouldn't have learnt the meaning of that tricky word.">＿＿＿＿＿＿</span></p>
+  <p>11. You must be able to swim if you want to learn to canoe. (Use <strong>unless</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="You can't learn to canoe unless you are able to swim. / Unless you are able to swim, you can't learn to canoe.">＿＿＿＿＿＿</span></p>
+  <p>12. If you don't take a map with you, you're sure to lose your way. (Use <strong>otherwise</strong>.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="Take a map with you, otherwise you're sure to lose your way.">＿＿＿＿＿＿</span></p>
+  <p>13. If he weren't going to the airport this afternoon, would he join us? (Use <strong>What if</strong> and make two questions.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="What if he weren't going to the airport this afternoon? Would he join us?">＿＿＿＿＿＿</span></p>
+  <p>14. If Kelly had more patience, she would have more friends. (Use <strong>I wish</strong> and the word given.)</p>
+  <p class="cloze-line"><span class="cloze" onclick="revealCloze(this)" data-answer="I wish Kelly had more patience. Then she would have more friends.">＿＿＿＿＿＿</span></p>
+</div>
+
+</section>
+<section class="slide" data-title="Language practice &middot; Story cloze" data-section="lang" data-part="Skill Builder &middot; Language practice">
+
+<div class="slide-h1">📝 Language practice &middot; Story cloze <span class="h1-en">Choose the correct answers</span></div>
+<div class="card">
+  <p>1. <span class="cloze" onclick="revealCloze(this)" data-answer="For instance">＿＿＿＿＿＿</span></p>
+  <p>2. <span class="cloze" onclick="revealCloze(this)" data-answer="were given">＿＿＿＿＿＿</span></p>
+  <p>3. <span class="cloze" onclick="revealCloze(this)" data-answer="would">＿＿＿＿＿＿</span></p>
+  <p>4. <span class="cloze" onclick="revealCloze(this)" data-answer="had">＿＿＿＿＿＿</span></p>
+  <p>5. <span class="cloze" onclick="revealCloze(this)" data-answer="would">＿＿＿＿＿＿</span></p>
+  <p>6. <span class="cloze" onclick="revealCloze(this)" data-answer="could">＿＿＿＿＿＿</span></p>
+  <p>7. <span class="cloze" onclick="revealCloze(this)" data-answer="would">＿＿＿＿＿＿</span></p>
+  <p>8. <span class="cloze" onclick="revealCloze(this)" data-answer="had">＿＿＿＿＿＿</span></p>
+  <p>9. <span class="cloze" onclick="revealCloze(this)" data-answer="could">＿＿＿＿＿＿</span></p>
+  <p>10. <span class="cloze" onclick="revealCloze(this)" data-answer="were">＿＿＿＿＿＿</span></p>
+  <p>11. <span class="cloze" onclick="revealCloze(this)" data-answer="would not be">＿＿＿＿＿＿</span></p>
+  <p>12. <span class="cloze" onclick="revealCloze(this)" data-answer="made">＿＿＿＿＿＿</span></p>
+  <p>13. <span class="cloze" onclick="revealCloze(this)" data-answer="had had">＿＿＿＿＿＿</span></p>
+  <p>14. <span class="cloze" onclick="revealCloze(this)" data-answer="would have helped">＿＿＿＿＿＿</span></p>
+  <p>15. <span class="cloze" onclick="revealCloze(this)" data-answer="regretfully">＿＿＿＿＿＿</span></p>
+  <p>16. <span class="cloze" onclick="revealCloze(this)" data-answer="had">＿＿＿＿＿＿</span></p>
+  <p>17. <span class="cloze" onclick="revealCloze(this)" data-answer="would be">＿＿＿＿＿＿</span></p>
+  <p>18. <span class="cloze" onclick="revealCloze(this)" data-answer="but">＿＿＿＿＿＿</span></p>
+  <p>19. <span class="cloze" onclick="revealCloze(this)" data-answer="Unless">＿＿＿＿＿＿</span></p>
+  <p>20. <span class="cloze" onclick="revealCloze(this)" data-answer="will not">＿＿＿＿＿＿</span></p>
+  <p>21. <span class="cloze" onclick="revealCloze(this)" data-answer="decide">＿＿＿＿＿＿</span></p>
+</div>
+
+</section>
+<section class="slide" data-title="Language practice &middot; Opinion column rewrite" data-section="lang" data-part="Skill Builder &middot; Language practice">
+
+<div class="slide-h1">📝 Language practice &middot; Opinion column <span class="h1-en">Rewrite</span></div>
+<div class="card">
+  <p>1. <span class="cloze" onclick="revealCloze(this)" data-answer="If I wanted a snack or a cold drink on my way home from work, I would stop">＿＿＿＿＿＿</span> there.</p>
+  <p>2. <span class="cloze" onclick="revealCloze(this)" data-answer="If I suddenly realized I was out of bread, or pens, or soap, I would check there first">＿＿＿＿＿＿</span>.</p>
+  <p>3. <span class="cloze" onclick="revealCloze(this)" data-answer="We must act to save them, or else they will disappear entirely">＿＿＿＿＿＿</span>.</p>
+  <p>4. <span class="cloze" onclick="revealCloze(this)" data-answer="If it had not been for that shop on my street, I would not have discovered">＿＿＿＿＿＿</span> my favourite Korean brand of spicy crisps...</p>
+  <p>5. <span class="cloze" onclick="revealCloze(this)" data-answer="Should we ignore independent stores, we will lose">＿＿＿＿＿＿</span> a great deal of variety in our city.</p>
+  <p>6. <span class="cloze" onclick="revealCloze(this)" data-answer="If I am shopping at a chain store, I do not feel comfortable starting a conversation">＿＿＿＿＿＿</span> with the workers there...</p>
+  <p>7. <span class="cloze" onclick="revealCloze(this)" data-answer="Without her sitting there any more">＿＿＿＿＿＿</span>, the neighbourhood does not feel the same.</p>
+  <p>8. <span class="cloze" onclick="revealCloze(this)" data-answer="People say they like independent shops more than chains. If so, why aren't they thriving instead of disappearing?">＿＿＿＿＿＿</span></p>
+  <p>9. <span class="cloze" onclick="revealCloze(this)" data-answer="Otherwise, I would not have got to know">＿＿＿＿＿＿</span> some of my neighbours...</p>
+  <p>10. <span class="cloze" onclick="revealCloze(this)" data-answer="Unless we protect them, these little community spaces will disappear">＿＿＿＿＿＿</span>; and</p>
+  <p>11. <span class="cloze" onclick="revealCloze(this)" data-answer="if that happens here, this neighbourhood will become">＿＿＿＿＿＿</span> an impersonal one, just like many others.</p>
+</div>
+
+</section>
+<section class="slide" data-title="SB Writing &middot; Feedback email Splash Land" data-section="sb-writing" data-part="Skill Builder &middot; Writing">
+
+<div class="slide-h1">&#128231; Skill Builder &middot; Writing <span class="h1-en">Feedback email (Paper 3 style)</span></div>
+<div class="card">
+  <h4>Email cloze answers (Splash Land poster feedback)</h4>
+  <p>Hi Stanley,</p>
+  <p>Thank you for getting the poster to me so quickly. If it (1) <span class="cloze" onclick="revealCloze(this)" data-answer="were not for">＿＿＿＿＿＿</span> your quick work, we (2) <span class="cloze" onclick="revealCloze(this)" data-answer="wouldn't/would not have">＿＿＿＿＿＿</span> the time to make edits now, so it is very much appreciated.</p>
+  <p>The committee and I have discussed the design and we have some suggestions for you. Firstly, it would be great if the name of the park (3) <span class="cloze" onclick="revealCloze(this)" data-answer="was bigger/could be bigger">＿＿＿＿＿＿</span>. Also, would it be possible if (4) <span class="cloze" onclick="revealCloze(this)" data-answer="we made the poster more colourful">＿＿＿＿＿＿</span>? If so, the poster (5) <span class="cloze" onclick="revealCloze(this)" data-answer="would attract">＿＿＿＿＿＿</span> more people.</p>
+  <p>Apart from the design, we really love (6) <span class="cloze" onclick="revealCloze(this)" data-answer="your/the writing">＿＿＿＿＿＿</span>, which includes short and catchy lines. People (7) <span class="cloze" onclick="revealCloze(this)" data-answer="lose">＿＿＿＿＿＿</span> interest and focus if they (8) <span class="cloze" onclick="revealCloze(this)" data-answer="see">＿＿＿＿＿＿</span> too much writing on a poster, so we are very happy with that aspect.</p>
+  <p>Moving on, we like (9) <span class="cloze" onclick="revealCloze(this)" data-answer="the bird's eye view photo you've chosen">＿＿＿＿＿＿</span>. It looks really creative and refreshing. We think the poster would look even better if (10) <span class="cloze" onclick="revealCloze(this)" data-answer="you added a few/two or three photos of people having fun in the water">＿＿＿＿＿＿</span>. By the way, thanks for coming in last week and taking the photos. We were lucky — if the photoshoot (11) <span class="cloze" onclick="revealCloze(this)" data-answer="had been scheduled">＿＿＿＿＿＿</span> a day earlier, it (12) <span class="cloze" onclick="revealCloze(this)" data-answer="would not have been">＿＿＿＿＿＿</span> possible to do because of the terrible weather. In that case, we (13) <span class="cloze" onclick="revealCloze(this)" data-answer="would probably have needed to">＿＿＿＿＿＿</span> use some old photos, which (14) <span class="cloze" onclick="revealCloze(this)" data-answer="would have made">＿＿＿＿＿＿</span> everything look out-of-date.</p>
+  <p>Finally, the poster would be more informative if (15) <span class="cloze" onclick="revealCloze(this)" data-answer="you could include the address of Splash Land and its social media usernames">＿＿＿＿＿＿</span>. You can find the relevant information in the attached document. If people (16) <span class="cloze" onclick="revealCloze(this)" data-answer="don't know">＿＿＿＿＿＿</span> where we are, they (17) <span class="cloze" onclick="revealCloze(this)" data-answer="may refer">＿＿＿＿＿＿</span> to the poster this way.</p>
+  <p>We would appreciate it if (18) <span class="cloze" onclick="revealCloze(this)" data-answer="you could send the revised draft to us on or before 16 May">＿＿＿＿＿＿</span>.</p>
+  <p>Thank you very much for your hard work on this.</p>
+  <p>Cheers,<br>Kerry Ng</p>
+</div>
+
+</section>
+<section class="slide" data-title="Summary &middot; Lesson review" data-section="summary" data-part="Lesson summary">
+
+<div class="slide-h1">🎯 Summary</div>
+<div class="card-grid-2">
+  <div class="info-card"><div class="ic-title">Reading skills</div><p>Positive/negative language + tone/attitude identification: adjectives, nouns, figurative language, verbs, adverbs, and negatives are all clues.</p></div>
+  <div class="info-card"><div class="ic-title">Exam practice</div><p>Part A: Restaurant intern diary + Text 2 career advice. Part B1: India travel + Gen Z + Gap year destinations.</p></div>
+  <div class="info-card"><div class="ic-title">Writing</div><p>Cohesive devices (time/reason/purpose/result/example), alliteration, personification; diary and reflective writing.</p></div>
+  <div class="info-card"><div class="ic-title">Grammar</div><p>Zero/first/second/third conditionals, unless/otherwise/provided that/even if, wish/if only/as if/it's time.</p></div>
+</div>
+
+</section>
+<section class="slide" data-title="Done!" data-section="done" data-part="Lesson summary">
+
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">Well Done!</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">
+    You completed Unit 5 — Happy travels. Reading + Writing + Skill Builder + Conditionals.
+  </p>
+  <div class="score-badge" style="font-size:18px;padding:10px 24px;margin-bottom:20px">
+    <span class="sb-correct" id="finalScore">0</span><span class="sb-divider">/</span><span class="sb-total" id="finalTotal">0</span>
+  </div>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 Celebrate!</button>
+</div>
+
+</section>
+  </div><!-- /main-area -->
+</div><!-- /deck -->
+<script src="js/main.js"></script>
+<script src="../../../assets/app.js"></script>
+<script src="../../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u205',weakKey:'pronoun',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

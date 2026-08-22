@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSE Paper 1 Reading — 香港加速班 Unit 2 (V8 MAX · v2)</title>
+<style>
+
+/* ============================================================
+   DSE Reading Courseware MAX — Style System V7
+   Inspired by: freeCodeCamp (terminal-chic) + Khan Academy (clean edu)
+   Base: V6 reading-style.css
+   v2: 修正 Q49 题干与选项（According to the writer, … 答案 D）
+   ============================================================ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+
+/* === Design Tokens (CSS Custom Properties) === */
+:root{
+  /* ── Brand Core ── */
+  --brand-green:#0B8235;
+  --brand-green-dark:#096B2C;
+  --brand-green-light:#E8F5E9;
+  --brand-green-pale:#F5F9F0;
+  --brand-gold:#C85D0A;
+  --brand-red:#C0392B;
+  --brand-blue:#1A6DAF;
+
+  /* ── fCC Accent Palette ── */
+  --fcc-purple:#dbb8ff;
+  --fcc-yellow:#f1be32;
+  --fcc-blue:#99c9ff;
+  --fcc-green:#acd157;
+  --fcc-purple-dark:#5a01a7;
+  --fcc-yellow-dark:#4d3800;
+  --fcc-blue-dark:#002ead;
+  --fcc-green-dark:#00471b;
+
+  /* ── Khan Accent Palette ── */
+  --khan-blue:#1868d7;
+  --khan-teal:#14bf96;
+  --khan-teal-light:#d8f5ed;
+  --khan-bg:#f6f7f8;
+
+  /* ── Text Hierarchy ── */
+  --text-1:#1A1D23;
+  --text-2:#55596a;
+  --text-3:#9ca1b0;
+
+  /* ── Surface / Card ── */
+  --surface-0:#FFFFFF;
+  --surface-1:#f6f7f8;
+  --surface-2:#f0f1f3;
+  --card-bd:#D9E5D5;
+  --card-bd-subtle:rgba(0,0,0,.06);
+  --card-sh:0 1px 6px rgba(0,0,0,.05);
+  --card-sh-hover:0 4px 16px rgba(0,0,0,.1);
+  --r:14px;
+  --r-lg:20px;
+
+  /* ── Sidebar ── */
+  --sidebar-w:260px;
+  --sidebar-collapsed-w:56px;
+  --sidebar-bg:#0a0a23;
+  --sidebar-text:#dfdfe2;
+  --sidebar-text-dim:#8b8ba7;
+  --sidebar-active:#dbb8ff;
+  --sidebar-hover-bg:#1b1b32;
+
+  /* ── Topbar ── */
+  --topbar-h:44px;
+  --topbar-bg:rgba(255,255,255,.97);
+
+  /* ── Score Badge ── */
+  --score-bg:#0a0a23;
+  --score-text:#acd157;
+
+  /* ── Transition ── */
+  --ease:cubic-bezier(.4,0,.2,1);
+  --ease-bounce:cubic-bezier(.34,1.56,.64,1);
+
+  /* ── Zoom ── */
+  --zoom-scale:1;
+
+  /* ── Dark Mode (overrides) ── */
+  --dark-bg:#0a0a23;
+  --dark-surface:#1b1b32;
+  --dark-surface-2:#2a2a40;
+  --dark-text:#dfdfe2;
+  --dark-text-dim:#8b8ba7;
+  --dark-card-bd:#3b3b4f;
+}
+
+/* === Dark Mode Toggle === */
+body.dark{
+  --surface-0:#1b1b32;
+  --surface-1:#2a2a40;
+  --surface-2:#3b3b4f;
+  --text-1:#dfdfe2;
+  --text-2:#8b8ba7;
+  --text-3:#6b6b87;
+  --card-bd:#3b3b4f;
+  --card-bd-subtle:rgba(255,255,255,.08);
+  --card-sh:0 1px 6px rgba(0,0,0,.3);
+  --card-sh-hover:0 4px 16px rgba(0,0,0,.4);
+  --topbar-bg:rgba(10,10,35,.97);
+  --brand-green-light:#0d3d1e;
+  --brand-green-pale:#0a2e16;
+  --khan-bg:#1b1b32;
+}
+body.dark .topbar{border-bottom-color:var(--card-bd)}
+body.dark .page-counter{background:rgba(10,10,35,.92);color:var(--text-2);border-color:var(--card-bd)}
+body.dark .s1-card-wrapper{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .s1-meta-card{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .s1-meta-card .sm-value{color:var(--dark-text)}
+body.dark .s1-meta-card .sm-sub{color:var(--dark-text-dim)}
+body.dark .split-left{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .passage-excerpt{background:var(--dark-surface-2);border-left-color:var(--brand-green);color:var(--dark-text)}
+body.dark .passage-excerpt .para-num{color:var(--fcc-green)}
+body.dark .practice-mcq{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .pmcq-opt{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .pmcq-opt:hover{border-color:var(--fcc-purple);background:rgba(90,1,167,.1)}
+body.dark .pmcq-opt .pl{background:rgba(90,1,167,.2);color:var(--fcc-purple)}
+body.dark .flip-front{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .flip-back{background:rgba(90,1,167,.1);border-color:rgba(90,1,167,.3)}
+body.dark .flip-q{color:var(--dark-text)}
+body.dark .flip-ans{color:var(--fcc-green)}
+body.dark .tfng-btn{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .tfng-btn:hover{border-color:var(--fcc-purple)}
+body.dark .cloze{color:var(--text-3);border-bottom-color:var(--fcc-purple)}
+body.dark .cloze:hover{background:rgba(90,1,167,.1);color:var(--fcc-purple)}
+body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.15);border-bottom-color:var(--fcc-green)}
+body.dark .sa-input{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .sa-input:focus{border-color:var(--fcc-purple);background:var(--dark-surface)}
+body.dark .draggable{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .draggable:hover{border-color:var(--fcc-purple);background:rgba(90,1,167,.1)}
+body.dark .word-pool{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .drop-zone{border-color:rgba(90,1,167,.4);background:var(--dark-surface)}
+body.dark .drop-zone .dz-label{color:var(--fcc-purple)}
+body.dark .mc-banner.mc-correct{background:rgba(0,71,27,.15);border-color:var(--fcc-green);color:var(--fcc-green)}
+body.dark .mc-banner.mc-wrong{background:rgba(192,57,43,.12);border-color:var(--brand-red);color:#ff6b6b}
+body.dark .sa-result{background:var(--dark-surface);border-color:var(--fcc-green)}
+body.dark .reveal-btn{background:var(--fcc-purple-dark)}
+body.dark .timeline-row .tl-seg{background:var(--dark-surface);border-right-color:var(--dark-card-bd)}
+body.dark .timeline-row .tl-seg .seg-name{color:var(--dark-text)}
+body.dark .user-highlight{background:rgba(219,184,255,.25)}
+body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
+body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+body.dark .sec-label{color:var(--fcc-purple)}
+body.dark .sec-label::before{background:var(--fcc-purple)}
+body.dark .slide-h1,.slide-h2,.slide-h3{color:var(--dark-text)}
+body.dark .card{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .card h4,.card p{color:var(--dark-text)}
+body.dark .ce-item{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .ce-cn{color:var(--dark-text)}
+body.dark .ce-btn{color:var(--fcc-purple);border-color:var(--fcc-purple)}
+body.dark .ce-btn:hover{background:var(--fcc-purple-dark);color:#fff}
+
+body{
+  font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;
+  background:var(--surface-0);
+  color:var(--text-1);
+  font-size:20px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+
+/* === Monospace Accent (fCC-inspired) === */
+.mono,.course-tag,.pmcq-label,.sec-label,.sm-label,.seg-ph,.dz-label,.score-badge-val,.topbar .slide-title{
+  font-family:'Hack','JetBrains Mono','Fira Code','SF Mono','Menlo',monospace;
+}
+
+/* === Layout Shell === */
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--surface-0);display:flex;transition:background .4s var(--ease)}
+
+/* === Sidebar (Khan Academy + fCC inspired) === */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:var(--sidebar-bg);
+  color:var(--sidebar-text);
+  display:flex;
+  flex-direction:column;
+  transition:width .3s var(--ease),min-width .3s var(--ease);
+  overflow:hidden;
+  z-index:50;
+  position:relative;
+}
+.sidebar.collapsed{width:var(--sidebar-collapsed-w);min-width:var(--sidebar-collapsed-w)}
+
+.sidebar-header{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  min-height:52px;
+}
+.sidebar-logo{
+  font-family:'Hack','JetBrains Mono','Fira Code','SF Mono',monospace;
+  font-size:15px;
+  font-weight:800;
+  color:var(--fcc-purple);
+  white-space:nowrap;
+  overflow:hidden;
+}
+.sidebar.collapsed .sidebar-logo{display:none}
+.sidebar-toggle{
+  width:28px;height:28px;border-radius:6px;border:none;
+  background:rgba(255,255,255,.06);color:var(--sidebar-text);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:all .15s;flex-shrink:0;
+}
+.sidebar-toggle:hover{background:var(--sidebar-hover-bg);color:var(--fcc-purple)}
+
+.sidebar-nav{
+  flex:1;overflow-y:auto;padding:8px 0;
+  scrollbar-width:thin;scrollbar-color:var(--sidebar-hover-bg) transparent;
+}
+.sidebar-section-label{
+  font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--sidebar-text-dim);padding:12px 16px 4px;white-space:nowrap;
+}
+.sidebar.collapsed .sidebar-section-label{display:none}
+
+.sidebar-item{
+  display:flex;align-items:center;gap:10px;padding:8px 16px;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+  color:var(--sidebar-text-dim);font-size:13px;font-weight:600;
+  border-left:3px solid transparent;position:relative;
+}
+.sidebar-item:hover{background:var(--sidebar-hover-bg);color:var(--sidebar-text)}
+.sidebar-item.active{
+  color:var(--sidebar-active);border-left-color:var(--sidebar-active);
+  background:rgba(219,184,255,.08);
+}
+.sidebar-item .si-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.sidebar-item .si-label{overflow:hidden;text-overflow:ellipsis}
+.sidebar.collapsed .sidebar-item{padding:10px 0;justify-content:center}
+.sidebar.collapsed .sidebar-item .si-label{display:none}
+
+/* Sidebar score display */
+.sidebar-score{
+  padding:14px 16px;border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.score-ring{
+  width:36px;height:36px;position:relative;flex-shrink:0;
+}
+.score-ring svg{width:36px;height:36px;transform:rotate(-90deg)}
+.score-ring .ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:3}
+.score-ring .ring-fg{fill:none;stroke:var(--fcc-green);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s var(--ease)}
+.score-ring .ring-text{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;color:var(--fcc-green);font-family:'Hack',monospace;
+}
+.sidebar.collapsed .sidebar-score .score-detail{display:none}
+.score-detail{display:flex;flex-direction:column;overflow:hidden}
+.score-detail .sd-label{font-size:10px;color:var(--sidebar-text-dim);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.score-detail .sd-val{font-size:14px;font-weight:800;color:var(--fcc-green);font-family:'Hack',monospace}
+
+/* Sidebar theme toggle */
+.sidebar-footer{
+  padding:10px 16px;border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:8px;
+}
+.theme-toggle{
+  width:28px;height:28px;border-radius:6px;border:none;
+  background:rgba(255,255,255,.06);color:var(--sidebar-text);
+  cursor:pointer;font-size:14px;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.theme-toggle:hover{background:var(--sidebar-hover-bg);color:var(--fcc-yellow)}
+.sidebar.collapsed .theme-label{display:none}
+.theme-label{font-size:12px;color:var(--sidebar-text-dim);font-weight:600}
+
+/* === Main Content Area === */
+.main-area{
+  flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;
+  min-width:0;
+}
+
+/* === Topbar (enhanced) === */
+.topbar{
+  height:var(--topbar-h);background:var(--topbar-bg);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--card-bd);
+  display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px;
+  transition:background .4s var(--ease),border-color .4s var(--ease);
+}
+.topbar .course-tag{
+  font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  color:var(--fcc-purple-dark);background:rgba(90,1,167,.08);
+  padding:3px 10px;border-radius:12px;
+  transition:all .3s;
+}
+body.dark .topbar .course-tag{color:var(--fcc-purple);background:rgba(219,184,255,.12)}
+
+.topbar .slide-title{
+  font-size:12px;font-weight:700;color:var(--text-1);
+  flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.3px;
+}
+
+/* Progress dots (fCC color-coded) */
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{
+  width:7px;height:7px;border-radius:50%;background:#C8DCC4;
+  cursor:pointer;transition:background .25s,transform .2s;position:relative;
+}
+.dot.active{background:var(--fcc-purple);transform:scale(1.5)}
+.dot.passed{background:var(--fcc-green)}
+.dot.correct-slide{background:var(--fcc-green)}
+.dot.wrong-slide{background:var(--brand-red)}
+.dot[data-pn]:hover::after{
+  content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;
+  transform:translateX(-50%);background:var(--sidebar-bg);color:var(--fcc-purple);
+  font-size:12px;font-weight:700;padding:3px 8px;border-radius:5px;
+  white-space:nowrap;pointer-events:none;z-index:20;font-family:'Hack',monospace;
+}
+
+/* Zoom controls */
+.zoom-controls{display:flex;align-items:center;gap:3px;margin-left:2px;padding-left:8px;border-left:1px solid var(--card-bd)}
+.zoom-btn{
+  width:24px;height:24px;border-radius:50%;
+  border:1.5px solid rgba(90,1,167,.25);background:rgba(90,1,167,.06);
+  color:var(--fcc-purple-dark);font-size:11px;font-weight:800;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  padding:0;line-height:1;transition:all .15s;font-family:'Hack',monospace;
+}
+.zoom-btn:hover{background:var(--fcc-purple-dark);color:#fff}
+.zoom-btn:active{transform:scale(.9)}
+.zoom-btn:disabled{opacity:.35;cursor:not-allowed}
+body.dark .zoom-btn{border-color:rgba(219,184,255,.3);background:rgba(219,184,255,.08);color:var(--fcc-purple)}
+body.dark .zoom-btn:hover{background:var(--fcc-purple);color:var(--sidebar-bg)}
+.zoom-level{
+  font-size:11px;font-weight:700;color:var(--text-2);
+  min-width:30px;text-align:center;font-family:'Hack',monospace;cursor:pointer;user-select:none;
+}
+.zoom-level:hover{color:var(--fcc-purple)}
+
+/* Timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{
+  display:inline-flex;align-items:center;gap:2px;
+  background:rgba(90,1,167,.06);color:var(--fcc-purple-dark);
+  border:1.5px solid rgba(90,1,167,.25);border-radius:20px;
+  padding:2px 10px 2px 6px;font-size:13px;font-weight:700;
+  transition:all .2s;font-family:'Hack',monospace;
+}
+.timer-input-wrap:hover{background:rgba(90,1,167,.12)}
+.timer-input-wrap.running{background:var(--fcc-purple-dark);border-color:var(--fcc-purple-dark);color:#fff}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--brand-red);border-color:var(--brand-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap;font-family:'Hack',monospace}
+.timer-input-wrap.done .timer-done-label{display:inline}
+body.dark .timer-input-wrap{background:rgba(219,184,255,.08);border-color:rgba(219,184,255,.25);color:var(--fcc-purple)}
+body.dark .timer-input-wrap.running{background:var(--fcc-purple);color:var(--sidebar-bg)}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{
+  width:22px;background:transparent;border:none;
+  color:var(--fcc-purple-dark);font-size:13px;font-weight:700;
+  text-align:center;outline:none;font-family:'Hack',monospace;padding:0;
+  -moz-appearance:textfield;
+}
+body.dark .t-min,body.dark .t-sec{color:var(--fcc-purple)}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-colon{color:var(--fcc-purple-dark);font-size:13px;font-weight:700;padding:0 1px}
+body.dark .t-colon{color:var(--fcc-purple)}
+.timer-play{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;background:rgba(90,1,167,.06);
+  color:var(--fcc-purple-dark);border:1.5px solid rgba(90,1,167,.25);
+  border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1;
+}
+.timer-play:hover{background:var(--fcc-purple-dark);color:#fff}
+.timer-play.running{background:var(--fcc-purple-dark);color:#fff;border-color:var(--fcc-purple-dark)}
+.timer-play.done{background:var(--brand-red);color:#fff;border-color:var(--brand-red)}
+body.dark .timer-play{background:rgba(219,184,255,.08);border-color:rgba(219,184,255,.25);color:var(--fcc-purple)}
+.timer-reset{
+  background:transparent;color:var(--text-3);border:1.5px solid transparent;
+  font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;
+}
+.timer-reset:hover{color:var(--brand-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+/* Score badge in topbar */
+.score-badge{
+  display:flex;align-items:center;gap:4px;
+  background:var(--score-bg);color:var(--score-text);
+  padding:3px 10px;border-radius:20px;font-size:12px;font-weight:800;
+  font-family:'Hack',monospace;letter-spacing:.5px;
+  transition:all .3s var(--ease);
+}
+.score-badge .sb-correct{color:var(--fcc-green)}
+.score-badge .sb-divider{color:rgba(255,255,255,.3)}
+.score-badge .sb-total{color:rgba(255,255,255,.5)}
+.score-badge.pulse{animation:scorePulse .4s var(--ease-bounce)}
+@keyframes scorePulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+/* Progress bar (gradient fCC-style) */
+.progress-bar{
+  position:fixed;bottom:0;left:0;height:3px;
+  background:linear-gradient(90deg,var(--fcc-purple),var(--fcc-green),var(--fcc-yellow));
+  transition:width .4s ease;z-index:100;
+  background-size:200% 100%;animation:gradientShift 3s ease infinite;
+}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* Page counter */
+.page-counter{
+  position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;
+  font-family:'Hack',monospace;font-size:13px;font-weight:700;color:var(--text-2);
+  background:var(--topbar-bg);backdrop-filter:blur(8px);
+  padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);
+  letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default;
+  transition:all .3s;
+}
+.page-counter .pc-cur{
+  display:inline-block;min-width:14px;text-align:center;cursor:pointer;
+  border-radius:4px;padding:1px 4px;transition:background .15s;
+}
+.page-counter .pc-cur:hover{background:rgba(90,1,167,.08);color:var(--fcc-purple-dark)}
+body.dark .page-counter .pc-cur:hover{background:rgba(219,184,255,.12);color:var(--fcc-purple)}
+.page-counter .pc-cur-input{
+  width:28px;background:rgba(90,1,167,.06);border:1.5px solid var(--fcc-purple-dark);
+  border-radius:6px;color:var(--fcc-purple-dark);font-size:13px;font-weight:700;
+  text-align:center;outline:none;padding:1px 2px;font-family:'Hack',monospace;-moz-appearance:textfield;
+}
+.page-counter .pc-total{color:var(--text-3)}
+
+/* === Slides === */
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  padding:calc(var(--topbar-h) + 20px) 72px 48px;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s var(--ease),transform .45s var(--ease);
+  transform:translateX(40px) scale(var(--zoom-scale));
+  transform-origin:top left;
+  width:calc(100% / var(--zoom-scale));
+  height:calc(100% / var(--zoom-scale));
+  overflow-y:auto;
+}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0) scale(var(--zoom-scale));z-index:2}
+.slide.slide-enter{animation:slideIn .4s var(--ease)}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px) scale(var(--zoom-scale))}to{opacity:1;transform:translateX(0) scale(var(--zoom-scale))}}
+
+/* === Typography (fCC-inspired scale) === */
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{
+  font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fcc-purple-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+body.dark .sec-label{color:var(--fcc-purple)}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--fcc-purple-dark);border-radius:1px}
+body.dark .sec-label::before{background:var(--fcc-purple)}
+.accent{color:var(--fcc-purple-dark)}
+body.dark .accent{color:var(--fcc-purple)}
+
+/* === Cover Slide (MAX Design — fCC + Khan blend) === */
+.s1-card-wrapper{
+  background:var(--surface-0);border:2px solid var(--card-bd);
+  border-radius:var(--r-lg);box-shadow:var(--card-sh);
+  position:relative;padding-bottom:52px;overflow:hidden;
+  transition:all .4s var(--ease);
+}
+.xdf-header-bar{
+  background:linear-gradient(135deg,var(--sidebar-bg) 0%,#1b1b32 50%,var(--fcc-purple-dark) 100%);
+  border-radius:var(--r-lg) var(--r-lg) 0 0;padding:18px 28px;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;
+}
+.xdf-header-bar::after{content:'';position:absolute;right:-30px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(219,184,255,.08)}
+.xdf-header-bar .xdf-logo-text{
+  font-family:'Hack','JetBrains Mono','Fira Code',monospace;
+  font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;
+}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:13px;opacity:.7;letter-spacing:0}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6);font-weight:600;font-family:'Hack',monospace;letter-spacing:1px}
+
+/* Decorative grid pattern (fCC-inspired) */
+.xdf-grid-pattern{
+  position:absolute;bottom:0;left:0;right:0;height:48px;
+  background:
+    repeating-linear-gradient(90deg,rgba(219,184,255,.06) 0px,rgba(219,184,255,.06) 1px,transparent 1px,transparent 24px),
+    repeating-linear-gradient(0deg,rgba(219,184,255,.06) 0px,rgba(219,184,255,.06) 1px,transparent 1px,transparent 24px),
+    var(--sidebar-bg);
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  display:flex;align-items:center;justify-content:center;
+}
+.xdf-grid-pattern span{
+  font-family:'Hack',monospace;font-size:12px;font-weight:800;
+  color:var(--fcc-purple);letter-spacing:3px;
+  background:var(--sidebar-bg);padding:4px 20px;border-radius:20px;
+  box-shadow:0 0 12px rgba(219,184,255,.15);
+}
+
+.teacher-badge{
+  display:inline-flex;align-items:center;gap:10px;background:var(--surface-0);
+  border:2px solid var(--fcc-purple-dark);border-radius:44px;
+  padding:8px 22px;box-shadow:0 3px 16px rgba(90,1,167,.1);
+  transition:all .3s;
+}
+body.dark .teacher-badge{border-color:var(--fcc-purple);background:var(--dark-surface)}
+.teacher-badge .tb-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--fcc-purple-dark),var(--fcc-purple));
+  color:#fff;font-weight:900;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Hack',monospace;
+}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{
+  font-size:11px;color:var(--fcc-purple-dark);background:rgba(90,1,167,.08);
+  padding:3px 10px;border-radius:12px;font-weight:700;font-family:'Hack',monospace;letter-spacing:.5px;
+}
+body.dark .teacher-badge .tb-tag{color:var(--fcc-purple);background:rgba(219,184,255,.1)}
+
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{
+  background:var(--surface-0);border:2px solid var(--card-bd);
+  border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh);transition:all .2s;
+}
+.s1-meta-card:hover{box-shadow:var(--card-sh-hover);transform:translateY(-1px)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--fcc-purple-dark);margin-bottom:4px}
+body.dark .s1-meta-card .sm-label{color:var(--fcc-purple)}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1);font-family:'Hack',monospace}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:var(--surface-0);text-align:center;border-right:1px solid var(--card-bd);transition:all .15s}
+.tl-seg:last-child{border-right:none}
+.tl-seg:hover{background:var(--surface-1)}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--fcc-purple-dark);margin-bottom:4px;font-family:'Hack',monospace}
+body.dark .tl-seg .seg-ph{color:var(--fcc-purple)}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg .sm-sub{font-size:11px;color:var(--text-2)}
+.tl-seg.c1{border-top:4px solid var(--brand-red)}
+.tl-seg.c2{border-top:4px solid var(--fcc-green-dark)}
+.tl-seg.c3{border-top:4px solid var(--fcc-purple-dark)}
+.tl-seg.c4{border-top:4px solid var(--fcc-blue-dark)}
+body.dark .tl-seg.c2{border-top-color:var(--fcc-green)}
+body.dark .tl-seg.c3{border-top-color:var(--fcc-purple)}
+body.dark .tl-seg.c4{border-top-color:var(--fcc-blue)}
+
+.class-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--sidebar-bg) 0%,var(--fcc-purple-dark) 100%);
+  color:#fff;padding:8px 22px;border-radius:36px;
+  box-shadow:0 3px 16px rgba(90,1,167,.2);
+  font-weight:800;font-size:15px;letter-spacing:1px;font-family:'Hack',monospace;
+}
+
+/* === Flip Cards (3D flip with fCC accents) === */
+.flip-grid{display:grid;gap:14px;width:100%}
+.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{
+  min-height:140px;cursor:pointer;width:100%;
+  border-radius:18px;position:relative;perspective:800px;
+}
+.flip-card-inner{
+  width:100%;display:grid;grid-template:1fr/1fr;
+  transition:transform .5s var(--ease-bounce);
+  transform-style:preserve-3d;
+}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-face{
+  border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px 22px;text-align:center;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  grid-area:1/1;
+}
+.flip-front{background:var(--surface-1);border:1.5px solid var(--card-bd-subtle);z-index:1}
+.flip-back{
+  background:rgba(90,1,167,.06);border:1.5px solid rgba(90,1,167,.2);
+  transform:rotateY(180deg);z-index:0;
+}
+.flip-card.flipped .flip-front{z-index:0}
+.flip-card.flipped .flip-back{z-index:1}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--fcc-green-dark);font-weight:600}
+body.dark .flip-ans{color:var(--fcc-green)}
+
+/* === Cards === */
+.card{background:var(--surface-0);border:1.5px solid var(--card-bd-subtle);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh);transition:all .2s}
+.card:hover{box-shadow:var(--card-sh-hover)}
+.card.accent{border-left:4px solid var(--fcc-purple-dark)}
+body.dark .card.accent{border-left-color:var(--fcc-purple)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-1)}
+
+.ce-item{background:var(--surface-0);border:1.5px solid var(--card-bd-subtle);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--text-1);background:rgba(90,1,167,.06);padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:var(--surface-0);padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid rgba(90,1,167,.15)}
+.ce-en{display:none;font-size:20px;color:var(--text-1);font-weight:700;background:var(--brand-green-pale);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(90,1,167,.2)}
+.ce-btn{background:transparent;color:var(--fcc-purple-dark);border:2px solid var(--fcc-purple-dark);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--fcc-purple-dark);color:#fff}
+
+/* === Split View === */
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:rgba(90,1,167,.04);border-radius:14px;border:1.5px solid rgba(90,1,167,.15)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--fcc-purple-dark)}
+body.dark .split-label.good{color:var(--fcc-purple)}
+
+.reveal-btn{background:var(--fcc-purple-dark);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--fcc-purple-dark);filter:brightness(1.15);transform:translateY(-1px)}
+.reveal-btn:active{transform:translateY(0)}
+
+.split-view{display:flex;gap:18px;margin-top:14px;max-height:680px}
+.split-left{
+  flex:1.1;background:var(--brand-green-pale);padding:18px 22px;
+  border-radius:12px;overflow-y:auto;max-height:680px;border:1px solid var(--card-bd);
+  transition:all .3s;
+}
+.split-left h4{font-size:16px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:10px;font-family:'Hack',monospace;letter-spacing:.5px}
+body.dark .split-left h4{color:var(--fcc-purple)}
+.split-right{flex:1;overflow-y:auto;max-height:680px}
+.passage-excerpt{
+  font-size:22px;color:var(--text-1);line-height:1.85;margin-bottom:14px;
+  padding:12px 16px;background:var(--surface-0);border-radius:10px;
+  border-left:4px solid var(--fcc-purple-dark);transition:all .3s;
+}
+body.dark .passage-excerpt{border-left-color:var(--fcc-purple)}
+.passage-excerpt .para-num{font-size:11px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-family:'Hack',monospace}
+body.dark .passage-excerpt .para-num{color:var(--fcc-purple)}
+.passage-excerpt .user-highlight{background:rgba(219,184,255,.2);padding:2px 4px;border-radius:2px}
+
+/* === MCQ === */
+.practice-mcq{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:14px;padding:20px 24px;box-shadow:var(--card-sh);margin-bottom:16px;transition:all .3s}
+.practice-mcq .pmcq-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--fcc-purple-dark);margin-bottom:12px;font-family:'Hack',monospace}
+body.dark .practice-mcq .pmcq-label{color:var(--fcc-purple)}
+.practice-mcq .pmcq-q{font-size:17px;font-weight:800;margin-bottom:18px;line-height:1.5;color:var(--text-1)}
+.pmcq-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.pmcq-opt{
+  display:flex;align-items:center;gap:14px;padding:12px 18px;
+  border-radius:10px;border:2px solid var(--card-bd);
+  background:var(--surface-1);font-size:16px;color:var(--text-1);
+  cursor:pointer;transition:all .2s;
+}
+.pmcq-opt:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04);transform:translateX(2px)}
+body.dark .pmcq-opt:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.06)}
+.pmcq-opt.correct{border-color:var(--fcc-green-dark);background:#C8E6C9;font-weight:700}
+body.dark .pmcq-opt.correct{border-color:var(--fcc-green);background:rgba(0,71,27,.2)}
+.pmcq-opt.wrong{border-color:#C62828;background:#FFCDD2}
+body.dark .pmcq-opt.wrong{border-color:#ff6b6b;background:rgba(192,57,43,.15)}
+.pmcq-opt.answered{cursor:default}
+.pmcq-opt .pl{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(90,1,167,.08);color:var(--fcc-purple-dark);
+  font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:'Hack',monospace;transition:all .2s;
+}
+body.dark .pmcq-opt .pl{background:rgba(219,184,255,.1);color:var(--fcc-purple)}
+.pmcq-opt.correct .pl{background:var(--fcc-green-dark);color:#fff}
+.pmcq-opt.wrong .pl{background:#C62828;color:#fff}
+.pmcq-opt.correct-revealed{background:var(--brand-green-pale) !important;border:2.5px solid var(--fcc-green-dark) !important;font-weight:800 !important;animation:pulseGreen 1.5s ease infinite}
+@keyframes pulseGreen{0%,100%{box-shadow:0 0 0 0 rgba(0,71,27,.3)}50%{box-shadow:0 0 0 8px rgba(0,71,27,0)}}
+body.dark .pmcq-opt.correct-revealed{border-color:var(--fcc-green) !important}
+
+.mc-banner{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;margin-top:14px;border-radius:12px;font-size:17px;line-height:1.6}
+.mc-banner.mc-correct{background:rgba(172,209,87,.1);border:2px solid var(--fcc-green-dark);color:var(--fcc-green-dark)}
+body.dark .mc-banner.mc-correct{background:rgba(0,71,27,.15);border-color:var(--fcc-green);color:var(--fcc-green)}
+.mc-banner.mc-wrong{background:#FFF5F5;border:2px solid var(--brand-red);color:var(--brand-red)}
+body.dark .mc-banner.mc-wrong{background:rgba(192,57,43,.12);border-color:#ff6b6b;color:#ff6b6b}
+.mc-banner .tick{font-size:28px;flex-shrink:0;line-height:1}
+.mc-banner .at{font-size:18px;font-weight:800;margin-bottom:4px}
+.mc-banner .asub{font-size:15px;color:var(--text-1);font-weight:500;line-height:1.7}
+
+/* === TFNG === */
+.tfng-group{display:flex;gap:10px;margin:6px 0 14px}
+.tfng-btn{
+  display:inline-block;padding:8px 20px;border:2px solid var(--card-bd);
+  border-radius:8px;cursor:pointer;font-size:16px;font-weight:700;
+  background:var(--surface-1);transition:all .2s;font-family:'Hack',monospace;
+}
+.tfng-btn:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04)}
+body.dark .tfng-btn:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.06)}
+.tfng-btn.correct{border-color:var(--fcc-green-dark);background:#C8E6C9;color:var(--fcc-green-dark)}
+body.dark .tfng-btn.correct{border-color:var(--fcc-green);color:var(--fcc-green)}
+.tfng-btn.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+body.dark .tfng-btn.wrong{border-color:#ff6b6b;color:#ff6b6b}
+.tfng-group.answered .tfng-btn{cursor:default}
+
+/* === Cloze === */
+.cloze{
+  display:inline-block;min-width:80px;border-bottom:2px dashed var(--fcc-purple-dark);
+  cursor:pointer;padding:2px 6px;font-weight:700;color:var(--text-3);transition:all .2s;
+}
+.cloze:hover{background:rgba(90,1,167,.06);color:var(--fcc-purple-dark)}
+body.dark .cloze{border-bottom-color:var(--fcc-purple)}
+body.dark .cloze:hover{background:rgba(219,184,255,.06);color:var(--fcc-purple)}
+.cloze.revealed{color:var(--fcc-green-dark);border-bottom-style:solid;background:rgba(0,71,27,.06);font-weight:800}
+body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.12);border-bottom-color:var(--fcc-green)}
+
+/* === Short Answer === */
+.sa-input-wrap{margin-top:12px;display:flex;gap:10px;align-items:flex-start}
+.sa-input{
+  flex:1;padding:10px 14px;border:2px solid var(--card-bd);border-radius:10px;
+  font-size:15px;font-family:'PingFang SC','Inter',sans-serif;
+  color:var(--text-1);background:var(--surface-1);resize:vertical;
+  min-height:44px;max-height:120px;transition:border-color .2s;
+}
+.sa-input:focus{outline:none;border-color:var(--fcc-purple-dark);background:var(--surface-0)}
+body.dark .sa-input:focus{border-color:var(--fcc-purple)}
+.sa-input::placeholder{color:var(--text-3)}
+.sa-submit{
+  padding:10px 20px;background:var(--fcc-purple-dark);color:#fff;border:none;
+  border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;
+  white-space:nowrap;transition:all .2s;
+}
+.sa-submit:hover{filter:brightness(1.15)}
+.sa-submit:disabled{background:#C8DCC4;cursor:not-allowed}
+.sa-result{display:none;margin-top:12px;padding:14px 18px;background:rgba(90,1,167,.04);border:2px solid var(--fcc-purple-dark);border-radius:10px;font-size:15px;line-height:1.7}
+.sa-result.show{display:block}
+body.dark .sa-result{background:rgba(219,184,255,.06);border-color:var(--fcc-purple)}
+.sa-your-ans{color:var(--fcc-blue-dark);font-weight:700;margin-bottom:8px}
+body.dark .sa-your-ans{color:var(--fcc-blue)}
+.sa-correct-ans{color:var(--fcc-green-dark);font-weight:700}
+body.dark .sa-correct-ans{color:var(--fcc-green)}
+.sa-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+
+/* === Drag & Drop (fCC-styled) === */
+.draggable{
+  display:inline-block;padding:6px 14px;margin:4px;
+  background:var(--surface-0);border:2px solid var(--card-bd);
+  border-radius:8px;cursor:grab;font-size:18px;font-weight:600;
+  color:var(--text-1);transition:all .2s;user-select:none;
+}
+.draggable:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04)}
+body.dark .draggable:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.06)}
+.draggable.dragging{opacity:.4;cursor:grabbing}
+.draggable.correct-placed{background:#C8E6C9;border-color:var(--fcc-green-dark)}
+body.dark .draggable.correct-placed{background:rgba(0,71,27,.2);border-color:var(--fcc-green)}
+.draggable.wrong-placed{background:#FFCDD2;border-color:#C62828}
+body.dark .draggable.wrong-placed{background:rgba(192,57,43,.15);border-color:#ff6b6b}
+.word-pool{
+  display:flex;flex-wrap:wrap;gap:8px;padding:14px;
+  background:var(--surface-1);border-radius:10px;min-height:80px;
+  border:1px solid var(--card-bd-subtle);transition:all .2s;
+}
+.word-pool.drag-over{background:rgba(90,1,167,.06);border-color:var(--fcc-purple-dark)}
+body.dark .word-pool.drag-over{background:rgba(219,184,255,.08);border-color:var(--fcc-purple)}
+.drop-zone{transition:all .2s;padding:10px;background:var(--surface-1);border-radius:8px;border:2px dashed rgba(90,1,167,.3);min-height:80px}
+.drop-zone.drag-over .drop-content{background:rgba(90,1,167,.06);border-color:var(--fcc-purple-dark);border-style:solid}
+body.dark .drop-zone{border-color:rgba(219,184,255,.3);background:var(--dark-surface)}
+body.dark .drop-zone.drag-over .drop-content{background:rgba(219,184,255,.08);border-color:var(--fcc-purple)}
+.dz-label{font-size:13px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:4px;font-family:'Hack',monospace;letter-spacing:.5px}
+body.dark .dz-label{color:var(--fcc-purple)}
+
+/* === Sigword === */
+.sigword{cursor:default;transition:all .3s;padding:1px 3px;border-radius:3px}
+.sigword.pending{color:inherit;background:transparent}
+.sigword.revealed-pos{color:var(--fcc-green-dark);font-weight:700;background:rgba(172,209,87,.15)}
+body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
+.sigword.revealed-neg{color:var(--brand-red);font-weight:700;background:#FFEBEE}
+body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+
+/* === Confetti === */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+/* === Clear Highlights Button === */
+.clear-hl-btn{
+  display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+  background:transparent;color:var(--text-3);border:1px solid var(--card-bd);
+  border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;
+  transition:all .2s;margin-left:6px;
+}
+.clear-hl-btn:hover{color:var(--brand-red);border-color:var(--brand-red);background:rgba(192,57,43,.06)}
+
+/* === Answer Reveal === */
+.ans-reveal{display:none;margin-top:14px;padding:14px 18px;background:rgba(90,1,167,.04);border:2px solid var(--fcc-purple-dark);border-radius:10px;font-size:15px;line-height:1.7}
+.ans-reveal.show{display:block}
+body.dark .ans-reveal{background:rgba(219,184,255,.06);border-color:var(--fcc-purple)}
+.ans-banner{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ans-banner .tick{font-size:24px}
+.ans-banner .at{font-weight:800;font-size:18px;color:var(--fcc-purple-dark)}
+body.dark .ans-banner .at{color:var(--fcc-purple)}
+.ans-banner .asub{font-size:14px;color:var(--text-2);margin-top:2px}
+
+/* === Toast Notification === */
+.toast{
+  position:fixed;top:60px;right:20px;z-index:200;
+  padding:12px 20px;border-radius:12px;font-size:14px;font-weight:700;
+  color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.2);
+  animation:toastIn .3s var(--ease-bounce),toastOut .3s var(--ease) 2.7s forwards;
+  pointer-events:none;font-family:'Hack',monospace;
+}
+.toast.success{background:var(--fcc-green-dark)}
+.toast.error{background:var(--brand-red)}
+.toast.info{background:var(--fcc-purple-dark)}
+@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}
+
+/* === Streak Counter (gamification) === */
+.streak-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,var(--fcc-yellow-dark),var(--fcc-yellow));
+  color:var(--sidebar-bg);padding:4px 12px;border-radius:20px;
+  font-size:12px;font-weight:800;font-family:'Hack',monospace;
+  box-shadow:0 2px 8px rgba(241,190,50,.3);
+  animation:streakGlow 2s ease infinite;
+}
+@keyframes streakGlow{0%,100%{box-shadow:0 2px 8px rgba(241,190,50,.3)}50%{box-shadow:0 2px 16px rgba(241,190,50,.5)}}
+.streak-fire{font-size:14px}
+
+/* === Responsive === */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .slide{padding:52px 28px 40px}
+  .flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .split-view{flex-direction:column}
+}
+@media(max-width:768px){
+  .slide{padding:42px 14px 36px}
+  .topbar .course-tag{display:none}
+  .topbar .progress-dots{display:none}
+  .topbar{padding:0 8px;gap:6px;height:34px}
+  .topbar .slide-title{font-size:11px;min-width:0}
+  .slide-h1{font-size:clamp(26px,6vw,36px)!important}
+  .slide-h2{font-size:clamp(20px,5vw,28px)!important}
+  .slide-h3{font-size:clamp(17px,4vw,22px)!important}
+  .sec-label{font-size:15px}
+  .card,.ce-item{padding:14px 16px}
+  .card h4,.card p,.ce-cn{font-size:15px}
+  .ce-hints span{font-size:14px}
+  .ce-en{font-size:14px;padding:10px 14px}
+  .ce-btn{font-size:14px;padding:5px 12px}
+  .flip-grid.g5{grid-template-columns:repeat(3,1fr)}
+  .flip-q,.flip-ans{font-size:15px}
+  .flip-hint{font-size:13px}
+  .flip-card{min-height:110px}
+  .split-view{flex-direction:column;max-height:none;gap:12px}
+  .split-left,.split-right{max-height:none;flex:none}
+  .split-left{max-height:35vh}
+  .passage-excerpt{font-size:14px;padding:10px 12px;line-height:1.7}
+  .passage-excerpt .para-num{font-size:10px}
+  .practice-mcq{padding:14px 16px}
+  .practice-mcq .pmcq-q{font-size:14px;margin-bottom:12px}
+  .pmcq-opt{padding:10px 12px;font-size:14px;gap:10px}
+  .pmcq-opt .pl{width:26px;height:26px;font-size:12px}
+  .tfng-btn{padding:6px 14px;font-size:14px}
+  .cloze{font-size:14px;min-width:60px}
+  .sa-input{font-size:14px;padding:8px 10px;min-height:38px}
+  .sa-submit{padding:8px 14px;font-size:14px}
+  .sa-result{font-size:13px;padding:10px 12px}
+  .s1-card-wrapper{border-radius:12px}
+  .xdf-header-bar{padding:12px 16px;border-radius:12px 12px 0 0}
+  .xdf-header-bar .xdf-logo-text{font-size:16px}
+  .xdf-header-bar .xdf-logo-text span{font-size:12px}
+  .xdf-header-bar .xdf-sub-text{font-size:11px}
+  .xdf-grid-pattern{height:32px}
+  .xdf-grid-pattern span{font-size:11px;padding:3px 12px}
+  .teacher-badge{padding:6px 14px;gap:8px}
+  .teacher-badge .tb-name{font-size:13px}
+  .teacher-badge .tb-avatar{width:28px;height:28px}
+  .class-badge{font-size:12px;padding:6px 14px}
+  .s1-meta-grid{gap:8px}
+  .s1-meta-card{padding:10px 12px;border-radius:10px}
+  .s1-meta-card .sm-label{font-size:9px}
+  .s1-meta-card .sm-value{font-size:14px}
+  .s1-meta-card .sm-sub{font-size:10px}
+  .timeline-row{border-radius:10px}
+  .tl-seg{padding:8px 8px}
+  .tl-seg .seg-ph{font-size:8px}
+  .tl-seg .seg-name{font-size:12px}
+  .mc-banner{font-size:14px;padding:10px 12px;gap:10px}
+  .mc-banner .tick{font-size:22px}
+  .mc-banner .at{font-size:15px}
+  .mc-banner .asub{font-size:13px}
+  table{font-size:13px!important}
+  table th,table td{padding:6px 8px!important}
+  .zoom-controls{display:none}
+  .timer-wrap{gap:3px}
+  .timer-input-wrap{padding:2px 6px 2px 4px;font-size:12px}
+  .t-min,.t-sec{width:18px;font-size:12px}
+  .timer-play{width:24px;height:24px;font-size:12px}
+  .timer-reset{font-size:11px;padding:3px 6px}
+  .clear-hl-btn{font-size:10px;padding:2px 8px}
+  .page-counter{font-size:12px;padding:4px 12px;bottom:10px}
+  .progress-bar{height:2px}
+  .draggable{font-size:14px;padding:5px 10px}
+  .word-pool{padding:10px;gap:6px}
+  .split-compare{grid-template-columns:1fr;gap:12px}
+  .sigword{font-size:13px!important}
+  .sigword span{font-size:11px!important}
+  .ans-reveal{font-size:13px;padding:10px 12px}
+  .ans-banner .at{font-size:15px}
+  .ans-banner .asub{font-size:12px}
+  .score-badge{font-size:10px;padding:2px 8px}
+  .streak-badge{font-size:10px;padding:3px 8px}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .sidebar{width:var(--sidebar-collapsed-w);min-width:var(--sidebar-collapsed-w)}
+  .sidebar .si-label,.sidebar .sidebar-section-label,.sidebar .sidebar-logo,.sidebar .score-detail,.sidebar .theme-label{display:none}
+  .sidebar-item{padding:10px 0;justify-content:center}
+  .slide{padding:54px 36px 40px}
+  .split-view{max-height:600px}
+  .passage-excerpt{font-size:18px}
+  .pmcq-opt{font-size:15px}
+  .practice-mcq .pmcq-q{font-size:16px}
+}
+
+/* V8 Enhancements */
+.passage-excerpt{font-family:'Times New Roman',Times,serif;font-size:25px}
+.pmcq-q,.pmcq-opt,.card h4,.card p,.ce-cn,.ce-hints,.ce-en,.ce-btn,.ans-reveal,.draggable,.dz-label,.mc-banner,.reveal-btn,.flip-q,.flip-ans{font-family:'Times New Roman',Times,serif;font-size:20px}
+.pmcq-q{font-size:20px}.pmcq-opt{font-size:20px}.card h4{font-size:22px}.card p{font-size:21px}.reveal-btn{font-size:20px}.ans-reveal{font-size:20px}.draggable{font-size:20px}.dz-label{font-size:20px}.mc-banner{font-size:20px}
+.passage-excerpt .user-highlight{background:#FFEB3B;color:#000;padding:2px 4px;border-radius:2px}
+body.dark .user-highlight{background:#FFEB3B;color:#000}
+.hardmode-btn{padding:3px 12px;border-radius:12px;cursor:pointer;border:1.5px solid var(--card-bd);background:var(--surface-1);color:var(--text-2);font-size:11px;font-weight:700;font-family:'Hack',monospace;transition:all .2s}
+.hardmode-btn:hover{border-color:var(--fcc-purple-dark);color:var(--fcc-purple-dark)}
+.hardmode-btn.active{background:var(--brand-red);color:#fff;border-color:var(--brand-red)}
+body.dark .hardmode-btn{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .hardmode-btn:hover{border-color:var(--fcc-purple);color:var(--fcc-purple)}
+body.dark .hardmode-btn.active{background:var(--brand-red);color:#fff;border-color:var(--brand-red)}
+
+</style>
+</head>
+<body>
+<div class="deck">
+
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">&lt;/&gt; READING</div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+  </div>
+  <div class="sidebar-nav" id="sidebarNav"></div>
+  <div class="sidebar-score">
+    <div class="score-ring">
+      <svg viewBox="0 0 36 36">
+        <circle class="ring-bg" cx="18" cy="18" r="14"/>
+        <circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+      </svg>
+      <div class="ring-text">0%</div>
+    </div>
+    <div class="score-detail">
+      <div class="sd-label">Score</div>
+      <div class="sd-val">0/0</div>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+    <span class="theme-label">Dark Mode</span>
+  </div>
+</aside>
+
+
+<div class="main-area">
+
+
+<div class="topbar">
+  <span class="course-tag">香港加速班</span>
+  <span class="slide-title mono" id="topbarTitle"></span>
+  <span class="progress-dots" id="progressDots"></span>
+  <span class="score-badge">
+    <span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span>
+  </span>
+  <span class="streak-badge" style="display:none">
+    <span class="streak-fire">🔥</span><span class="streak-count">0</span>
+  </span>
+  <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()">🔒 Easy</button>
+  <span class="zoom-controls">
+    <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+    <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+    <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+  </span>
+  <span class="timer-wrap">
+    <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets">
+      <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5">
+      <span class="t-colon">:</span>
+      <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00">
+      <span class="timer-done-label">TIME UP</span>
+    </span>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">Reset</button>
+  </span>
+  <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter">
+  <span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span>
+  <span class="pc-total" id="pcTotal"></span>
+</div>
+
+
+<section class="slide is-active" data-title="DSE Reading Unit 2" data-section="cover" data-part="Part B2">
+<div class="s1-card-wrapper">
+  <div class="xdf-header-bar">
+    <div class="xdf-logo-text">DSE READING <span>// Paper 1 · Part B2</span></div>
+    <div class="xdf-sub-text">Unit 2 · The Value of a Plant</div>
+  </div>
+  <div style="padding:28px 32px">
+    <div class="slide-h1" style="text-align:center;margin-bottom:6px">The Value of a Plant</div>
+    <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Reading Lesson 02 · DSE Paper 1 Part B2</div>
+    <div style="display:flex;justify-content:center;margin-bottom:24px">
+      <div class="teacher-badge">
+        <div class="tb-avatar">G</div>
+        <div class="tb-name">陈成寓 George</div>
+        <div class="tb-tag">TEACHER</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:20px">
+      <div class="class-badge">香港加速班</div>
+    </div>
+    <div class="s1-meta-grid">
+      <div class="s1-meta-card"><div class="sm-label">Part B2</div><div class="sm-value">Q46–Q70</div><div class="sm-sub">Text 4</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Total</div><div class="sm-value">42 Marks</div><div class="sm-sub">25 Questions</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Skills</div><div class="sm-value">TFNG · Vocab · Ref</div><div class="sm-sub">+ Focus Practice</div></div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-seg c1"><div class="seg-ph">STEP 1</div><div class="seg-name">Pre-reading</div><div class="sm-sub">Vocab + Skimming</div></div>
+      <div class="tl-seg c2"><div class="seg-ph">STEP 2</div><div class="seg-name">While Reading</div><div class="sm-sub">Q46–Q70</div></div>
+      <div class="tl-seg c3"><div class="seg-ph">STEP 3</div><div class="seg-name">Skills</div><div class="sm-sub">TFNG · Vocab · Ref</div></div>
+      <div class="tl-seg c4"><div class="seg-ph">STEP 4</div><div class="seg-name">Practice</div><div class="sm-sub">Champions of Memory</div></div>
+    </div>
+  </div>
+  <div class="xdf-grid-pattern"><span>USE ARROW KEYS // SWIPE TO NAVIGATE</span></div>
+</div>
+</section>
+
+
+
+<section class="slide" data-title="Vocabulary in Action" data-section="practice" data-part="Part B2">
+<div class="sec-label">Pre-reading · Vocabulary in Action</div>
+<div class="card" style="margin-bottom:16px">
+  <h4>📖 Vocabulary in Action</h4>
+  <p>Read the sentences below. Use the context clues to answer the concept checking questions by circling the correct option. Then, write down the Chinese meaning of the bold words.</p>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">1</div>
+  <p>The famous painting was sold at an <b>auction</b>, where several wealthy art collectors kept raising their bids until the highest offer won.</p>
+  <p>CCQ: Do people pay a fixed price at an auction, or do they compete to offer the highest price?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="true" data-explain="At an auction, people compete by raising bids — the highest wins. 拍卖（买家竞相出价，价高者得）" onclick="checkMCAuto(this)"><span class="pl">A</span>Compete to offer the highest price</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Pay a fixed price</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">2</div>
+  <p>The generous billionaire donated ten million dollars to the hospital but chose to remain <b>anonymous</b>, asking the media not to publish his name.</p>
+  <p>CCQ: Does an anonymous person want everyone to know their name, or do they hide their identity?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Want everyone to know their name</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="'Anonymous' means hiding one's identity. 匿名的/不公开姓名的" onclick="checkMCAuto(this)"><span class="pl">B</span>Hide their identity</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">3</div>
+  <p>The dishonest manager tried to <b>manipulate</b> the sales data by changing the numbers to make the company look more profitable than it actually was.</p>
+  <p>CCQ: When someone manipulates data, do they leave it as it is, or do they control and change it artificially?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="true" data-explain="'Manipulate' = control and change artificially. 操纵/操控" onclick="checkMCAuto(this)"><span class="pl">A</span>Control and change it artificially</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Leave it naturally</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">4</div>
+  <p>Instead of saving her salary for rent, Sarah made a <b>frivolous</b> decision to buy a sparkling dress she would only wear once.</p>
+  <p>CCQ: Is a frivolous purchase useful and serious, or silly and a waste of money?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Useful and serious</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="'Frivolous' = silly, not serious, a waste of money. 轻浮的/浪费钱的" onclick="checkMCAuto(this)"><span class="pl">B</span>Silly and a waste of money</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">5</div>
+  <p>Farmers rely heavily on the honey bee, a crucial <b>pollinator</b> that flies from flower to flower, helping apple trees produce fruit.</p>
+  <p>CCQ: Does a pollinator destroy plants, or does it help plants transfer pollen to produce fruits?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="true" data-explain="'Pollinator' = helps transfer pollen to produce fruits. 传粉者/传粉昆虫" onclick="checkMCAuto(this)"><span class="pl">A</span>Helps plants transfer pollen to produce fruits</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Destroy plants</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">6</div>
+  <p>His joy after winning the game was <b>short-lived</b>, as he quickly realized he had twisted his ankle during the final play.</p>
+  <p>CCQ: Does something short-lived last for a long time, or only for a very brief time?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>A long time</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="'Short-lived' = lasting only a very brief time. 短暂的/昙花一现的" onclick="checkMCAuto(this)"><span class="pl">B</span>A very brief time</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">7</div>
+  <p>In the 1980s, carrying a massive mobile phone was considered a <b>status symbol</b> because only the extremely rich could afford one.</p>
+  <p>CCQ: Does a status symbol show that you are practical, or that you have high social rank and wealth?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="true" data-explain="'Status symbol' = shows high social rank and wealth. 地位象征/身份的象征" onclick="checkMCAuto(this)"><span class="pl">A</span>You have high social rank and wealth</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>You are a practical person</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">8</div>
+  <p>After the introduction of the smartphone, mobile apps began to <b>proliferate</b>, growing from a few hundred to millions in just a few years.</p>
+  <p>CCQ: When things proliferate, are there very few of them, or do they multiply and spread quickly in large numbers?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>Very few of them</span>
+    <span class="pmcq-opt" data-correct="true" data-explain="'Proliferate' = multiply and spread quickly. 激增/迅速扩散" onclick="checkMCAuto(this)"><span class="pl">B</span>Multiply and spread quickly in large numbers</span>
+  </div>
+</div>
+
+<div class="practice-mcq" style="margin-bottom:14px">
+  <div class="pmcq-label">9</div>
+  <p>The size of the universe is truly <b>unfathomable</b>; human brains simply cannot imagine a space that stretches for billions of light-years.</p>
+  <p>CCQ: Is an unfathomable concept easy to understand, or so huge and complex that it is hard to imagine?</p>
+  <div class="pmcq-options">
+    <span class="pmcq-opt" data-correct="true" data-explain="'Unfathomable' = so huge/complex it's hard to imagine. 深不可测的/难以理解的" onclick="checkMCAuto(this)"><span class="pl">A</span>So huge and complex that it is hard to imagine</span>
+    <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>Easy to understand</span>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Vocabulary List" data-section="practice" data-part="Part B2">
+<div class="sec-label">Pre-reading · 词汇预习 Vocabulary</div>
+<div class="card" style="margin-bottom:16px">
+  <h4>📚 词汇预习 Vocabulary</h4>
+  <p>阅读前，请先学习以下关键词，结合例句理解意思。</p>
+</div>
+<div style="overflow-x:auto">
+<table style="width:100%;border-collapse:collapse;font-size:14px">
+<thead><tr style="background:var(--brand-green);color:#fff"><th style="padding:8px;text-align:left">Word</th><th style="padding:8px;text-align:left">POS</th><th style="padding:8px;text-align:left">Meaning</th><th style="padding:8px;text-align:left">Example</th></tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>delicate</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">娇弱的 / 易碎的 / 精美的</td><td style="padding:6px 8px">The delicate wine glass shattered when it fell.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>magenta</b></td><td style="padding:6px 8px">n./adj.</td><td style="padding:6px 8px">洋红色 / 紫红色</td><td style="padding:6px 8px">She painted her bedroom walls a bright magenta.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>auction</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">拍卖</td><td style="padding:6px 8px">They bought the antique vase at an auction in London.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>startling</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">令人吃惊的 / 惊人的</td><td style="padding:6px 8px">He made a startling discovery about his family history.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>anonymous</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">匿名的 / 不知名的</td><td style="padding:6px 8px">An anonymous donor gave a million dollars to the hospital.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>drawn to</b></td><td style="padding:6px 8px">idm.</td><td style="padding:6px 8px">被…吸引</td><td style="padding:6px 8px">I've always been drawn to the ocean.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>dedication</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">奉献 / 献身精神</td><td style="padding:6px 8px">Her dedication to her studies resulted in top grades.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>manipulate</b></td><td style="padding:6px 8px">v.</td><td style="padding:6px 8px">操纵 / 控制</td><td style="padding:6px 8px">The politician was accused of manipulating the media.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>frivolous</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">轻浮的 / 毫无意义的 / 乱花钱的</td><td style="padding:6px 8px">She spent her entire salary on a frivolous shopping trip.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>passed down</b></td><td style="padding:6px 8px">phr. v.</td><td style="padding:6px 8px">传承 / 传授</td><td style="padding:6px 8px">This secret recipe has been passed down for generations.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>status symbol</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">地位象征</td><td style="padding:6px 8px">Carrying a massive mobile phone was a status symbol.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>fabrication</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">捏造 / 虚构物</td><td style="padding:6px 8px">His excuse for being late was a complete fabrication.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>monetary</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">金钱的 / 货币的</td><td style="padding:6px 8px">The old photograph has no real monetary value.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>variegated</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">杂色的 / 斑驳的</td><td style="padding:6px 8px">The gardener planted a variegated ivy along the wall.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>unfathomable</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">难以理解的 / 难以置信的</td><td style="padding:6px 8px">The sheer size of the universe is unfathomable.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>furnace</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">熔炉 / 暖炉</td><td style="padding:6px 8px">Steel workers wore protective gear near the blazing furnaces.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>foliage</b></td><td style="padding:6px 8px">n.</td><td style="padding:6px 8px">叶子（总称）/ 枝叶</td><td style="padding:6px 8px">The autumn foliage turns beautiful shades of red and gold.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd);background:var(--surface-1)"><td style="padding:6px 8px"><b>part with</b></td><td style="padding:6px 8px">phr. v.</td><td style="padding:6px 8px">放弃 / 割舍</td><td style="padding:6px 8px">It was hard for him to part with his childhood toy collection.</td></tr>
+<tr style="border-bottom:1px solid var(--card-bd)"><td style="padding:6px 8px"><b>priceless</b></td><td style="padding:6px 8px">adj.</td><td style="padding:6px 8px">无价的 / 极珍贵的</td><td style="padding:6px 8px">The museum contains many priceless works of art.</td></tr>
+</tbody></table>
+</div>
+</section>
+
+
+<section class="slide" data-title="Pre-reading · Lead-in" data-section="practice" data-part="Part B2">
+<div class="sec-label">Pre-reading · Lead-in</div>
+<div class="card" style="margin-bottom:16px">
+  <h4>🤔 Scenario Ranking</h4>
+  <p>Imagine you won <b>2 million HKD</b>. Rank these from 1 (most likely to buy) to 4 (least likely):</p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+  <div class="card"><h4>A. Flat Down Payment</h4><p>A down payment for a small flat in Hong Kong</p></div>
+  <div class="card"><h4>B. Luxury Sports Car</h4><p>A high-end sports car</p></div>
+  <div class="card"><h4>C. Diamond Ring</h4><p>A rare, flawless 2-carat diamond ring</p></div>
+  <div class="card"><h4>D. A Single Orchid</h4><p>A single, beautiful orchid in a pot</p></div>
+</div>
+<div class="card accent">
+  <h4>💭 Brainstorm</h4>
+  <p>In 2005, an anonymous buyer actually spent <b>2 million HKD</b> on a Shenzhen Nongke Orchid!</p>
+  <button class="reveal-btn" onclick="this.style.display='none';this.nextElementSibling.style.display='block'" style="margin:8px 0">💡 Show Brainstorm Question</button>
+  <div style="display:none">
+    <p style="margin-top:8px"><b>Why would someone spend a fortune on a flower that will eventually die, instead of buying a house or a car? What makes it so valuable?</b></p>
+    <p style="margin:8px 0 4px;color:var(--text-2)">Write down reasons you can think of:</p>
+    <textarea class="sa-input" placeholder="Type your ideas here..." style="width:100%;min-height:80px"></textarea>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Skimming & Prediction" data-section="practice" data-part="Part B2">
+<div class="sec-label">Pre-reading · Skimming</div>
+<div class="card" style="margin-bottom:16px">
+  <h4>📖 Skimming Strategy</h4>
+  <p>• Don't read every word! • Focus on Title & Topic Sentences • Look for Keywords</p>
+  <p style="margin-top:6px;color:var(--text-2)">Read the title + first sentences of ¶1, ¶6, ¶10. Then answer:</p>
+</div>
+
+<div class="card" style="margin-bottom:16px;max-height:500px;overflow-y:auto">
+  <h4>📖 Full Article: The value of a plant</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>The Shenzhen Nongke Orchid is a delicate flower. Its centre is white, surrounded by a rich brush of magenta paint. These inner petals seem to grasp a small white and pink pearl. Fanning out from there are vibrant green petals, seeming to hold the centre safe from the outside world. It is a beautiful sight, and one enjoyed by very few. The Shenzhen Nongke Orchid sold at auction in 2005 for a startling 2 million Hong Kong dollars.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>The anonymous buyers must have felt incredibly drawn to this scarce flower. Not only did it cost them a fortune, this flower only blooms every 4-5 years. Its blooms must feel like a celebration, a reward for dedication and patience. But there are other flowers whose beauty equals that of the orchid. What makes it worth such an incredible amount? It turns out that the Shenzhen Nongke Orchid has an unusual origin. The flower is completely human-made. Agricultural scientists at the Shenzhen Nongke Group developed the flower over a period of eight years. The company is known for its work manipulating genes in order to produce useful results for agriculture. In this case, though, the results were less useful than they were frivolous.</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>Humans do not need flowers to survive. Well, we do need pollinators like bees and beetles to go about their important work, producing fruits and vegetables for our diets, but the actual beauty of flowers has no bearing on our lives. Why then, are we so drawn to blooms for which people would be willing to spend as much as they would on a house or several luxury cars?</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>The same question could of course be asked about art. Throughout history, people have spent their fortunes on paintings and sculptures, but at least in those cases, they could not be destroyed by simply forgetting to water them. Neither can plants be passed down through families, like art often is. Most orchids survive for several decades, and that's with proper care. Flowers are both sensitive and fleeting. They do not last forever. But perhaps that's the point. For the very wealthy, do these super rare flowers serve as the perfect reminder that nothing lasts forever?</div>
+  <div class="passage-excerpt"><div class="para-num">¶5</div>Another possibility is that the Shenzhen Nongke Orchid acts as a status symbol. Amongst wealthy circles, it is common to have expensive items that show belonging in the class of the elite. An orchid like this might be shown off at a dinner party, amazing guests while also signalling a certain status.</div>
+  <div class="passage-excerpt"><div class="para-num">¶6</div>Without interviewing the buyers, it is impossible to know the exact motivation. But the urge to buy beautiful and expensive things is certainly not unique to the wealthy. The majority of people on earth feel the drive to own fashionable clothing, the latest gadgets, jewellery, designer pets, stylish furniture ... the list goes on and on and on. To witness our love of beautiful and useless things, we need not look any further than the diamond industry. Diamonds only really became popular starting in the 1930s. They became a must-have item, the ultimate symbol of long-lasting love. The idea that diamonds are rare is a more or less a fabrication. Somewhere around 120 million carats of diamonds are mined every year. But since we believe that diamonds are special and beautiful, we're willing to spend a large portion of our savings on them. It is our belief in these objects that creates their monetary value.</div>
+  <div class="passage-excerpt"><div class="para-num">¶7</div>Though, diamonds, like art, can be kept for generations. One has to wonder how plants have managed to reach a similar price point. It's not just the Shenzhen Nongke Orchid. The popularity of rare plants has been increasing in the last several years. Instagram may be partly to blame for this trend. A variegated Monstera, a large unruly plant with striking white-patched leaves, sells for an amount close to most people's annual salary. Photos of these have proliferated on the social media site. Even a small cutting may sell for thousands of dollars. Depending on their age, bonsai trees can sell for hundreds of thousands, or even millions, of dollars. In 1981, a juniper bonsai sold for 15.6 million Hong Kong dollars at an auction in Japan. Plant collectors seem willing to part with an unfathomable amount of money to own rare and beautiful specimens.</div>
+  <div class="passage-excerpt"><div class="para-num">¶8</div>The history of indoor plants stretches almost as far back as modern human history. Ancient civilizations in China, Greece, India and Egypt were known for cultivating plants indoors. It seems that the draw to have greenery indoors has been around for a very long time. As global exploration increased during the Renaissance, plants from different locales began travelling around the world. Imagine, at that time, having a plant that came from thousands of kilometres away. What better way to show off your worldly experience? Then, as people began to have furnaces in their homes, the variety of plants they could grow expanded. Now, it's a common sight to see plants in nearly every home you walk into. They've become as much a part of home decor as lamps or sofas. Perhaps it is only natural, then, that some people would want to highlight their style by choosing fancier foliage.</div>
+  <div class="passage-excerpt"><div class="para-num">¶9</div>It should be said, too, that indoor plants are not completely without use. To say so is to overlook the benefits that they can bring to our lives. Multiple studies have shown that the presence of indoor plants can help us to feel relaxed. They provide us with oxygen. They make us feel as though we are outdoors, surrounded by nature. Caring for indoor plants, or shaping them, in the case of bonsai trees, provides us with a sense of purpose. But we can gain those benefits just as easily with a $10 spider plant as a $2 million dollar orchid.</div>
+  <div class="passage-excerpt"><div class="para-num">¶10</div>Could the urge to spend hard-earned cash on indoor plants have something to do with the changing environment outside our windows? No one can deny, in this day and age, that nature is in peril because of climate change. Sometimes it feels like the world outside is spiralling outside of our control, with increasing droughts and other extreme weather. Maybe by bringing nature inside, we feel like we're able to control our own small slice of nature. In our homes, the flowers can bloom freely. They can have lush leaves even when the sky refuses to rain. We can live in a small forest even as forests are disappearing all around us. Whether we are wealthy or poor, having exposure to nature is something that affects every human on Earth.</div>
+  <div class="passage-excerpt"><div class="para-num">¶11</div>It's a funny aspect of human nature that we think we could place a price tag on a flower. Or that we could create a flower with more value than what Mother Nature could produce. It is of course not us who owns nature, but nature who owns us. We would do well to remember that life is priceless.</div>
+</div>
+
+<div class="practice-mcq">
+  <div class="pmcq-label">Prediction 1</div>
+  <div class="pmcq-q">Based on the title and ¶1, what is the main topic of this article?</div>
+  <div class="sa-input-wrap">
+    <textarea class="sa-input" placeholder="Type your prediction..."></textarea>
+    <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+  </div>
+  <div class="sa-result">
+    <div class="sa-label">Model Answer</div>
+    <div class="sa-correct-ans">The value of plants / Why rare plants are so expensive. The article uses the Shenzhen Nongke Orchid (sold for 2 million HKD in 2005) as a starting point to explore why humans assign such high monetary value to flowers that are neither essential nor permanent.</div>
+  </div>
+</div>
+
+<div class="practice-mcq">
+  <div class="pmcq-label">Prediction 2</div>
+  <div class="pmcq-q">Based on ¶4 and ¶6, the author compares the 2-million-dollar plant with two other things. What are they?</div>
+  <div class="sa-input-wrap">
+    <textarea class="sa-input" placeholder="Type your prediction..."></textarea>
+    <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+  </div>
+  <div class="sa-result">
+    <div class="sa-label">Model Answer</div>
+    <div class="sa-correct-ans">Diamonds and Art (paintings and sculptures). ¶4 compares flowers to art; ¶6 compares to the diamond industry. All three are beautiful but non-essential, sold at extremely high prices, with value determined mainly by human belief.</div>
+  </div>
+</div>
+
+<div class="practice-mcq">
+  <div class="pmcq-label">Prediction 3</div>
+  <div class="pmcq-q">Why do you think the author compares a flower to diamonds and art? What do they have in common?</div>
+  <div class="sa-input-wrap">
+    <textarea class="sa-input" placeholder="Type your prediction..."></textarea>
+    <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+  </div>
+  <div class="sa-result">
+    <div class="sa-label">Model Answer</div>
+    <div class="sa-correct-ans">All three are: (1) beautiful but non-essential, (2) sold at extremely high prices, (3) value determined by human belief rather than practical use. The comparison raises the deeper question: why are we willing to pay so much for non-essential, fleeting things?</div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q46–Q47 · ¶1" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q46q47">
+    <h4>Text 4: The value of a plant</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>The Shenzhen Nongke Orchid is a delicate flower. Its centre is white, surrounded by a rich brush of magenta paint. These inner petals seem to grasp a small white and pink pearl. Fanning out from there are vibrant green petals, seeming to hold the centre safe from the outside world. It is a beautiful sight, and one enjoyed by very few. The Shenzhen Nongke Orchid sold at auction in 2005 for a startling 2 million Hong Kong dollars.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q46-box">
+      <div class="pmcq-label">Q46 · Fill-in-the-blank · 3 marks</div>
+      <div class="pmcq-q">What does the writer compare the different parts of the Shenzhen Nongke Orchid to?</div>
+      <img src="q46_image.png" alt="Q46 - Orchid parts comparison" style="width:100%;max-width:400px;border-radius:8px;margin:8px 0;border:1px solid var(--card-bd)" />
+      <p style="margin:6px 0">(i) <span class="cloze" data-answer="a pink pearl" onclick="revealCloze(this)">________________</span></p>
+      <p style="margin:6px 0">(ii) <span class="cloze" data-answer="a fan" onclick="revealCloze(this)">________________</span></p>
+      <p style="margin:6px 0">(iii) <span class="cloze" data-answer="a brush of magenta paint" onclick="revealCloze(this)">________________</span></p>
+    </div>
+    <div class="practice-mcq" id="q47-box">
+      <div class="pmcq-label">Q47 · MC · 4 marks</div>
+      <div class="pmcq-q">What is the writer's opinion about the sale of the Shenzhen Nongke Orchid?</div>
+      <div class="pmcq-options" id="q47-options">
+        <span class="pmcq-opt" data-correct="false" data-explain="The word 'startling' suggests the price was too high, not that it was worth it." onclick="checkMCAuto(this)"><span class="pl">A</span>It was worth the price.</span>
+        <span class="pmcq-opt" data-correct="true" data-explain="'Startling' implies shock at the high price — the writer thinks it was excessive." onclick="checkMCAuto(this)"><span class="pl">B</span>The price was too high.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The sale did happen — it's a factual event reported in the text." onclick="checkMCAuto(this)"><span class="pl">C</span>It did not really happen.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The flower is described as 'frivolous' (not useful) in ¶2." onclick="checkMCAuto(this)"><span class="pl">D</span>It shows the flower is useful.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q48 · ¶2 · TFNG" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q48">
+    <h4>Text 4: The value of a plant</h4>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>The anonymous buyers must have felt incredibly drawn to this scarce flower. Not only did it cost them a fortune, this flower only blooms every 4-5 years. Its blooms must feel like a celebration, a reward for dedication and patience. But there are other flowers whose beauty equals that of the orchid. What makes it worth such an incredible amount? It turns out that the Shenzhen Nongke Orchid has an unusual origin. The flower is completely human-made. Agricultural scientists at the Shenzhen Nongke Group developed the flower over a period of eight years. The company is known for its work manipulating genes in order to produce useful results for agriculture. In this case, though, the results were less useful than they were frivolous.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q48 · True / False / Not Given · 3 marks</div>
+      <div class="pmcq-q">Decide whether the following statements are T, F, or NG in paragraph 2.</div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(i) The buyer of the Shenzhen Nongke Orchid did not tell the public who they were.</p>
+      <div class="tfng-group" data-answer="T" data-explain="'Anonymous buyers' means they hid their identity — matches the statement. ✓ TRUE">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>NG</b></span>
+      </div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(ii) The Shenzhen Nongke Group is the first organization to create a human-made flower.</p>
+      <div class="tfng-group" data-answer="NG" data-explain="The text says the flower is 'completely man-made' but never says it was the FIRST. No evidence either way. ✓ NOT GIVEN">
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(iii) It took the Shenzhen Nongke Group just over a decade to complete their work on the orchid.</p>
+      <div class="tfng-group" data-answer="F" data-explain="The text says scientists spent 8 years (not 'just over a decade' = ~10-12 years). The time frame is contradicted. ✓ FALSE">
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>NG</b></span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q49 · ¶2" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q49">
+    <h4>Text 4: ¶2</h4>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>The anonymous buyers must have felt incredibly drawn to this scarce flower. Not only did it cost them a fortune, this flower only blooms every 4-5 years. Its blooms must feel like a celebration, a reward for dedication and patience. But there are other flowers whose beauty equals that of the orchid. What makes it worth such an incredible amount? It turns out that the Shenzhen Nongke Orchid has an unusual origin. The flower is completely human-made. Agricultural scientists at the Shenzhen Nongke Group developed the flower over a period of eight years. The company is known for its work manipulating genes in order to produce useful results for agriculture. In this case, though, the results were less useful than they were frivolous.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q49-box">
+      <div class="pmcq-label">Q49 · MC</div>
+      <div class="pmcq-q">According to the writer, …</div>
+      <div class="pmcq-options" id="q49-options">
+        <span class="pmcq-opt" data-correct="false" data-explain="The writer never calls it the world's prettiest — ¶2 says &quot;there are other flowers whose beauty equals that of the orchid&quot;. 作者并未说它是世上最美的花。" onclick="checkMCAuto(this)"><span class="pl">A</span>the Shenzhen Nongke Orchid is the world's prettiest flower.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The opposite is shown — buyers pay a fortune for flowers, which proves many people DO appreciate their beauty. 买家为一朵花掷千金，恰恰说明很多人欣赏花之美。" onclick="checkMCAuto(this)"><span class="pl">B</span>not many people appreciate the beauty of flowers.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Not stated — the passage never says flowers become more beautiful over time; if anything, flowers are &quot;sensitive and fleeting&quot; (¶4). 原文未提花会随时间变美丽。" onclick="checkMCAuto(this)"><span class="pl">C</span>flowers tend to get more beautiful over time.</span>
+        <span class="pmcq-opt" data-correct="true" data-explain="¶2: &quot;But there are other flowers whose beauty equals that of the orchid&quot; — the writer implies there are many beautiful flowers in the world. 作者说还有其他花的美不亚于这株兰花 = 世界上有很多美丽的花。" onclick="checkMCAuto(this)"><span class="pl">D</span>there are many beautiful flowers in the world.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q50–Q54 · ¶3–5" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q50q54">
+    <h4>Text 4: ¶3–5</h4>
+    <div class="passage-excerpt"><div class="para-num">¶3</div>Humans do not need flowers to survive. Well, we do need pollinators like bees and beetles to go about their important work, producing fruits and vegetables for our diets, but the actual beauty of flowers has no bearing on our lives. Why then, are we so drawn to blooms for which people would be willing to spend as much as they would on a house or several luxury cars?</div>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>The same question could of course be asked about art. Throughout history, people have spent their fortunes on paintings and sculptures, but at least in those cases, they could not be destroyed by simply forgetting to water them. Neither can plants be passed down through families, like art often is. Most orchids survive for several decades, and that's with proper care. Flowers are both sensitive and fleeting. They do not last forever. But perhaps that's the point. For the very wealthy, do these super rare flowers serve as the perfect reminder that nothing lasts forever?</div>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Another possibility is that the Shenzhen Nongke Orchid acts as a status symbol. Amongst wealthy circles, it is common to have expensive items that show belonging in the class of the elite. An orchid like this might be shown off at a dinner party, amazing guests while also signalling a certain status.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q50 · Short Answer · 4 marks</div>
+      <div class="pmcq-q">Does the writer truly believe "Humans do not need flowers to survive" (line 14)? Use information from the text to justify your response.</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">No, the writer does not truly believe this. The writer immediately corrects the statement with "Well, we do need pollinators like bees and beetles..." — the word "Well" signals a correction. Humans indirectly depend on flowers through pollinators for food production.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q51 · Matching · Drag &amp; Drop · 5 marks</div>
+      <div class="pmcq-q">Match the main idea (A–F) with each of the paragraphs 1–5. One idea is NOT used.</div>
+      <div class="pmcq-q" style="font-size:14px;color:var(--text-2);margin-bottom:8px">Drag each idea into the correct paragraph slot.</div>
+      <div class="word-pool" id="q51-pool" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:50px;padding:10px;border-radius:8px;border:2px solid var(--card-bd);background:var(--surface-1)">
+        <div class="draggable" draggable="true" data-word="A" data-q51-answer="4">A. Flowers as a work of art</div>
+        <div class="draggable" draggable="true" data-word="B" data-q51-answer="0">B. A flower that is impossible to find</div>
+        <div class="draggable" draggable="true" data-word="C" data-q51-answer="2">C. A bloom with an unusual origin</div>
+        <div class="draggable" draggable="true" data-word="D" data-q51-answer="1">D. A beautiful flower with a high price tag</div>
+        <div class="draggable" draggable="true" data-word="E" data-q51-answer="5">E. Showing wealth off to others</div>
+        <div class="draggable" draggable="true" data-word="F" data-q51-answer="3">F. Our love for something unnecessary</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600">¶1</span><div class="drop-zone" id="q51-dz-1" data-slot="1" style="flex:1;min-height:40px"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600">¶2</span><div class="drop-zone" id="q51-dz-2" data-slot="2" style="flex:1;min-height:40px"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600">¶3</span><div class="drop-zone" id="q51-dz-3" data-slot="3" style="flex:1;min-height:40px"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600">¶4</span><div class="drop-zone" id="q51-dz-4" data-slot="4" style="flex:1;min-height:40px"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600">¶5</span><div class="drop-zone" id="q51-dz-5" data-slot="5" style="flex:1;min-height:40px"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="min-width:50px;font-weight:600;color:var(--text-2)">Not used</span><div class="drop-zone" id="q51-dz-0" data-slot="0" style="flex:1;min-height:40px;border-color:rgba(255,152,0,.4)"><div class="dz-label" style="color:var(--text-3);text-align:center;padding:8px;pointer-events:none">Drop here</div></div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn accent" onclick="checkQ51()">Check Answers</button>
+        <button class="btn" onclick="resetQ51()">Reset</button>
+      </div>
+      <div id="q51-result" style="display:none;margin-top:10px"></div>
+    </div>
+
+        <div class="practice-mcq">
+      <div class="pmcq-label">Q52 · Short Answer</div>
+      <div class="pmcq-q">Why does the writer make the point that paintings and sculptures 'could not be destroyed by simply forgetting to water them' (lines 19-20)?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">The writer is comparing paintings and sculptures to flowers to make the point that flowers need to be watered otherwise they will die, whereas art will last much longer.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q53 · Vocabulary</div>
+      <div class="pmcq-q">What is a 'status symbol' (line 24)?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">A status symbol is something that is used to show how wealthy or powerful you are.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q54 · Vocabulary · Find a word</div>
+      <div class="pmcq-q">Find a word in paragraph 4 that means 'short-lived'.</div>
+      <p>Answer: <span class="cloze" data-answer="fleeting" onclick="revealCloze(this)">________</span></p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q55–Q56 · ¶6" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q55q56">
+    <h4>Text 4: ¶6</h4>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>Without interviewing the buyers, it is impossible to know the exact motivation. But the urge to buy beautiful and expensive things is certainly not unique to the wealthy. The majority of people on earth feel the drive to own fashionable clothing, the latest gadgets, jewellery, designer pets, stylish furniture ... the list goes on and on and on. To witness our love of beautiful and useless things, we need not look any further than the diamond industry. Diamonds only really became popular starting in the 1930s. They became a must-have item, the ultimate symbol of long-lasting love. The idea that diamonds are rare is a more or less a fabrication. Somewhere around 120 million carats of diamonds are mined every year. But since we believe that diamonds are special and beautiful, we're willing to spend a large portion of our savings on them. It is our belief in these objects that creates their monetary value.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q55 · Short Answer · 2 marks</div>
+      <div class="pmcq-q">According to paragraph 6, what is something that wealthy and unwealthy people have in common?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">the urge to buy beautiful and expensive things</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q56 · Reference · 2 marks</div>
+      <div class="pmcq-q">What does 'them' (line 35) refer to?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">Diamonds. 'Them' refers back to 'diamonds' in the preceding sentence — "we are willing to spend a large portion of our savings on them" = on diamonds.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q57–Q59 · ¶6–7" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q57q59">
+    <h4>Text 4: ¶6–7</h4>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>Without interviewing the buyers, it is impossible to know the exact motivation. But the urge to buy beautiful and expensive things is certainly not unique to the wealthy. The majority of people on earth feel the drive to own fashionable clothing, the latest gadgets, jewellery, designer pets, stylish furniture ... the list goes on and on and on. To witness our love of beautiful and useless things, we need not look any further than the diamond industry. Diamonds only really became popular starting in the 1930s. They became a must-have item, the ultimate symbol of long-lasting love. The idea that diamonds are rare is a more or less a fabrication. Somewhere around 120 million carats of diamonds are mined every year. But since we believe that diamonds are special and beautiful, we're willing to spend a large portion of our savings on them. It is our belief in these objects that creates their monetary value.</div>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>Though, diamonds, like art, can be kept for generations. One has to wonder how plants have managed to reach a similar price point. It's not just the Shenzhen Nongke Orchid. The popularity of rare plants has been increasing in the last several years. Instagram may be partly to blame for this trend. A variegated Monstera, a large unruly plant with striking white-patched leaves, sells for an amount close to most people's annual salary. Photos of these have proliferated on the social media site. Even a small cutting may sell for thousands of dollars. Depending on their age, bonsai trees can sell for hundreds of thousands, or even millions, of dollars. In 1981, a juniper bonsai sold for 15.6 million Hong Kong dollars at an auction in Japan. Plant collectors seem willing to part with an unfathomable amount of money to own rare and beautiful specimens.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q57 · Short Answer · 4 marks</div>
+      <div class="pmcq-q">Why does the writer think that art and diamonds should have a higher value than plants?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">The writer thinks that art and diamonds should have a higher value than plants because they can last for a much longer time and be passed down to future generations.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q58 · Two-part Short Answer</div>
+      <div class="pmcq-q">(i) Why does the writer believe people pay high prices for diamonds?<br>(ii) According to the writer, what is the reality of diamond production?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">(i) The writer believes people pay the price they do for diamonds because they believe they are special and beautiful.<br>(ii) According to the writer, the reality is that a large number of diamonds are mined every year, meaning they are not rare at all.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q59 · Summary Completion · 4 marks</div>
+      <div class="pmcq-q">Complete the summary with ONE word per blank based on ¶7:</div>
+      <p>Rare plants have become more <span class="cloze" data-answer="popular" onclick="revealCloze(this)">________</span> over the last number of years, with their photos being posted on social media sites. One example is the variegated Monstera. People are often <span class="cloze" data-answer="struck" onclick="revealCloze(this)">________</span> by the white <span class="cloze" data-answer="patches" onclick="revealCloze(this)">________</span> on its leaves. Even cuttings sell for thousands of dollars. Bonsais are another example of an expensive plant. It's sometimes hard to <span class="cloze" data-answer="fathom" onclick="revealCloze(this)">________</span> the amount of money plant collectors will spend on beautiful specimens.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q60–Q62 · ¶8" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q60q62">
+    <h4>Text 4: ¶8</h4>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>The history of indoor plants stretches almost as far back as modern human history. Ancient civilizations in China, Greece, India and Egypt were known for cultivating plants indoors. It seems that the draw to have greenery indoors has been around for a very long time. As global exploration increased during the Renaissance, plants from different locales began travelling around the world. Imagine, at that time, having a plant that came from thousands of kilometres away. What better way to show off your worldly experience? Then, as people began to have furnaces in their homes, the variety of plants they could grow expanded. Now, it's a common sight to see plants in nearly every home you walk into. They've become as much a part of home decor as lamps or sofas. Perhaps it is only natural, then, that some people would want to highlight their style by choosing fancier foliage.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q60 · Literary Device · 3 marks</div>
+      <div class="pmcq-q">Find ONE example of alliteration in paragraph 8.</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">"human history" (both words start with /h/ sound) or "fancier foliage" (both words start with /f/ sound). Alliteration = adjacent words with the same initial consonant sound.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q61 · Vocabulary · Find opposite</div>
+      <div class="pmcq-q">Find a word that means the opposite of 'hide' in paragraph 8.</div>
+      <p>Answer: <span class="cloze" data-answer="highlight" onclick="revealCloze(this)">________</span></p>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q62 · Short Answer · 4 marks</div>
+      <div class="pmcq-q">Why did the variety of plants people could have in their homes increase after furnaces were invented?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">The variety of plants people could have in their homes increased because people could own plants that required a warmer climate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q63–Q64 · ¶9" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q63q64">
+    <h4>Text 4: ¶9</h4>
+    <div class="passage-excerpt"><div class="para-num">¶9</div>It should be said, too, that indoor plants are not completely without use. To say so is to overlook the benefits that they can bring to our lives. Multiple studies have shown that the presence of indoor plants can help us to feel relaxed. They provide us with oxygen. They make us feel as though we are outdoors, surrounded by nature. Caring for indoor plants, or shaping them, in the case of bonsai trees, provides us with a sense of purpose. But we can gain those benefits just as easily with a $10 spider plant as a $2 million dollar orchid.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q63 · Listing · 4 marks</div>
+      <div class="pmcq-q">What FOUR benefits of indoor plants are mentioned in paragraph 9?</div>
+      <p>a. <span class="cloze" data-answer="help us feel relaxed" onclick="revealCloze(this)">________</span></p>
+      <p>b. <span class="cloze" data-answer="provide us with oxygen" onclick="revealCloze(this)">________</span></p>
+      <p>c. <span class="cloze" data-answer="make us feel as though we are outdoors / surrounded by nature" onclick="revealCloze(this)">________</span></p>
+      <p>d. <span class="cloze" data-answer="provides us with a sense of purpose" onclick="revealCloze(this)">________</span></p>
+    </div>
+
+    <div class="practice-mcq" id="q64-box">
+      <div class="pmcq-label">Q64 · MC · 3 marks</div>
+      <div class="pmcq-q">According to paragraph 9, ...</div>
+      <div class="pmcq-options" id="q64-options">
+        <span class="pmcq-opt" data-correct="false" data-explain="The text says we can get the same benefits from cheap plants too." onclick="checkMCAuto(this)"><span class="pl">A</span>People without money miss out on many benefits of plants.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Bonsai are mentioned as an example, not as 'the best' for relaxation." onclick="checkMCAuto(this)"><span class="pl">B</span>Bonsai trees are the best plants to make you feel relaxed.</span>
+        <span class="pmcq-opt" data-correct="true" data-explain="'We can gain those benefits just as easily with a $10 spider plant as a $2 million dollar orchid.'" onclick="checkMCAuto(this)"><span class="pl">C</span>Expensive and inexpensive plants give us the same benefits.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Oxygen is not mentioned in paragraph 9." onclick="checkMCAuto(this)"><span class="pl">D</span>Plants that produce more oxygen are usually more expensive.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q65–Q66 · ¶10" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q65q66">
+    <h4>Text 4: ¶10</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>Could the urge to spend hard-earned cash on indoor plants have something to do with the changing environment outside our windows? No one can deny, in this day and age, that nature is in peril because of climate change. Sometimes it feels like the world outside is spiralling outside of our control, with increasing droughts and other extreme weather. Maybe by bringing nature inside, we feel like we're able to control our own small slice of nature. In our homes, the flowers can bloom freely. They can have lush leaves even when the sky refuses to rain. We can live in a small forest even as forests are disappearing all around us. Whether we are wealthy or poor, having exposure to nature is something that affects every human on Earth.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q65 · Vocabulary · Find synonym</div>
+      <div class="pmcq-q">Find a word that means 'danger' in paragraph 10.</div>
+      <p>Answer: <span class="cloze" data-answer="peril" onclick="revealCloze(this)">________</span></p>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q66 · Short Answer · 3 marks</div>
+      <div class="pmcq-q">Why does the writer think people want to own indoor plants in the face of climate change? Explain using your own words.</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">The writer thinks people want to own indoor plants in the face of climate change because it's a way to control a small part of nature when they have no control over the destruction of nature in the wider world.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q67 · ¶11" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q67">
+    <h4>Text 4: ¶11</h4>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>It's a funny aspect of human nature that we think we could place a price tag on a flower. Or that we could create a flower with more value than what Mother Nature could produce. It is of course not us who owns nature, but nature who owns us. We would do well to remember that life is priceless.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q67 · Short Answer · 4 marks</div>
+      <div class="pmcq-q">What does the writer mean when she says 'It is of course not us who owns nature, but nature who owns us' (lines 68-69)? Use your own words.</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">The writer means that we think we can purchase and own parts of nature, but in reality, our lives depend on nature. We are a part of nature, and cannot live without it.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Q68–Q70 · Whole Text" data-section="practice" data-part="Part B2" data-hard-group="text4">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-q68q70">
+    <h4>Text 4: Full Review</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>The Shenzhen Nongke Orchid is a delicate flower. Its centre is white, surrounded by a rich brush of magenta paint. These inner petals seem to grasp a small white and pink pearl. Fanning out from there are vibrant green petals, seeming to hold the centre safe from the outside world. It is a beautiful sight, and one enjoyed by very few. The Shenzhen Nongke Orchid sold at auction in 2005 for a startling 2 million Hong Kong dollars.</div>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>It's a funny aspect of human nature that we think we could place a price tag on a flower. Or that we could create a flower with more value than what Mother Nature could produce. It is of course not us who owns nature, but nature who owns us. We would do well to remember that life is priceless.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q68 · Matching · 3 marks</div>
+      <div class="pmcq-q">Match the person with the statement that best represents their thoughts. ONE statement is not used.</div>
+      <p style="font-weight:700;margin:8px 0">(i) The writer → <span class="cloze" data-answer="D" onclick="revealCloze(this)">__</span></p>
+      <p style="font-weight:700;margin:8px 0">(ii) Agricultural scientist → <span class="cloze" data-answer="B" onclick="revealCloze(this)">__</span></p>
+      <p style="font-weight:700;margin:8px 0">(iii) Anonymous buyer → <span class="cloze" data-answer="A" onclick="revealCloze(this)">__</span></p>
+      <p style="color:var(--text-2);font-size:14px;margin-top:8px">A. Beauty is worth waiting for... even for a long time.<br>B. We wanted to create something special and beautiful out of nothing.<br>C. Our time on Earth is best spent walking through the forest.<br>D. Nothing is more valuable than life itself.</p>
+    </div>
+
+    <div class="practice-mcq" id="q69-box">
+      <div class="pmcq-label">Q69 · MC · Text Type</div>
+      <div class="pmcq-q">This text is ...</div>
+      <div class="pmcq-options" id="q69-options">
+        <span class="pmcq-opt" data-correct="true" data-explain="An essay — a discursive piece that explores ideas about value and nature." onclick="checkMCAuto(this)"><span class="pl">A</span>An essay.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Not academic — it's written for a general audience." onclick="checkMCAuto(this)"><span class="pl">B</span>An academic article.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="A review evaluates something; this text explores ideas." onclick="checkMCAuto(this)"><span class="pl">C</span>A review.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="A journal entry is personal; this is a structured argument." onclick="checkMCAuto(this)"><span class="pl">D</span>A journal entry.</span>
+      </div>
+    </div>
+
+    <div class="practice-mcq" id="q70-box">
+      <div class="pmcq-label">Q70 · MC · Purpose · 4 marks</div>
+      <div class="pmcq-q">The purpose of this text is to ...</div>
+      <div class="pmcq-options" id="q70-options">
+        <span class="pmcq-opt" data-correct="false" data-explain="Climate change is only mentioned in ¶10, not the main focus." onclick="checkMCAuto(this)"><span class="pl">A</span>Explain why climate change is an important issue.</span>
+        <span class="pmcq-opt" data-correct="true" data-explain="The entire text explores why we assign value to plants and what that reveals about human nature." onclick="checkMCAuto(this)"><span class="pl">B</span>Explore the worth of flowers and plants.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The orchid is just the starting point; the scope is much broader." onclick="checkMCAuto(this)"><span class="pl">C</span>Describe the history of the Shenzhen Nongke Orchid.</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The text is analytical, not promotional." onclick="checkMCAuto(this)"><span class="pl">D</span>Advertise rare and expensive plants.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Skills · TFNG Framework" data-section="close-reading" data-part="Part B2">
+<div class="sec-label">Key Reading Skills · TFNG</div>
+<div class="card accent" style="margin-bottom:16px">
+  <h4>📌 TFNG 解题框架</h4>
+  <p><b>Step 1: 提取关键词</b> — 从题干中找名词、专有名词、数字等</p>
+  <p><b>Step 2: 扫读定位</b> — 用关键词在文章中找对应句，注意同义替换</p>
+  <p><b>Step 3: 精读比对</b> — 留意程度词(most/some)、绝对词(first/only/all)</p>
+  <p><b>Step 4: 三向判断</b></p>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+  <div class="card" style="border-top:4px solid var(--fcc-green-dark)"><h4 style="color:var(--fcc-green-dark)">✅ True</h4><p>原文提供足够证据支持题干，信息一致（含同义替换）</p></div>
+  <div class="card" style="border-top:4px solid var(--brand-red)"><h4 style="color:var(--brand-red)">❌ False</h4><p>原文有明确的相反或矛盾信息</p></div>
+  <div class="card" style="border-top:4px solid var(--fcc-yellow)"><h4 style="color:var(--fcc-yellow-dark)">⚠️ Not Given</h4><p>原文完全未提及，无法判断对错</p></div>
+</div>
+<div class="card">
+  <h4>⚠️ False vs NG 的关键区别</h4>
+  <p><b>False</b> = 文中有证据<b>推翻</b>题干<br><b>NG</b> = 文中根本没有提供足够信息作判断<br><span style="color:var(--text-2)">"看起来合理" ≠ True，"找不到原句" ≠ False</span></p>
+</div>
+</section>
+
+
+<section class="slide" data-title="Skills · Vocabulary Framework" data-section="close-reading" data-part="Part B2">
+<div class="sec-label">Key Reading Skills · Vocabulary</div>
+<div class="card accent" style="margin-bottom:16px">
+  <h4>📌 Vocabulary Questions 解题框架</h4>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+  <div class="card">
+    <h4>A. 简答释义题</h4>
+    <p><b>Step 1:</b> 定位该词，读完整个句子<br><b>Step 2:</b> 寻找语境线索 — 举例/对比/解释性结构<br><b>Step 3:</b> 用自己的话作答（paraphrase）</p>
+  </div>
+  <div class="card">
+    <h4>B. 找同义/反义词</h4>
+    <p><b>Step 1:</b> 确定提问目的（同义/反义？词/词组？）<br><b>Step 2:</b> 划出关键词，定位原句<br><b>Step 3:</b> 利用上下文推断词义<br><b>Step 4:</b> 验证答案，检查拼写与语法<br><b>Step 5:</b> 填入答案</p>
+  </div>
+</div>
+<div class="card" style="margin-top:14px">
+  <h4>🎯 Your Practice Questions</h4>
+  <p>• Q53: What is a 'status symbol'? → Type A (definition)<br>• Q54: Find 'short-lived' in ¶4 → Type B (synonym)<br>• Q61: Find opposite of 'hide' in ¶8 → Type B (antonym)<br>• Q65: Find 'danger' in ¶10 → Type B (synonym)</p>
+</div>
+</section>
+
+
+<section class="slide" data-title="Skills · Reference Framework" data-section="close-reading" data-part="Part B2">
+<div class="sec-label">Key Reading Skills · Reference</div>
+<div class="card accent" style="margin-bottom:16px">
+  <h4>📌 Reference Questions 解题框架</h4>
+  <p><b>Step 1: 定位指代词</b> — 找到 it/they/them/this/that/these/those/such/which 所在句子</p>
+  <p><b>Step 2: 向前追溯</b> — 指代几乎总是向前文已出现的名词/名词短语/概念</p>
+  <p><b>Step 3: 语法验证</b> — 候选答案替换回原句后，单复数与人称一致</p>
+  <p><b>Step 4: 语义验证</b> — 替换后整句逻辑通顺，与上下文意思吻合</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>⚠️ 不一定选最近的名词！</h4>
+  <p>同句或前句出现多个名词时，以<b>语义逻辑</b>为最终判断标准，而非位置距离。</p>
+</div>
+<div class="card">
+  <h4>🎯 Your Practice Question</h4>
+  <p>Q56: What does 'them' (line 35) refer to?<br>Answer: <b>Diamonds</b> — the closest plural noun that makes logical sense in "spend a large portion of our savings on them."</p>
+</div>
+</section>
+
+
+<section class="slide" data-title="Focus Practice" data-section="divider" data-part="Focus Practice">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
+  <div class="class-badge" style="font-size:20px;padding:14px 36px;margin-bottom:24px">Focus Practice</div>
+  <div class="slide-h1" style="text-align:center">Champions of Memory</div>
+  <div class="slide-h3" style="text-align:center;color:var(--text-2);margin-top:12px">Text 1 · Q1–Q8 · Reference · TFNG · Vocab</div>
+  <p style="margin-top:20px;color:var(--text-3);text-align:center">Apply your TFNG, Vocabulary, and Reference strategies to a new text!</p>
+</div>
+</section>
+
+
+<section class="slide" data-title="FP Entry Test · Vocab" data-section="entry-test" data-part="Focus Practice">
+<div class="sec-label">Focus Practice · Entry Test</div>
+<div class="slide-h3" style="margin-bottom:18px">Key Vocabulary — tap to flip 🃏</div>
+<div class="flip-grid g5">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">prowess</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">杰出才能</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">deteriorate</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">恶化</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">outsource</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">外包</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">cultivate</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">培养</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">bizarre</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">奇异的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">cognitive</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">认知的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">irresistible</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">无法抗拒的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">cement</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">巩固 / 加强</div></div></div></div>
+</div>
+</section>
+
+
+<section class="slide" data-title="FP Q1–Q3 · ¶1–2" data-section="practice" data-part="Focus Practice" data-hard-group="memory1">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-fp1">
+    <h4>Champions of Memory · ¶1–2</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>They have trained for months, devoting hours to their craft and turning down social engagements to be here. Now the athletes are assembled under the same roof, sweat pricking at their armpits and mouths dry, ready for the challenge to begin. You won't see any Lycra or running shoes in this hall though: these are mental athletes, preparing to take part in the World Memory Championships. For the next three days, they will compete to see who has the world's best memory.</div>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>The events may not have the same visual drama as a penalty shoot-out or a 100 m final, but the feats are no less impressive. Competitors have to memorise names and faces, historic and future dates or random words. One challenge requires participants to remember a string of binary numbers. The record is a string 7,485 numbers long. Another gives competitors 60 minutes to remember decks of cards in a specific order. The record is 2,530 cards.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q1 · Reference · 2 marks</div>
+      <div class="pmcq-q">Who or what do the following words refer to?</div>
+      <p>(i) 'They' (line 1) → <span class="cloze" data-answer="the athletes/competitors" onclick="revealCloze(this)">________</span></p>
+      <p>(ii) 'Another' (line 9) → <span class="cloze" data-answer="challenge" onclick="revealCloze(this)">________</span></p>
+    </div>
+
+    <div class="practice-mcq" id="fp-q2-box">
+      <div class="pmcq-label">Q2 · MC</div>
+      <div class="pmcq-q">What does 'the average Joe' (lines 11-12) mean?</div>
+      <div class="pmcq-options" id="fp-q2-options">
+        <span class="pmcq-opt" data-correct="false" data-explain="An intelligent person would not be 'average'." onclick="checkMCAuto(this)"><span class="pl">A</span>An intelligent person</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Joe' is idiomatic for any ordinary person, not specifically male." onclick="checkMCAuto(this)"><span class="pl">B</span>A male competitor</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="The context is about ordinary people, not athletes specifically." onclick="checkMCAuto(this)"><span class="pl">C</span>An athlete</span>
+        <span class="pmcq-opt" data-correct="true" data-explain="'The average Joe' is an idiom meaning an ordinary, typical person." onclick="checkMCAuto(this)"><span class="pl">D</span>An ordinary person</span>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q3 · Vocabulary · Find synonym</div>
+      <div class="pmcq-q">Which word can we use to replace 'grey matter' in line 22?</div>
+      <p>Answer: <span class="cloze" data-answer="brain" onclick="revealCloze(this)">________</span></p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="FP Q4–Q5 · ¶3–5" data-section="practice" data-part="Focus Practice" data-hard-group="memory1">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-fp2">
+    <h4>Champions of Memory · ¶3–5</h4>
+    <div class="passage-excerpt"><div class="para-num">¶3</div>The mental prowess on show is hugely impressive and at first glance might seem out of reach to the average Joe. However, as competitor Liam Jones illustrates, the techniques required to build a powerful memory are available to all of us, if we can just be bothered to put in the time.</div>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>'My dad developed Alzheimer's at an early age and his memory deteriorated rapidly. It was heartbreaking to watch,' he explains, face pinched. "I thought "What can I do to protect my memory?" and I started reading books about memory-training techniques, which ultimately led me here, to the Championships.'</div>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Liam is the first to acknowledge that he, like most of us, was quick to outsource his memorising to technology: we can set alarms to remind us to take our medication, we can use map apps so we don't have to remember the route to a location, we can set calendar alerts so we don't forget birthdays or anniversaries. Of course, it's good to have technology to remember phone numbers for us, but we don't want to let the grey matter become lazy,' he says. 'A strong memory makes us wiser, more intelligent. It's useful in your career, in exams and in your relationships.' As I think back to my wife berating me for failing to remember a story she'd told me the day before, I begin to see the practical applications of Liam's skill.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q4 · TFNG · 3 marks</div>
+      <div class="pmcq-q">According to paragraph 5, are the following statements T, F, or NG?</div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(i) In the past, Liam was a fan of using technology.</p>
+      <div class="tfng-group" data-answer="T" data-explain="¶5: 'he was quick to outsource so much of his memory to technology' = he was a fan. ✓ TRUE">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>NG</b></span>
+      </div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(ii) We can use technology to help us remember important dates.</p>
+      <div class="tfng-group" data-answer="T" data-explain="¶5: 'set alarms to remind us...don't have to remember anniversaries' = technology helps with dates. ✓ TRUE">
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>NG</b></span>
+      </div>
+      
+      <p style="font-weight:700;margin:10px 0 6px">(iii) It takes many months to develop a strong memory.</p>
+      <div class="tfng-group" data-answer="NG" data-explain="The text never mentions how long it takes to develop a strong memory. ✓ NOT GIVEN">
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>T</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>F</b></span>
+        <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+      </div>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q5 · Reference</div>
+      <div class="pmcq-q">What does 'it' (line 30) refer to?</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">What you want to remember / the item. ¶6: "draw a picture of what you want to remember...plant it in your memory palace"</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="FP Q6–Q8 · ¶6–8" data-section="practice" data-part="Focus Practice" data-hard-group="memory1">
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" id="passage-fp3">
+    <h4>Champions of Memory · ¶6–8</h4>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>So how can we cultivate a super memory? Thankfully, many of the techniques used by memory athletes can be applied to our everyday lives. One way to remember more easily is to draw a picture of what you want to remember, either physical or mental. This requires you to think more deeply and in greater detail about the item. Think about any smells, tastes or emotions you associate with the item: the more detail and the more bizarre the picture, the more likely you'll be to remember it.</div>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>Then you'll need somewhere to store all these images: a memory palace. Think of a place you know well (your apartment, school, place of work), then imagine walking through it using a familiar route. Stick your images at different places along that route. When you want to remember, just walk back along the route and look at the images stuck to the walls. Interestingly, it seems that if you imagine yourself walking backwards, the technique is more effective than walking forwards. Experts speculate this is linked to our notion of the past stretching back behind us, and the future stretching ahead in front of us.</div>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>You can also use word association, for example to remember names. The first time you meet someone, conjure up a story to go with their name. Sandra Burley is a neurolinguist who has studied name recall and can always put a name to a face. 'Say for example I meet someone new, and his name is Robin Whitely. I think of the bird, a Robin, which has a red breast. So I think of Robin as a man who likes flying from one meeting to the next, flapping his arms instead of wings,' she explains. 'Then for the surname: I imagine Robin is depressed because the red colour of his breast has faded to white. So now he's flapping around everywhere, trying to find the red to put back in his breast. Robin Whitely. I won't forget his name any time soon.'</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q6 · Vocabulary · Find synonym</div>
+      <div class="pmcq-q">Find a word in paragraph 6 which has a similar meaning to 'strange'.</div>
+      <p>Answer: <span class="cloze" data-answer="bizarre" onclick="revealCloze(this)">________</span></p>
+    </div>
+
+    <div class="practice-mcq">
+      <div class="pmcq-label">Q7 · Vocabulary · Find phrase</div>
+      <div class="pmcq-q">Find a word or phrase in paragraph 7 that suggests that scientists are not sure about a theory.</div>
+      <div class="sa-input-wrap">
+        <textarea class="sa-input" placeholder="Type your answer..."></textarea>
+        <button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button>
+      </div>
+      <div class="sa-result">
+        <div class="sa-label">Model Answer</div>
+        <div class="sa-correct-ans">"speculate" — The word suggests scientists are not sure about the theory but are making educated guesses.</div>
+      </div>
+    </div>
+
+    <div class="practice-mcq" id="fp-q8-box">
+      <div class="pmcq-label">Q8 · MC</div>
+      <div class="pmcq-q">What does 'get on board with' (line 63) mean?</div>
+      <div class="pmcq-options" id="fp-q8-options">
+        <span class="pmcq-opt" data-correct="true" data-explain="'Get on board with' = agree with / accept / support an idea." onclick="checkMCAuto(this)"><span class="pl">A</span>Agree with</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="Understanding is different from agreeing." onclick="checkMCAuto(this)"><span class="pl">B</span>Understand</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="'Get on board' implies acceptance, not refusal." onclick="checkMCAuto(this)"><span class="pl">C</span>Refuse to accept</span>
+        <span class="pmcq-opt" data-correct="false" data-explain="It means the opposite — to embrace, not criticize." onclick="checkMCAuto(this)"><span class="pl">D</span>Be critical of</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Exit Test · Key Vocabulary" data-section="entry-test" data-part="Part B2">
+<div class="sec-label">Part B2 · Exit Test</div>
+<div class="slide-h3" style="margin-bottom:18px">Key Vocabulary — tap to flip 🃏</div>
+<div class="flip-grid g5">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">auction</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">拍卖<br><span style="font-size:14px;color:var(--text-2)">Buyers compete to offer the highest price</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">anonymous</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">匿名的<br><span style="font-size:14px;color:var(--text-2)">Hide their identity</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">manipulate</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">操纵 / 操控<br><span style="font-size:14px;color:var(--text-2)">Control and change it artificially</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">frivolous</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">轻浮的 / 浪费钱的<br><span style="font-size:14px;color:var(--text-2)">Silly and a waste of money</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">pollinator</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">传粉者<br><span style="font-size:14px;color:var(--text-2)">Helps plants transfer pollen</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">short-lived</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">短暂的 / 昙花一现的<br><span style="font-size:14px;color:var(--text-2)">Lasts only a very brief time</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">status symbol</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">地位象征<br><span style="font-size:14px;color:var(--text-2)">Shows high social rank and wealth</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">proliferate</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">激增 / 迅速扩散<br><span style="font-size:14px;color:var(--text-2)">Multiply and spread quickly</span></div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">unfathomable</div><div class="flip-hint">tap to flip</div></div><div class="flip-face flip-back"><div class="flip-ans">深不可测的 / 难以理解的<br><span style="font-size:14px;color:var(--text-2)">So huge and complex, hard to imagine</span></div></div></div></div>
+</div>
+</section>
+
+
+<section class="slide" data-title="Done!" data-section="done" data-part="">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">Well Done!</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">
+    You completed Unit 2 Reading — The Value of a Plant!<br>
+    📖 TFNG · Vocabulary · Reference · Focus Practice
+  </p>
+  <div class="score-badge" style="font-size:18px;padding:10px 24px;margin-bottom:20px">
+    <span class="sb-correct" id="finalScore">0</span><span class="sb-divider">/</span><span class="sb-total" id="finalTotal">0</span>
+  </div>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 Celebrate!</button>
+</div>
+</section>
+
+
+<!-- Hard Mode Templates (hidden) -->
+<div id="hard-template-text4" style="display:none">
+  <h4>Text 4: The value of a plant — Full Passage</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>The Shenzhen Nongke Orchid is a delicate flower. Its centre is white, surrounded by a rich brush of magenta petals. These inner petals seem to grasp a small white and pink pearl. Fanning out from there, fan out in a gentle arc, seeming to hold the centre of the flower. It is a beautiful sight, one enjoyed by very few. The Shenzhen Nongke Orchid sold at auction in 2005 for a startling 2 million Hong Kong dollars.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>The anonymous buyers must have felt inexplicably drawn to this scarce flower. Not only did it cost them a fortune, this flower only blooms every 4-5 years. Its blooms must feel like a celebration, a reward for dedication and patience. But there are other flowers whose beauty equals that of the orchid. What makes it worth such an incredible amount? It turns out that the Shenzhen Nongke Orchid has an unusual origin. The flower is completely man-made. Agricultural scientists at the Shenzhen Nongke Group in order to produce useful results for agriculture. In this case, however, the results were less useful than they were frivolous.</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>Humans do not need flowers to survive. Well, we do need pollinators like bees and beetles to go about their important work, producing fruits and vegetables for our diet, but the actual beauty of flowers has no bearing on our lives. Why, then, are we drawn to blooms for which people will be willing to spend as much as they would on a house or several luxury cars?</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>The same question could of course be asked about art. Throughout history, people have spent their fortunes on paintings and sculptures that can be passed down through families, could not be destroyed by simply forgetting to water them. Neither can plants wither in those cases. Plants like the orchid, however, survive for several decades. Bonsai plants can live for hundreds of years. A bonsai pine tree fetched 1.6 million Hong Kong dollars at an auction in Japan. Plant collectors seem willing to part with an unfathomable amount of money to care for and own beautiful specimens.</div>
+  <div class="passage-excerpt"><div class="para-num">¶5</div>Another possibility is that the Shenzhen Nongke Orchid belongs to the status symbol type. Amongst wealthy circles, it is common to have expensive items that show you are in a certain class. An orchid like this might be shown off at a dinner party, a status symbol signalling a certain status.</div>
+  <div class="passage-excerpt"><div class="para-num">¶6</div>Without interviewing the buyers, it is impossible to know the exact motivation. But the majority of people... to feel beautiful and expensive fashion is certainly not unique to the wealthy. Designer pets, designer furniture... But the drive to own fashionable things, the latest gadgets, designer jewellery, fashion... But people are born with the desire to own and show off, to want to own something that others do not have. It goes no further than that, and it is not unique. Diamonds are only beautiful and rare, because we are told they are rare. Any diamond is the ultimate symbol of long-lasting love. The popular idea that diamonds are not rare is a fabrication. Somewhere around 120 million carats of diamonds are mined every year. But since we believe that diamonds are special and beautiful, we are willing to spend a large portion of our savings on them. It is our belief in these objects that creates their monetary value.</div>
+  <div class="passage-excerpt"><div class="para-num">¶7</div>Though, diamonds, like art, can be kept for generations. One has to wonder how plants have managed to reach a similar price point. The popularity of rare plants has been on the rise in the last several years. Photos of variegated Monstera, a large plant with striking white-patched leaves, have proliferated on social media. This plant's annual salary. Cuttings sell for thousands of dollars. Even a small cutting may sell for thousands of dollars. Depending on their bonsai age, bonsai trees can sell for hundreds of thousands, or even millions, of dollars. In 1981, a juniper bonsai sold for 15.6 million Hong Kong dollars at an auction in Japan. Plant collectors seem willing to part with an unfathomable amount of money to care for and own beautiful specimens.</div>
+  <div class="passage-excerpt"><div class="para-num">¶8</div>The history of indoor plants stretches almost as far back as modern human history. Ancient civilizations in China, Greece, India and Egypt were known for cultivating plants indoors. It seems that the draw to have greenery indoors has been around for a very long time. As global exploration increased during the Renaissance, plants from different locales began travelling around the world. Imagine, at that time, having a plant that you had travelled thousands of kilometres to get. What better way to show off your worldly experience? Then, as people began to have furnaces in their homes, the variety of plants you could grow expanded. Now, it is common to see plants in nearly every home you walk into. They've become as much a part of home decor as lamps or sofas. Perhaps it is only natural, then, that some people would want to highlight their style by choosing fancier foliage.</div>
+  <div class="passage-excerpt"><div class="para-num">¶9</div>It should be said, too, that indoor plants are not completely without use. To say so is to overlook the benefits that they can bring to our lives. Multiple studies have shown that indoor plants help us to feel relaxed. Caring for indoor plants, or shaping them, gives us a sense of purpose. Sitting by plants, surrounded by nature gives us a sense of calm. We can gain those benefits just as easily with a $10 spider plant as a $2 million dollar orchid.</div>
+  <div class="passage-excerpt"><div class="para-num">¶10</div>Could our urge to spend hard-earned cash on indoor plants have something to do with the changing environment outside us? No one can deny, in this day and age, that nature is in peril because of climate change. Sometimes it feels like the world outside is spiraling out of control, with droughts and other extreme weather. Maybe by bringing nature inside, we feel like we have less control over our own small size of nature. We want to feel like we can control our own lives. When we are able to keep a plant alive, we feel like we are taming a small part of nature. Whether we buy a $2 spider plant or a $2 million orchid, the feeling is the same. It is a foolish or a wise pursuit? That is a small piece of nature we can call our own.</div>
+  <div class="passage-excerpt"><div class="para-num">¶11</div>It is a foolish or a wise pursuit? No one can say for sure. But what we do know is that whoever could create a flower of more value than Mother Nature could produce it is not us who owns nature, but nature who owns us. We would do well to remember that life is priceless.</div>
+</div>
+
+<div id="hard-template-memory1" style="display:none">
+  <h4>Champions of Memory — Full Passage</h4>
+  <div class="passage-excerpt"><div class="para-num">¶1</div>They have trained for months, devoting hours to their craft and turning down social engagements to be here. Now the athletes are assembled in the same room, sweat practically dripping at this moment and ready for the challenge to begin. You won't see any Lycra or running shoes in this hall, though: these are mental athletes, preparing to take part in the World Memory Championships. For the next three days, they will compete to see who has the world's best memory.</div>
+  <div class="passage-excerpt"><div class="para-num">¶2</div>The events may not have the same drama as a penalty shoot-out or a 100 m final, but the feats are no less impressive. Competitors have to memorise names and faces, historic and future dates or random words. One challenge requires participants to remember a string of binary numbers. The record is a string 7,485 numbers long. Another gives competitors 60 minutes to memorise decks of cards in a specific order. The record is 2,530 cards.</div>
+  <div class="passage-excerpt"><div class="para-num">¶3</div>The mental prowess on show is hugely impressive and at first sight might seem out of reach for the average Joe. However, the techniques required to reach this level are not difficult to master. If we can all learn these tricks, anyone can outsource our memory to smartphones or apps.</div>
+  <div class="passage-excerpt"><div class="para-num">¶4</div>'My dad developed Alzheimer's at an early age and his memory deteriorated rapidly. It was heart-breaking to watch,' he explains, a face lined. 'I thought "What can I do to protect my memory?" and I started reading books about memory-training techniques, which ultimately led me here, to the Championships.'</div>
+  <div class="passage-excerpt"><div class="para-num">¶5</div>Liam is the first to acknowledge that, like most of us, he was quick to outsource so much of his memory to technology: we can set alarms to remind us to take our medication, we don't use maps, we don't have to remember phone numbers or anniversaries. 'Of course, it's easy to have technology to remember things for us, but we don't let it get in the way,' in his words. 'A strong memory makes you wiser, more intelligent. It's useful in your career, and in your relationships.' As I finish my interview with Liam, I begin to see the practical uses of memory training.</div>
+  <div class="passage-excerpt"><div class="para-num">¶6</div>So how can we cultivate a super memory? Thankfully, many of the techniques used by memory athletes can be applied to our everyday lives. One way to remember more easily is to associate the item you want to remember, either physical or mental, with a place or time you are more familiar with. This requires you to think more deeply and with greater detail than the item. Think about the smells, tastes and sounds associated with the item. More often than not, you'll need more than one place to store all these memories. Think of it as a memory palace.</div>
+  <div class="passage-excerpt"><div class="para-num">¶7</div>Then, you need somewhere to store these images: a memory palace. Think of a place you know well (your apartment, school, workplace) — imagine walking through it, different rooms, walking backwards and forwards at different times. It's more effective if you imagine yourself walking backwards through the place, because it forces you to see things from a different perspective. Experts claim this technique can be used to memorise lists stretching back hundreds, and the future stretching ahead of you.</div>
+  <div class="passage-excerpt"><div class="para-num">¶8</div>You can also use word association. For example, to remember names. The first time you meet someone, come up with a story to go with their name. 'Say for example I meet someone called Robin Whitely, I think of a robin. Whitely, I think of a bird, a robin, which is a bird — so I picture a robin, which has a red breast, flying from my front door. The name "Robin" has "red" in it, which reminds me of a robin's red breast. Then, when I meet Robin again, I imagine him dressed in his red waistcoat, flapping his wings as he explains his theories for summer. I picture Robin repeatedly trying to find the red robin in his breast. I won't forget his name any time soon.'</div>
+</div>
+
+
+
+</div><!-- /main-area -->
+</div><!-- /deck -->
+
+
+<script>
+
+// ============================================================
+// DSE Reading Courseware MAX — Interactions V7
+// Inspired by: freeCodeCamp (terminal-chic UX) + Khan Academy (teacher tools)
+// Base: V6 reading-interactions.js
+// ============================================================
+
+// === Score Tracker (new in V7) ===
+var scoreState = { correct: 0, wrong: 0, total: 0, streak: 0, maxStreak: 0 };
+function recordAnswer(isCorrect) {
+  scoreState.total++;
+  if (isCorrect) {
+    scoreState.correct++;
+    scoreState.streak++;
+    if (scoreState.streak > scoreState.maxStreak) scoreState.maxStreak = scoreState.streak;
+  } else {
+    scoreState.wrong++;
+    scoreState.streak = 0;
+  }
+  updateScoreDisplay();
+  if (isCorrect) showToast('Correct! +1', 'success');
+  else showToast('Not quite. Keep going!', 'error');
+  if (scoreState.streak >= 3) showToast('🔥 ' + scoreState.streak + ' streak!', 'info');
+}
+function updateScoreDisplay() {
+  var badge = document.querySelector('.score-badge');
+  if (badge) {
+    badge.querySelector('.sb-correct').textContent = scoreState.correct;
+    badge.querySelector('.sb-total').textContent = scoreState.total;
+    badge.classList.remove('pulse');
+    void badge.offsetWidth;
+    badge.classList.add('pulse');
+  }
+  var ringFg = document.querySelector('.ring-fg');
+  var ringText = document.querySelector('.ring-text');
+  if (ringFg && scoreState.total > 0) {
+    var pct = scoreState.correct / scoreState.total;
+    var circumference = 2 * Math.PI * 14;
+    ringFg.style.strokeDasharray = circumference;
+    ringFg.style.strokeDashoffset = circumference * (1 - pct);
+    ringText.textContent = Math.round(pct * 100) + '%';
+  }
+  var sdVal = document.querySelector('.sd-val');
+  if (sdVal) sdVal.textContent = scoreState.correct + '/' + scoreState.total;
+  var streakBadge = document.querySelector('.streak-badge .streak-count');
+  if (streakBadge) streakBadge.textContent = scoreState.streak;
+  var streakContainer = document.querySelector('.streak-badge');
+  if (streakContainer) streakContainer.style.display = scoreState.streak >= 2 ? 'inline-flex' : 'none';
+}
+
+// === Toast Notifications (new in V7) ===
+function showToast(msg, type) {
+  var toast = document.createElement('div');
+  toast.className = 'toast ' + (type || 'info');
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(function() { if (toast.parentNode) toast.remove(); }, 3200);
+}
+
+// === Timer (V7 — fCC-styled) ===
+var timerDuration = 300, timerRemaining = 300, timerRunning = false, timerInterval = null, timerDone = false;
+var durations = [60, 120, 180, 300, 600], durIdx = 3;
+function updateTimerDisplay() {
+  var min = Math.floor(timerRemaining / 60), sec = timerRemaining % 60;
+  requestAnimationFrame(function() {
+    var minEl = document.getElementById('timerMin');
+    var secEl = document.getElementById('timerSec');
+    if (minEl) minEl.value = min;
+    if (secEl) secEl.value = sec < 10 ? '0' + sec : sec;
+  });
+}
+function readTimerFromInputs() {
+  var m = parseInt(document.getElementById('timerMin').value) || 0;
+  var s = parseInt(document.getElementById('timerSec').value) || 0;
+  if (m < 0) m = 0; if (s < 0) s = 0; if (s > 59) s = 59; return m * 60 + s;
+}
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent = '\u25b6';
+  } else {
+    if (timerDone) { resetTimer(); }
+    if (timerRemaining <= 0) {
+      var v = readTimerFromInputs();
+      if (v > 0) { timerDuration = v; timerRemaining = v; }
+      else { timerDuration = 60; timerRemaining = 60; }
+      updateTimerDisplay();
+    }
+    timerInterval = setInterval(function() {
+      timerRemaining--; updateTimerDisplay();
+      if (timerRemaining <= 0) {
+        clearInterval(timerInterval); timerInterval = null; timerRunning = false; timerDone = true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent = '\u25b6';
+        showToast('⏱ Time is up!', 'error');
+      }
+    }, 1000);
+    timerRunning = true; timerDone = false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent = '\u23f8';
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval); timerInterval = null;
+  timerRunning = false; timerDone = false;
+  timerRemaining = timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running', 'done');
+  document.getElementById('timerPlayBtn').classList.remove('running', 'done');
+  document.getElementById('timerPlayBtn').textContent = '\u25b6';
+}
+function cycleDuration() {
+  durIdx = (durIdx + 1) % durations.length;
+  timerDuration = durations[durIdx]; timerRemaining = timerDuration; timerDone = false;
+  updateTimerDisplay();
+  clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+  document.getElementById('timerWrap').classList.remove('running', 'done');
+  document.getElementById('timerPlayBtn').classList.remove('running', 'done');
+  document.getElementById('timerPlayBtn').textContent = '\u25b6';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var minEl = document.getElementById('timerMin');
+  var secEl = document.getElementById('timerSec');
+  function syncFromInputs() {
+    if (!timerRunning && !timerDone) {
+      var v = readTimerFromInputs();
+      if (v > 0) { timerDuration = v; timerRemaining = v; }
+    }
+  }
+  if (minEl) minEl.addEventListener('change', syncFromInputs);
+  if (secEl) secEl.addEventListener('change', syncFromInputs);
+});
+
+// === Zoom controls ===
+var ZOOM_MIN = 0.8, ZOOM_MAX = 1.6, ZOOM_STEP = 0.1;
+var zoomLevel = (function() {
+  var saved = parseFloat(localStorage.getItem('xdf-zoom-level'));
+  return (!isNaN(saved) && saved >= ZOOM_MIN && saved <= ZOOM_MAX) ? saved : 1;
+})();
+function applyZoom() {
+  zoomLevel = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoomLevel)) * 100) / 100;
+  document.documentElement.style.setProperty('--zoom-scale', zoomLevel);
+  var label = document.getElementById('zoomLevelLabel');
+  if (label) label.textContent = Math.round(zoomLevel * 100) + '%';
+  var outBtn = document.getElementById('zoomOutBtn'), inBtn = document.getElementById('zoomInBtn');
+  if (outBtn) outBtn.disabled = zoomLevel <= ZOOM_MIN + 1e-6;
+  if (inBtn) inBtn.disabled = zoomLevel >= ZOOM_MAX - 1e-6;
+  try { localStorage.setItem('xdf-zoom-level', String(zoomLevel)); } catch (e) {}
+}
+function zoomIn() { zoomLevel += ZOOM_STEP; applyZoom(); }
+function zoomOut() { zoomLevel -= ZOOM_STEP; applyZoom(); }
+function resetZoom() { zoomLevel = 1; applyZoom(); }
+applyZoom();
+
+// === Dark Mode (new in V7) ===
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  var isDark = document.body.classList.contains('dark');
+  try { localStorage.setItem('xdf-dark-mode', isDark ? '1' : '0'); } catch (e) {}
+  var btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = isDark ? '\u2600' : '\u263D';
+  showToast(isDark ? 'Dark mode on' : 'Light mode on', 'info');
+}
+function initDarkMode() {
+  try {
+    var saved = localStorage.getItem('xdf-dark-mode');
+    if (saved === '1') {
+      document.body.classList.add('dark');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '\u2600';
+    }
+  } catch (e) {}
+}
+initDarkMode();
+
+// === Sidebar (new in V7) ===
+function toggleSidebar() {
+  var sidebar = document.querySelector('.sidebar');
+  if (sidebar) sidebar.classList.toggle('collapsed');
+  try {
+    localStorage.setItem('xdf-sidebar-collapsed', document.querySelector('.sidebar').classList.contains('collapsed') ? '1' : '0');
+  } catch (e) {}
+}
+function initSidebar() {
+  try {
+    var saved = localStorage.getItem('xdf-sidebar-collapsed');
+    if (saved === '1') {
+      var sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.classList.add('collapsed');
+    }
+  } catch (e) {}
+}
+function buildSidebarNav() {
+  var nav = document.querySelector('.sidebar-nav');
+  if (!nav) return;
+  nav.innerHTML = '';
+  var slides = document.querySelectorAll('.slide');
+  var currentPart = '';
+  slides.forEach(function(slide, i) {
+    var title = slide.dataset.title || 'Slide ' + (i + 1);
+    var sectionType = slide.dataset.section || '';
+    var icon = '\u25CB';
+    if (sectionType === 'cover') icon = '\uD83C\uDFE0';
+    else if (sectionType === 'entry-test') icon = '\uD83D\uDEAA';
+    else if (sectionType === 'practice') icon = '\u270F\uFE0F';
+    else if (sectionType === 'close-reading') icon = '\uD83D\uDCD6';
+    else if (sectionType === 'exit-test') icon = '\uD83D\uDEAA';
+    else if (sectionType === 'divider') icon = '\uD83D\uDFE2';
+    else if (sectionType === 'done') icon = '\uD83C\uDF89';
+    else icon = '\u25CB';
+
+    // Section headers
+    var part = slide.dataset.part || '';
+    if (part && part !== currentPart) {
+      currentPart = part;
+      var secLabel = document.createElement('div');
+      secLabel.className = 'sidebar-section-label';
+      secLabel.textContent = part;
+      nav.appendChild(secLabel);
+    }
+
+    var item = document.createElement('div');
+    item.className = 'sidebar-item' + (i === current ? ' active' : '');
+    item.dataset.slideIndex = i;
+    item.innerHTML = '<span class="si-icon">' + icon + '</span><span class="si-label">' + title + '</span>';
+    item.onclick = function() { goTo(i); };
+    nav.appendChild(item);
+  });
+}
+
+// === Navigation ===
+var current = 0;
+function initDots() {
+  var slides = document.querySelectorAll('.slide');
+  var dots = document.getElementById('progressDots');
+  if (!dots) return;
+  dots.innerHTML = '';
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot';
+    d.dataset.pn = 'Slide ' + (i + 1);
+    d.onclick = function() { goTo(i); };
+    dots.appendChild(d);
+  });
+}
+function updateUI() {
+  var slides = document.querySelectorAll('.slide');
+  slides.forEach(function(s, i) { s.classList.toggle('is-active', i === current); });
+  var dots = document.getElementById('progressDots');
+  if (dots) {
+    var dotEls = dots.querySelectorAll('.dot');
+    dotEls.forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+      d.classList.toggle('passed', i < current);
+    });
+  }
+  var pct = slides.length > 1 ? Math.round((current / (slides.length - 1)) * 100) : 0;
+  var bar = document.getElementById('progressBar');
+  if (bar) bar.style.width = pct + '%';
+  var topTitle = document.getElementById('topbarTitle');
+  if (topTitle) topTitle.textContent = slides[current].dataset.title || '';
+  var pcCur = document.getElementById('pcCur');
+  var pcTotal = document.getElementById('pcTotal');
+  if (pcCur) pcCur.textContent = (current + 1);
+  if (pcTotal) pcTotal.textContent = ' / ' + slides.length;
+  slides[current].scrollTop = 0;
+  if (current === slides.length - 1) launchConfetti();
+  reapplyAllHighlights();
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar-item').forEach(function(item) {
+    var idx = parseInt(item.dataset.slideIndex);
+    item.classList.toggle('active', idx === current);
+  });
+  // Scroll sidebar to active item
+  var activeItem = document.querySelector('.sidebar-item.active');
+  if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function goTo(i) {
+  var slides = document.querySelectorAll('.slide');
+  if (i < 0 || i >= slides.length || i === current) return;
+  current = i;
+  updateUI();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+});
+function editPageCounter() {
+  var curEl = document.getElementById('pcCur');
+  var total = document.querySelectorAll('.slide').length;
+  var input = document.createElement('input');
+  input.type = 'number'; input.className = 'pc-cur-input';
+  input.min = 1; input.max = total; input.value = current + 1;
+  curEl.replaceWith(input); input.focus(); input.select();
+  function finish() {
+    var val = parseInt(input.value);
+    var span = document.createElement('span');
+    span.className = 'pc-cur'; span.id = 'pcCur'; span.onclick = editPageCounter;
+    if (!isNaN(val) && val >= 1 && val <= total && val !== current + 1) { span.textContent = val; input.replaceWith(span); goTo(val - 1); }
+    else { span.textContent = current + 1; input.replaceWith(span); }
+  }
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); finish(); }
+    if (e.key === 'Escape') { e.preventDefault(); var s = document.createElement('span'); s.className = 'pc-cur'; s.id = 'pcCur'; s.onclick = editPageCounter; s.textContent = current + 1; input.replaceWith(s); }
+  });
+  input.addEventListener('blur', finish);
+}
+
+// === Signal word progressive reveal ===
+var negList = [];
+function revealNextSignal(slideId) {
+  var pool = document.querySelectorAll('.slide.is-active .sigword.pending');
+  if (!pool.length) return;
+  var target = pool[0];
+  var pair = target.dataset.pair || '';
+  var cls = negList.indexOf(pair) >= 0 ? 'revealed-neg' : 'revealed-pos';
+  var zh = target.dataset.zh || '';
+  var wrapper = document.createElement('span');
+  wrapper.className = 'sigword ' + cls;
+  wrapper.dataset.pair = pair;
+  wrapper.dataset.zh = zh;
+  wrapper.innerHTML = pair + ' <span style="font-size:14px;color:var(--fcc-blue);font-weight:600">(' + zh + ')</span>';
+  target.replaceWith(wrapper);
+  updateCounter(slideId);
+}
+function updateCounter(slideId) {
+  var total = document.querySelectorAll('.slide.is-active .sigword').length;
+  var revealed = document.querySelectorAll('.slide.is-active .sigword.revealed-pos, .slide.is-active .sigword.revealed-neg').length;
+  var counter = document.getElementById(slideId + '-counter');
+  if (counter) counter.textContent = revealed + '/' + total;
+}
+function resetSignals(slideId) {
+  var revealed = document.querySelectorAll('.slide.is-active .sigword.revealed-pos, .slide.is-active .sigword.revealed-neg');
+  revealed.forEach(function(el) {
+    var pair = el.dataset.pair || '';
+    var zh = el.dataset.zh || '';
+    var newEl = document.createElement('span');
+    newEl.className = 'sigword pending';
+    newEl.dataset.pair = pair;
+    newEl.dataset.zh = zh;
+    newEl.textContent = pair;
+    el.replaceWith(newEl);
+  });
+  var counter = document.getElementById(slideId + '-counter');
+  if (counter) { var total = document.querySelectorAll('.slide.is-active .sigword').length; counter.textContent = '0/' + total; }
+}
+
+// === Drag & Drop ===
+function initDragDrop(scope) {
+  var draggables = document.querySelectorAll(scope ? scope + ' .draggable' : '.draggable');
+  var zones = document.querySelectorAll(scope ? scope + ' .drop-zone' : '.drop-zone');
+  var pools = document.querySelectorAll(scope ? scope + ' .word-pool' : '.word-pool');
+  draggables.forEach(function(d) {
+    d.addEventListener('dragstart', function(e) { e.dataTransfer.setData('text/plain', d.dataset.word); d.classList.add('dragging'); });
+    d.addEventListener('dragend', function(e) { d.classList.remove('dragging'); });
+  });
+  zones.forEach(function(z) {
+    z.addEventListener('dragover', function(e) { e.preventDefault(); z.classList.add('drag-over'); if (typeof autoScrollToVisible === 'function') autoScrollToVisible(e, z); });
+    z.addEventListener('dragleave', function(e) { z.classList.remove('drag-over'); });
+    z.addEventListener('drop', function(e) {
+      e.preventDefault(); z.classList.remove('drag-over');
+      var word = e.dataTransfer.getData('text/plain');
+      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
+      if (!dragged) return;
+      // Show label in the zone the dragged item is leaving
+      var prevZone = dragged.closest('.drop-zone');
+      if (prevZone && prevZone !== z) {
+        var prevLabel = prevZone.querySelector('.dz-label');
+        if (prevLabel) prevLabel.style.display = 'block';
+      }
+      // If zone already has a draggable, move it back to the nearest word-pool
+      var existingDraggable = z.querySelector('.draggable');
+      if (existingDraggable && existingDraggable !== dragged) {
+        var pool = dragged.closest('.word-pool') || document.getElementById('q51-pool') || document.getElementById('word-pool');
+        if (pool) { pool.appendChild(existingDraggable); existingDraggable.classList.remove('correct-placed', 'wrong-placed'); }
+      }
+      // Place dragged into zone (use .drop-content if present, else zone itself)
+      var content = z.querySelector('.drop-content');
+      (content || z).appendChild(dragged);
+      dragged.classList.remove('correct-placed', 'wrong-placed');
+      // Hide zone label after drop
+      var label = z.querySelector('.dz-label');
+      if (label) label.style.display = 'none';
+    });
+  });
+  pools.forEach(function(p) {
+    p.addEventListener('dragover', function(e) { e.preventDefault(); p.classList.add('drag-over'); if (typeof autoScrollToVisible === 'function') autoScrollToVisible(e, p); });
+    p.addEventListener('dragleave', function(e) { p.classList.remove('drag-over'); });
+    p.addEventListener('drop', function(e) {
+      e.preventDefault(); p.classList.remove('drag-over');
+      var word = e.dataTransfer.getData('text/plain');
+      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
+      if (!dragged) return;
+      // Show label in the zone the dragged item is leaving
+      var prevZone = dragged.closest('.drop-zone');
+      if (prevZone) {
+        var prevLabel = prevZone.querySelector('.dz-label');
+        if (prevLabel) prevLabel.style.display = 'block';
+      }
+      p.appendChild(dragged); dragged.classList.remove('correct-placed', 'wrong-placed'); if (typeof sortDraggablesInPool === 'function') sortDraggablesInPool(p);
+    });
+  });
+}
+function checkDragDrop() {
+  var placed = document.querySelectorAll('.draggable');
+  var correctCount = 0, wrongCount = 0;
+  placed.forEach(function(d) {
+    var parent = d.closest('.drop-zone');
+    var cat = parent ? parent.dataset.cat : '';
+    if (cat === d.dataset.cat) { d.classList.add('correct-placed'); d.classList.remove('wrong-placed'); correctCount++; }
+    else { d.classList.add('wrong-placed'); d.classList.remove('correct-placed'); wrongCount++; }
+  });
+  var result = document.getElementById('drag-result');
+  if (!result) return;
+  result.style.display = 'block';
+  var total = placed.length;
+  var remaining = document.querySelectorAll('#word-pool .draggable').length;
+  result.innerHTML = '<div class="card accent" style="text-align:center"><h4>\u63d0\u4ea4\u7ed3\u679c\uff1a\u2705 ' + correctCount + ' \u6b63\u786e / \u274c ' + wrongCount + ' \u9519\u8bef / \ud83d\udce6 ' + remaining + ' \u672a\u62d6\u5165</h4>' + (correctCount === total ? '<p style="color:var(--fcc-green-dark);font-size:20px;margin-top:10px">\ud83c\udf89 \u5168\u90e8\u6b63\u786e\uff01</p>' : '') + '</div>';
+}
+function resetDragDrop() {
+  var pool = document.getElementById('word-pool');
+  if (pool) {
+    document.querySelectorAll('#dz-pos .draggable, #dz-neg .draggable, #word-pool .draggable').forEach(function(d) {
+      d.classList.remove('correct-placed', 'wrong-placed');
+      pool.appendChild(d);
+    });
+    if (typeof sortDraggablesInPool === 'function') sortDraggablesInPool(pool);
+  }
+  var result = document.getElementById('drag-result');
+  if (result) result.style.display = 'none';
+}
+
+// === Q51 Drag-Drop Matching ===
+function checkQ51() {
+  var slots = document.querySelectorAll('[id^="q51-dz-"]');
+  var result = document.getElementById('q51-result');
+  if (!result) return;
+  var correctCount = 0, wrongCount = 0, emptyCount = 0;
+  var answerKey = {1:'D', 2:'C', 3:'F', 4:'A', 5:'E', 0:'B'};
+  slots.forEach(function(z) {
+    var slotNum = parseInt(z.dataset.slot);
+    var placed = z.querySelector('.draggable');
+    var label = z.querySelector('.dz-label');
+    if (!placed) {
+      emptyCount++;
+      if (label) label.style.display = 'block';
+    } else {
+      if (label) label.style.display = 'none';
+      var correctSlot = parseInt(placed.dataset.q51Answer);
+      placed.classList.remove('correct-placed', 'wrong-placed');
+      if (correctSlot === slotNum) {
+        placed.classList.add('correct-placed');
+        correctCount++;
+      } else {
+        placed.classList.add('wrong-placed');
+        wrongCount++;
+      }
+    }
+  });
+  var total = 6;
+  var allPlaced = (emptyCount === 0);
+  result.style.display = 'block';
+  if (allPlaced) {
+    result.innerHTML = '<div class="card accent" style="text-align:center"><h4>\u63d0\u4ea4\u7ed3\u679c\uff1a\u2705 ' + correctCount + ' \u6b63\u786e / \u274c ' + wrongCount + ' \u9519\u8bef</h4>' +
+      (correctCount === total ? '<p style="color:var(--fcc-green-dark);font-size:20px;margin-top:10px">\ud83c\udf89 \u5168\u90e8\u6b63\u786e\uff01</p>' : '<p style="font-size:13px;color:var(--text-2);margin-top:6px">\u6b63\u786e\u7b54\u6848\uff1a\u00b61\u2192D &nbsp; \u00b62\u2192C &nbsp; \u00b63\u2192F &nbsp; \u00b64\u2192A &nbsp; \u00b65\u2192E &nbsp; Not used\u2192B</p>') + '</div>';
+    if (typeof recordAnswer === 'function') { for (var i = 0; i < correctCount; i++) recordAnswer(true); for (var j = 0; j < wrongCount; j++) recordAnswer(false); }
+    if (correctCount === total && typeof playRewardSound === 'function') playRewardSound();
+    else if (wrongCount > 0 && typeof playWrongSound === 'function') playWrongSound();
+  } else {
+    result.innerHTML = '<div class="card" style="border-left:4px solid #FF9800;padding:10px"><span style="color:#FF9800">\u26a0\ufe0f Please drag all options into a slot first. (' + emptyCount + ' empty)</span></div>';
+  }
+}
+function resetQ51() {
+  var pool = document.getElementById('q51-pool');
+  var result = document.getElementById('q51-result');
+  if (pool) {
+    document.querySelectorAll('[id^="q51-dz-"] .draggable').forEach(function(d) {
+      d.classList.remove('correct-placed', 'wrong-placed');
+      pool.appendChild(d);
+    });
+    document.querySelectorAll('[id^="q51-dz-"] .dz-label').forEach(function(l) { l.style.display = 'block'; });
+  }
+  if (result) result.style.display = 'none';
+}
+
+// === MC check (V7 — with score tracking) ===
+function checkMC(el, isCorrect, containerId, explanation) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  if (el.classList.contains('answered')) return;
+  var allOpts = container.querySelectorAll('.pmcq-opt');
+  var correctOpt = null;
+  allOpts.forEach(function(o) { if (o.getAttribute('data-correct') === 'true') { correctOpt = o; } });
+  el.classList.add('answered');
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  // Record score
+  recordAnswer(isCorrect);
+  var practiceBox = el.closest('.practice-mcq') || container.parentNode;
+  var oldBanner = practiceBox.querySelector(':scope > .mc-banner');
+  if (oldBanner) oldBanner.remove();
+  var exp = explanation || '';
+  var banner = document.createElement('div');
+  banner.className = isCorrect ? 'mc-banner mc-correct' : 'mc-banner mc-wrong';
+  banner.innerHTML = '<div class="tick">' + (isCorrect ? '\u2705' : '\u274c') + '</div><div><div class="at">' + (isCorrect ? 'Correct!' : 'Incorrect') + '</div><div class="asub">' + exp + '</div></div>';
+  container.insertAdjacentElement('afterend', banner);
+  var answeredCount = container.querySelectorAll('.pmcq-opt.answered').length;
+  var allAnswered = answeredCount >= allOpts.length;
+  if (isCorrect || allAnswered) {
+    if (correctOpt && !isCorrect) correctOpt.classList.add('correct-revealed');
+    container.classList.add('answered');
+  }
+}
+
+// Simplified MC check (auto-detect from data-correct)
+function checkMCAuto(el) {
+  if (el.classList.contains('answered')) return;
+  var container = el.closest('.practice-mcq');
+  if (!container || container.classList.contains('answered')) return;
+  var isCorrect = el.getAttribute('data-correct') === 'true';
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  el.classList.add('answered');
+  recordAnswer(isCorrect);
+  if (isCorrect) {
+    container.classList.add('answered');
+    container.classList.add('correct-revealed');
+    var allOpts = container.querySelectorAll('.pmcq-opt');
+    allOpts.forEach(function(o) { o.classList.add('answered'); });
+    var banner = document.createElement('div');
+    banner.className = 'mc-banner mc-correct';
+    banner.innerHTML = '<span class="tick">\u2705</span><div><div class="at">Correct!</div></div>';
+    container.insertAdjacentElement('afterend', banner);
+  } else {
+    var banner = document.createElement('div');
+    banner.className = 'mc-banner mc-wrong';
+    banner.innerHTML = '<span class="tick">\u274c</span><div><div class="at">Not quite</div><div class="asub">' + (el.getAttribute('data-explain') || '') + '</div></div>';
+    container.insertAdjacentElement('afterend', banner);
+  }
+}
+
+function toggleRev(id) { var el = document.getElementById(id); if (el) el.classList.toggle('show'); }
+
+// === TFNG check (V7 — with score tracking) ===
+function checkTFNG(btn, correctVal) {
+  var group = btn.parentElement;
+  if (group.classList.contains('answered')) return;
+  var chosen = btn.textContent.trim();
+  var isCorrect = chosen === correctVal;
+  group.classList.add('answered');
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  recordAnswer(isCorrect);
+  if (!isCorrect) {
+    var btns = group.querySelectorAll('.tfng-btn');
+    btns.forEach(function(b) { if (b.textContent.trim() === correctVal) b.classList.add('correct'); });
+  }
+  var ans = group.getAttribute('data-explain') || '';
+  var banner = document.createElement('div');
+  banner.className = 'mc-banner ' + (isCorrect ? 'mc-correct' : 'mc-wrong');
+  banner.innerHTML = '<span class="tick">' + (isCorrect ? '\u2705' : '\u274c') + '</span><div><div class="at">' + (isCorrect ? 'Correct!' : 'The answer is ' + correctVal) + '</div><div class="asub">' + ans + '</div></div>';
+  group.insertAdjacentElement('afterend', banner);
+}
+
+function revealCloze(el) {
+  if (el.classList.contains('revealed')) return;
+  el.textContent = el.getAttribute('data-answer');
+  el.classList.add('revealed');
+}
+
+// === Short Answer ===
+function submitShortAnswer(btn) {
+  var wrap = btn.closest('.sa-input-wrap');
+  var input = wrap.querySelector('.sa-input');
+  var userAns = input.value.trim();
+  if (!userAns) {
+    input.style.borderColor = 'var(--brand-red)';
+    input.setAttribute('placeholder', 'Please type your answer first...');
+    setTimeout(function() { input.style.borderColor = ''; input.setAttribute('placeholder', 'Type your answer...'); }, 1500);
+    return;
+  }
+  input.disabled = true;
+  btn.disabled = true;
+  btn.textContent = 'Submitted';
+  var result = wrap.nextElementSibling;
+  if (result && result.classList.contains('sa-result')) {
+    result.classList.add('show');
+    result.querySelector('.sa-your-ans').textContent = userAns;
+  }
+}
+
+// === Right-click highlight in passage ===
+function passageHash(text) {
+  var h = 0; for (var i = 0; i < text.length; i++) { h = ((h << 5) - h) + text.charCodeAt(i); h |= 0; }
+  return 'hl_' + Math.abs(h);
+}
+function getHighlights(passageEl) {
+  var key = passageHash(passageEl.textContent);
+  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { return []; }
+}
+function saveHighlights(passageEl, arr) {
+  var key = passageHash(passageEl.textContent);
+  try { localStorage.setItem(key, JSON.stringify(arr)); } catch (e) {}
+}
+function escapeRegex(s) { return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'); }
+function applyHighlights(passageEl) {
+  var list = getHighlights(passageEl);
+  if (!list.length) return;
+  list.forEach(function(txt) {
+    if (!txt || !txt.trim()) return;
+    function walkAndReplace(node) {
+      if (node.nodeType === 3) {
+        var val = node.nodeValue;
+        if (val.indexOf(txt) >= 0) {
+          var span = document.createElement('span');
+          span.className = 'user-highlight';
+          var idx = val.indexOf(txt);
+          span.textContent = txt;
+          var before = document.createTextNode(val.substring(0, idx));
+          var after = document.createTextNode(val.substring(idx + txt.length));
+          var parent = node.parentNode;
+          parent.insertBefore(before, node);
+          parent.insertBefore(span, node);
+          parent.insertBefore(after, node);
+          parent.removeChild(node);
+        }
+      } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && !node.classList.contains('user-highlight')) {
+        var children = Array.from(node.childNodes);
+        children.forEach(walkAndReplace);
+      }
+    }
+    walkAndReplace(passageEl);
+  });
+}
+function handleHighlight(e, el) {
+  e.preventDefault();
+  var sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  var range = sel.getRangeAt(0);
+  if (!el.contains(range.commonAncestorContainer) && !el.contains(range.startContainer)) return;
+  var startNode = range.startContainer;
+  var parent = startNode.nodeType === 3 ? startNode.parentNode : startNode;
+  var existingHl = parent.closest && parent.closest('.user-highlight');
+  if (existingHl) {
+    var hlText = existingHl.textContent;
+    var text = document.createTextNode(hlText);
+    existingHl.parentNode.replaceChild(text, existingHl);
+    var list = getHighlights(el);
+    var idx = list.indexOf(hlText);
+    if (idx >= 0) list.splice(idx, 1);
+    saveHighlights(el, list);
+  } else {
+    try {
+      var span = document.createElement('span');
+      span.className = 'user-highlight';
+      var fragment = range.extractContents();
+      var hlText = fragment.textContent;
+      span.appendChild(fragment);
+      range.insertNode(span);
+      if (hlText && hlText.trim()) {
+        var list = getHighlights(el);
+        if (list.indexOf(hlText) < 0) list.push(hlText);
+        saveHighlights(el, list);
+      }
+    } catch (err) {}
+  }
+  sel.removeAllRanges();
+}
+function reapplyAllHighlights() {
+  document.querySelectorAll('.passage-excerpt').forEach(applyHighlights);
+}
+
+function clearAllHighlights() {
+  document.querySelectorAll('.user-highlight').forEach(function(span) {
+    var text = document.createTextNode(span.textContent);
+    span.parentNode.replaceChild(text, span);
+  });
+  var keysToRemove = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    if (key && key.startsWith('hl_')) keysToRemove.push(key);
+  }
+  keysToRemove.forEach(function(k) { localStorage.removeItem(k); });
+  showToast('Highlights cleared', 'info');
+}
+
+// Sort draggables in pool by data-word
+function sortDraggablesInPool(pool) {
+  if (!pool) return;
+  var items = Array.from(pool.querySelectorAll('.draggable'));
+  items.sort(function(a, b) { return (a.dataset.word || '').localeCompare(b.dataset.word || ''); });
+  items.forEach(function(it) { pool.appendChild(it); });
+}
+
+// === Auto-scroll for drag near edges ===
+function findScrollableAncestor(el) {
+  var node = el;
+  while (node && node !== document.body && node !== document.documentElement) {
+    var cs = window.getComputedStyle(node);
+    if ((cs.overflowY === 'auto' || cs.overflowY === 'scroll') && node.scrollHeight - node.clientHeight > 2) return node;
+    node = node.parentElement;
+  }
+  return null;
+}
+var __edgeScroll = { raf: null, container: null, dir: 0, speed: 0 };
+function stopEdgeAutoScroll() {
+  if (__edgeScroll.raf) cancelAnimationFrame(__edgeScroll.raf);
+  __edgeScroll.raf = null; __edgeScroll.container = null; __edgeScroll.dir = 0; __edgeScroll.speed = 0;
+}
+function runEdgeAutoScroll() {
+  if (!__edgeScroll.container || !__edgeScroll.dir) { __edgeScroll.raf = null; return; }
+  __edgeScroll.container.scrollTop += __edgeScroll.dir * __edgeScroll.speed;
+  __edgeScroll.raf = requestAnimationFrame(runEdgeAutoScroll);
+}
+function autoScrollToVisible(e, refEl) {
+  try {
+    var container = findScrollableAncestor(refEl || (e && e.target));
+    if (!container || !e || typeof e.clientY !== 'number') { stopEdgeAutoScroll(); return; }
+    var rect = container.getBoundingClientRect();
+    var edge = 55;
+    var distBottom = rect.bottom - e.clientY;
+    var distTop = e.clientY - rect.top;
+    if (distBottom >= 0 && distBottom < edge && container.scrollTop + container.clientHeight < container.scrollHeight - 1) {
+      __edgeScroll.container = container; __edgeScroll.dir = 1;
+      __edgeScroll.speed = 2 + (edge - distBottom) / edge * 7;
+      if (!__edgeScroll.raf) __edgeScroll.raf = requestAnimationFrame(runEdgeAutoScroll);
+    } else if (distTop >= 0 && distTop < edge && container.scrollTop > 0) {
+      __edgeScroll.container = container; __edgeScroll.dir = -1;
+      __edgeScroll.speed = 2 + (edge - distTop) / edge * 7;
+      if (!__edgeScroll.raf) __edgeScroll.raf = requestAnimationFrame(runEdgeAutoScroll);
+    } else { stopEdgeAutoScroll(); }
+  } catch (err) {}
+}
+document.addEventListener('dragend', stopEdgeAutoScroll);
+document.addEventListener('drop', stopEdgeAutoScroll);
+
+// === Confetti ===
+function launchConfetti() {
+  var wrap = document.createElement('div'); wrap.className = 'confetti-wrap'; document.body.appendChild(wrap);
+  var colors = ['#0B8235', '#4CAF50', '#C85D0A', '#1A6DAF', '#C0392B', '#FFD54F', '#dbb8ff', '#99c9ff', '#acd157'];
+  for (var i = 0; i < 80; i++) {
+    var p = document.createElement('div'); p.className = 'c-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = (6 + Math.random() * 10) + 'px'; p.style.height = p.style.width;
+    p.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (2 + Math.random() * 3) + 's';
+    p.style.animationDelay = (Math.random() * 2) + 's';
+    wrap.appendChild(p);
+  }
+  setTimeout(function() { wrap.remove(); }, 6000);
+}
+
+// === Touch Swipe Navigation ===
+(function() {
+  var touchStartX = 0, touchStartY = 0;
+  var swipeThreshold = 50;
+  var swipeVerticalRatio = 1.5;
+  function isScrollable(el) {
+    if (!el) return false;
+    var style = window.getComputedStyle(el);
+    return (style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+  }
+  document.addEventListener('touchstart', function(e) {
+    var target = e.target;
+    var inScrollable = false;
+    while (target && target !== document.body) {
+      if (isScrollable(target)) { inScrollable = true; break; }
+      target = target.parentElement;
+    }
+    if (inScrollable) { touchStartX = 0; touchStartY = 0; return; }
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (touchStartX === 0 && touchStartY === 0) return;
+    var touchEndX = e.changedTouches[0].screenX;
+    var touchEndY = e.changedTouches[0].screenY;
+    var dx = touchEndX - touchStartX;
+    var dy = touchEndY - touchStartY;
+    touchStartX = 0; touchStartY = 0;
+    if (Math.abs(dx) < swipeThreshold) return;
+    if (Math.abs(dy) > Math.abs(dx) * swipeVerticalRatio) return;
+    if (dx < 0) goTo(current + 1);
+    else goTo(current - 1);
+  }, { passive: true });
+})();
+
+// === Keyboard shortcuts (V7 enhanced) ===
+document.addEventListener('keydown', function(e) {
+  // D for dark mode
+  if (e.key === 'd' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    toggleDarkMode();
+  }
+  // S for sidebar toggle
+  if (e.key === 's' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    toggleSidebar();
+  }
+});
+
+// === Initialize ===
+initDots(); updateUI(); initDragDrop(); initSidebar();
+document.addEventListener('DOMContentLoaded', function() {
+  buildSidebarNav();
+  reapplyAllHighlights();
+});
+
+// === V8 Audio ===
+var audioCtx=null;
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function playRewardSound(){try{var c=getAudioCtx();var n1=c.currentTime;[523.25,659.25,783.99].forEach(function(f,i){var o=c.createOscillator();var g=c.createGain();o.type='sine';o.frequency.setValueAtTime(f,n1+i*0.12);g.gain.setValueAtTime(0.15,n1+i*0.12);g.gain.exponentialRampToValueAtTime(0.001,n1+i*0.12+0.3);o.connect(g);g.connect(c.destination);o.start(n1+i*0.12);o.stop(n1+i*0.12+0.3);});}catch(e){}}
+function playWrongSound(){try{var c=getAudioCtx();var n=c.currentTime;var o=c.createOscillator();var g=c.createGain();o.type='sawtooth';o.frequency.setValueAtTime(200,n);o.frequency.exponentialRampToValueAtTime(100,n+0.3);g.gain.setValueAtTime(0.1,n);g.gain.exponentialRampToValueAtTime(0.001,n+0.3);o.connect(g);g.connect(c.destination);o.start(n);o.stop(n+0.3);}catch(e){}}
+function playTimeUpBeep(){try{var c=getAudioCtx();var n=c.currentTime;var o=c.createOscillator();var g=c.createGain();o.type='square';o.frequency.setValueAtTime(880,n);g.gain.setValueAtTime(0.1,n);g.gain.exponentialRampToValueAtTime(0.001,n+0.15);o.connect(g);g.connect(c.destination);o.start(n);o.stop(n+0.15);}catch(e){}}
+function playTimeUpBeepSeries(){for(var i=0;i<3;i++)setTimeout(playTimeUpBeep,i*250);}
+
+// Override recordAnswer to play sounds
+var _origRecordAnswer = recordAnswer;
+recordAnswer = function(isCorrect) {
+  _origRecordAnswer(isCorrect);
+  if (isCorrect) playRewardSound(); else playWrongSound();
+};
+
+// === V8 Hard Mode ===
+var hardMode=false,hardModeOriginals={};
+function toggleHardMode(){
+  hardMode=!hardMode;
+  var btn=document.getElementById('hardmodeBtn');
+  if(btn){btn.textContent=hardMode?'🔒 Hard':'🔒 Easy';btn.classList.toggle('active',hardMode);}
+  applyHardMode();
+}
+function applyHardMode(){
+  document.querySelectorAll('.slide[data-hard-group]').forEach(function(slide){
+    var splitLeft=slide.querySelector('.split-left');
+    var slideId=slide.dataset.title;
+    if(hardMode){
+      if(!hardModeOriginals[slideId])hardModeOriginals[slideId]=splitLeft.innerHTML;
+      var tmpl=document.getElementById('hard-template-'+slide.dataset.hardGroup);
+      if(tmpl)splitLeft.innerHTML=tmpl.innerHTML;
+    }else{
+      if(hardModeOriginals[slideId]){splitLeft.innerHTML=hardModeOriginals[slideId];delete hardModeOriginals[slideId];}
+    }
+  });
+  reapplyAllHighlights();
+}
+
+// V8: Highlight on split-right too
+document.addEventListener('contextmenu', function(e) {
+  var splitRight = e.target.closest('.split-right');
+  if (splitRight) { handleHighlight(e, splitRight); }
+});
+
+// V8: reapplyAllHighlights covers both
+var _origReapply = reapplyAllHighlights;
+reapplyAllHighlights = function() {
+  document.querySelectorAll('.passage-excerpt,.split-right').forEach(applyHighlights);
+};
+
+
+// Final score sync
+document.addEventListener('DOMContentLoaded', function() {
+  var finalScore = document.getElementById('finalScore');
+  var finalTotal = document.getElementById('finalTotal');
+  if (finalScore) finalScore.textContent = scoreState.correct;
+  if (finalTotal) finalTotal.textContent = scoreState.total;
+  // Update on each answer
+  var origUpdate = updateScoreDisplay;
+  updateScoreDisplay = function() {
+    origUpdate();
+    var fs = document.getElementById('finalScore');
+    var ft = document.getElementById('finalTotal');
+    if (fs) fs.textContent = scoreState.correct;
+    if (ft) ft.textContent = scoreState.total;
+  };
+});
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u2',weakKey:'pronoun',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

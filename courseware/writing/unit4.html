@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 4 · Article · 香港加速班写作课</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+/* student textarea */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px}
+.edit-btn:hover{background:var(--xdf-gl)}
+/* sorting exercise */
+.sort-item{background:#fff;border:1.5px solid var(--card-bd);border-radius:10px;padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:18px;line-height:1.6}
+.sort-item:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.sort-item.placed{opacity:.5;pointer-events:none;background:#f0f0f0;border-color:#ddd}
+.sort-slot{min-height:48px;border:2px dashed var(--card-bd);border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-size:18px;transition:all .2s;background:#fafafa}
+.sort-slot.filled{border-style:solid;border-color:var(--xdf-green);background:var(--xdf-gp)}
+.sort-slot .slot-num{font-size:16px;font-weight:800;color:var(--xdf-green);background:var(--xdf-gl);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* notes box */
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+/* checklist */
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+/* hw card */
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<!-- 顶栏 -->
+<div class="topbar">
+  <span class="course-tag">加速班·Unit4</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter">
+  <span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span>
+  <span class="pc-total" id="pcTotal"></span>
+</div>
+
+<div class="deck">
+
+<!-- ===== S1: 封面 ===== -->
+<section class="slide is-active" data-title="封面 · Unit 4">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">HKDSE <span>DSE</span></div><div class="xdf-sub-text">香港加速班</div></div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="class-badge" style="margin-left:auto">香港加速班</div>
+  </div>
+  <div class="slide-h1">Depression: More Than<br><span class="accent">Just Feeling Sad</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Article — 杂志文章写作</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 4 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Article</div><div class="sm-sub">School magazine article</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Mental Health</div><div class="sm-sub">Depression &amp; recovery</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~350 words</div><div class="sm-sub">7 paragraphs</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题构思</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">开头+SPAR</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段写作</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">建议+结尾</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>加速班 · 写作课</span></div>
+</div></div>
+</section>
+
+<!-- ===== S2: 课程目标 ===== -->
+<section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 本节课目标</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">本节课结束后，你将能够：</p>
+<div style="display:flex;flex-direction:column;gap:14px">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>1. 掌握 Article 文体特征 + 段落结构</h4>
+    <p>了解 article 的开头方式（提问式 / 情景式）、SPAR 叙事法及段落组织</p>
+  </div>
+  <div class="card accent">
+    <h4>2. 写出引人入胜的开头段</h4>
+    <p>能用提问式或情景式写法完成 article 开头段</p>
+  </div>
+  <div class="card accent">
+    <h4>3. 使用 SPAR 法则构思故事情节</h4>
+    <p>Situation → Problem → Action → Result 叙事结构</p>
+  </div>
+  <div class="card accent">
+    <h4>4. 在叙事中使用描述性语言</h4>
+    <p>行为描述、情绪描述、变化描述——让故事更生动</p>
+  </div>
+  <div class="card accent">
+    <h4>5. 按时间顺序组织情节</h4>
+    <p>使用时间标记词串联事件，增强叙事逻辑</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== S3: 审题 ===== -->
+<section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Part 2 · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题分析</h2>
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:20px;font-size:18px;line-height:1.8;color:var(--text-2)">
+  <b style="color:var(--text-1)">Learning English through Social Issues</b><br>
+  Your school magazine is going to include a special feature on mental health. Recently, one of your friends was suffering from depression. Write an article for the school magazine about your friend's depression and how he/she overcame it. Give advice to others on how to help fight depression.
+</div>
+
+<h3 class="slide-h3" style="margin-top:20px">Task 2A: 从题目中提取以下信息</h3>
+
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你是谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">a student</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">2. Audience（写给谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">readers of the school magazine</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="purpose-cb" data-correct="true"> describe how your friend suffered from depression</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="purpose-cb" data-correct="true"> describe how he/she overcame depression</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="purpose-cb" data-correct="true"> provide advice on how to help fight depression</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="purpose-cb" data-correct="false"> explain the harmful effects of depression</label>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 检查答案</button>
+  <div class="ce-en">✅ 前三个是题目要求的写作目的。"explain the harmful effects of depression" 并非题目要求。<br>题目要求的是：描述朋友患抑郁 → 描述如何克服 → 给出建议</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">4. Register（正式程度）</div>
+  <div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+    </div>
+    <div class="quiz-ans">✅ <b>semi-formal</b> — 校刊文章面向同学读者，语气正式但不刻板</div>
+  </div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">5. Tone（语气，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> engaging</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="false"> neutral</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> positive</label>
+    <label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer"><input type="checkbox" class="tone-cb" data-correct="true"> vivid / descriptive</label>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 检查答案</button>
+  <div class="ce-en">✅ engaging, positive, vivid / descriptive — article 需要吸引读者、传递正能量，同时用生动的描述让故事鲜活</div>
+</div>
+</section>
+
+<!-- ===== S4: Brainstorming 思考3.1+3.2 ===== -->
+<section class="slide" data-title="🧠 内容构思 A">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 内容构思</h2>
+
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 3.1：背景部分，哪种设定方式更好？</span></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px" data-ans-id="s4-ans1">
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)">A. 突出前后对比——背景着重描述抑郁前积极开朗的性格特征，以及引发抑郁的核心事件或因素</button>
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)">B. 背景直接写导致主人公患抑郁症的核心事件或因素</button>
+</div>
+<div id="s4-ans1" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;line-height:1.8">✅ <b>A</b> 有前后对比，使故事更加生动鲜活！先呈现积极面，再展现问题，反差更有感染力。</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">思考 3.2："问题"部分，哪种叙述方式更好？</span></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px" data-ans-id="s4-ans2">
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)">A. 简单说明主人公咨询心理医生确诊了抑郁症</button>
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)">B. 描述主人公患抑郁症的表现，如不参与社交、成绩下降等</button>
+</div>
+<div id="s4-ans2" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;line-height:1.8">✅ <b>B</b> 有具体的行为描述，使故事更加生动！读者需要"看到"而非"被告知"。</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">思考 3.3：主人公可以做哪些事来克服抑郁？</span></div>
+<div class="student-input-wrap mt-m">
+  <textarea class="student-ta" id="ta33" placeholder=""></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta33','ans33')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans33"></div>
+  <button class="edit-btn" id="ta33-eb" onclick="continueEdit('ta33','ans33',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">咨询心理医生、规律运动、多和家人朋友倾诉等</div>
+</section>
+
+<!-- ===== S5: SPAR 叙事公式 ===== -->
+<section class="slide" data-title="📐 SPAR 叙事公式">
+<p class="sec-label">Part 3 · SPAR Formula</p>
+<h2 class="slide-h2">📐 叙事公式 SPAR</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">点击每个字母查看含义 👇</p>
+
+<div class="flip-grid g2">
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q" style="font-size:36px;color:var(--xdf-red)">S</div>
+        <div class="flip-hint">点击查看</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-ans"><b>S — Situation</b><br>What happened before the problem occurred?<br>问题出现前发生了什么？（即问题产生的潜在诱因）</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q" style="font-size:36px;color:var(--xdf-gold)">P</div>
+        <div class="flip-hint">点击查看</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-ans"><b>P — Problem</b><br>What problem occurred? What was its impact?<br>出现了什么问题？问题带来何种影响？</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q" style="font-size:36px;color:var(--xdf-green)">A</div>
+        <div class="flip-hint">点击查看</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-ans"><b>A — Action</b><br>What was done to solve the problem?<br>就解决问题采取了何种行动？</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q" style="font-size:36px;color:var(--xdf-blue)">R</div>
+        <div class="flip-hint">点击查看</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-ans"><b>R — Result</b><br>What was the outcome of these actions?<br>这些行动带来怎样的结果？</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== S6: 文章结构 ===== -->
+<section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击每个部分查看功能说明 👇</p>
+
+<table class="rule-table">
+  <tr><th style="width:25%">段落</th><th>功能</th></tr>
+  <tr>
+    <td class="col-type">Title</td>
+    <td class="col-example">Depression: More Than Just Feeling Sad</td>
+  </tr>
+  <tr>
+    <td class="col-type">Introduction</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Introduce the topic and purpose — 交代文章话题和目的">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 1 (Situation)</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="What happened before the problem occurred? — 背景：问题出现前发生了什么？">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 2 (Problem)</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="What problem occurred? What was its impact? — 问题：出现了什么问题？问题带来何种影响？">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 3 (Action+Result)</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="What was done? What was the outcome? — 行动+结果：采取了何种行动？带来怎样的结果？">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 4 (Advice)</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Advice for sufferers — 给抑郁患者提供建议">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 5 (Advice)</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Advice for family &amp; friends — 给抑郁患者的家属朋友提供建议">点击查看</span></td>
+  </tr>
+  <tr>
+    <td class="col-type">Conclusion</td>
+    <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Summary + call for action — 总结核心内容+呼吁行动">点击查看</span></td>
+  </tr>
+</table>
+</section>
+
+<!-- ===== S7: 开头段 ===== -->
+<section class="slide" data-title="✍️ 开头段">
+<p class="sec-label">Part 5 · Opening Paragraph</p>
+<h2 class="slide-h2">✍️ 开头段 Opening Paragraph</h2>
+
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 5.1：哪种开头方式更具吸引力？</span></div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px" data-ans-id="s7-ans1">
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)" style="font-size:17px">A. Mental health has become an increasingly important issue among teenagers. Despite growing public awareness, many people still misunderstand depression ...</button>
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)" style="font-size:17px">B. Have you ever noticed a friend becoming unusually quiet? Have you ever wondered whether they were simply stressed or facing something more serious? These questions became very real to me when ...</button>
+</div>
+<div id="s7-ans1" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;line-height:1.8">✅ <b>B</b> — Article 的开头采用提问或情景描述的方式，会更加吸引读者注意力！</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">✍️</span><span class="think-text">Task 5A: 根据提示补全开头段</span></div>
+
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-top:14px;font-size:20px;line-height:2">
+  <b>Depression: More Than Just Feeling Sad</b><br><br>
+  Have you ever felt overwhelmed by stress or noticed a friend becoming unusually quiet and withdrawn? Have you ever wondered whether they were simply stressed or facing something more serious? These questions became very real to me when one of my close friends suffered from depression. <span class="cloze" onclick="revealCloze(this)" data-answer="His experience taught me valuable lessons about mental health and the importance of supporting those who are struggling.">______</span>
+  <div style="font-size:16px;color:var(--text-3);margin-top:4px">（提示：通过他的经历，我学到了关于心理健康的知识，也明白了给予理解和支持的重要性）</div>
+</div>
+</section>
+
+<!-- ===== S8: 开头段结构与句式 ===== -->
+<section class="slide" data-title="📐 开头段结构与句式">
+<p class="sec-label">Part 5 · Opening Structure &amp; Patterns</p>
+<h2 class="slide-h2">📐 Article 开头段模版</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击查看每层的句式资源 👇</p>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s8-structure');a.classList.toggle('show')" style="margin-bottom:16px">📖 查看结构与句式模版</button>
+<div id="s8-structure" class="ce-en" style="display:none">
+  <table class="rule-table">
+    <tr><th style="width:30%">层次</th><th>句式</th></tr>
+    <tr><td class="col-type">第一句<br>提问或情景描述<br>吸引读者注意力</td>
+    <td class="col-example">
+      <b>提问式：</b><br>
+      1. Have you ever ...?<br>
+      2. Have you ever wondered why ...?<br>
+      3. How would you feel if ...?<br><br>
+      <b>情景式：</b><br>
+      1. Imagine being ...<br>
+      2. Imagine a situation where ...<br>
+      3. Picture yourself ...
+    </td></tr>
+    <tr><td class="col-type">第二句<br>引出主题</td>
+    <td class="col-example">
+      <b>提问式：</b><br>
+      1. These questions became very real to me when ...<br>
+      2. I never gave these questions much thought until ...<br><br>
+      <b>情景式：</b><br>
+      1. This was exactly what happened to ...<br>
+      2. For some people, this is not imagination but reality.
+    </td></tr>
+    <tr><td class="col-type">第三句<br>点明主旨</td>
+    <td class="col-example">
+      1. His/Her/This story taught me valuable lessons about ...<br>
+      2. This experience reminds us that ...
+    </td></tr>
+  </table>
+</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">✍️</span><span class="think-text">Task 5B: 试用情景式的写法，改写本题开头段: Have you ever felt overwhelmed by stress or noticed a friend becoming unusually quiet and withdrawn? Have you ever wondered whether they were simply stressed or facing something more serious? These questions became very real to me when one of my close friends suffered from depression.</span></div>
+
+<div class="student-input-wrap mt-m">
+  <textarea class="student-ta" id="ta5b" placeholder="用 Imagine being / Imagine a situation where 开头，写2个情景&#10;然后用 This was exactly what happened to 引出主题&#10;最后用 His experience taught me ... 点明主旨" style="min-height:120px"></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta5b','ans5b')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans5b"></div>
+  <button class="edit-btn" id="ta5b-eb" onclick="continueEdit('ta5b','ans5b',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案</button>
+<div class="ce-en">Imagine waking up every morning feeling exhausted, hopeless and unable to enjoy the things you once loved. Imagine trying to hide these feelings from everyone around you. This was exactly what happened to one of my close friends. His experience taught me valuable lessons about mental health and the importance of supporting those who are struggling.</div>
+</section>
+
+<!-- ===== S9: 主体段1 背景 ===== -->
+<section class="slide" data-title="✍️ 主体段1 — 背景">
+<p class="sec-label">Part 6 · Body Paragraph 1 — Situation</p>
+<h2 class="slide-h2">✍️ 主体段1：背景 Situation</h2>
+
+<div class="think-prompt"><span class="think-icon">✍️</span><span class="think-text">Task 6A: 根据提示补全主体段1</span></div>
+
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-top:14px;font-size:20px;line-height:2">
+  My friend, Jason, was once an <span class="cloze" onclick="revealCloze(this)" data-answer="energetic and cheerful">______</span> (活力充沛、性格开朗的) student who enjoyed participating in school activities. He was always eager to join class events, spend time with friends and take on new challenges with enthusiasm. <span class="cloze" onclick="revealCloze(this)" data-answer="However, everything began to change when he entered senior secondary school.">______</span>（然而，一切在他进入高中后开始发生变化） The pressure of examinations, high expectations from his parents and a growing lack of confidence gradually took a toll on him.
+</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">思考 6.1：第二句针对"活力充沛、性格开朗"给到了哪些细节描述？</span></div>
+<div class="student-input-wrap">
+  <textarea class="student-ta" id="ta61" placeholder="写下你的观察..."></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta61','ans61')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans61"></div>
+  <button class="edit-btn" id="ta61-eb" onclick="continueEdit('ta61','ans61',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-s" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">join class events, spend time with friends and take on new challenges with enthusiasm</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">思考 6.2：第四句针对"发生变化"给到了哪些细节描述？</span></div>
+<div class="student-input-wrap">
+  <textarea class="student-ta" id="ta62" placeholder="写下你的观察..."></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta62','ans62')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans62"></div>
+  <button class="edit-btn" id="ta62-eb" onclick="continueEdit('ta62','ans62',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-s" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">the pressure of examinations, high expectations from his parents and a growing lack of confidence</div>
+
+<div class="notes-box mt-l">
+  <b>📝 写作要点：</b>记叙一件事时，可以使用<b>描述性语言</b>来增加画面感，提升故事的生动性。第1、3句只是直接告诉读者人物的状态，第2、4句则是通过行为和变化的细节描述来将这些状态具体地呈现出来。
+</div>
+</section>
+
+<!-- ===== S10: 描述性语言库 ===== -->
+<section class="slide" data-title="🧠 描述性语言库">
+<p class="sec-label">Language Bank · Descriptive Language</p>
+<h2 class="slide-h2">🧠 描述性语言库</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">点击卡片翻开 → 点击空白处查看挖空的英文表达 👇</p>
+<p style="font-size:15px;color:var(--text-3);margin-bottom:16px">根据中文提示，回忆关键英文单词，再点击空白验证</p>
+
+<div class="flip-grid g2">
+  <!-- Card 1: Behaviour -->
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">Behaviour 行为描写</div><div class="flip-hint">4 个挖空表达</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="line-height:2.6;font-size:19px">
+          <span style="font-size:14px;color:var(--text-3);display:block;margin-bottom:6px">💡 点击 ______ 揭晓答案</span>
+          <span class="cloze" data-answer="stop" onclick="event.stopPropagation();revealCloze(this)">______</span> talking to his friends 不再和朋友交流<br>
+          <span class="cloze" data-answer="avoid" onclick="event.stopPropagation();revealCloze(this)">______</span> school activities 避免参加学校活动<br>
+          spend most time <span class="cloze" data-answer="alone" onclick="event.stopPropagation();revealCloze(this)">______</span> 大部分时间独处<br>
+          <span class="cloze" data-answer="lose" onclick="event.stopPropagation();revealCloze(this)">______</span> interest in hobbies 对爱好失去兴趣
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card 2: Feelings -->
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">Feelings 感受描写</div><div class="flip-hint">4 个挖空表达</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="line-height:2.6;font-size:19px">
+          <span style="font-size:14px;color:var(--text-3);display:block;margin-bottom:6px">💡 点击 ______ 揭晓答案</span>
+          feel under <span class="cloze" data-answer="tremendous" onclick="event.stopPropagation();revealCloze(this)">______</span> pressure 承受巨大压力<br>
+          feel <span class="cloze" data-answer="overwhelmed" onclick="event.stopPropagation();revealCloze(this)">______</span> by academic pressure 被学业压力压得喘不过气<br>
+          feel <span class="cloze" data-answer="lonely" onclick="event.stopPropagation();revealCloze(this)">______</span> even when surrounded by friends 即使身边有朋友也感到孤独<br>
+          feel <span class="cloze" data-answer="trapped" onclick="event.stopPropagation();revealCloze(this)">______</span> by negative thoughts 被消极想法困住
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Card 3: Changes -->
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">Changes 变化描写</div><div class="flip-hint">4 个挖空表达</div></div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="line-height:2.6;font-size:19px">
+          <span style="font-size:14px;color:var(--text-3);display:block;margin-bottom:6px">💡 点击 ______ 揭晓答案</span>
+          <span class="cloze" data-answer="used to" onclick="event.stopPropagation();revealCloze(this)">______</span> do sth. 过去常常做某事<br>
+          become increasingly <span class="cloze" data-answer="quiet and withdrawn" onclick="event.stopPropagation();revealCloze(this)">______</span> 变得越来越沉默寡言<br>
+          gradually <span class="cloze" data-answer="regain" onclick="event.stopPropagation();revealCloze(this)">______</span> confidence 逐渐重拾信心<br>
+          <span class="cloze" data-answer="return to" onclick="event.stopPropagation();revealCloze(this)">______</span> one's normal routine 恢复正常生活
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== S11: 主体段2 问题 ===== -->
+<section class="slide" data-title="✍️ 主体段2 — 问题">
+<p class="sec-label">Part 7 · Body Paragraph 2 — Problem</p>
+<h2 class="slide-h2">✍️ 主体段2：问题 Problem</h2>
+
+<div class="think-prompt"><span class="think-icon">✍️</span><span class="think-text">Task 7A: 补齐句子，并将句子排序形成合乎逻辑的段落</span></div>
+
+<p style="font-size:18px;color:var(--text-2);margin:12px 0">先填写空格，再思考这5句话的正确顺序：</p>
+
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-top:10px;font-size:18px;line-height:2">
+  <div style="margin-bottom:10px"><b>Sentence A:</b> Like many teenagers, Jason believed that he could handle the problem on his own and did not seek help.</div>
+  <div style="margin-bottom:10px"><b>Sentence B:</b> <span class="cloze" onclick="revealCloze(this)" data-answer="As time went by">______</span> (慢慢地/随着时间的推移), these negative emotions began to affect his behaviour. He <span class="cloze" onclick="revealCloze(this)" data-answer="stopped joining extracurricular activities">______</span> (不再参加课外活动), rarely met up with friends and gradually <span class="cloze" onclick="revealCloze(this)" data-answer="lost interest in the hobbies">______</span> (对爱好失去兴趣) he once enjoyed.</div>
+  <div style="margin-bottom:10px"><b>Sentence C:</b> <span class="cloze" onclick="revealCloze(this)" data-answer="At first">______</span> (起初), Jason often seemed unusually down and worried.</div>
+  <div style="margin-bottom:10px"><b>Sentence D:</b> Unfortunately, his condition continued to worsen. His <span class="cloze" onclick="revealCloze(this)" data-answer="academic performance declined">______</span> (学习成绩下降) significantly, and he increasingly isolated himself from those around him.</div>
+  <div style="margin-bottom:10px"><b>Sentence E:</b> <span class="cloze" onclick="revealCloze(this)" data-answer="Before long">______</span> (不久之后), his condition started to affect him physically as well. He often <span class="cloze" onclick="revealCloze(this)" data-answer="fell exhausted">______</span> (感到疲惫不堪), had difficulty concentrating in class and <span class="cloze" onclick="revealCloze(this)" data-answer="struggled to sleep at night">______</span> (晚上难以入睡).</div>
+</div>
+
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">正确顺序是什么？</span></div>
+<div class="quiz-card" data-correct="2" style="margin-top:10px">
+  <div class="quiz-q">这5句话的正确排序是？</div>
+  <div class="quiz-opts" style="flex-direction:column;gap:8px">
+    <button class="quiz-opt" onclick="checkQuiz(this)" style="text-align:left">A → B → C → D → E</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)" style="text-align:left">C → D → E → A → B</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)" style="text-align:left">C → B → E → A → D</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)" style="text-align:left">B → C → E → A → D</button>
+  </div>
+  <div class="quiz-ans">✅ <b>C → B → E → A → D</b><br>时间顺序：At first → As time went by → Before long → (不求助) → Unfortunately (恶化)</div>
+</div>
+</section>
+
+<!-- ===== S12: 时间推进标记 ===== -->
+<section class="slide" data-title="📐 时间推进标记">
+<p class="sec-label">Part 7 · Sequencing Expressions</p>
+<h2 class="slide-h2">📐 时间推进标记</h2>
+
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 7.1：主人公症状分成几个阶段？有哪些标记词？</span></div>
+<div class="student-input-wrap">
+  <textarea class="student-ta" id="ta71" placeholder="写出你观察到的阶段和对应的标记词..."></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta71','ans71')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans71"></div>
+  <button class="edit-btn" id="ta71-eb" onclick="continueEdit('ta71','ans71',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-s" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">4个阶段——At first ... As time went by ... Before long ... Unfortunately ...</div>
+
+<div class="notes-box mt-m">
+  <b>📝 写作要点：</b>记叙一件事时，变化描述可以使叙事更加引人入胜。而这些变化描述，可以使用<b>时间标记词</b>来串联，增强叙事逻辑。
+</div>
+
+<table class="rule-table mt-m">
+  <tr><th style="width:25%">阶段</th><th>时间推进标记</th></tr>
+  <tr><td class="col-type">初始阶段</td><td class="col-example">At first, ... / In the beginning, ... / Initially, ... / At the early stage, ...</td></tr>
+  <tr><td class="col-type">发展阶段</td><td class="col-example">Gradually, ... / Over time, ... / As time went on, ... / Before long, ...</td></tr>
+  <tr><td class="col-type">转折阶段</td><td class="col-example">Fortunately/Unfortunately, ... / A turning point came when ... / It was not until ... that ... / However, things began to change when ...</td></tr>
+  <tr><td class="col-type">结尾阶段</td><td class="col-example">In the end, ... / Eventually, ... / As a result, ... / Today, ...</td></tr>
+</table>
+</section>
+
+<!-- ===== S13: 主体段3 行动+结果 ===== -->
+<section class="slide" data-title="✍️ 主体段3 — 行动+结果">
+<p class="sec-label">Part 8 · Body Paragraph 3 — Action + Result</p>
+<h2 class="slide-h2">✍️ 主体段3：行动+结果</h2>
+
+<div class="think-prompt"><span class="think-icon">📝</span><span class="think-text">Homework: 完成主体段3</span></div>
+
+<p style="font-size:20px;color:var(--text-2);margin:12px 0">写作提示：点击查看 👇</p>
+
+<button class="ce-btn hint-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">💡 写作提示</button>
+<div class="ce-hints">
+  <span>个人行动：咨询心理医生、规律运动、多和家人朋友倾诉</span>
+  <span>他人支持：朋友/家人/老师时常鼓励</span>
+  <span>结果：逐渐战胜抑郁/更加积极或开心</span>
+  <span>使用合适的时间推进标记词串联以上思路</span>
+</div>
+
+<div class="student-input-wrap mt-m">
+  <textarea class="student-ta" id="ta8hw" placeholder="写出你的主体段3...&#10;&#10;提示：Jason 意识到自己无法独自面对 → 寻求专业帮助 → 规律运动 → 向家人朋友倾诉 → 他人的支持 → 逐渐康复" style="min-height:160px"></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta8hw','ans8hw')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans8hw"></div>
+  <button class="edit-btn" id="ta8hw-eb" onclick="continueEdit('ta8hw','ans8hw',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案</button>
+<div class="ce-en">Jason realised that he could not overcome the problem on his own and decided to seek professional help. He began attending counselling sessions, where he learned effective ways to manage stress and cope with negative emotions. He also started exercising regularly and learned to open up about his feelings instead of keeping everything bottled up inside. Throughout this difficult journey, his family, teachers and friends stood by his side and offered continuous support and encouragement whenever he needed it. Although recovery was not immediate, their support, together with his own efforts, helped him gradually regain his confidence and optimism. Today, he is much happier and more positive about life.</div>
+</section>
+
+<!-- ===== S14: 主体段4 给患者建议 ===== -->
+<section class="slide" data-title="✍️ 主体段4 — 给患者建议">
+<p class="sec-label">Part 9 · Body Paragraph 4 — Advice for Sufferers</p>
+<h2 class="slide-h2">✍️ 主体段4：给患者建议</h2>
+
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 9.1：Body 3 中 Jason 症状经历了哪几方面？</span></div>
+<button class="reveal-btn mt-s" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">情绪症状 negative emotions → 行为症状 affect his behavior → 生理症状 affect him physically</div>
+
+<div class="think-prompt mt-m"><span class="think-icon">🤔</span><span class="think-text">思考 9.2：针对这几方面，分别可以给到什么应对方案？</span></div>
+<div class="student-input-wrap">
+  <textarea class="student-ta" id="ta92" placeholder="情绪症状 → ？&#10;行为症状 → ？&#10;生理症状 → ？"></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta92','ans92')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans92"></div>
+  <button class="edit-btn" id="ta92-eb" onclick="continueEdit('ta92','ans92',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-s" onclick="this.nextElementSibling.classList.toggle('show')">📖 参考答案</button>
+<div class="ce-en">情绪症状 → 和朋友/家人倾诉<br>行为症状 → 保持日常的兴趣爱好<br>生理症状 → 需要看心理医生</div>
+
+<div class="notes-box mt-m">
+  <b>📝 写作要点：</b>给出建议/解决方案时，可以针对前面提到的问题（即 Body 3）来展开。
+</div>
+
+<div class="think-prompt mt-m"><span class="think-icon">✍️</span><span class="think-text">Task 9A: 根据提示完成本段</span></div>
+
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-top:14px;font-size:20px;line-height:2">
+  Jason's experience reminds us that depression can affect anyone. If you or someone you know is struggling with depression, do not ignore the warning signs. <span class="cloze" onclick="revealCloze(this)" data-answer="When feelings of hopelessness, anxiety or self-doubt arise">______</span>（当绝望感、焦虑或自我怀疑出现时）, talk to trusted friends or family members instead of keeping everything to yourself. <span class="cloze" onclick="revealCloze(this)" data-answer="If you begin to withdraw from social activities or lose interest in your hobbies">______</span>（如果你开始远离社交活动或对自己的爱好失去兴趣）, try to stay connected with others and gradually return to your normal routines. Furthermore, <span class="cloze" onclick="revealCloze(this)" data-answer="if depression affects your physical well-being through fatigue, poor concentration or sleep problems">______</span>（如果抑郁通过疲劳、注意力不集中或睡眠问题影响了你的身体健康）, it is important to seek professional help from a psychologist or counsellor. At the same time, maintaining a healthy lifestyle through regular exercise can support both physical and mental recovery. By taking these steps early, people can prevent their condition from worsening and reduce its impact on their studies and daily lives.
+</div>
+</section>
+
+<!-- ===== S15: 主体段5 给家属朋友建议 ===== -->
+<section class="slide" data-title="✍️ 主体段5 — 给家属朋友建议">
+<p class="sec-label">Part 10 · Body Paragraph 5 — Advice for Family &amp; Friends</p>
+<h2 class="slide-h2">✍️ 主体段5：给家属朋友的建议</h2>
+
+<div class="think-prompt"><span class="think-icon">📝</span><span class="think-text">Homework: 完成主体段5</span></div>
+
+<button class="ce-btn hint-btn mt-m" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">💡 写作提示</button>
+<div class="ce-hints">
+  <span>情绪症状 → 倾听与理解，避免批判</span>
+  <span>行为症状 → 主动邀约，给予鼓励</span>
+  <span>生理症状 → 鼓励他们寻求专业医生的帮助</span>
+  <span>参考句式：When ..., ... / If ..., ...</span>
+</div>
+
+<div class="student-input-wrap mt-m">
+  <textarea class="student-ta" id="ta10hw" placeholder="写出你的主体段5...&#10;&#10;提示：If you have a friend who is suffering from depression...&#10;When they express negative emotions...&#10;If they begin to withdraw...&#10;When depression starts to affect their physical well-being..." style="min-height:140px"></textarea>
+  <button class="submit-btn" onclick="submitAnswer(this,'ta10hw','ans10hw')">✏️ 提交我的回答</button>
+  <div class="student-answer" id="ans10hw"></div>
+  <button class="edit-btn" id="ta10hw-eb" onclick="continueEdit('ta10hw','ans10hw',this.previousElementSibling.previousElementSibling)" style="display:none">✏️ 继续输入</button>
+</div>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案</button>
+<div class="ce-en">If you have a friend who is suffering from depression, remember that your support can make a real difference. When they express negative emotions, listen patiently and show empathy rather than judgement. If they begin to withdraw from social activities or avoid friends, stay connected with them and encourage them to take part in daily activities. When depression starts to affect their physical well-being, encourage them to seek professional help. Your care and support can help them take the first step towards recovery.</div>
+</section>
+
+<!-- ===== S16: 结尾段 ===== -->
+<section class="slide" data-title="✍️ 结尾段">
+<p class="sec-label">Part 11 · Ending Paragraph</p>
+<h2 class="slide-h2">✍️ 结尾段 Conclusion</h2>
+
+<div class="think-prompt"><span class="think-icon">✍️</span><span class="think-text">Task 11A: 根据提示完成结尾段</span></div>
+
+<div style="background:#fafafa;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-top:14px;font-size:20px;line-height:2">
+  Jason's story shows us that depression is far more than simply feeling sad. It is a serious mental health condition that can affect many aspects of a person's life. This experience taught me the importance of recognising the warning signs and offering support to those who are struggling. Let us pay closer attention to the people around us and remember that <span class="cloze" onclick="revealCloze(this)" data-answer="a simple conversation, a listening ear or a small act of kindness may make a life-changing difference to someone battling depression.">______</span>
+  <div style="font-size:16px;color:var(--text-3);margin-top:4px">（提示：一次简单的交谈、一双倾听的耳朵，或是一个微小的善举，都可能为正在与抑郁症抗争的人带来改变人生的影响）</div>
+</div>
+
+<div class="notes-box mt-l">
+  <b>📝 结尾段思路：</b><br>
+  1️⃣ 总结故事<br>
+  2️⃣ 点明主旨<br>
+  3️⃣ 呼吁行动
+</div>
+</section>
+
+<!-- ===== S17: 作业 ===== -->
+<section class="slide" data-title="📝 作业">
+<p class="sec-label">Part 11 · Homework</p>
+<h2 class="slide-h2">📝 作业</h2>
+
+<div class="hw-card">
+  <h4>1. 完成主体段3</h4>
+  <p>见 Part 8 — Action + Result。参考写作提示，用时间标记词串联思路。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 完成主体段5</h4>
+  <p>见 Part 10 — Advice for family &amp; friends。用 When ... / If ... 句式，针对情绪、行为、生理症状给出建议。</p>
+</div>
+</section>
+
+<!-- ===== S18: 总结 ===== -->
+<section class="slide" data-title="📋 总结">
+<p class="sec-label">Part 12 · Summary</p>
+<h2 class="slide-h2">📋 知识清单 Check Your Learning</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:20px">对照以下清单，回顾今天掌握的核心技能：</p>
+
+<div class="card accent" style="margin-bottom:16px">
+  <h4>● 文体认知 Genre Awareness</h4>
+  <p>Article 的基本特点：引人入胜的开头（情景式/提问式）、SPAR 叙事法、描述性语言（情绪描述/行为描述/变化描述）</p>
+</div>
+
+<div class="card accent" style="margin-bottom:16px">
+  <h4>● 文章结构 Overall Structure</h4>
+  <p>Opening → Situation → Problem → Action+Result → Advice → Conclusion</p>
+</div>
+
+<div class="card accent" style="margin-bottom:16px">
+  <h4>● 段落结构 Body Paragraph Structure</h4>
+  <p>运用时间标记串联情节：At first ... As time went by ... Before long ... Unfortunately ...</p>
+</div>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s18-exp');a.classList.toggle('show')" style="margin-top:10px">📖 查看常用表达</button>
+<div id="s18-exp" class="ce-en" style="display:none">
+  <b>开头段句式：</b><br>
+  1. Have you ever ...?<br>
+  2. Have you ever wondered why ...?<br>
+  3. How would you feel if ...?<br>
+  4. Imagine being ...<br>
+  5. Imagine a situation where ...<br>
+  6. Picture yourself ...<br><br>
+  <b>引出主题句式：</b><br>
+  7. These questions became very real to me when ...<br>
+  8. I never gave these questions much thought until ...<br>
+  9. This was exactly what happened to ...<br>
+  10. For some people, this is not imagination but reality.<br><br>
+  <b>点明主旨句式：</b><br>
+  11. His/Her/This story taught me valuable lessons about ...<br>
+  12. This experience reminds us that ...
+</div>
+</section>
+
+<!-- ===== S19: 范文附录 ===== -->
+<section class="slide" data-title="📝 范文附录">
+<p class="sec-label">Appendix · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Depression: More Than Just Feeling Sad</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">Task: Write an article for the school magazine about your friend's depression and how he/she overcame it. Give advice to others on how to help fight depression.</p>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:2">
+  <p style="margin-bottom:16px"><b>Depression: More Than Just Feeling Sad</b></p>
+  <p style="margin-bottom:14px">Have you ever felt overwhelmed by stress or noticed a friend becoming unusually quiet and withdrawn? Have you ever wondered whether they were simply stressed or facing something more serious? These questions became very real to me when one of my close friends suffered from depression. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">His experience taught me valuable lessons about mental health and the importance of supporting those who are struggling.</span></p>
+  <p style="margin-bottom:14px">My friend, Jason, was once an <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">energetic and cheerful</span> student who enjoyed participating in school activities. He was always eager to join class events, spend time with friends and take on new challenges with enthusiasm. However, everything began to change when he entered senior secondary school. The pressure of examinations, high expectations from his parents and a growing lack of confidence gradually took a toll on him.</p>
+  <p style="margin-bottom:14px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">At first</span>, Jason often seemed unusually down and worried. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">As time went by</span>, these negative emotions began to affect his behaviour. He stopped joining extracurricular activities, rarely met up with friends and gradually lost interest in the hobbies he once enjoyed. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Before long</span>, his condition started to affect him physically as well. He often fell exhausted, had difficulty concentrating in class and struggled to sleep at night. Like many teenagers, Jason believed that he could handle the problem on his own and did not seek help. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Unfortunately</span>, his condition continued to worsen. His academic performance declined significantly, and he increasingly isolated himself from those around him.</p>
+  <p style="margin-bottom:14px">Jason realised that he could not overcome the problem on his own and decided to seek professional help. He began attending counselling sessions, where he learned effective ways to manage stress and cope with negative emotions. He also started exercising regularly and learned to open up about his feelings instead of keeping everything bottled up inside. Throughout this difficult journey, his family, teachers and friends stood by his side and offered continuous support and encouragement whenever he needed it. Although recovery was not immediate, their support, together with his own efforts, helped him gradually regain his confidence and optimism. Today, he is much happier and more positive about life.</p>
+  <p style="margin-bottom:14px">Jason's experience reminds us that depression can affect anyone. If you or someone you know is struggling with depression, do not ignore the warning signs. When feelings of hopelessness, anxiety or self-doubt arise, talk to trusted friends or family members instead of keeping everything to yourself. If you begin to withdraw from social activities or lose interest in your hobbies, try to stay connected with others and gradually return to your normal routines. Furthermore, if depression affects your physical well-being through fatigue, poor concentration or sleep problems, it is important to seek professional help from a psychologist or counsellor. At the same time, maintaining a healthy lifestyle through regular exercise can support both physical and mental recovery. By taking these steps early, people can prevent their condition from worsening and reduce its impact on their studies and daily lives.</p>
+  <p style="margin-bottom:14px">If you have a friend who is suffering from depression, remember that your support can make a real difference. When they express negative emotions, listen patiently and show empathy rather than judgement. If they begin to withdraw from social activities or avoid friends, stay connected with them and encourage them to take part in daily activities. When depression starts to affect their physical well-being, encourage them to seek professional help. Your care and support can help them take the first step towards recovery.</p>
+  <p>Jason's story shows us that depression is far more than simply feeling sad. It is a serious mental health condition that can affect many aspects of a person's life. This experience taught me the importance of recognising the warning signs and offering support to those who are struggling. Let us pay closer attention to the people around us and remember that a simple conversation, a listening ear or a small act of kindness may make a life-changing difference to someone battling depression.</p>
+</div>
+</section>
+
+<!-- ===== S20: 句子翻译练习 Introduction ===== -->
+<section class="slide" data-title="✏️ 翻译练习·Intro">
+<p class="sec-label">Part 13 · Sentence Translation Practice</p>
+<h2 class="slide-h2">✏️ 句子翻译练习</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">范文：<b>Extra-curricular Activities: A Gain or Drain on Students' Lives?</b></p>
+<div class="notes-box mt-m" style="font-size:18px;line-height:1.8">
+  <b>📖 练习说明</b><br>
+  ● 根据中文句子和词伙提示，将句子翻译成英文<br>
+  ● 先点击<b>「💡 词伙提示」</b>查看关键词汇<br>
+  ● 在输入框中写下你的翻译<br>
+  ● 点击<b>「✅ 提交」</b>后可查看参考答案<br>
+  ● 共 19 句，分 6 组，按段落难度递进
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)"><h4>Introduction</h4><p>第 1–5 句</p></div>
+  <div class="card accent" style="border-left:4px solid #E65100"><h4>Body 1 & 2</h4><p>第 6–10 句</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-blue)"><h4>Body 3 & 4</h4><p>第 11–15 句</p></div>
+  <div class="card accent" style="border-left:4px solid #6A1B9A"><h4>Conclusion</h4><p>第 16–19 句</p></div>
+  <div class="card accent" style="border-left:4px solid #00695C"><h4>交互方式</h4><p>词伙提示 → 输入 → 揭晓</p></div>
+  <div class="card accent" style="border-left:4px solid #BF360C"><h4>目标</h4><p>掌握 argumentative 句式</p></div>
+</div>
+</section>
+
+<!-- ===== S21: 翻译练习 Introduction (1-5) ===== -->
+<section class="slide" data-title="✏️ 翻译·Introduction">
+<p class="sec-label">Part 13-A · Introduction (1–5)</p>
+<h2 class="slide-h2">✏️ Introduction 句子翻译</h2>
+
+<div class="ce-item">
+  <div class="ce-cn">1. 人们普遍认为，在香港做一名中学生是很艰难的。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>It is generally accepted that 普遍认为</span>
+    <span>secondary school student 中学生</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans1" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans1','transAns1')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns1">It is generally accepted that being a secondary school student in Hong Kong is tough.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">2. 除了完整的在校日之外，还有家庭作业、项目和考试复习要在课外完成，而且大多数学生平均参加四到五个课外活动。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>in addition to 除了</span>
+    <span>a full school day 完整的在校日</span>
+    <span>homework assignments 家庭作业</span>
+    <span>extra-curricular activities 课外活动</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans2" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans2','transAns2')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns2">In addition to a full school day, there are homework assignments, projects and exam studies to complete out of school, plus most students do an average of four to five extra-curricular activities.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">3. 因此，学生们几乎没有空闲时间。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>as a result 因此</span>
+    <span>downtime 空闲时间</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans3" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans3','transAns3')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns3">As a result, students have very little downtime.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">4. 一种解决方案是鼓励学生减少课外活动，但许多人认为课外活动是必不可少的。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>cut back on 减少</span>
+    <span>argue that 认为</span>
+    <span>essential 必不可少的</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans4" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans4','transAns4')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns4">One solution would be to encourage students to cut back on extra-curricular activities, but many people argue that extra-curricular activities are essential.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">5. 在本文中，我将讨论这个问题的利与弊。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>the pros and cons 利与弊</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans5" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans5','transAns5')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns5">In this essay, I shall discuss the pros and cons of the issue.</div>
+</div>
+</section>
+
+<!-- ===== S22: 翻译练习 Body 1 & 2 (6-10) ===== -->
+<section class="slide" data-title="✏️ 翻译·Body 1&2">
+<p class="sec-label">Part 13-B · Body 1 & 2 (6–10)</p>
+<h2 class="slide-h2">✏️ Body 1 & 2 句子翻译</h2>
+
+<div class="ce-item">
+  <div class="ce-cn">6. 课外活动的一个主要优势是它们能让年轻人培养广泛的技能。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>one major advantage of … is 一个主要优势是</span>
+    <span>the breadth of skills 广泛的技能</span>
+    <span>allow sb. to develop 让某人培养</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans6" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans6','transAns6')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns6">One major advantage of extra-curricular activities is the breadth of skills that they allow a young person to develop.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">7. 由于上课时间有限，一般的学校课程往往侧重于较学术的科目，几乎没有空间让学生专攻音乐、体育和戏剧等活动。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>with a limited amount of time 时间有限</span>
+    <span>tend to focus on 往往侧重于</span>
+    <span>academic subjects 学术科目</span>
+    <span>leave little room for 几乎没有空间</span>
+    <span>specialise in 专攻</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans7" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans7','transAns7')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns7">With a limited amount of time for lessons, the average school curriculum tends to focus on the more academic subjects, leaving little room for students to specialise in activities such as music, sport and drama.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">8. 通过课外活动，学生可以真正发展他们在这些领域的能力，甚至可能继续从事相关专业工作。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>go on to pursue 继续追求</span>
+    <span>professionally 专业地/从事专业工作</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans8" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans8','transAns8')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns8">Through extra-curricular activities, students can really develop their abilities in such areas and may even go on to pursue them professionally.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">9. 另一个优点是能够在非学术科目上展示成就，这通常对获得顶尖大学的录取至关重要。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>show achievement 展示成就</span>
+    <span>non-academic subjects 非学术科目</span>
+    <span>critical to 对……至关重要</span>
+    <span>secure a place 获得录取</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans9" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans9','transAns9')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns9">Another advantage is that being able to show achievement in non-academic subjects is often critical to securing a place at a top university.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">10. 学生参加的课外活动不仅表明了该学生的兴趣，还展示了其他技能，例如团队合作能力或领导能力。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>engage in 参加</span>
+    <span>an important indicator of ……的重要指标</span>
+    <span>not only … but also 不仅……而且</span>
+    <span>possess 拥有</span>
+    <span>teamwork 团队合作</span>
+    <span>leadership 领导力</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans10" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans10','transAns10')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns10">The extra-curricular activities that a student engages in are an important indicator of not only what that student is interested in, but also what other skills he or she possesses: for example, teamwork or leadership skills.</div>
+</div>
+</section>
+
+<!-- ===== S23: 翻译练习 Body 3 & 4 (11-15) ===== -->
+<section class="slide" data-title="✏️ 翻译·Body 3&4">
+<p class="sec-label">Part 13-C · Body 3 & 4 (11–15)</p>
+<h2 class="slide-h2">✏️ Body 3 & 4 句子翻译</h2>
+
+<div class="ce-item">
+  <div class="ce-cn">11. 然而，课外活动也有缺点。其中一个是活动的选择并不总是由学生自己决定的。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>disadvantages 缺点</span>
+    <span>the selection of activities 活动的选择</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans11" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans11','transAns11')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns11">There are disadvantages to extra-curricular activities though. One is that the selection of activities is not always the student's choice.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">12. 通常，父母会规定孩子课外应该做什么。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>dictate 规定/支配</span>
+    <span>out of school 课外</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans12" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans12','transAns12')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns12">Often parents dictate what their children should do out of school.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">13. 如果这不符合学生的兴趣，可能会导致他们与父母产生冲突，从经历中获益甚微，甚至感到痛苦或抑郁。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>reflect one's interests 符合某人的兴趣</span>
+    <span>lead to 导致</span>
+    <span>have conflict with 与……产生冲突</span>
+    <span>miserable 痛苦的</span>
+    <span>depressed 抑郁的</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans13" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans13','transAns13')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns13">If this does not reflect students' interests, it can lead to them having conflict with their parents, not gaining very much from the experience, and feeling miserable or even depressed.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">14. 另一个缺点是，随着学生升入高年级，课业和考试准备的要求不断升级，这意味着他们需要在学习上花更多时间。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>reach the higher forms 升入高年级</span>
+    <span>demands 要求</span>
+    <span>escalate 升级/增加</span>
+    <span>exam preparation 考试准备</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans14" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans14','transAns14')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns14">Another disadvantage is that as students reach the higher forms at school, the demands of schoolwork and exam preparation escalate, meaning that they need to spend more time on their studies.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">15. 如果他们有满满的课外活动安排，这会变得非常困难。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>a full schedule 满满的安排</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans15" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans15','transAns15')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns15">This can be very difficult if they have a full extra-curricular schedule.</div>
+</div>
+</section>
+
+<!-- ===== S24: 翻译练习 Conclusion (16-19) ===== -->
+<section class="slide" data-title="✏️ 翻译·Conclusion">
+<p class="sec-label">Part 13-D · Conclusion (16–19)</p>
+<h2 class="slide-h2">✏️ Conclusion 句子翻译</h2>
+
+<div class="ce-item">
+  <div class="ce-cn">16. 总而言之，课外活动有明显的优点和缺点。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>in summary 总而言之</span>
+    <span>advantages and disadvantages 优点和缺点</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans16" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans16','transAns16')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns16">In summary, there are clear advantages and disadvantages to extra-curricular activities.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">17. 好处是，它们让学生培养特殊技能，并有助于获得大学录取。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>in one's favor 在……方面有利</span>
+    <span>secure a place at university 获得大学录取</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans17" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans17','transAns17')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns17">In their favour, they allow students to develop special skills and can help secure a place at university.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">18. 不利的是，学生本人可能并不认可这些活动，而且可能使他们分心而影响学业。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>on the downside 不利的是</span>
+    <span>appreciate 欣赏/认可</span>
+    <span>distract sb. from 使某人分心而影响</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans18" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans18','transAns18')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns18">On the downside, they may not be appreciated by the students themselves, and may distract them from their studies.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">19. 然而，总的来说，我支持课外活动，只要学生对自己做什么以及花多少时间有发言权。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints">
+    <span>on balance 总的来说</span>
+    <span>in favour of 支持</span>
+    <span>as long as 只要</span>
+    <span>have a say 有发言权</span>
+  </div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="trans19" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'trans19','transAns19')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="transAns19">On balance, however, I am in favour of extra-curricular activities as long as students have a say in what they do and how much time they spend doing it.</div>
+</div>
+
+<div class="notes-box mt-l" style="font-size:16px">
+  🎯 <b>恭喜完成所有翻译练习！</b>回顾你学到的 argumentative 句式：It is generally accepted that… / One major advantage of… is… / In summary… / On balance, however…
+</div>
+</section>
+
+<!-- ===== S25: 撒花结束 ===== -->
+<section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 4！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：审题分析 → SPAR 叙事法 → 提问式/情景式开头 → 描述性语言 → 时间推进标记 → 建议段写法 → 结尾段思路 → 句子翻译练习</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section>
+
+</div><!-- .deck -->
+
+<div class="confetti-wrap" id="confetti"></div>
+
+<script>
+let current=0;
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// ── countdown timer ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);timerInterval=null;timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    if(timerDone){resetTimer();}
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+      else{timerDuration=60;timerRemaining=60;}
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=false;
+  timerRemaining=timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];timerRemaining=timerDuration;
+  clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+
+// ── student input ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(text){
+    ans.textContent=text;
+    ta.style.display='none';
+    ans.classList.add('show');
+    btn.style.display='none';
+    var eb=document.getElementById(areaId+'-eb');
+    if(eb)eb.style.display='inline-flex';
+  }
+}
+function continueEdit(areaId,answerId,submitBtn){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  submitBtn.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation practice submit ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  // hide textarea & button, show answer
+  ta.style.display='none';
+  btn.style.display='none';
+  // show reference answer
+  ans.classList.add('show');
+  // add student's answer above reference
+  var stuDiv=document.createElement('div');
+  stuDiv.style.cssText='background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的翻译：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+
+initDots();updateUI();
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u4',weakKey:'conjunction',mode:'quiz'};</script>
+</body>
+</html>

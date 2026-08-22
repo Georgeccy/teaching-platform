@@ -1,0 +1,450 @@
+{
+  "unit": 5,
+  "title": "课程概览",
+  "passageCount": 1,
+  "questionCount": 10,
+  "passages": [
+    "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'"
+  ],
+  "questions": [
+    {
+      "type": "mc",
+      "text": "35 A 'holier-than-thou go-getter' (line 2) is someone who is …",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "religious 错——holier-than-thou 在此不是宗教含义"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": true,
+          "explain": "holier-than-thou = self-righteous; go-getter = ambitious"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "reliable/helpful 偏离了'自以为是'意味"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "confident/assertive 偏离了'自以为是'意味"
+        }
+      ],
+      "answer": "B",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q35 · 词义推断"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 1/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "A. Both a benefit and a pain → §10, not §1-2"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "B. Permission to go goblin → §11-12, not §1-2"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "C. A shift towards imperfection → §3-5, not §1-2"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": true,
+          "explain": "D ✓ — §1-2: 'holier-than-thou go-getters' + 'nauseating displays' = annoying terminology for annoying people"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E. Reconsidering the decision → not used"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": false,
+          "explain": "F. A natural goblin → §9, not §1-2"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": false,
+          "explain": "G. Undeniable public support → §6-8, not §1-2"
+        }
+      ],
+      "answer": "D",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 2/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "A → §10"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "B → §11-12"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": true,
+          "explain": "C ✓ — §3-5: OUP defines goblin mode; §5 describes 'complete lack of aesthetic' = shift towards imperfection"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "D → §1-2"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E → not used"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": false,
+          "explain": "F → §9"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": false,
+          "explain": "G → §6-8"
+        }
+      ],
+      "answer": "C",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 3/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "A → §10"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "B → §11-12"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "C → §3-5"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "D → §1-2"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E → not used"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": false,
+          "explain": "F → §9"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": true,
+          "explain": "G ✓ — §6-8: 93% of votes, 300,000+ votes, Casper Grathwohl endorsement = undeniable public support"
+        }
+      ],
+      "answer": "G",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 4/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "A → §10"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "B → §11-12"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "C → §3-5"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "D → §1-2"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E → not used"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": true,
+          "explain": "F ✓ — §9: 'I seem to have perfected the artform already' = the writer is a natural goblin"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": false,
+          "explain": "G → §6-8"
+        }
+      ],
+      "answer": "F",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 5/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": true,
+          "explain": "A ✓ — §10: 'not altogether bad thing' (benefit) + 'borderline pathological' (pain) = both a benefit and a pain"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "B → §11-12"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "C → §3-5"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "D → §1-2"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E → not used"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": false,
+          "explain": "F → §9"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": false,
+          "explain": "G → §6-8"
+        }
+      ],
+      "answer": "A",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "50 Below are subheadings for the paragraphs of Text 4. Match the most appropriate subheading (A-G) with the paragraph(s). Write the letter of the subheading next to the paragraph number(s) given. Use each letter ONCE only. One of the subheadings is not used. (6 marks) Subheadings: A. Both a benefit and a pain B. Permission to go goblin C. A shift towards imperfection D. Annoying terminology for annoying people E. Reconsidering the decision F. A natural goblin G. Undeniable public support Paragraph(s) Choose Subheading 1–2 （第 6/6 空）",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "A → §10"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": true,
+          "explain": "B ✓ — §11-12: 'should be encouraged whenever possible' = permission to go goblin"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "C → §3-5"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "D → §1-2"
+        },
+        {
+          "label": "E",
+          "text": "E",
+          "correct": false,
+          "explain": "E → not used (distractor)"
+        },
+        {
+          "label": "F",
+          "text": "F",
+          "correct": false,
+          "explain": "F → §9"
+        },
+        {
+          "label": "G",
+          "text": "G",
+          "correct": false,
+          "explain": "G → §6-8"
+        }
+      ],
+      "answer": "B",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q50 · Subheading Matching"
+    },
+    {
+      "type": "mc",
+      "text": "51 This text is …",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "Feature article 应客观平衡，本文全篇使用'I'——不符合"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "Essay 应论点严谨、语言学术，本文太随意"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": true,
+          "explain": "Column ✓ — 第一人称贯穿、强烈个人立场、幽默风格"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "Letter to the editor 必须有书信格式，本文无"
+        }
+      ],
+      "answer": "C",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "Q51 · 文体识别"
+    },
+    {
+      "type": "mc",
+      "text": "1 What is the writer's main purpose in writing the article?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": false,
+          "explain": "animals 仅 §7 提及，太窄"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": true,
+          "explain": "全文围绕香港光污染(社会问题)展开"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "文章未表明明确措辞 advocating laws"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "未提具体行动方案"
+        }
+      ],
+      "answer": "B",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "练习 Q1 · Main Purpose"
+    },
+    {
+      "type": "mc",
+      "text": "4 What is the main purpose of paragraph 5?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A",
+          "correct": true,
+          "explain": "§5 呈现反对光污染法规及原因"
+        },
+        {
+          "label": "B",
+          "text": "B",
+          "correct": false,
+          "explain": "非 persuading"
+        },
+        {
+          "label": "C",
+          "text": "C",
+          "correct": false,
+          "explain": "非 explaining why bad"
+        },
+        {
+          "label": "D",
+          "text": "D",
+          "correct": false,
+          "explain": "非 supporting businesses"
+        }
+      ],
+      "answer": "A",
+      "passage": "At the start of the Covid pandemic, as people were finding themselves locked in their houses for weeks at a time, a certain breed of holier-than-thou go-getter appeared who took their physical isolation as an opportunity to very publicly 'better' themselves in all manner of ways. They would take up yoga, for example, or sourdough baking, or gardening, or embroidery—all while gleefully rubbing their achievements in everyone else's face on social media.\nDue to the relentless compulsion within modern society to pigeonhole and bestow catchy terms onto every mundane aspect of human behaviour, these nauseating displays of in-your-face domesticity very quickly started to be categorized as examples of 'that girl' or 'cottagecore' aesthetics (this latter term also appeasing the equally unyielding compulsion these days to give every little change in fashion or lifestyle trends the name whatever-core ).\n'Goblin mode is like when you wake up at 2 a.m. and shuffle into the kitchen wearing nothing but a long T-shirt to make a weird snack, like melted cheese on saltines. It's about a complete lack of aesthetic. Because why would a goblin care what they look like? Why would a goblin care about presentation?'",
+      "section": "练习 Q4 · Paragraph Purpose"
+    }
+  ],
+  "vocab": []
+}

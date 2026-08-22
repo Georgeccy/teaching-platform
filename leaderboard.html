@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 排行榜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/shell.css" />
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">智学<br/>PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input type="text" placeholder="搜索单元 / 题目 / 知识点" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+      </div>
+
+      <div id="content"><div class="loading">正在加载班级排行榜…</div></div>
+
+      <footer>智学平台 · 排行榜：依据练习正确率与完成单元数排名（仅展示聚合数据）</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+    const MEDAL = { 1: '🥇', 2: '🥈', 3: '🥉' };
+
+    function loginGate() {
+      const c = document.getElementById('content');
+      c.innerHTML = '<div class="empty"><p style="margin-bottom:16px">请先登录，查看班级排行榜</p><button class="btn" id="loginNow">登录 / 注册</button></div>';
+      document.getElementById('loginNow').addEventListener('click', () => {
+        ZhiXue.openLogin().then(() => window.location.reload());
+      });
+    }
+
+    function rows(ranking, meId) {
+      return ranking.map((r, i) => {
+        const rank = i + 1;
+        const me = r.id === meId;
+        const medal = MEDAL[rank] || ('#' + rank);
+        return `<div style="display:flex;align-items:center;gap:14px;padding:13px 14px;border:3px solid ${me ? 'var(--pink)' : 'var(--line)'};background:${me ? 'var(--card)' : 'transparent'};box-shadow:${me ? '4px 4px 0 var(--shadow)' : 'none'};margin-bottom:10px;">
+          <div class="pixel" style="font-size:18px;width:42px;text-align:center;color:${rank<=3?'var(--orange)':'var(--text)'}">${medal}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700">${esc(r.name)}${me ? ' <span style="color:var(--pink);font-size:12px">（你）</span>' : ''}</div>
+            <div style="font-size:12px;color:var(--muted)">完成 ${r.completed} 单元 · 最高连胜 ${r.maxStreak} 天</div>
+          </div>
+          <div style="text-align:right">
+            <div class="pixel" style="font-size:18px;color:var(--blue)">${r.accuracy}%</div>
+            <div style="font-size:11px;color:var(--muted)">正确率</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    (async function () {
+      ZhiXue.initAuthChip();
+      if (!ZhiXue.user) { loginGate(); return; }
+      try {
+        const d = await ZhiXue.api('/api/leaderboard');
+        const ranking = (d.ranking || []).filter(r => r.id !== 'demo' && r.name !== 'demo');
+        if (!ranking.length) {
+          document.getElementById('content').innerHTML = '<div class="empty">还没有足够数据生成排行榜，快去做几道题吧！</div>';
+          return;
+        }
+        const meId = ZhiXue.user.id;
+        const meRank = ranking.findIndex(r => r.id === meId) + 1;
+        document.getElementById('content').innerHTML = `
+          <div class="hero">
+            <div class="avatar-big" style="background:var(--yellow)">🏆</div>
+            <div>
+              <h1>班级排行榜</h1>
+              <p>共 ${ranking.length} 名同学参与排名。${meRank ? '你目前排在第 <b style="color:var(--pink)">' + meRank + '</b> 名。' : '完成练习后即可上榜！'}</p>
+            </div>
+          </div>
+          <div class="panel">${rows(ranking, meId)}</div>`;
+      } catch (e) {
+        document.getElementById('content').innerHTML = '<div class="alert warn">加载失败：' + esc(e.message) + '</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

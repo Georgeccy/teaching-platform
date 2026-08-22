@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 6 · Debate Speech · 香港加速班写作课 | 成雨</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+/* slide 3 purpose multi-select */
+#purpose-opts .quiz-opt{text-align:left;white-space:normal;line-height:1.5;padding:10px 16px}
+/* slide 13 drag-and-drop matching */
+.match-table .drop-zone{min-height:44px;border:2px dashed var(--card-bd);border-radius:8px;padding:4px 8px;transition:all .2s;vertical-align:top}
+.match-table .drop-zone.drag-over{border-color:var(--xdf-green);background:var(--xdf-gl)}
+.match-item{display:inline-block;padding:6px 12px;background:#fff;border:1.5px solid var(--card-bd);border-radius:8px;font-size:14px;font-weight:600;cursor:grab;transition:all .2s;line-height:1.4}
+.match-item:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.match-item.dragging{opacity:.4}
+.match-table .drop-zone .match-item{display:block;margin:2px 0;width:100%}
+.match-table .drop-zone.correct{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.match-table .drop-zone.wrong{border-color:var(--xdf-red);background:#FFF5F5}
+.match-item.correct{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-gd)}
+.match-item.wrong{border-color:var(--xdf-red);background:#FFF5F5;color:var(--xdf-red)}
+#match-pool{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;min-height:50px;padding:10px;background:#f8f9fb;border-radius:10px;border:1px solid rgba(0,0,0,.06)}
+</style>
+</head><body>
+<div class="topbar">
+  <span class="course-tag">香港加速班·Unit 6</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 6">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <img class="tb-avatar" src="avatar.jpg" alt="George">
+      <div class="tb-name">成雨 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">香港加速班</div>
+  </div>
+  <div class="slide-h1">Debate Speech<br><span class="accent">Green Spaces vs Playgrounds</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">辩论稿 — 议论文写作</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 6 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Debate Speech</div><div class="sm-sub">辩论稿 · 总结陈词</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Urban Development</div><div class="sm-sub">Green Spaces vs Children's Playgrounds</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Structure</div><div class="sm-value">Opening + 4 Body + Conclusion</div><div class="sm-sub">PEER 论证 + 反驳反方</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题+想论点</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">开头段+结构</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段 PEER</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">反驳+结尾+范文</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Section 1 · Course Objectives</p>
+<h2 class="slide-h2">🎯 课程目标</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:18px">本节课程结束后，学生将能够：</p>
+<div style="display:flex;flex-direction:column;gap:12px">
+  <div class="card accent"><h4>📌 目标 1</h4><p>掌握 debate speech 文体特征、篇章结构</p></div>
+  <div class="card accent" style="border-left-color:var(--xdf-gold)"><h4>📌 目标 2</h4><p>运用"利弊通用论点（个人需求+社会发展）"构思写作观点</p></div>
+  <div class="card accent" style="border-left-color:var(--xdf-blue)"><h4>📌 目标 3</h4><p>能灵活使用 PEER 结构完成观点论述</p></div>
+  <div class="card accent" style="border-left-color:var(--xdf-red)"><h4>📌 目标 4</h4><p>区分 debate speech 和 argumentative essay 的差异，并使用符合 debate speech 语气特征的语言完成写作</p></div>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Section 2 · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题分析 Task 2A</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px;background:#f8f9fb;padding:10px 16px;border-radius:8px;border:1px solid rgba(0,0,0,.06)"><b>题目：</b>Learning English through Debating — You are taking part in a debate about the urban development of the city. You are giving the closing remarks of the speech, arguing that green spaces should be developed more than children's playgrounds. Write a speech for the debate.</p>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+  <div class="ce-item">
+    <div class="ce-cn">1. Role（你是谁）</div>
+    <button class="ce-btn" onclick="this.parentElement.querySelector('.ce-en').classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">a debater<br>（一名辩手）</div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">2. Audience（写给谁）</div>
+    <button class="ce-btn" onclick="this.parentElement.querySelector('.ce-en').classList.toggle('show')">✅ 看答案</button>
+    <div class="ce-en">裁判 / 听众 / 对方辩手</div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">3. Purpose（写作目的，多选）</div>
+    <p style="font-size:16px;color:var(--text-2);margin-bottom:6px">点击选择你认为正确的选项（可多选），然后点击"判断"按钮：</p>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px" id="purpose-opts">
+      <button class="quiz-opt" onclick="togglePurpose(this)">giving closing remarks of the speech（总结陈词/结尾发言）</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">arguing that green spaces should be developed more than children's playgrounds</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">describe the benefits of urban green spaces</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">describe the drawbacks of children's playgrounds in the city</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">write a formal report for the city council</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">entertain the audience with humorous stories</button>
+      <button class="quiz-opt" onclick="togglePurpose(this)">remain neutral and present both sides equally</button>
+    </div>
+    <button class="reveal-btn" onclick="checkPurpose()" style="font-size:17px;padding:6px 16px">✅ 判断</button>
+    <div class="quiz-ans" id="purpose-ans">✅ 正确答案：前四项均为正确目的。作为 debate speech 的 closing remarks，需要<b>总结陈词</b>、<b>论证己方立场</b>、<b>描述绿化空间的好处</b>以及<b>城市儿童游乐场的缺点</b>。<br>❌ <b>write a formal report</b>（错误：文本类型不对，这是辩论稿不是报告）<br>❌ <b>entertain the audience with humorous stories</b>（错误：辩论稿以说服为目的，不以娱乐为目的）<br>❌ <b>remain neutral</b>（错误：辩论稿需要明确立场，不能保持中立）</div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">4. Register（正式程度）</div>
+    <div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+        <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+        <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+      </div>
+      <div class="quiz-ans">✅ <b>semi-formal</b> — debate speech 面向现场听众，语气正式但不刻板，需要拉近距离</div>
+    </div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">5. Tone（语气，可多选）</div>
+    <p style="font-size:16px;color:var(--text-2);margin-bottom:6px">点击选择你认为正确的选项（可多选），然后点击"判断"按钮：</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px" id="tone-opts">
+      <button class="quiz-opt" onclick="toggleTone(this)">logical</button>
+      <button class="quiz-opt" onclick="toggleTone(this)">engaging</button>
+      <button class="quiz-opt" onclick="toggleTone(this)">neutral</button>
+      <button class="quiz-opt" onclick="toggleTone(this)">persuasive</button>
+      <button class="quiz-opt" onclick="toggleTone(this)">vivid and descriptive</button>
+    </div>
+    <button class="reveal-btn" onclick="checkTone()" style="font-size:17px;padding:6px 16px">✅ 判断</button>
+    <div class="quiz-ans" id="tone-ans">✅ 正确答案：<b>logical</b>、<b>engaging</b>、<b>persuasive</b> — debate speech 需要逻辑清晰、引人入胜且有说服力</div>
+  </div>
+</div>
+</section><section class="slide" data-title="🧠 内容库 · 人类需求">
+<p class="sec-label">Section 3 · Content Bank 人类需求</p>
+<h2 class="slide-h2">🧠 利弊七大通用论点（个人需求）</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">我们在第二课中学过"利弊的7大通用论点"，点击卡片查看英文表达：</p>
+<div class="flip-grid g2">
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">1. 安全与健康</div><div class="flip-hint">生存需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Safety and health<br>(physical & mental health)</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">2. 时间</div><div class="flip-hint">生存需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Time / efficiency / flexibility / convenience</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">3. 钱</div><div class="flip-hint">生存需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Money / cost / income</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">4. 信息与知识</div><div class="flip-hint">认知需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Information & knowledge</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">5. 技能、品质、价值观</div><div class="flip-hint">认知需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Skills/abilities, qualities, and values/beliefs</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">6. 爱、归属感、社会关系</div><div class="flip-hint">情感与精神需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Love, belonging, and social relationships<br>- family bond<br>- friendship/connection with others<br>- a sense of belonging<br>- national/cultural identity</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">7. 兴趣、理想、个人实现</div><div class="flip-hint">情感与精神需求</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">Interest, ambition, self-actualization</div></div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" data-title="🧠 内容库 · 社会发展">
+<p class="sec-label">Section 3 · Content Bank 社会发展</p>
+<h2 class="slide-h2">🧠 利弊八大通用论点（社会发展）</h2>
+<div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px">
+  <div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.2：你认为 green spaces 能给人们带来哪些方面的好处？</span></div>
+  <div class="think-input-area" style="display:flex;flex-direction:column;gap:8px">
+    <textarea class="think-textarea" id="think32-input" style="width:100%;min-height:56px;padding:10px 14px;border:1.5px solid var(--card-bd);border-radius:10px;font-size:18px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="请输入你的思考..." rows="2"></textarea>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="reveal-btn" onclick="submitThink('think32')" style="font-size:16px;padding:6px 16px">📤 提交</button>
+      <span class="think-feedback" id="think32-fb" style="font-size:15px;color:var(--text-2)"></span>
+    </div>
+    <div class="think-answer" id="think32-ans" style="display:none;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:17px;color:var(--xdf-gd);line-height:1.7">
+      <b>参考答案：</b>physical & mental health, strengthen relationships
+    </div>
+  </div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px">
+  <div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.3：从社会的层面出发，green spaces 能给社会带来什么好处？</span></div>
+  <div class="think-input-area" style="display:flex;flex-direction:column;gap:8px">
+    <textarea class="think-textarea" id="think33-input" style="width:100%;min-height:56px;padding:10px 14px;border:1.5px solid var(--card-bd);border-radius:10px;font-size:18px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="请输入你的思考..." rows="2"></textarea>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="reveal-btn" onclick="submitThink('think33')" style="font-size:16px;padding:6px 16px">📤 提交</button>
+      <span class="think-feedback" id="think33-fb" style="font-size:15px;color:var(--text-2)"></span>
+    </div>
+    <div class="think-answer" id="think33-ans" style="display:none;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:17px;color:var(--xdf-gd);line-height:1.7">
+      <b>参考答案：</b>有利于环境保护和可持续发展
+    </div>
+  </div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px;margin-bottom:16px">
+  <div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.4：children's playgrounds 会带来什么弊端？</span></div>
+  <div class="think-input-area" style="display:flex;flex-direction:column;gap:8px">
+    <textarea class="think-textarea" id="think34-input" style="width:100%;min-height:56px;padding:10px 14px;border:1.5px solid var(--card-bd);border-radius:10px;font-size:18px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="请输入你的思考..." rows="2"></textarea>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="reveal-btn" onclick="submitThink('think34')" style="font-size:16px;padding:6px 16px">📤 提交</button>
+      <span class="think-feedback" id="think34-fb" style="font-size:15px;color:var(--text-2)"></span>
+    </div>
+    <div class="think-answer" id="think34-ans" style="display:none;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:17px;color:var(--xdf-gd);line-height:1.7">
+      <b>参考答案：</b>仅服务于小孩这一群体，政府/社区维护成本更高
+    </div>
+  </div>
+</div>
+<div class="flip-grid g2">
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">1. 企业盈利</div><div class="flip-hint">经济发展</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">corporate profits</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">2. 政府预算</div><div class="flip-hint">经济发展</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">government budgets</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">3. 文化多样性/文化交流</div><div class="flip-hint">文化建设</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">cultural diversity / cultural exchange</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">4. 传统文化保护</div><div class="flip-hint">文化建设</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">cultural heritage preservation</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">5. 社会观念和准则</div><div class="flip-hint">文化建设</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">social values and norms<br>- equality and justice<br>- open-mindedness and inclusiveness</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">6. 能源危机</div><div class="flip-hint">环境保护</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">energy crisis<br>- fossil fuel depletion<br>- renewable energy</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">7. 环境问题</div><div class="flip-hint">环境保护</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">environmental issues<br>- air/water/ocean pollution<br>- soil degradation<br>- climate change</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q">8. 生物多样性</div><div class="flip-hint">环境保护</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans">biodiversity</div></div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Section 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 辩论稿整体结构</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">点击各段落查看详细内容</p>
+<table class="rule-table" style="font-size:18px">
+  <tr><th style="width:16%">段落</th><th style="width:42%">功能</th><th>说明</th></tr>
+  <tr>
+    <td class="col-type">Opening</td>
+    <td>introduce the topic + state opinion<br>引入话题 + 表达立场</td>
+    <td class="col-example">可简单改写题目</td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 1</td>
+    <td>Support 1: benefit public health<br>支持点1：有利于公共健康</td>
+    <td class="col-example">PEER 论证</td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 2</td>
+    <td>Support 2: strengthen relationships<br>支持点2：促进家庭/社区关系</td>
+    <td class="col-example">PEER 论证</td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 3</td>
+    <td>Support 3: promote sustainable development<br>支持点3：促进可持续发展</td>
+    <td class="col-example">PEER 论证</td>
+  </tr>
+  <tr>
+    <td class="col-type">Body 4</td>
+    <td>Counter-argument & rebuttal<br>承认反方优点并反驳</td>
+    <td class="col-example">降低对方重要性 + 对比我方优势</td>
+  </tr>
+  <tr>
+    <td class="col-type">Conclusion</td>
+    <td>Restate opinion + ending response<br>重申立场 + 结尾回应</td>
+    <td class="col-example">引发思考 / 提出建议 / 呼吁行动</td>
+  </tr>
+</table>
+</section><section class="slide" data-title="✍️ 开头段 Task 5A">
+<p class="sec-label">Section 5 · Opening Paragraph</p>
+<h2 class="slide-h2">✍️ Task 5A：补齐开头段</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">根据括号中的提示，点击 ______ 揭晓答案：</p>
+<div style="background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:10px"><b>P1 — 开头段</b></p>
+  <p>Good afternoon, everyone,</p>
+  <p>The topic before us today is how limited urban land should be used. In light of the evidence discussed, our team firmly believes that green spaces should <span class="cloze" onclick="revealCloze(this)" data-answer="be developed more than children's playgrounds">______</span> (相比于儿童游乐场，更应该优先建设绿地). They <span class="cloze" onclick="revealCloze(this)" data-answer="protect our health">______</span> (保护我们的健康), <span class="cloze" onclick="revealCloze(this)" data-answer="bring people together">______</span> (凝聚人心) and <span class="cloze" onclick="revealCloze(this)" data-answer="make our city more sustainable">______</span> (让我们的城市更具可持续性).</p>
+</div>
+</section><section class="slide" data-title="📐 开头段结构句式">
+<p class="sec-label">Section 5 · Structure & Sentence Patterns</p>
+<h2 class="slide-h2">📐 开头段模版</h2>
+<button class="ce-btn" onclick="var a=document.getElementById('s8-structure');a.classList.toggle('show')">📖 查看结构与句式模版</button>
+<div id="s8-structure" class="ce-en">
+  <p style="margin-bottom:12px;font-size:18px"><b>第一句：问候 + 重申辩题</b></p>
+  <table class="rule-table" style="margin-bottom:16px;font-size:18px">
+    <tr><th style="width:20%">功能</th><th>句式</th></tr>
+    <tr><td class="col-type">问候</td><td class="col-example">1. Good morning / afternoon, everyone / ladies and gentlemen.<br>2. Good morning / afternoon, Mr. / Madam Chairperson, respected judges, honorable opponents, and fellow classmates.</td></tr>
+    <tr><td class="col-type">重申辩题</td><td class="col-example">1. The topic before us today is …<br>2. Today's motion concerns the question of …<br>3. The issue we are debating today is …</td></tr>
+  </table>
+  <p style="margin-bottom:12px;font-size:18px"><b>第二句：总结立场</b></p>
+  <table class="rule-table" style="margin-bottom:16px;font-size:18px">
+    <tr><th style="width:20%">功能</th><th>句式</th></tr>
+    <tr><td class="col-type">总结立场</td><td class="col-example">1. In summary, our arguments have shown that 题目给定的立场<br>2. In light of the evidence discussed, we maintain that …<br>3. After considering all the arguments presented today, it is evident that …</td></tr>
+  </table>
+  <p style="margin-bottom:12px;font-size:18px"><b>第三句：总结论点</b></p>
+  <table class="rule-table" style="font-size:18px">
+    <tr><th style="width:20%">句式类型</th><th>句式</th></tr>
+    <tr><td class="col-type">句式1</td><td class="col-example">It/They/具体话题关键词 <b>contribute(s) to</b> 概括分论点1，2，3<br>☐ They (Green spaces) contribute to our physical well-being, social cohesion and environmental sustainability.</td></tr>
+    <tr><td class="col-type">句式2</td><td class="col-example">From 概括分论点1 to 概括分论点2 and 概括分论点3, it/they/具体话题关键词 <b>bring(s)/provide(s) undeniable benefits</b>.<br>☐ From facilitating communication to spreading information and creating opportunities for self-expression, social media provides undeniable benefits.</td></tr>
+  </table>
+</div>
+</section><section class="slide" data-title="✍️ 开头段 Task 5B">
+<p class="sec-label">Section 5 · Task 5B</p>
+<h2 class="slide-h2">✍️ Task 5B：仿写开头段</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">参考旁侧的句式模板，仿写本文的开头段。先构思再动笔，不要直接套用答案：</p>
+
+<div style="display:grid;grid-template-columns:2.2fr 1.3fr;gap:18px;margin-bottom:12px">
+  <!-- Left: Writing area -->
+  <div style="background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:20px 24px;font-size:19px;line-height:2.2">
+    <p style="margin-bottom:8px"><b>P1 — 开头段</b></p>
+    <p>Good morning, ladies and gentlemen.</p>
+    
+    <div style="margin:10px 0;padding:12px;background:#f8f9fb;border-radius:10px;border:1px solid rgba(0,0,0,.04)">
+      <p style="font-size:16px;font-weight:700;color:var(--xdf-gold);margin-bottom:6px">第一句：重申辩题 <span style="font-size:13px;font-weight:400;color:var(--text-2)">（参考右栏句式2）</span></p>
+      <textarea id="tb5-rephrase" style="width:100%;min-height:48px;padding:8px 12px;border:1.5px solid var(--card-bd);border-radius:8px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="在此仿写重申辩题的句子..." rows="2"></textarea>
+      <button class="ce-btn" style="margin-top:6px;font-size:14px;padding:4px 12px" onclick="var a=document.getElementById('tb5-ans1');a.classList.toggle('show')">📖 查看参考</button>
+      <div id="tb5-ans1" class="ce-en" style="font-size:16px;line-height:1.7">Today's motion concerns the question of how limited urban land should be used.</div>
+    </div>
+
+    <div style="margin:10px 0;padding:12px;background:#f8f9fb;border-radius:10px;border:1px solid rgba(0,0,0,.04)">
+      <p style="font-size:16px;font-weight:700;color:var(--xdf-gold);margin-bottom:6px">第二句：总结立场 <span style="font-size:13px;font-weight:400;color:var(--text-2)">（参考右栏句式3）</span></p>
+      <textarea id="tb5-stance" style="width:100%;min-height:48px;padding:8px 12px;border:1.5px solid var(--card-bd);border-radius:8px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="在此仿写总结立场的句子..." rows="2"></textarea>
+      <button class="ce-btn" style="margin-top:6px;font-size:14px;padding:4px 12px" onclick="var a=document.getElementById('tb5-ans2');a.classList.toggle('show')">📖 查看参考</button>
+      <div id="tb5-ans2" class="ce-en" style="font-size:16px;line-height:1.7">After considering all the arguments presented today, it is evident that green spaces should be developed more than children's playgrounds.</div>
+    </div>
+
+    <div style="margin:10px 0;padding:12px;background:#f8f9fb;border-radius:10px;border:1px solid rgba(0,0,0,.04)">
+      <p style="font-size:16px;font-weight:700;color:var(--xdf-gold);margin-bottom:6px">第三句：总结论点 <span style="font-size:13px;font-weight:400;color:var(--text-2)">（参考右栏句式2）</span></p>
+      <textarea id="tb5-arguments" style="width:100%;min-height:48px;padding:8px 12px;border:1.5px solid var(--card-bd);border-radius:8px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;outline:none;background:#fff" placeholder="在此仿写总结论点的句子..." rows="2"></textarea>
+      <button class="ce-btn" style="margin-top:6px;font-size:14px;padding:4px 12px" onclick="var a=document.getElementById('tb5-ans3');a.classList.toggle('show')">📖 查看参考</button>
+      <div id="tb5-ans3" class="ce-en" style="font-size:16px;line-height:1.7">From improving public health to fostering social interaction and protecting the environment, green spaces bring undeniable benefits.</div>
+    </div>
+  </div>
+
+  <!-- Right: Reference patterns -->
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="background:#E8F5E9;border:2px solid var(--xdf-green);border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--xdf-green);margin-bottom:6px">📐 句式模板</div>
+      <p style="font-size:14px;font-weight:700;color:var(--xdf-gd);margin-bottom:4px">重申辩题 · 句式2：</p>
+      <p style="font-size:15px;line-height:1.5;color:var(--text-1);background:#fff;padding:8px 12px;border-radius:8px;border:1px solid rgba(11,130,53,.15)"><b>Today's motion concerns the question of</b> …</p>
+    </div>
+    <div style="background:#E8F5E9;border:2px solid var(--xdf-green);border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--xdf-green);margin-bottom:6px">📐 句式模板</div>
+      <p style="font-size:14px;font-weight:700;color:var(--xdf-gd);margin-bottom:4px">总结立场 · 句式3：</p>
+      <p style="font-size:15px;line-height:1.5;color:var(--text-1);background:#fff;padding:8px 12px;border-radius:8px;border:1px solid rgba(11,130,53,.15)"><b>After considering all the arguments presented today, it is evident that</b> …</p>
+    </div>
+    <div style="background:#E8F5E9;border:2px solid var(--xdf-green);border-radius:14px;padding:16px 18px">
+      <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--xdf-green);margin-bottom:6px">📐 句式模板</div>
+      <p style="font-size:14px;font-weight:700;color:var(--xdf-gd);margin-bottom:4px">总结论点 · 句式2：</p>
+      <p style="font-size:15px;line-height:1.5;color:var(--text-1);background:#fff;padding:8px 12px;border-radius:8px;border:1px solid rgba(11,130,53,.15)"><b>From</b> 概括分论点1 <b>to</b> 概括分论点2 <b>and</b> 概括分论点3, <b>it/they bring(s) undeniable benefits</b>.</p>
+      <p style="font-size:13px;color:var(--text-2);margin-top:6px;background:#fff;padding:6px 10px;border-radius:6px;line-height:1.5">💡 <i>From improving public health to fostering social interaction and protecting the environment, green spaces bring undeniable benefits.</i></p>
+    </div>
+  </div>
+</div>
+</section><section class="slide" data-title="📐 PEER 论证公式">
+<p class="sec-label">Section 6 · PEER Structure</p>
+<h2 class="slide-h2">📐 PEER 论证公式</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">点击卡片查看每部分的说明：</p>
+<div class="flip-grid g2">
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:32px;color:var(--xdf-red)">P</div><div class="flip-hint" style="font-size:16px">Point</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans"><b>P — Point</b><br>What is your point?<br>表明观点</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:32px;color:var(--xdf-gold)">E</div><div class="flip-hint" style="font-size:16px">Explain</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans"><b>E — Explain / Explanation</b><br>Why / How?<br>展开解释（为什么 / 如何）</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:32px;color:var(--xdf-green)">E</div><div class="flip-hint" style="font-size:16px">Example</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans"><b>E — Example</b><br>How / what?<br>举例 / 列举 / 具体化</div></div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front"><div class="flip-q" style="font-size:32px;color:var(--xdf-blue)">R</div><div class="flip-hint" style="font-size:16px">Result</div></div>
+      <div class="flip-face flip-back"><div class="flip-ans"><b>R — Result</b><br>So what? Why it matters?<br>结果 / 影响 / 最终判断</div></div>
+    </div>
+  </div>
+</div>
+<div class="notes-box mt-m" style="font-size:18px;line-height:1.8">
+  <b>📝 注意：</b>PEER 是一个整体框架，具体逻辑链可以合并或增补。如一<wbr>句话中结合 explain+example；或者在完成一个 explain 后，并列展开 further explain。
+</div>
+</section><section class="slide" data-title="✍️ 主体段1 · 保护健康">
+<p class="sec-label">Section 6 · Body Paragraph 1</p>
+<h2 class="slide-h2">✍️ Task 6A：补齐主体段1</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">根据括号中的提示，点击 ______ 揭晓答案：</p>
+<div style="background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:10px"><b>P2 — 主体段1 · 保护健康</b></p>
+  <p><b>Point</b>: First, green spaces are essential to public health.</p>
+  <p><b>Explain</b>: In a fast-paced city like Hong Kong, many of us <span class="cloze" onclick="revealCloze(this)" data-answer="study or work for long hours and face constant pressure">______</span> (长时间学习或工作，并承受持续不断的压力). Green spaces can help <span class="cloze" onclick="revealCloze(this)" data-answer="relieve this pressure">______</span> (缓解这种压力) through the well-known "twenty-minute park effect".</p>
+  <p><b>Example</b>: Residents can take a short walk under the trees, look at flowers and plants, or simply enjoy the natural surroundings in a nearby park. Spending around twenty minutes in a green environment can help <span class="cloze" onclick="revealCloze(this)" data-answer="lower stress and calm the mind">______</span> (减轻压力，放松心情).</p>
+  <p><b>Result</b>: As a result, regular contact with nature can <span class="cloze" onclick="revealCloze(this)" data-answer="improve our physical health and mental well-being">______</span> (促进身体健康和心理健康).</p>
+</div>
+<button class="ce-btn" style="margin-top:12px" onclick="document.getElementById('s11-full').classList.toggle('show')">📖 查看完整主体段1</button>
+<div id="s11-full" class="ce-en" style="line-height:2">
+  <b>Point</b>: First, green spaces are essential to public health.<br><br>
+  <b>Explain</b>: In a fast-paced city like Hong Kong, many of us study or work for long hours and face constant pressure. Green spaces can help relieve this pressure through the well-known "twenty-minute park effect".<br><br>
+  <b>Example</b>: Residents can take a short walk under the trees, look at flowers and plants, or simply enjoy the natural surroundings in a nearby park. Spending around twenty minutes in a green environment can help lower stress and calm the mind.<br><br>
+  <b>Result</b>: As a result, regular contact with nature can improve our physical health and mental well-being.
+</div>
+</section><section class="slide" data-title="🤔 思考6.1 · 对比分析">
+<p class="sec-label">Section 6 · Task 6B</p>
+<h2 class="slide-h2">🤔 Task 6B + 思考6.1</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">对比以下句子，<b>点击你认为更适合 debate speech 的一句</b>，系统会自动判断并显示理由：</p>
+<div style="display:flex;flex-direction:column;gap:14px">
+  <div class="ce-item">
+    <div class="ce-cn">A. 对比分析</div>
+    <div class="compare-group" id="comp-a" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0">
+      <div class="compare-opt" onclick="pickCompare('comp-a',false,'debate speech 中使用 we / us / our 拉近与听众距离；第二句更适合放在 argumentative essay，因为使用了第三人称体现客观性')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">In a fast-paced city such as Hong Kong, residents often spend long hours studying or working and are exposed to considerable levels of stress.</p>
+      </div>
+      <div class="compare-opt" onclick="pickCompare('comp-a',true,'debate speech 中使用 we / us / our 拉近与听众距离；第二句更适合放在 argumentative essay，因为使用了第三人称体现客观性')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">In a fast-paced city like Hong Kong, many of us study or work for long hours and face constant pressure.</p>
+      </div>
+    </div>
+    <div class="comp-reason" id="comp-a-reason" style="display:none;margin-top:8px;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:17px;color:var(--xdf-gd);line-height:1.7"></div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">B. 对比分析</div>
+    <div class="compare-group" id="comp-b" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0">
+      <div class="compare-opt" onclick="pickCompare('comp-b',false,'第一句使用 we / us / our 拉近与听众距离')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">Therefore, regular access to green spaces can contribute significantly to both physical and mental health.</p>
+      </div>
+      <div class="compare-opt" onclick="pickCompare('comp-b',true,'第一句使用 we / us / our 拉近与听众距离')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">As a result, regular contact with nature can improve our physical health and mental well-being.</p>
+      </div>
+    </div>
+    <div class="comp-reason" id="comp-b-reason" style="display:none;margin-top:8px;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:17px;color:var(--xdf-gd);line-height:1.7"></div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">C. 对比分析</div>
+    <div class="compare-group" id="comp-c" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0">
+      <div class="compare-opt" onclick="pickCompare('comp-c',false,'第二句更加简洁，适合 debate speech；第一句句子较长，结构复杂，更适合放在 argumentative essay')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">Research has shown that access to green spaces can help reduce stress and improve mental well-being through what is commonly known as the "twenty-minute park effect".</p>
+      </div>
+      <div class="compare-opt" onclick="pickCompare('comp-c',true,'第二句更加简洁，适合 debate speech；第一句句子较长，结构复杂，更适合放在 argumentative essay')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">Green spaces can help relieve this pressure through the well-known "twenty-minute park effect".</p>
+      </div>
+    </div>
+    <div class="comp-reason" id="comp-c-reason" style="display:none;margin-top:8px;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:17px;color:var(--xdf-gd);line-height:1.7"></div>
+  </div>
+  <div class="ce-item">
+    <div class="ce-cn">D. 对比分析</div>
+    <div class="compare-group" id="comp-d" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0">
+      <div class="compare-opt" onclick="pickCompare('comp-d',false,'版本一用词较口语化，适合 debate speech')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">observe natural scenery; foster social cohesion</p>
+      </div>
+      <div class="compare-opt" onclick="pickCompare('comp-d',true,'版本一用词较口语化，适合 debate speech')" style="padding:18px 20px;background:#fff;border:2px solid var(--card-bd);border-radius:12px;cursor:pointer;transition:all .2s">
+        <p style="font-size:17px;line-height:1.6">look at flowers and plants; bring neighbours closer</p>
+      </div>
+    </div>
+    <div class="comp-reason" id="comp-d-reason" style="display:none;margin-top:8px;padding:10px 16px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:17px;color:var(--xdf-gd);line-height:1.7"></div>
+  </div>
+</div>
+</section><section class="slide" data-title="📊 对比 · 辩论稿 vs 议论文">
+<p class="sec-label">Section 6 · Comparison</p>
+<h2 class="slide-h2">📊 Debate Speech vs Argumentative Essay</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">将下方描述拖拽到对应的表格格子里，然后点击"检查匹配"按钮验证：</p>
+<table class="rule-table match-table" style="font-size:15px">
+  <tr><th style="width:15%">维度</th><th style="width:42.5%">Debate Speech</th><th>Argumentative Essay</th></tr>
+  <tr><td class="col-type">写作目的</td><td class="drop-zone" data-row="0" data-col="debate"></td><td class="drop-zone" data-row="0" data-col="essay"></td></tr>
+  <tr><td class="col-type">语气</td><td class="drop-zone" data-row="1" data-col="debate"></td><td class="drop-zone" data-row="1" data-col="essay"></td></tr>
+  <tr><td class="col-type">人称</td><td class="drop-zone" data-row="2" data-col="debate"></td><td class="drop-zone" data-row="2" data-col="essay"></td></tr>
+  <tr><td class="col-type">用词特征</td><td class="drop-zone" data-row="3" data-col="debate"></td><td class="drop-zone" data-row="3" data-col="essay"></td></tr>
+  <tr><td class="col-type">与受众互动</td><td class="drop-zone" data-row="4" data-col="debate"></td><td class="drop-zone" data-row="4" data-col="essay"></td></tr>
+</table>
+<div id="match-pool"></div>
+<div style="margin-top:10px;display:flex;gap:8px">
+  <button class="ce-btn" onclick="checkMatch()">✅ 检查匹配</button>
+  <button class="ce-btn hint-btn" onclick="resetMatch()">↺ 重新开始</button>
+</div>
+<div id="match-feedback" class="ce-en" style="margin-top:8px"></div>
+</section><section class="slide" data-title="📝 主体段2 · 凝聚人心">
+<p class="sec-label">Section 7 · Body Paragraph 2</p>
+<h2 class="slide-h2">📝 Task 7A：完成主体段2</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">Homework — 请根据 PEER 结构完成。点击下方按钮查看词汇提示：</p>
+<div class="gw-card">
+  <div class="gw-main-idea">📌 PEER 提示：<br>• <b>Point</b>: 抛出论点，绿化空间的第二个好处——凝聚人心<br>• <b>Explain</b>: 为什么绿化空间能凝聚人心？<br>• <b>Example</b>: 家人/邻居在绿化空间具体可以做什么？<br>• <b>Result</b>: 回扣论点</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    <button class="ce-btn" onclick="revealPeerHint('peer2-point','peer2-point-full')">P · Point</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer2-explain','peer2-explain-full')">E · Explain</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer2-example','peer2-example-full')">E · Example</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer2-result','peer2-result-full')">R · Result</button>
+  </div>
+  <div id="peer2-point" class="gw-answer" style="border-left:4px solid var(--xdf-red);padding:14px 18px">
+    <b>💡 词汇提示：</b>加强家庭和社区关系 (strengthen family and community relationships)
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer2-point-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer2-point-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Point:</b><br>Second, green spaces help strengthen family and community relationships.</div>
+  </div>
+  <div id="peer2-explain" class="gw-answer" style="border-left:4px solid var(--xdf-gold);padding:14px 18px">
+    <b>💡 词汇提示：</b>邻里关系现状（住得近却不认识）→ 绿化空间提供共同场所（见面、放松、自然交流）
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer2-explain-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer2-explain-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Explain:</b><br>In many neighbourhoods, people may live close together, but they do not really know their neighbours. Green spaces give people a shared place to meet, relax and interact naturally.</div>
+  </div>
+  <div id="peer2-example" class="gw-answer" style="border-left:4px solid var(--xdf-green);padding:14px 18px">
+    <b>💡 词汇提示：</b>不同年龄段的具体例子（家长陪孩子、青少年聊天、长者休息运动交谈）
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer2-example-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer2-example-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Example:</b><br>For example, parents can spend meaningful time with their children, teenagers can chat with friends after school, and elderly residents can sit, exercise and talk to neighbours.</div>
+  </div>
+  <div id="peer2-result" class="gw-answer" style="border-left:4px solid var(--xdf-blue);padding:14px 18px">
+    <b>💡 词汇提示：</b>共用空间→熟悉信任→社区归属感
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer2-result-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer2-result-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Result:</b><br>When people of different ages regularly share the same space, they gradually become familiar with one another and develop trust. In this way, green spaces can bring neighbours closer and help people feel that they belong to the same community.</div>
+  </div>
+</div>
+</section><section class="slide" data-title="📝 主体段3 · 可持续发展">
+<p class="sec-label">Section 8 · Body Paragraph 3</p>
+<h2 class="slide-h2">📝 主体段3：可持续发展</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">Homework — 根据提示完成主体段3。点击下方按钮查看词汇提示：</p>
+<div class="gw-card">
+  <div class="gw-main-idea">📌 PEER 提示：<br>• <b>Point</b>: 抛出论点，绿化空间的第三个好处——可持续发展的环境<br>• <b>Explain</b>: 为什么植被有利于环境保护？<br>• <b>Example</b>: 有什么例子可以体现植被对环境的作用？（过滤空气、绿荫乘凉、防涝）<br>• <b>Result</b>: 回扣论点</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    <button class="ce-btn" onclick="revealPeerHint('peer3-point','peer3-point-full')">P · Point</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer3-explain','peer3-explain-full')">E · Explain</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer3-example','peer3-example-full')">E · Example</button>
+    <button class="ce-btn" onclick="revealPeerHint('peer3-result','peer3-result-full')">R · Result</button>
+  </div>
+  <div id="peer3-point" class="gw-answer" style="border-left:4px solid var(--xdf-red);padding:14px 18px">
+    <b>💡 词汇提示：</b>更健康、更具可持续性的城市 (healthier and more sustainable)
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer3-point-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer3-point-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Point:</b><br>Third, green spaces make our city healthier and more sustainable.</div>
+  </div>
+  <div id="peer3-explain" class="gw-answer" style="border-left:4px solid var(--xdf-gold);padding:14px 18px">
+    <b>💡 词汇提示：</b>改善城市环境、减少环境问题对日常生活的影响
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer3-explain-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer3-explain-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Explain:</b><br>This is because they help improve the urban environment and reduce the impact of environmental problems on our daily lives.</div>
+  </div>
+  <div id="peer3-example" class="gw-answer" style="border-left:4px solid var(--xdf-green);padding:14px 18px">
+    <b>💡 词汇提示：</b>过滤空气污染物、提供绿荫降温、吸收雨水防涝
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer3-example-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer3-example-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Example:</b><br>Trees and plants can filter dust and pollutants from the air, so residents can enjoy a cleaner living environment. They also provide shade and help cool down streets during hot summer days. During heavy rain, green spaces can absorb rainwater, reducing pressure on drainage systems and lowering the risk of flooding.</div>
+  </div>
+  <div id="peer3-result" class="gw-answer" style="border-left:4px solid var(--xdf-blue);padding:14px 18px">
+    <b>💡 词汇提示：</b>回扣论点——创造更清洁、凉爽、安全的城市
+    <button class="ce-btn" style="margin-top:8px;font-size:16px" onclick="document.getElementById('peer3-result-full').classList.toggle('show')">📖 查看英文全句</button>
+    <div id="peer3-result-full" class="ce-en" style="margin-top:6px;font-size:17px"><b>Result:</b><br>These benefits may not seem obvious at first, but they matter to every resident because they help create a cleaner, cooler and safer city for all of us.</div>
+  </div>
+</div>
+</section><section class="slide" data-title="✍️ 主体段4 · 反驳反方">
+<p class="sec-label">Section 9 · Counter-argument & Rebuttal</p>
+<h2 class="slide-h2">✍️ Task 9A：完成反驳段</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px">根据括号中的提示，点击 ______ 揭晓答案：</p>
+<div style="background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;font-size:19px;line-height:2.2">
+  <p style="margin-bottom:10px"><b>P5 — 主体段4 · 反方观点与反驳</b></p>
+  <p>Some people may argue that children's playgrounds are important because children need places to play and exercise outdoors. This is a fair point because outdoor play can <span class="cloze" onclick="revealCloze(this)" data-answer="help children stay active and develop social skills">______</span> (帮助儿童保持活跃，并培养社交能力).</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="However, this does not mean that playgrounds should be developed more than green spaces">______</span> (然而，这并不意味着我们应该优先发展游乐场，而不是绿化空间). When land in Hong Kong is so limited, it is only fair to choose the option that benefits the whole community.</p>
+  <p>Children's playgrounds <span class="cloze" onclick="revealCloze(this)" data-answer="mainly serve young children and parents">______</span> (主要供年幼儿童及其家长使用), and they are mainly designed for play. They also require <span class="cloze" onclick="revealCloze(this)" data-answer="regular maintenance and supervision">______</span> (定期维护和管理) to remain safe.</p>
+  <p>Green spaces are different. <span class="cloze" onclick="revealCloze(this)" data-answer="They can be used by children, teenagers, adults and the elderly in different ways">______</span> (儿童、青少年、成年人和长者都可以以不同方式使用这些绿化空间). <span class="cloze" onclick="revealCloze(this)" data-answer="They are more flexible, more inclusive and more beneficial to the community as a whole">______</span> (它们更具灵活性、更具包容性，也能为整个社区带来更大的益处).</p>
+</div>
+<button class="ce-btn" style="margin-top:12px" onclick="document.getElementById('s16-full').classList.toggle('show')">📖 查看完整主体段4</button>
+<div id="s16-full" class="ce-en" style="line-height:2">
+  Some people may argue that children's playgrounds are important because children need places to play and exercise outdoors. This is a fair point because outdoor play can help children stay active and develop social skills. However, this does not mean that playgrounds should be developed more than green spaces. When land in Hong Kong is so limited, it is only fair to choose the option that benefits the whole community. Children's playgrounds mainly serve young children and parents, and they are mainly designed for play. They also require regular maintenance and supervision to remain safe. Green spaces are different. They can be used by children, teenagers, adults and the elderly in different ways. They are more flexible, more inclusive and more beneficial to the community as a whole.
+</div>
+</section><section class="slide" data-title="🤔 反驳逻辑与方法">
+<p class="sec-label">Section 9 · Rebuttal Logic</p>
+<h2 class="slide-h2">🤔 思考9.1 + 反驳方法</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px"><b>思考9.1：将以下5个步骤拖拽排列成正确顺序</b>（拖拽条目调整位置）</p>
+<div id="sort-items" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+<button class="ce-btn" onclick="checkSort()">✅ 检查排序</button>
+<button class="ce-btn hint-btn" onclick="resetSort()">↺ 重新排列</button>
+<div id="sort-feedback" class="ce-en" style="margin-top:8px"></div>
+
+<div style="margin-top:18px;border-top:1px solid var(--card-bd);padding-top:14px">
+<p style="font-size:18px;color:var(--text-2);margin-bottom:8px"><b>反驳反方的两种常用方法：</b></p>
+<button class="ce-btn" onclick="var a=document.getElementById('rebuttal-methods');a.classList.toggle('show')">📖 先思考，再点击查看方法</button>
+<div id="rebuttal-methods" class="ce-en" style="padding:14px 0">
+<div class="split-compare" style="grid-template-columns:1fr 1fr;gap:16px">
+  <div style="padding:16px 20px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)">
+    <div style="font-size:17px;font-weight:700;color:#e53935;margin-bottom:8px">方法1：降低反方重要性</div>
+    <ul style="font-size:16px;line-height:1.8;padding-left:18px;margin-top:6px">
+      <li>对方影响有限/对方也有问题</li>
+      <li>对方问题可以解决</li>
+      <li>非必须</li>
+    </ul>
+    <p style="font-size:15px;margin-top:6px;color:var(--text-2);background:#fafafa;padding:6px 10px;border-radius:6px"><b>举例：</b>children need to play → 对方也有问题 (limited to a particular age group, require maintenance) → 非必须 (does not necessarily mean developing more playgrounds)</p>
+  </div>
+  <div style="padding:16px 20px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)">
+    <div style="font-size:17px;font-weight:700;color:var(--xdf-green);margin-bottom:8px">方法2：与我方对比</div>
+    <ul style="font-size:16px;line-height:1.8;padding-left:18px;margin-top:6px">
+      <li>我方好处更多/影响更大</li>
+    </ul>
+    <p style="font-size:15px;margin-top:6px;color:var(--text-2);background:#fafafa;padding:6px 10px;border-radius:6px"><b>举例：</b>green spaces → benefit people of different age groups → require less maintenance</p>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="✍️ 结尾段">
+<p class="sec-label">Section 10 · Ending Paragraph</p>
+<h2 class="slide-h2">✍️ 结尾段 + Task 10A</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:12px"><b>结尾段思路：</b></p>
+<div class="notes-box" style="font-size:18px;margin-bottom:16px">
+  <b>📝 结尾段三步法：</b><br>
+  1. （optional）点明辩题的意义<br>
+  2. 总结分论点<br>
+  3. 重申立场
+</div>
+<div style="background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;font-size:20px;line-height:2.2">
+  <p style="margin-bottom:10px"><b>P6 — 结尾段</b></p>
+  <p>To conclude, this debate is about making the best use of our limited urban land. A playground may serve one group well, but a green space can serve all of us.</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="It protects our health, connects our community and improves our environment">______</span> (绿化空间能够保障我们的健康、凝聚社区，并改善环境).</p>
+  <p><span class="cloze" onclick="revealCloze(this)" data-answer="That is why we strongly believe that green spaces should be developed more than children's playgrounds">______</span> (因此，我们坚信应优先发展绿化空间，而不是儿童游乐场).</p>
+</div>
+<button class="ce-btn" style="margin-top:12px" onclick="document.getElementById('s18-full').classList.toggle('show')">📖 查看完整结尾段</button>
+<div id="s18-full" class="ce-en" style="line-height:2">
+  To conclude, this debate is about making the best use of our limited urban land. A playground may serve one group well, but a green space can serve all of us. It protects our health, connects our community and improves our environment. That is why we strongly believe that green spaces should be developed more than children's playgrounds.
+</div>
+</section><section class="slide" data-title="📝 作业">
+<p class="sec-label">Section 11 · Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成主体段3</h4>
+  <p>见讲义 Part 8 — 可持续发展。参考写作提示，用 PEER 结构完成第三主体段。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 背诵开头段句式</h4>
+  <p>熟练掌握三种重申辩题句式、三种总结立场句式、两种总结论点句式。</p>
+</div>
+<div class="hw-card">
+  <h4>3. 复习对比表格</h4>
+  <p>掌握 Debate Speech vs Argumentative Essay 的五大差异。</p>
+</div>
+</section><section class="slide" data-title="📋 总结 · 知识清单">
+<p class="sec-label">Section 12 · Summary</p>
+<h2 class="slide-h2">🎯 知识清单 Check Your Learning</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:14px">今天我们完成了 debate speech 的学习，请对照以下清单回顾：</p>
+<div class="card accent" style="margin-bottom:12px">
+  <h4>● 文体认知 Genre Awareness</h4>
+  <p>了解 debate speech 的基本特点：明确立场、充分理由、回应反方并反驳；说服现场听众，措辞口语化，简短有力</p>
+</div>
+<div class="card accent" style="margin-bottom:12px;border-left-color:var(--xdf-gold)">
+  <h4>● 文章结构 Overall Structure</h4>
+  <p>Opening → Support 1 → Support 2 → Support 3 → Counter-argument & Rebuttal → Conclusion</p>
+</div>
+<div class="card accent" style="margin-bottom:12px;border-left-color:var(--xdf-blue)">
+  <h4>● 段落结构 PEER</h4>
+  <p>Point → Explain → Example → Result 展开主体段。可合并或增补，如一句话中结合 explain+example</p>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s20-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div id="s20-exp" class="ce-en" style="line-height:2">
+  <b>常用表达 Useful Expressions：</b><br>
+  1. Good morning / afternoon, everyone / ladies and gentlemen.<br>
+  2. Good morning / afternoon, Mr. / Madam Chairperson, respected judges, honorable opponents, and fellow classmates.<br>
+  3. The topic before us today is …<br>
+  4. Today's motion concerns the question of …<br>
+  5. The issue we are debating today is …<br>
+  6. In summary, our arguments have shown that 题目给定的立场<br>
+  7. In light of the evidence discussed, we maintain that …<br>
+  8. After considering all the arguments presented today, it is evident that …<br>
+  9. It/They/具体话题关键词 contribute(s) to 概括分论点1，2，3<br>
+  10. From 概括分论点1 to 概括分论点2 and 概括分论点3, it/they/具体话题关键词 bring(s) undeniable benefits.
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">附录 · Model Answer</p>
+<h2 class="slide-h2">📝 范文 Debate Speech</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:6px">Task: Write a debate speech arguing that green spaces should be developed more than children's playgrounds.</p>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:2.1;font-size:18px">
+  <p style="margin-bottom:12px"><b style="font-size:20px">Debate Speech: Green Spaces vs Children's Playgrounds</b></p>
+  <p style="margin-bottom:10px">Good afternoon, everyone,</p>
+  <p style="margin-bottom:10px">The topic before us today is how limited urban land should be used. In light of the evidence discussed, our team firmly believes that green spaces should be developed more than children's playgrounds. They <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">protect our health</span>, <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">bring people together</span> and <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">make our city more sustainable</span>.</p>
+  <p style="margin-bottom:10px">First, green spaces are <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">essential to public health</span>. In a fast-paced city like Hong Kong, many of us study or work for long hours and <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">face constant pressure</span>. Green spaces can help relieve this pressure through the well-known <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">"twenty-minute park effect"</span>. Residents can take a short walk under the trees, look at flowers and plants, or simply enjoy the natural surroundings in a nearby park. Spending around twenty minutes in a green environment can help <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">lower stress and calm the mind</span>. As a result, regular contact with nature can <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">improve our physical health and mental well-being</span>.</p>
+  <p style="margin-bottom:10px">Second, green spaces help <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">strengthen family and community relationships</span>. In many neighbourhoods, people may live close together, but they do not really know their neighbours. Green spaces give people <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">a shared place to meet, relax and interact naturally</span>. For example, parents can spend meaningful time with their children, teenagers can chat with friends after school, and elderly residents can sit, exercise and talk to neighbours. When people of different ages regularly share the same space, they gradually become familiar with one another and develop trust. In this way, green spaces can bring neighbours closer and help people feel that <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">they belong to the same community</span>.</p>
+  <p style="margin-bottom:10px">Third, green spaces <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">make our city healthier and more sustainable</span>. This is because they help improve the urban environment and reduce the impact of environmental problems on our daily lives. Trees and plants can <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">filter dust and pollutants from the air</span>, so residents can enjoy a cleaner living environment. They also provide shade and help cool down streets during hot summer days. During heavy rain, green spaces can absorb rainwater, reducing pressure on drainage systems and lowering the risk of flooding. These benefits may not seem obvious at first, but they matter to every resident because they help create <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">a cleaner, cooler and safer city for all of us</span>.</p>
+  <p style="margin-bottom:10px">Some people may argue that children's playgrounds are important because children need places to play and exercise outdoors. This is a fair point because outdoor play can <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">help children stay active and develop social skills</span>. However, this does not mean that playgrounds should be developed more than green spaces. When land in Hong Kong is so limited, it is only fair to choose the option that benefits the whole community. Children's playgrounds <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">mainly serve young children and parents</span>, and they are mainly designed for play. They also require <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">regular maintenance and supervision</span> to remain safe. Green spaces are different. They can be used by children, teenagers, adults and the elderly in different ways. They are <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">more flexible, more inclusive and more beneficial to the community as a whole</span>.</p>
+  <p style="margin-bottom:10px">To conclude, this debate is about making the best use of our limited urban land. A playground may serve one group well, but a green space can serve all of us. It <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">protects our health, connects our community and improves our environment</span>. That is why we strongly believe that green spaces should be developed more than children's playgrounds.</p>
+</div>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 6！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：审题分析 → 通用论点 → 文章结构 → 开头段句式 → PEER论证 → 主体段写作 → 反驳反方 → 结尾段 → 范文赏析</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// ── Tone multi-select quiz ──
+var toneAnswered=false;
+function toggleTone(el){
+  if(toneAnswered)return;
+  el.classList.toggle('chosen');
+}
+function checkTone(){
+  if(toneAnswered)return;
+  var opts=document.querySelectorAll('#tone-opts .quiz-opt');
+  var correctSet={0:true,1:true,3:true, 2:false,4:false}; // logical, engaging, persuasive = correct; neutral, vivid and descriptive = wrong
+  toneAnswered=true;
+  var allRight=true;
+  opts.forEach(function(o,i){
+    var isChosen=o.classList.contains('chosen');
+    var shouldBeChosen=correctSet[i];
+    if(isChosen&&shouldBeChosen){
+      o.classList.add('correct');
+    }else if(!isChosen&&!shouldBeChosen){
+      o.classList.add('correct');
+    }else{
+      allRight=false;
+      if(isChosen&&!shouldBeChosen) o.classList.add('wrong');
+      if(!isChosen&&shouldBeChosen) o.classList.add('wrong');
+    }
+  });
+  var ans=document.getElementById('tone-ans');
+  ans.style.display='block';
+}
+// ── Think question: text input + submit ──
+function submitThink(prefix){
+  var input=document.getElementById(prefix+'-input');
+  var fb=document.getElementById(prefix+'-fb');
+  var ans=document.getElementById(prefix+'-ans');
+  var text=input.value.trim();
+  if(!text){
+    fb.textContent='⚠️ 请先输入你的思考';
+    return;
+  }
+  fb.textContent='✅ 已提交！请对照参考答案';
+  ans.style.display='block';
+  input.disabled=true;
+}
+// ── Compare sentence: click to pick ──
+function pickCompare(groupId,isCorrect,reason){
+  var container=document.getElementById(groupId);
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.compare-opt');
+  opts.forEach(function(o){o.style.cursor='default';});
+  if(isCorrect){
+    opts[0].style.background='#FFF5F5';
+    opts[0].style.borderColor='rgba(229,57,53,.3)';
+    opts[1].style.background='var(--xdf-gp)';
+    opts[1].style.borderColor='var(--xdf-green)';
+  }else{
+    opts[0].style.background='var(--xdf-gp)';
+    opts[0].style.borderColor='var(--xdf-green)';
+    opts[1].style.background='#FFF5F5';
+    opts[1].style.borderColor='rgba(229,57,53,.3)';
+  }
+  var reasonDiv=document.getElementById(groupId+'-reason');
+  reasonDiv.textContent=reason;
+  reasonDiv.style.display='block';
+}
+// ── Reveal PEER hint first, full sentence on demand ──
+function revealPeerHint(hintId, fullId){
+  var hintEl=document.getElementById(hintId);
+  hintEl.classList.toggle('show');
+  // When hiding the hint, also hide the full sentence
+  if(!hintEl.classList.contains('show')){
+    var fullEl=document.getElementById(fullId);
+    if(fullEl)fullEl.classList.remove('show');
+  }
+}
+// ── Drag-and-drop sorting for 思考9.1 ──
+var sortData=[
+  {text:'引出反方观点',correct:1},
+  {text:'承认其合理性',correct:2},
+  {text:'反驳说明其非必要性',correct:3},
+  {text:'列举其缺点',correct:4},
+  {text:'对比论述我方优点更多',correct:5}
+];
+var sortOrder=[];
+var dragSrcIdx=null;
+function shuffleArr(a){
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+function initSort(){
+  sortOrder=sortData.map(function(_,i){return i});
+  shuffleArr(sortOrder);
+  renderSort();
+}
+function renderSort(){
+  var container=document.getElementById('sort-items');
+  container.innerHTML='';
+  sortOrder.forEach(function(idx,i){
+    var item=document.createElement('div');
+    item.className='card';
+    item.draggable=true;
+    item.dataset.pos=i;
+    item.style.cssText='display:flex;align-items:center;gap:12px;padding:12px 18px;cursor:grab;border-left:4px solid var(--xdf-green);margin:0';
+    var numSpan=document.createElement('span');
+    numSpan.style.cssText='width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0';
+    numSpan.textContent=i+1;
+    item.appendChild(numSpan);
+    var textSpan=document.createElement('span');
+    textSpan.style.cssText='font-size:17px;font-weight:600;color:var(--text-1)';
+    textSpan.textContent=sortData[idx].text;
+    item.appendChild(textSpan);
+    item.addEventListener('dragstart',function(e){dragSrcIdx=parseInt(this.dataset.pos);this.style.opacity='0.4';e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text','d')});
+    item.addEventListener('dragend',function(e){this.style.opacity='1';dragSrcIdx=null});
+    item.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move'});
+    item.addEventListener('drop',function(e){
+      e.preventDefault();var toIdx=parseInt(this.dataset.pos);
+      if(dragSrcIdx===null||dragSrcIdx===toIdx)return;
+      var val=sortOrder.splice(dragSrcIdx,1)[0];
+      sortOrder.splice(toIdx,0,val);dragSrcIdx=null;renderSort();
+    });
+    container.appendChild(item);
+  });
+  document.getElementById('sort-feedback').classList.remove('show');
+  document.getElementById('sort-feedback').textContent='';
+}
+function checkSort(){
+  var correct=true;
+  sortOrder.forEach(function(idx,i){
+    if(sortData[idx].correct!==i+1)correct=false;
+  });
+  var fb=document.getElementById('sort-feedback');
+  fb.classList.add('show');
+  if(correct){
+    fb.innerHTML='✅ <b>完全正确！</b>反驳的逻辑顺序是：引出反方观点 → 承认其合理性 → 反驳说明其非必要性 → 列举其缺点 → 对比论述我方优点更多';
+    fb.style.borderColor='var(--xdf-green)';
+  }else{
+    fb.innerHTML='❌ 顺序有误，请重新排列。正确顺序为：<b>引出反方观点</b> → <b>承认其合理性</b> → <b>反驳说明其非必要性</b> → <b>列举其缺点</b> → <b>对比论述我方优点更多</b>';
+    fb.style.borderColor='var(--xdf-red)';
+  }
+}
+function resetSort(){
+  initSort();
+}
+document.addEventListener('DOMContentLoaded',function(){initSort();initMatch();setupDropZones();});
+// ── Purpose multi-select quiz (slide 3) ──
+var purposeAnswered=false;
+function togglePurpose(el){
+  if(purposeAnswered)return;
+  el.classList.toggle('chosen');
+}
+function checkPurpose(){
+  if(purposeAnswered)return;
+  var opts=document.querySelectorAll('#purpose-opts .quiz-opt');
+  var correctSet=[true,true,true,true,false,false,false];
+  purposeAnswered=true;
+  var allRight=true;
+  opts.forEach(function(o,i){
+    var isChosen=o.classList.contains('chosen');
+    var shouldBeChosen=correctSet[i];
+    if(isChosen&&shouldBeChosen){
+      o.classList.add('correct');
+    }else if(!isChosen&&!shouldBeChosen){
+      o.classList.add('correct');
+    }else{
+      allRight=false;
+      if(isChosen&&!shouldBeChosen)o.classList.add('wrong');
+      if(!isChosen&&shouldBeChosen)o.classList.add('wrong');
+    }
+  });
+  var ans=document.getElementById('purpose-ans');
+  ans.style.display='block';
+}
+// ── Drag-and-drop matching (slide 13) ──
+var matchData=[
+  {dim:'写作目的',debate:'说服现场听众支持己方立场',essay:'通过逻辑分析说服读者'},
+  {dim:'语气',debate:'较直接、有感染力、有号召性',essay:'较客观、冷静、学术化'},
+  {dim:'人称',debate:'常用 we, us, our, you',essay:'多用第三人称；避免 we/us'},
+  {dim:'用词特征',debate:'较生活化、较口语化',essay:'较正式、较书面化'},
+  {dim:'与受众互动',debate:'强，常拉近距离、引起共鸣',essay:'弱，以客观分析为主'}
+];
+var matchItems=[];
+var matchAnswered=false;
+function initMatch(){
+  matchAnswered=false;
+  matchItems=[];
+  for(var i=0;i<matchData.length;i++){
+    matchItems.push({id:'m'+i+'d',text:matchData[i].debate,row:i,col:'debate'});
+    matchItems.push({id:'m'+i+'e',text:matchData[i].essay,row:i,col:'essay'});
+  }
+  shuffleArr(matchItems);
+  var pool=document.getElementById('match-pool');
+  if(!pool)return;
+  pool.innerHTML='';
+  matchItems.forEach(function(item){pool.appendChild(createMatchItem(item));});
+  document.querySelectorAll('.match-table .drop-zone').forEach(function(z){z.innerHTML='';z.classList.remove('correct','wrong','drag-over');});
+  var fb=document.getElementById('match-feedback');
+  if(fb){fb.classList.remove('show');fb.textContent='';}
+}
+function createMatchItem(item){
+  var el=document.createElement('div');
+  el.className='match-item';
+  el.draggable=true;
+  el.dataset.id=item.id;
+  el.textContent=item.text;
+  el.addEventListener('dragstart',function(e){e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',item.id);this.classList.add('dragging');});
+  el.addEventListener('dragend',function(e){this.classList.remove('dragging');});
+  return el;
+}
+function setupDropZones(){
+  document.querySelectorAll('.match-table .drop-zone').forEach(function(zone){
+    zone.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';this.classList.add('drag-over');});
+    zone.addEventListener('dragleave',function(e){this.classList.remove('drag-over');});
+    zone.addEventListener('drop',function(e){
+      e.preventDefault();this.classList.remove('drag-over');
+      if(matchAnswered)return;
+      var itemId=e.dataTransfer.getData('text/plain');
+      var draggedEl=document.querySelector('.match-item[data-id="'+itemId+'"]');
+      if(!draggedEl)return;
+      var existing=this.querySelector('.match-item');
+      if(existing&&existing!==draggedEl){document.getElementById('match-pool').appendChild(existing);}
+      this.appendChild(draggedEl);
+      clearMatchFeedback();
+    });
+  });
+  var pool=document.getElementById('match-pool');
+  if(pool){
+    pool.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';});
+    pool.addEventListener('drop',function(e){
+      e.preventDefault();
+      if(matchAnswered)return;
+      var itemId=e.dataTransfer.getData('text/plain');
+      var draggedEl=document.querySelector('.match-item[data-id="'+itemId+'"]');
+      if(!draggedEl)return;
+      pool.appendChild(draggedEl);
+      clearMatchFeedback();
+    });
+  }
+}
+function clearMatchFeedback(){
+  var fb=document.getElementById('match-feedback');
+  if(fb){fb.classList.remove('show');fb.textContent='';}
+  document.querySelectorAll('.match-table .drop-zone').forEach(function(z){z.classList.remove('correct','wrong');});
+  document.querySelectorAll('.match-item').forEach(function(el){el.classList.remove('correct','wrong');});
+}
+function checkMatch(){
+  if(matchAnswered)return;
+  var allCorrect=true;var allFilled=true;
+  document.querySelectorAll('.match-table .drop-zone').forEach(function(zone){
+    var item=zone.querySelector('.match-item');
+    if(!item){allFilled=false;zone.classList.add('wrong');return;}
+    var itemId=item.dataset.id;var matchItem=null;
+    for(var j=0;j<matchItems.length;j++){if(matchItems[j].id===itemId){matchItem=matchItems[j];break;}}
+    if(!matchItem)return;
+    var expectedRow=parseInt(zone.dataset.row);var expectedCol=zone.dataset.col;
+    if(matchItem.row===expectedRow&&matchItem.col===expectedCol){
+      zone.classList.add('correct');item.classList.add('correct');
+    }else{
+      zone.classList.add('wrong');item.classList.add('wrong');allCorrect=false;
+    }
+  });
+  var fb=document.getElementById('match-feedback');
+  fb.classList.add('show');
+  if(!allFilled){
+    fb.innerHTML='⚠️ 还有空格未填，请将所有描述拖到对应的格子里。';
+    fb.style.borderColor='var(--xdf-gold)';
+    setTimeout(function(){document.querySelectorAll('.match-table .drop-zone.wrong').forEach(function(z){if(!z.querySelector('.match-item'))z.classList.remove('wrong');});},1500);
+  }else if(allCorrect){
+    fb.innerHTML='✅ <b>全部正确！</b>你已经掌握了 Debate Speech 和 Argumentative Essay 的区别。';
+    fb.style.borderColor='var(--xdf-green)';matchAnswered=true;
+  }else{
+    fb.innerHTML='❌ 部分匹配有误（红色格子位置不对），请调整后重试。';
+    fb.style.borderColor='var(--xdf-red)';
+  }
+}
+function resetMatch(){
+  matchAnswered=false;
+  document.querySelectorAll('.match-table .drop-zone .match-item').forEach(function(el){document.getElementById('match-pool').appendChild(el);});
+  document.querySelectorAll('.match-table .drop-zone').forEach(function(z){z.classList.remove('correct','wrong','drag-over');});
+  document.querySelectorAll('.match-item').forEach(function(el){el.classList.remove('correct','wrong');});
+  var pool=document.getElementById('match-pool');var items=Array.from(pool.children);shuffleArr(items);pool.innerHTML='';items.forEach(function(el){pool.appendChild(el);});
+  var fb=document.getElementById('match-feedback');if(fb){fb.classList.remove('show');fb.textContent='';}
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u6',weakKey:'general',mode:'quiz'};</script>
+</body></html>

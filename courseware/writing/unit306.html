@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 6 · Science, Technology, and What Lies Ahead · 加速班写作课 | 陈成寓 George</title>
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+
+</style>
+</head><body>
+
+<div class="topbar">
+  <span class="course-tag">加速班·Unit6</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck">
+<section class="slide" data-title="封面 · Unit 6">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">G</div>
+      <div class="tb-name">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">加速班</div>
+  </div>
+  <div class="slide-h1">Science, Technology,<br><span class="accent">and What Lies Ahead</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Completing Texts &amp; The Four-Step Writing Process</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 6 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">多种文体</div><div class="sm-sub">Speech · Story · Article · Debate · Essay</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Science &amp; Technology</div><div class="sm-sub">Technology, Robots, Inventions, Space</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">200–400 words</div><div class="sm-sub">Part A + Part B</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">补全文章</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">四步写作流程</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">审题+范文精讲</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">课后作业</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>加速班 · 写作课</span></div>
+</div></div>
+</section>
+<section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Learning Objectives</p>
+<h2 class="slide-h2">🎯 本课学习目标</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>① 掌握补全文章技巧</h4>
+    <p>学会审题、识别文体与语气，准确补全 Part A 缺失部分（Completing a Text）</p>
+  </div>
+  <div class="card accent">
+    <h4>② 掌握四步写作流程</h4>
+    <p>Plan → Organize → Draft → Revise，用一套流程应对任何文体</p>
+  </div>
+  <div class="card accent">
+    <h4>③ 审题 5 个 Practice Paper 文体</h4>
+    <p>speech / short story / magazine article / debate speech / argumentative essay 逐一攻克</p>
+  </div>
+  <div class="card accent">
+    <h4>④ 精读 5 篇范文 + 积累词伙</h4>
+    <p>逐句翻译 + 中英词伙积累，从输入到输出完整训练</p>
+  </div>
+</div>
+</section>
+<section class="slide" data-title="📖 什么是补全文章">
+<p class="sec-label">Skill 1 · Completing a Text</p>
+<h2 class="slide-h2">📖 什么是补全文章？</h2>
+<div class="card" style="margin-top:10px">
+  <p style="font-size:21px;line-height:2">在 HKDSE Paper 2 的 <b>Part A</b>，你可能会被要求<b>补全一篇未写完的文章</b>。补全时，你必须仔细阅读：</p>
+</div>
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>① 题目里的说明 (instructions)</h4><p>题目告诉你要写什么、哪些必须写、哪些可选。</p></div>
+  <div class="card accent"><h4>② 已给出的文字 (the text)</h4><p>已给文字决定了文体、语气和上下文逻辑，补齐部分要与之衔接。</p></div>
+</div>
+<div class="notes-box"><b>📖 引导语：</b>补全文章 = 读懂题目 + 读懂已给文字 + 判断文体与语气，然后补齐缺失部分。常见于 Part A。</div>
+</section>
+<section class="slide" data-title="📋 审题要点">
+<p class="sec-label">Skill 1 · Instructions</p>
+<h2 class="slide-h2">📋 审题要点：must / should / may</h2>
+<div class="notes-box"><b>📝 引导语：</b>先圈出题目里的 <b>must / should / may</b>——它们决定你哪些内容必须写、哪些可选。</div>
+
+<table class="rule-table">
+  <tr><th style="width:42%">说明类型</th><th>含义（点击空格揭晓）</th></tr>
+  <tr><td class="col-type">You <b>must</b> use/include...<br>Make sure you state why...</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="强制要求，必须包含指定信息">______</span></td></tr>
+  <tr><td class="col-type">You <b>should</b> use/include...</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="建议要求，应当包含">______</span></td></tr>
+  <tr><td class="col-type">You <b>may</b> include... / You <b>can</b> include...</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="可选内容，可自行决定是否包含">______</span></td></tr>
+</table>
+<div class="notes-box"><b>💡 引导语：</b>补全前先想清楚：这一空是<b>必须写</b>、<b>应该写</b>，还是<b>可写可不写</b>？别漏掉 must 项，也别浪费篇幅在 may 项上。</div>
+</section>
+<section class="slide" data-title="🎭 识别文体">
+<p class="sec-label">Skill 1 · Text Types</p>
+<h2 class="slide-h2">🎭 识别文体：判断 Purpose 与 Tone</h2>
+<div class="notes-box"><b>🎯 引导语：</b>识别文体后，就知道写作目的（purpose）和语气（tone）是什么——这是补全文章的关键。</div>
+
+<p style="font-size:20px;color:var(--text-2);margin-bottom:10px">逐条揭晓每个文本类型的目的与语气 →</p>
+<div class="ce-item"><div class="ce-cn"><b>一个邀请你参加生日派对的 email（写给朋友）</b></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Purpose = informing and inviting（告知并邀请）<br>Tone = informal（非正式）</div></div>
+<div class="ce-item"><div class="ce-cn"><b>邀请一位现代科技教授来「现代科技社」演讲的 email</b></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Purpose = informing and inviting（告知并邀请）<br>Tone = formal（正式）</div></div>
+<div class="ce-item"><div class="ce-cn"><b>介绍新社团「青年科学家」并说明会议详情的 poster</b></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Purpose = informing and persuading（告知并劝说）<br>Tone = 正式与非正式混合</div></div>
+<div class="ce-item"><div class="ce-cn"><b>介绍天文社新购望远镜（全体会员可用）的 leaflet</b></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Purpose = informing（告知）<br>Tone = 正式与非正式混合</div></div>
+</section>
+<section class="slide" data-title="🔢 Part B 选题四步法">
+<p class="sec-label">Skill 1 · Choosing a Question</p>
+<h2 class="slide-h2">🔢 Part B 选题四步法</h2>
+<div class="notes-box"><b>💡 引导语：</b>Part B 有 <b>8 题</b>可选，用这四步快速锁定最有把握的一题。</div>
+
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>Step 1 · Read</h4><p>仔细阅读每一道题目。</p></div>
+  <div class="card accent"><h4>Step 2 · Identify</h4><p>锁定你正在考虑作答的那一题。</p></div>
+  <div class="card accent"><h4>Step 3 · Decide</h4><p>确定：① 要写什么文体 ② 能否围绕主题写出约 400 词。</p></div>
+  <div class="card accent"><h4>Step 4 · Begin</h4><p>开始你的写作流程。</p></div>
+</div>
+<div class="notes-box"><b>⚠️ 引导语：</b>选题别只看题目「好不好写」，要问自己：<b>这个文体我熟不熟？</b><b>这个主题我有话可说吗？</b></div>
+</section>
+<section class="slide" data-title="✍️ 四步写作流程总览">
+<p class="sec-label">Skill 2 · Writing Process</p>
+<h2 class="slide-h2">✍️ 四步写作流程总览</h2>
+<div class="notes-box"><b>📝 引导语：</b>有效的写作流程让你的文章<b>逻辑清晰、结构完整</b>。四步缺一不可。</div>
+
+<div class="timeline-row mt-m">
+  <div class="tl-seg c1"><div class="seg-ph">Step 1</div><div class="seg-name">Plan 构思</div></div>
+  <div class="tl-seg c2"><div class="seg-ph">Step 2</div><div class="seg-name">Organize 组织</div></div>
+  <div class="tl-seg c3"><div class="seg-ph">Step 3</div><div class="seg-name">Draft 起草</div></div>
+  <div class="tl-seg c4"><div class="seg-ph">Step 4</div><div class="seg-name">Revise 修改</div></div>
+</div>
+<div class="grid g2 mt-l">
+  <div class="card accent"><h4>📐 Plan</h4><p>用词和短语 + 思维导图整理思路，别写完整句子。</p></div>
+  <div class="card accent"><h4>🗂️ Organize</h4><p>按逻辑排序、删除无关、补充遗漏。</p></div>
+  <div class="card accent"><h4>📝 Draft</h4><p>直接写在答题纸上，别先写草稿。</p></div>
+  <div class="card accent"><h4>🔍 Revise</h4><p>检查连贯、拼写、词汇、语法、标点。</p></div>
+</div>
+</section>
+<section class="slide" data-title="📐 Plan 构思">
+<p class="sec-label">Skill 2 · Plan</p>
+<h2 class="slide-h2">📐 Plan 构思：不同文体的结构</h2>
+<div class="notes-box"><b>🧠 引导语：</b>构思时只用词和短语，别写完整句子；用思维导图整理思路。</div>
+
+<table class="rule-table">
+  <tr><th style="width:22%">文体</th><th style="width:36%">结构</th><th>内容要点（点击空格揭晓）</th></tr>
+  <tr><td class="col-type">argumentative 议论文</td><td class="col-example">introduction<br>main body<br>conclusion</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="arguments · opinions supported by facts · counter-arguments">______</span></td></tr>
+  <tr><td class="col-type">reports 报告</td><td class="col-example">statement of purpose<br>subheadings &amp; body<br>conclusion (+ recommendations)</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="facts">______</span></td></tr>
+  <tr><td class="col-type">articles 报刊文章</td><td class="col-example">headline<br>body<br>conclusion</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="facts and opinions · quotes">______</span></td></tr>
+  <tr><td class="col-type">proposals 提案</td><td class="col-example">introduction / purpose<br>subheadings &amp; body<br>conclusion &amp; benefits</td>
+      <td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="persuasive language">______</span></td></tr>
+</table>
+</section>
+<section class="slide" data-title="🗂️ Organize 组织">
+<p class="sec-label">Skill 2 · Organize</p>
+<h2 class="slide-h2">🗂️ Organize 组织信息</h2>
+<div class="notes-box"><b>📋 引导语：</b>组织信息时要敢于取舍——删掉无关的，补上遗漏的。</div>
+
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>① group &amp; arrange</h4><p>把信息分组，并<b>按逻辑顺序排列</b>。</p></div>
+  <div class="card accent"><h4>② delete</h4><p><b>删除</b>任何无关内容。</p></div>
+  <div class="card accent"><h4>③ add</h4><p><b>补充</b>你之前可能忘记纳入的要点。</p></div>
+  <div class="card accent"><h4>💡 效果</h4><p>组织得当 → 起草就变得容易多了。</p></div>
+</div>
+</section>
+<section class="slide" data-title="📝 Draft 起草">
+<p class="sec-label">Skill 2 · Draft</p>
+<h2 class="slide-h2">📝 Draft 起草</h2>
+<div class="notes-box"><b>⚠️ 引导语：</b>直接写在答题纸上，别先写草稿——时间不够！</div>
+
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>① 用你的计划</h4><p>起草时照着 Plan 的思路写。</p></div>
+  <div class="card accent"><h4>② 划掉计划</h4><p>写完一段，就把计划里对应的要点划掉。</p></div>
+</div>
+<div class="notes-box mt-m" style="background:#FDECEA;border-color:rgba(192,57,43,.25)">
+  <b style="color:var(--xdf-red)">🚫 重要提示：</b>不要写完整草稿（rough draft）——考试时间不够！<b style="color:var(--xdf-red)">直接写在答题纸上</b>，修改放到 editing 阶段。
+</div>
+<div class="grid g2">
+  <div class="card accent"><h4>tidy 整洁</h4><p>卷面干净。</p></div>
+  <div class="card accent"><h4>legible 清晰</h4><p>字迹清楚。</p></div>
+  <div class="card accent"><h4>paragraphed 分段</h4><p>分段明确。</p></div>
+</div>
+</section>
+<section class="slide" data-title="🔍 Revise & Edit">
+<p class="sec-label">Skill 2 · Revise &amp; Edit</p>
+<h2 class="slide-h2">🔍 Revise &amp; Edit 修改润色</h2>
+<div class="notes-box"><b>✅ 引导语：</b>修改时用<b>一条线</b>划掉多余内容，保持卷面整洁清晰。</div>
+
+<div class="grid g2 mt-m">
+  <div class="card accent"><h4>连贯性 Coherence</h4><p>文章连贯吗？段落有 topic sentence / supporting sentences / conjunctions 吗？</p></div>
+  <div class="card accent"><h4>拼写 Spelling</h4><p>拼写准确吗？有没有用上题目里的词？</p></div>
+  <div class="card accent"><h4>词汇多样性 Vocabulary</h4><p>用词多样吗？避免重复同一个词，重复就换同义词。</p></div>
+  <div class="card accent"><h4>语法 Grammar</h4><p>语法准确吗？先查你最容易出错的语法点。</p></div>
+  <div class="card accent"><h4>标点 Punctuation</h4><p>colons, semicolons, commas, capital letters, full stops, quotation marks 用对了吗？</p></div>
+</div>
+</section>
+<section class="slide" data-title="📋 Practice Paper 总览">
+<p class="sec-label">Practice Paper · Overview</p>
+<h2 class="slide-h2">📋 Practice Paper 总览</h2>
+<div class="notes-box"><b>📌 引导语：</b>2 小时，<b>Part A 必答</b> + <b>Part B 选一题</b>。</div>
+
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)"><h4>Part A · Speech（必答）</h4><p>STEM 展览开幕演讲，约 200 词，补全已给开头。</p></div>
+  <div class="card accent"><h4>Q1 · Short Story</h4><p>「我和陪护机器人的爱恨情仇」，约 400 词。</p></div>
+  <div class="card accent"><h4>Q2 · Magazine Article</h4><p>提名最重要的科学发明（智能手机），约 400 词。</p></div>
+  <div class="card accent"><h4>Q3 · Debate Speech</h4><p>反对「机器人当老师」，约 400 词。</p></div>
+  <div class="card accent"><h4>Q4 · Argumentative Essay</h4><p>太空探索资金 vs 气候救灾，约 400 词。</p></div>
+</div>
+</section>
+<section class="slide" data-title="📋 审题 Part A">
+<p class="sec-label">Part A · Task Analysis</p>
+<h2 class="slide-h2">📋 审题 Part A：STEM 开幕演讲</h2>
+<div class="task-quote">You are the chairperson of your school's STEM Activities Club. You are preparing an opening speech for your club's 'Science and Technology for Better Living' exhibition that features tech-related (STEM) projects by students. Complete the speech.</div>
+<div class="notes-box"><b>📖 引导语：</b>补全 Part A 前，先锁定 Role / Audience / Purpose / Genre / Register 五要素。</div>
+<div class="ce-item"><div class="ce-cn">1. Role（身份）——你是谁？</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">The chairperson of the school's STEM Activities Club（学校 STEM 活动社的主席）</div></div>
+<div class="ce-item"><div class="ce-cn">2. Audience（听众）——说给谁听？</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Principal, distinguished guests, parents, teachers and fellow students（校长、贵宾、家长、老师和同学）</div></div>
+<div class="ce-item"><div class="ce-cn">3. Purpose（目的）——为什么要写？</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">补全开幕演讲：说明展览宗旨（鼓励成为主动创造者，而非被动消费者）+ 解释 STEM 教育为何重要</div></div>
+<div class="ce-item"><div class="ce-cn">4. Genre（文体）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Speech（演讲）—— 需有称呼语、开场白与感谢语</div></div>
+<div class="ce-item"><div class="ce-cn">5. Register（语域）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Formal（正式）—— 对校长和贵宾讲话，语气正式得体</div></div>
+</section>
+<section class="slide" data-title="🧠 Part A 词伙（中→英）"><p class="sec-label">Vocabulary · 词伙</p><h2 class="slide-h2">🧠 Part A 词伙（中→英）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p><div class="notes-box"><b>🧠 引导语：</b>这些词伙都是范文里的「得分词」，先记中文，点击翻面看英文。</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">尖端</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">cutting edge</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">驱动力</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">driving force</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">竞争优势</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">competitive edge</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">合作</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">collaborate</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">创新</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">innovation</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">利用科技</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">harness technology</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">主动创造者</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">active creator</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">被动消费者</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">passive consumer</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">批判性思维</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">critical thinking</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">独立思考</div><div class="flip-hint">STEM</div></div><div class="flip-face flip-back"><div class="flip-ans">independent thinking</div></div></div></div>
+</div></section>
+<section class="slide" data-title="✍️ 范文翻译 Part A（上）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Part A（上）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">STEM 开幕演讲范文 · 第 1–6 句（展览目的 + 项目示例 + 合作）。先看<b style="color:var(--xdf-blue)">中文</b>构思英文，再看<b style="color:var(--xdf-gold)">词伙提示</b>，最后对照<b style="color:var(--xdf-green)">原文</b>。</p><div class="notes-box"><b>📖 引导语：</b>补全部分要先回应题目要求：<b>点明展览目的</b> + <b>举出项目例子</b>，再自然过渡到「合作」。</div>
+<div class="ce-item"><div class="ce-cn"><b>1.</b> 本次展览的目的是展示由学生创作的、与科技相关的项目。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>the purpose of</span><span>showcase</span><span>tech-related projects</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The purpose of this exhibition is to showcase tech-related projects created by students.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>2.</b> 在本次展览中，你将看到与编程、计算机和可持续发展相关的项目示例。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>see examples of</span><span>related to</span><span>sustainability</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">At this exhibition, you will see examples of projects related to coding, computers and sustainability.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>3.</b> 今天这里展出的许多项目，都是学生们相互合作开发出来的。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>have been developed by</span><span>in collaboration with</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Many of the projects here today have been developed by students in collaboration with each other.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>4.</b> STEM 教育和活动促使学生锻炼批判性思维能力，并投身于尖端的科技发展之中。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>challenge students to</span><span>critical thinking skills</span><span>cutting edge developments</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">STEM education and activities challenge students to train their critical thinking skills and get involved in cutting edge developments in science and technology.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>5.</b> 与其盲目跟风，参加这次展览将帮助学生参与创新项目，并了解新的发明。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>rather than</span><span>blindly following trends</span><span>innovative projects</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Rather than blindly following trends, taking part in this exhibition will help students participate in innovative projects and learn about new inventions.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>6.</b> 通过鼓励学生参与原创项目，我们努力培养学生的独立思考能力和创新意识。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>work on original projects</span><span>independent thinking</span><span>sense of innovation</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">By encouraging students to work on original projects, we have tried to develop students' independent thinking and their sense of innovation.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 6 句</p></section>
+<section class="slide" data-title="✍️ 范文翻译 Part A（下）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Part A（下）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">STEM 开幕演讲范文 · 第 7–11 句（STEM 重要性 + 竞争优势 + 收束）。</p><div class="notes-box"><b>📖 引导语：</b>下半段要落到 <b>STEM 教育为何重要</b>：创新思维 → 竞争优势 → 推动科技进步，最后与已给结尾「harness technology」呼应。</div>
+<div class="ce-item"><div class="ce-cn"><b>7.</b> 通常，当我们想到科技时，我们把自己看作消费者，对科技如何发展或改变没有发言权。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>see ourselves as</span><span>have a say over</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Often, when we think about technology, we see ourselves as consumers who do not have a say over how technology is developed or changed.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>8.</b> 通过举办这次展览，我们希望鼓励学生成为未来科技的推动力量。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>by organizing</span><span>encourage...to be</span><span>a driving force</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">By organizing this exhibition, we hope to encourage students to be a driving force in science and technology in the future.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>9.</b> STEM 教育对学生的未来很重要，因为它帮助学生在科技时代获得竞争优势。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>be important for</span><span>gain a competitive edge</span><span>the technological age</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">STEM education is important for students' future as it helps students gain a competitive edge in the technological age.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>10.</b> 几乎没有哪项日常活动不依赖科技，因此学生必须掌握科技技能，而不是仅仅消费现有技术。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>hardly a daily activity</span><span>rely on</span><span>be equipped with</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">There is hardly a daily activity that does not rely on technology, so students must be equipped with technological skills rather than simply consuming current technology.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>11.</b> 拥有创新思维能够帮助学生成为批判性思考者和发明家，为科技的进步作出贡献。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>an innovative mind</span><span>critical thinkers and inventors</span><span>the advancement of</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Having an innovative mind can help students become critical thinkers and inventors who contribute to the advancement of science and technology.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 5 句</p></section>
+<section class="slide" data-title="📋 审题 Q1">
+<p class="sec-label">Part B Q1 · Short Story</p>
+<h2 class="slide-h2">📋 审题 Q1：我和陪护机器人</h2>
+<div class="task-quote">The Sci-fi Club is inviting young writers to submit short stories around the theme: 'My love-hate relationship with my support robot'. Write a short story. Describe your interactions with your support robot. Describe how you feel about it.</div>
+<div class="notes-box"><b>📖 引导语：</b>短篇小说要先定结构——顺叙（chronological）还是倒叙（non-chronological）。顺叙多用过去时；倒叙先讲现在、再回过去，需要多种时态。</div>
+<div class="ce-item"><div class="ce-cn">1. Role（身份）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">A young writer from the Sci-fi Club（科幻社的年轻写作者）</div></div>
+<div class="ce-item"><div class="ce-cn">2. Audience（读者）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Club readers（科幻社的读者）</div></div>
+<div class="ce-item"><div class="ce-cn">3. Purpose（目的）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">描写你与陪护机器人的互动（interactions）+ 你对它的感受（feelings）</div></div>
+<div class="ce-item"><div class="ce-cn">4. Genre（文体）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Short story（短篇小说）—— 须有 Title / Opening / Body / Ending</div></div>
+<div class="ce-item"><div class="ce-cn">5. Register（语域）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Semi-formal, narrative（半正式，叙事语气）</div></div>
+</section>
+<section class="slide" data-title="🧠 Q1 词伙（中→英）"><p class="sec-label">Vocabulary · 词伙</p><h2 class="slide-h2">🧠 Q1 词伙（中→英）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p><div class="notes-box"><b>🧠 引导语：</b>写机器人互动时，用「动作 + 感受」词伙，让情节和情绪都鲜活起来。</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">运动传感器</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">motion sensors</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">语音识别</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">voice recognition</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">最先进的</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">state-of-the-art</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">待机模式</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">standby mode</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">赢得欢心</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">win over</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">嗡嗡声</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">whirring noise</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">高耸于</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">tower over</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">懒散地躺着</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">lounge around</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">相处融洽</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">get along well</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">捉弄</div><div class="flip-hint">Robot</div></div><div class="flip-face flip-back"><div class="flip-ans">play pranks on</div></div></div></div>
+</div></section>
+<section class="slide" data-title="✍️ 范文翻译 Q1（上）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q1（上）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">My Enemy, RoboSweep · 第 1–13 句（引入 + 第一个冲突：机器人无视我）。</p><div class="notes-box"><b>📖 引导语：</b>开头交代背景（何时何地何人何事），再用具体事件推进冲突——RoboSweep 只回应爸妈、无视我，情绪自然浮现。</div>
+<div class="ce-item"><div class="ce-cn"><b>1.</b> 我还记得爸爸把一台叫 RoboSweep 的机器人带回家的那一天。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>I remember the day when</span><span>brought home</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">I remember the day when Dad brought home a robot called RoboSweep.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>2.</b> RoboSweep 配备齐全的运动传感器、轮子和语音识别功能，是一台最先进的家庭助理机器人。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>fully equipped with</span><span>motion sensors</span><span>voice recognition</span><span>state-of-the-art</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Fully equipped with motion sensors, wheels and voice recognition, RoboSweep is a state-of-the-art home assistant robot.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>3.</b> 它能做有用的家务，比如做饭、洗碗、洗衣服和熨衣服。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>do useful chores</span><span>doing the laundry</span><span>ironing clothes</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It can do useful chores like cooking, washing dishes, doing the laundry and ironing clothes.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>4.</b> 起初，我对这台机器人感到很好奇。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>at first</span><span>be intrigued by</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">At first, I was intrigued by the robot.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>5.</b> 毕竟，谁不想少做点家务呢？</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>after all</span><span>less housework</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">After all, who doesn't want to have less housework to do?</div></div>
+<div class="ce-item"><div class="ce-cn"><b>6.</b> 然而，很快就很明显，RoboSweep 和我之间将是一段麻烦的关系。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>it soon became clear that</span><span>a troubled relationship</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">However, it soon became clear that RoboSweep and I would have a troubled relationship.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>7.</b> 首先，这台机器人似乎无视我。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>first of all</span><span>seemed to ignore</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">First of all, the robot seemed to ignore me.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>8.</b> RoboSweep 通常处于待机模式。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>on standby mode</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">RoboSweep is usually on standby mode.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>9.</b> 如果你叫它的名字，它应该通过闪烁灯光、用人工语音说话来回应。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>respond by flashing</span><span>artificial voice</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">If you call its name, it should respond by flashing its lights and speaking in its artificial voice.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>10.</b> 每当我叫它时，它大约只有一半的时间会回应。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>whenever</span><span>about half of the time</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Whenever I call it, it only responds about half of the time.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>11.</b> 另一方面，每当妈妈或爸爸叫它的名字时，它都会立刻回应。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>on the other hand</span><span>responds instantly</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">On the other hand, it responds instantly whenever my mother or father say its name.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>12.</b> 当他们叫它时，它的灯光似乎快乐地闪烁，不像我叫它名字时得到的死一般的沉默。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>flash with happiness</span><span>unlike</span><span>dead silence</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Its lights seem to flash with happiness when they call it, unlike the dead silence I get when I say its name.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>13.</b> 因为 RoboSweep 不听我的话，我不得不放弃叫它，自己铺床、自己洗碗！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>give up trying to</span><span>make my bed</span><span>wash my dishes</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Because RoboSweep wouldn't listen to me, I had to give up trying to call it and made my bed and washed my dishes myself!</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 13 句</p></section>
+<section class="slide" data-title="✍️ 范文翻译 Q1（下）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q1（下）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">My Enemy, RoboSweep · 第 14–28 句（吓我一跳 + 赢得爸妈欢心 + 沮丧 + 和解收束）。</p><div class="notes-box"><b>📖 引导语：</b>结尾要让所有冲突<b>逻辑合理地收束</b>，别写「to be continued」或「原来是一场梦」，也无需点明寓意。</div>
+<div class="ce-item"><div class="ce-cn"><b>14.</b> 有一天，我正在刷牙，突然听到身后传来一阵嗡嗡声。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>brushing my teeth</span><span>a whirring noise</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">One day, I was brushing my teeth when I heard a whirring noise behind me.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>15.</b> 是 RoboSweep。</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It was RoboSweep.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>16.</b> 它的动作笨拙而响亮，简直就像僵尸一样！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>clumsy and loud</span><span>just like</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Its movements were clumsy and loud, just like a zombie's!</div></div>
+<div class="ce-item"><div class="ce-cn"><b>17.</b> 我并没有叫它，但它不知怎么决定过来吓我。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>had not called it</span><span>somehow</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">I had not called it but somehow it had decided to come and scare me.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>18.</b> 当一个两米高的机器人在你自己家里高耸于你之上时，你很难放松！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>hard to be relaxed</span><span>towers over</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It's hard to be relaxed when a two-metre-tall robot towers over you in your own home!</div></div>
+<div class="ce-item"><div class="ce-cn"><b>19.</b> 连我们的狗 Sparkles 都对它很警惕。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>be suspicious of</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Even our dog, Sparkles, is suspicious of it.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>20.</b> 每当 RoboSweep 靠近她，她就会吠叫。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>barks</span><span>comes anywhere near</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">She barks whenever RoboSweep comes anywhere near her.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>21.</b> 至于我的父母，这台机器人已经用它快乐的滴滴声和闪烁的灯光彻底赢得了他们的欢心。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>as for</span><span>won them over</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">As for my parents, the robot has completely won them over with its happy little beeps and flashing lights.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>22.</b> 当 RoboSweep 无视我时，我会很沮丧，所以我有时让父母帮我叫它。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>get frustrated</span><span>ask...to call it</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">I get frustrated when RoboSweep ignores me, so I sometimes ask my parents to call it for me.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>23.</b> 当这种情况发生时，我就能体验到拥有陪护机器人的全部好处。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>get to experience</span><span>the full benefits of</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">When this happens, I get to experience the full benefits of having a support robot.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>24.</b> 当它帮我做家务时，我就可以躺在沙发上放松了！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>relax on the couch</span><span>do my housework</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">I get to relax on the couch while it does my housework for me!</div></div>
+<div class="ce-item"><div class="ce-cn"><b>25.</b> 我可以像晴天里的树懒一样懒散地躺着，一边看电视，一边让别人替我做完所有烦人的家务。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>lounge around</span><span>like a sloth</span><span>bothersome chores</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">I can lounge around like a sloth on a sunny day, watching TV while someone else does all those bothersome chores for me.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>26.</b> 在那些日子里，RoboSweep 和我相处得非常好！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>on days like those</span><span>get along very well</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">On days like those, RoboSweep and I get along very well!</div></div>
+<div class="ce-item"><div class="ce-cn"><b>27.</b> 也许 RoboSweep 和我只是需要多一点时间来了解彼此。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>need a little bit more time</span><span>get to know each other</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Maybe both RoboSweep and I just need a little bit more time to get to know each other.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>28.</b> 很容易忘记它其实相当有用……只要它不再捉弄我就好了！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>easy to forget</span><span>quite helpful</span><span>playing pranks on</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It is easy to forget that it can be quite helpful ... if only it would stop playing pranks on me!</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 15 句</p></section>
+<section class="slide" data-title="📋 审题 Q2">
+<p class="sec-label">Part B Q2 · Magazine Article</p>
+<h2 class="slide-h2">📋 审题 Q2：提名最重要发明</h2>
+<div class="task-quote">A science and technology magazine is inviting readers to nominate the most important scientific invention in their daily life and in the world. Write an article to give your nomination.</div>
+<div class="notes-box"><b>📖 引导语：</b>杂志文章要有<b>吸引人的标题</b>，可用头韵（alliteration），但不要用完整句子。</div>
+<div class="ce-item"><div class="ce-cn">1. Role（身份）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">A reader nominating an invention（提名一项发明的读者）</div></div>
+<div class="ce-item"><div class="ce-cn">2. Purpose（目的）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">描述发明 + 解释它对日常生活的重要性 + 解释它对世界的重要性</div></div>
+<div class="ce-item"><div class="ce-cn">3. Genre（文体）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Magazine article（杂志文章）—— 须有 Headline / Body / Conclusion</div></div>
+<div class="ce-item"><div class="ce-cn">4. Register（语域）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Semi-formal（半正式）</div></div>
+</section>
+<section class="slide" data-title="🧠 Q2 词伙（中→英）"><p class="sec-label">Vocabulary · 词伙</p><h2 class="slide-h2">🧠 Q2 词伙（中→英）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p><div class="notes-box"><b>🧠 引导语：</b>写「发明的重要性」，用「日常生活 + 全球影响」双线词伙，论证才够充实。</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">电子设备</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">electronic device</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">连通性</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">connectivity</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">无与伦比的</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">unmatched</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">结合</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">combination of</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">保持联系</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">stay connected</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">信息来源</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">source of information</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">虚拟现实</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">virtual reality</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">自然灾害</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">natural disasters</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">健康追踪</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">health tracking</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">人类进步</div><div class="flip-hint">Smartphone</div></div><div class="flip-face flip-back"><div class="flip-ans">advancement of humanity</div></div></div></div>
+</div></section>
+<section class="slide" data-title="✍️ 范文翻译 Q2（上）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q2（上）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Our most important invention: the smartphone · 第 1–11 句（引入 + 功能 + 我的日常使用）。</p><div class="notes-box"><b>📖 引导语：</b>先介绍发明背景与功能，再落到「我」的日常使用，用<b>今昔对比</b>（Before... / Now...）突出其重要性。</div>
+<div class="ce-item"><div class="ce-cn"><b>1.</b> 我们的日常生活充满了科学发明，但其中一项对大多数人来说必不可少：智能手机。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>are filled with</span><span>essential to</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Our daily lives are filled with scientific inventions, but one of them is essential to most people: the smartphone.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>2.</b> 智能手机发明于 21 世纪初，是一种电子设备，无疑是我们这一代最重要的发明。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>invented in</span><span>electronic device</span><span>undoubtedly</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Invented in the early 21st century, the smartphone is an electronic device which is undoubtedly the most important invention of our generation.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>3.</b> 智能手机在通信、连通性和便利性方面的好处是无与伦比的。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>benefits for</span><span>connectivity</span><span>unmatched</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The smartphone's benefits for communication, connectivity and convenience are unmatched.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>4.</b> 智能手机基本上集迷你电脑、通信设备、相机、闹钟、计算器等于一体，可以装进口袋，而且它的功能每天都在变得越来越先进。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>a combination of</span><span>carried in our pockets</span><span>more and more advanced</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The smartphone is basically a combination of a mini computer, a communication device, a camera, an alarm, a calculator and more, that can be carried in our pockets, and its functions are only getting more and more advanced with each day.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>5.</b> 从通过短信、语音和视频通话保持联系，到在通勤途中玩游戏打发时间，如今大多数人一天都离不开智能手机。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>staying connected</span><span>passing the time</span><span>go a day without</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">From staying connected via text messages, voice and video calls, to passing the time playing games on their commute, most people these days would find it hard to go a day without their smartphone.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>6.</b> 我醒来做的第一件事就是查看手机。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>the first thing I do</span><span>check my phone</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The first thing I do when I wake up is check my phone.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>7.</b> 它让我连上互联网，是我获取信息、新闻和娱乐的来源。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>connects me to</span><span>source of information</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It connects me to the Internet, and is my source of information, news and entertainment.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>8.</b> 例如，我用它查收邮件、拍照、和朋友聊天、看新闻、上网课。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>check my email</span><span>chat to my friends</span><span>do online classes</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">For example, I use it to check my email, take photos, chat to my friends, read the news and do online classes.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>9.</b> 和许多人一样，我依赖手机了解世界动态、购物和查找交通。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>like many people</span><span>depend on</span><span>do my shopping</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Like many people, I depend on my phone to learn about what is happening in the world, to do my shopping and find transportation.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>10.</b> 在智能手机发明之前，我不得不去图书馆查找所有这些信息。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>before...was invented</span><span>find out all this information</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Before the smartphone was invented, I would have to go to a library to find out all this information.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>11.</b> 现在，我只需解锁我的智能手机。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>unlock my smartphone</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Now, I can just unlock my smartphone.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 11 句</p></section>
+<section class="slide" data-title="✍️ 范文翻译 Q2（下）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q2（下）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Our most important invention: the smartphone · 第 12–21 句（世界重要性 + 灾害预警 + 健康 + 总结）。</p><div class="notes-box"><b>📖 引导语：</b>结尾重申发明的重要性、富有说服力，从「通信、健康到灾害预警」多角度收束论证。</div>
+<div class="ce-item"><div class="ce-cn"><b>12.</b> 没有这项发明，就不可能轻松地与世界各地的朋友和家人保持联系。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>without this invention</span><span>stay connected</span><span>around the world</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Without this invention, it would be impossible to stay connected easily with friends and family around the world.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>13.</b> 在全球范围内，因为智能手机，我们彼此之间的联系更加紧密了。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>around the planet</span><span>connected to each other</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Around the planet, we are more connected to each other because of the smartphone.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>14.</b> 手机帮助我们了解他人，现在甚至提供了通往虚拟现实的入口。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>learn about others</span><span>a link to</span><span>virtual reality</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Our phones help us learn about others and now even offer a link to virtual reality.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>15.</b> 不仅如此，智能手机还能帮助我们预防危险、保护自己。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>not only that</span><span>prevent dangers</span><span>protect ourselves</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Not only that, smartphones also help us prevent dangers and protect ourselves.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>16.</b> 例如，我们用智能手机向人们发出自然灾害警报，让他们能够转移到安全地带。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>alert people to</span><span>natural disasters</span><span>get to safety</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">For example, we use smartphones to alert people to natural disasters so that they can get to safety.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>17.</b> 带有健康追踪功能的智能手机帮助人们监测脉搏或心率，从而帮助他们保持健康、预防疾病。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>health tracking</span><span>track their pulse</span><span>prevent diseases</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Smartphones with health tracking features help people track their pulse or heart rate, which helps them stay healthy and prevent diseases.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>18.</b> 与其他发明相比，智能手机是独一无二的，因为它在一种设备中提供了如此多有用的功能。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>unique compared to</span><span>offers...in one device</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The smartphone is unique compared to other inventions because of how many useful functions it offers in one device.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>19.</b> 它以其他任何单一发明都无法企及的方式，推动了人类的进步。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>contributed to</span><span>the advancement of humanity</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It has contributed to the advancement of humanity in ways no other single invention has.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>20.</b> 在我看来，它帮助生活各个方面的方式——从通信、健康到向人们发出危险警报——意味着它是最重要的发明。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>all aspects of life</span><span>from...to...</span><span>the most important invention</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">To me, the way it helps with all aspects of life, from communication and health to alerting people to danger means that it is the most important invention.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>21.</b> 无法想象没有智能手机的生活这一事实，恰恰说明了它是一项多么重要的发明。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>impossible to imagine</span><span>shows just how important</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The fact that it is impossible to imagine your life without a smartphone shows just how important an invention it is.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 10 句</p></section>
+<section class="slide" data-title="📋 审题 Q3">
+<p class="sec-label">Part B Q3 · Debate Speech</p>
+<h2 class="slide-h2">📋 审题 Q3：反对机器人当老师</h2>
+<div class="task-quote">You are taking part in a debate with the motion: 'Using robots as teachers is the way to go in future education.' Write a debate speech against the motion. Give reasons to support your stance.</div>
+<div class="notes-box"><b>📖 引导语：</b>辩论演讲要<b>明确立场</b>，用反问、『三的法则』和连接词增强说服力；结尾总结立场并感谢观众，不引入新观点。</div>
+<div class="ce-item"><div class="ce-cn">1. Role（身份）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">A debater（辩论选手）</div></div>
+<div class="ce-item"><div class="ce-cn">2. Purpose（目的）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">反对动议「Using robots as teachers is the way to go in future education」，给出理由</div></div>
+<div class="ce-item"><div class="ce-cn">3. Genre（文体）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Debate speech（辩论演讲）—— 须有问候、立场、反驳与总结</div></div>
+<div class="ce-item"><div class="ce-cn">4. Register（语域）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Semi-formal, engaging（半正式，富有感染力）</div></div>
+</section>
+<section class="slide" data-title="🧠 Q3 词伙（中→英）"><p class="sec-label">Vocabulary · 词伙</p><h2 class="slide-h2">🧠 Q3 词伙（中→英）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p><div class="notes-box"><b>🧠 引导语：</b>辩论靠「情感 + 理性」打动听众：用 heartless machines 引发共鸣，用 evidence 支撑论点。</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">无情的机器</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">heartless machines</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">无限信息</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">unlimited information</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">社交与情感技能</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">social and emotional skills</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">实践经验</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">practical experience</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">鼓舞人心的</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">inspirational</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">支持性的</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">supportive</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">鼓励性的</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">encouraging</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">补充</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">supplement</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">联网设备</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">Internet-connected devices</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">下一代</div><div class="flip-hint">Debate</div></div><div class="flip-face flip-back"><div class="flip-ans">next generation</div></div></div></div>
+</div></section>
+<section class="slide" data-title="✍️ 范文翻译 Q3（上）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q3（上）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Debate Speech · 第 1–11 句（问候 + 立场 + 反驳一：无情机器 + 学生需要人类老师）。</p><div class="notes-box"><b>📖 引导语：</b>开头问候听众、亮明立场；反驳先承认对方观点（Some would argue...），再用 However 转折驳倒。</div>
+<div class="ce-item"><div class="ce-cn"><b>1.</b> 大家下午好。</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Good afternoon, everyone.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>2.</b> 随着教育越来越依赖科技，机器人老师似乎很快就会成为常态。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>relying more and more heavily on</span><span>become the norm</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">With education relying more and more heavily on technology, it seems that robot teachers will soon become the norm.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>3.</b> 然而，我要论证：批准这样做将是一个糟糕的主意。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>I will argue that</span><span>a bad idea</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">However, I will argue that to approve this would be a bad idea.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>4.</b> 有人会说，因为机器人可以获取无限的信息，所以它们会是不错的老师。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>some would argue that</span><span>have access to</span><span>unlimited information</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Some would argue that because robots have access to unlimited information, they would be good teachers.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>5.</b> 然而，仅仅能获取无限信息，并不能让一个人成为好老师。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>just having access to</span><span>make someone a good teacher</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">However, just having access to unlimited information does not make someone a good teacher.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>6.</b> 教学是一门需要特定技能和个性的职业。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>a profession that requires</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Teaching is a profession that requires specific skills and personalities.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>7.</b> 机器人虽然聪明，但终究是没有情感的、无情的机器。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>smart as they may be</span><span>heartless machines</span><span>without emotions</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Smart as they may be, robots are still heartless machines without emotions.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>8.</b> 作为人，每个学生都是不同的，因此他们各自需要能够理解他们、并以他们独特的方式帮助他们发展和进步的老师。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>each student is different</span><span>in their own unique way</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">As humans, each student is different so they each require teachers who understand them and can help them develop and improve in their own unique way.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>9.</b> 例如，机器的思维方式非常逻辑化，因此它们无法像人那样全面或有人情味地评价学生的表现。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>in a very logical way</span><span>evaluate a student's performance</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">For example, machines think in a very logical way, so they would not be able to evaluate a student's performance as thoroughly or humanely as a person would.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>10.</b> 如果机器人老师犯了错，学生能做什么呢？</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>made a mistake</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">If a robot teacher made a mistake, what could a student do?</div></div>
+<div class="ce-item"><div class="ce-cn"><b>11.</b> 如果学生认为老师无法理解他们的经历，他们会变得非常焦虑，而这会对他们的教育产生负面影响。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>become very stressed</span><span>negatively affect</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Students would become very stressed if they thought their teachers could not understand their experiences, and this would negatively affect their education.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 11 句</p></section>
+<section class="slide" data-title="✍️ 范文翻译 Q3（下）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q3（下）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">Debate Speech · 第 12–25 句（反驳二 + 反问 + 结论）。</p><div class="notes-box"><b>📖 引导语：</b>用<b>反问句</b>（What is the goal of education?）引发思考，结尾总结立场、不给新观点，并强调「下一代」的利害。</div>
+<div class="ce-item"><div class="ce-cn"><b>12.</b> 教育的目标是什么？</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>the goal of education</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">What is the goal of education?</div></div>
+<div class="ce-item"><div class="ce-cn"><b>13.</b> 教育不仅仅是传递信息。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>simply about</span><span>transferring information</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Education is not simply about transferring information.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>14.</b> 学生需要学会如何与他人互动，并获得实践经验。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>interact with others</span><span>practical experience</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Students need to be able to learn how to interact with others, as well as obtain practical experience.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>15.</b> 他们还要学习社交与情感技能。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>social and emotional skills</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">They also learn social and emotional skills.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>16.</b> 只有人类老师才能在课堂上给予学生启发、支持和鼓励。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>the only ones able to</span><span>inspirational</span><span>supportive and encouraging</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Human teachers are the only ones able to be inspirational, supportive and encouraging of students in the classroom.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>17.</b> AI 开发者可能会说，机器人可以从与学生的互动中学会更加体贴或支持。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>AI developers may argue</span><span>from their interactions with</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">AI developers may argue that robots can learn to be more caring or supportive from their interactions with students.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>18.</b> 然而，我们目前没有任何证据表明机器人能做到这一点，而且把资源投入一个可能冷酷、无情的教育未来是不明智的。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>have no evidence that</span><span>put resources into</span><span>would be unwise</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">However, we currently have no evidence that robots could ever do this and to put resources into a potential cold, heartless future for education would be unwise.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>19.</b> 最后，机器人老师的好处可以通过其他方式轻松获得，比如在课堂上使用联网设备。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>can easily be obtained</span><span>Internet-connected devices</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Finally, the benefits of having robot teachers can easily be obtained in other ways, such as by using Internet-connected devices in class.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>20.</b> 没有必要完全取代人类老师，因为机器人可以作为一种附加功能在课堂上使用。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>no need for...to be replaced</span><span>an additional feature</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">There is no need for human teachers to be replaced completely because robots may be used in classrooms as an additional feature.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>21.</b> 事实上，它们已经被用来补充常规的课堂活动，并取得了一定的成功。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>already being used to</span><span>supplement</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Indeed, they are already being used to supplement regular classroom activities with some success.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>22.</b> 那么，为什么不保留目前的模式，用机器人作为额外工具来支持人类老师和学生呢？</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>keep the current model</span><span>additional tools</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">So, why not just keep the current model for supporting human teachers and students with robots as additional tools?</div></div>
+<div class="ce-item"><div class="ce-cn"><b>23.</b> 总之，虽然机器人具有许多在课堂上有用的特性，但它们无法履行老师所承担的所有角色和责任。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>to conclude</span><span>fulfil all the roles and responsibilities</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">To conclude, while robots have many properties that would be useful in the classroom, they are not able to fulfil all the roles and responsibilities teachers have.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>24.</b> 学习和教学是极具人性和个人化的体验，机器人无法像人类那样做好。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>extremely human and personal</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Learning and teaching are extremely human and personal experiences which robots cannot do as well as humans can.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>25.</b> 如果我们用无情的机器人取代所有老师，我们就会让下一代学生处于不利地位。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>replaced...with</span><span>disadvantaging</span><span>the next generation</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">If we replaced all teachers with heartless robots, we would be disadvantaging the next generation of students.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 14 句</p></section>
+<section class="slide" data-title="📋 审题 Q4">
+<p class="sec-label">Part B Q4 · Argumentative Essay</p>
+<h2 class="slide-h2">📋 审题 Q4：太空探索 vs 气候救灾</h2>
+<div class="task-quote">It is argued that the huge amount of funding allocated to space exploration should instead be used for relief aid to support people negatively affected by climate change. Write an argumentative essay on the subject.</div>
+<div class="notes-box"><b>📖 引导语：</b>议论文必须<b>自拟标题</b>，开头就明确立场，正文兼顾正反观点（可把反方观点作为反驳），结尾重申立场、不引入新观点。</div>
+<div class="ce-item"><div class="ce-cn">1. Role（身份）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">An essay writer（议论文写作者）</div></div>
+<div class="ce-item"><div class="ce-cn">2. Purpose（目的）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">选择立场 + 给出理由与证据 + 自拟标题</div></div>
+<div class="ce-item"><div class="ce-cn">3. Genre（文体）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Argumentative essay（议论文）—— 须有 Introduction / Body / Conclusion</div></div>
+<div class="ce-item"><div class="ce-cn">4. Register（语域）</div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button><div class="ce-en">Formal（正式）</div></div>
+</section>
+<section class="slide" data-title="🧠 Q4 词伙（中→英）"><p class="sec-label">Vocabulary · 词伙</p><h2 class="slide-h2">🧠 Q4 词伙（中→英）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p><div class="notes-box"><b>🧠 引导语：</b>议论文用「立场 + 数据/预测 + 让步」三件套，客观、有力、不偏激。</div>
+<div class="flip-grid g2"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">分配资金</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">allocate funding</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">太空探索</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">space exploration</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">救灾援助</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">relief aid</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">气候变化</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">climate change</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">极端天气</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">extreme weather</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">未来世代</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">future generations</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">环保主义者</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">environmentalists</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">新能源</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">new energy sources</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">自然灾害</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">natural disasters</div></div></div></div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">抵御</div><div class="flip-hint">Essay</div></div><div class="flip-face flip-back"><div class="flip-ans">withstand</div></div></div></div>
+</div></section>
+<section class="slide" data-title="✍️ 范文翻译 Q4（上）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q4（上）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">We should focus on our planet first · 第 1–6 句（标题立场 + 气候挑战）。</p><div class="notes-box"><b>📖 引导语：</b>开头用 Although 让步后亮出立场，正文先讲气候挑战，引用科学家预测增强可信度。</div>
+<div class="ce-item"><div class="ce-cn"><b>1.</b> 尽管太空探索带来了许多关于我们在宇宙中位置的发现，但现在是时候关注我们这颗家园星球上由气候变化所引发的问题了。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>space exploration</span><span>our place in the universe</span><span>caused by climate change</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Although space exploration has brought many discoveries about our place in the universe, it is time for us to pay attention to the problems happening on our home planet which have been caused by climate change.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>2.</b> 由于数百万人面临失去家园、生计甚至生命的风险，我认为只有解决了这些问题，我们才应该更专注于探索宇宙。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>at risk of losing</span><span>their livelihoods</span><span>only when...should we</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">As millions of people are at risk of losing their homes, their livelihoods and even their lives, I believe that only when these issues have been solved should we focus on exploring the universe more.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>3.</b> 首先，地球面临着气候变化带来的巨大挑战。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>first of all</span><span>faces great challenges</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">First of all, the Earth faces great challenges caused by climate change.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>4.</b> 例如，科学家预测，气候变化将导致更加极端的天气，如洪水、暴风雪和热浪。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>have predicted</span><span>result in</span><span>extreme weather</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">For example, scientists have predicted that changes in our climate will result in even more extreme weather such as flooding, snowstorms and heatwaves.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>5.</b> 据预测，整个国家将沉入水下，世界上大片地区将因气候变化不再适合人类居住。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>entire countries</span><span>sink under water</span><span>suitable for human life</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It has been predicted that entire countries will sink under water and large parts of the world will no longer be suitable for human life because of climate change.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>6.</b> 如果没有后代留下来享受太空，探索太空就没有意义了。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>no use exploring</span><span>future generations</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">It is no use exploring space if there are no future generations left to enjoy it.</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 6 句</p></section>
+<section class="slide" data-title="✍️ 范文翻译 Q4（下）"><p class="sec-label">Model Translation · 范文逐句</p><h2 class="slide-h2">✍️ 范文翻译 Q4（下）</h2><p style="font-size:20px;color:var(--text-2);margin-bottom:16px">We should focus on our planet first · 第 7–17 句（资金对比 + 让步 + 结论）。</p><div class="notes-box"><b>📖 引导语：</b>对比「太空受益人数 vs 气候受影响人数」，再让步（While...），最后以积极有力的结尾收束。</div>
+<div class="ce-item"><div class="ce-cn"><b>7.</b> 分配给太空探索的资金是巨大的，但它只会影响世界人口的极小一部分，即宇航员和其他目前能进入太空的人。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>funding allocated to</span><span>a very small percentage</span><span>namely</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">The funding allocated to space exploration is enormous but it would only affect a very small percentage of the world's population, namely astronauts and other people who can currently go to space.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>8.</b> 另一方面，气候变化的影响波及我们所有人。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>on the other hand</span><span>affect us all</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">On the other hand, the effects of climate change affect us all.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>9.</b> 这就是为什么环保主义者主张，资金应当用于寻找新能源、预防与气候变化相关的自然灾害，并帮助人们适应不断变化的气候。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>environmentalists have argued</span><span>new energy sources</span><span>prevent natural disasters</span><span>adapt to</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">This is why environmentalists have argued that it is important for funding to be used to find new energy sources, prevent natural disasters associated with climate change and help people adapt to the changing climate.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>10.</b> 虽然可以理解一些人会对削减太空探索资金感到不满，但一旦我们在地球上的问题得到解决，这笔资金很快就能恢复。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>it is understandable that</span><span>be upset at</span><span>quickly be restored</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">While it is understandable that some people will be upset at reducing funding for space exploration, the funding could quickly be restored once our problems on Earth are solved.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>11.</b> 太空探索无疑是我们这个物种一项有意义的追求，我们对宇宙的好奇是理所当然的。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>without doubt</span><span>a meaningful pursuit</span><span>curious about the universe</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Space exploration is without doubt a meaningful pursuit for our species, which is rightly curious about the universe.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>12.</b> 与此同时，我们不要忘记，这颗星球上还有许多需要帮助的人。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>at the same time</span><span>people in need</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">At the same time, let's not forget that there are many people in need here on this planet.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>13.</b> 暂时停止太空探索并不意味着人类将停止成为一个富有创新精神的物种。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>temporarily</span><span>stop being an innovative species</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Stopping space exploration temporarily does not mean that the human race will stop being an innovative species.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>14.</b> 我们的科学努力应当被重新引导，去帮助地球上那些需要药物、食物或更优质空气的人。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>be redirected to</span><span>better air quality</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">Our scientific efforts should simply be redirected to help the people on Earth who need medicine, food or better air quality.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>15.</b> 总之，尽管太空探索是一个崇高的目标，但在我们解决地球上更紧迫的问题之前，它必须被搁置。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>in conclusion</span><span>a noble goal</span><span>put on hold</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">In conclusion, although space exploration is a noble goal it must be put on hold while we fix more urgent problems on Earth.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>16.</b> 为了后代的利益，我们必须确保我们的社会能够抵御气候变化的负面影响。</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>for the sake of</span><span>future generations</span><span>withstand</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">For the sake of future generations, we must ensure that our societies are able to withstand the negative effects of climate change.</div></div>
+<div class="ce-item"><div class="ce-cn"><b>17.</b> 事实上，有了我们最优秀的科学头脑来解决这些问题，我们可能会比想象中更快地重返太空探索！</div><button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">🧩 词伙提示</button><div class="ce-hints"><span>in fact</span><span>our best scientific minds</span><span>sooner than we think</span></div><button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 显示原文</button><div class="ce-en">In fact, with our best scientific minds working on solving these problems, we may be back to exploring space sooner than we think!</div></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 本页 11 句</p></section>
+<section class="slide" data-title="📝 作业布置">
+<p class="sec-label">Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成 Part A STEM 开幕演讲（约 200 词）</h4>
+  <p>补全已给开头的演讲，涵盖：① 展览鼓励学生成为主动创造者的宗旨；② STEM 教育对学生成功的重要性。用上本课词伙（cutting edge / driving force / competitive edge 等）。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 辩论稿写作（选一方立场）</h4>
+  <p>校际辩论赛动议：'The policy of banning students from using smartphones at school should be abolished.'<br>写一篇辩论演讲，<b>支持或反对</b>该动议（约 400 词）。</p>
+</div>
+<div class="notes-box"><b>📌 引导语：</b>作业一练「补全文章 + 词伙运用」，作业二练「辩论文体 + 四步写作流程」，建议先 Plan 再动笔。</div>
+</section>
+<section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Summary</p>
+<h2 class="slide-h2">✅ 本课知识清单</h2>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握补全文章技巧：读懂题目 + 已给文字 + 判断文体语气</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握四步写作流程：Plan → Organize → Draft → Revise</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>完成 5 个文体的审题（speech / story / article / debate / essay）</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>精读 5 篇范文（Part A + Q1–Q4）</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>积累 50 个中英词伙</span></div>
+</section>
+<section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 6！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:640px;line-height:1.8;margin-bottom:28px">你今天学习了：补全文章技巧 → 四步写作流程 → Practice Paper 5 大文体审题 → 5 篇范文逐句翻译 → 50 个核心词伙积累</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section>
+</div>
+
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── Basic keydown (arrows only, for V4–V6 courseware) ──
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='u6scitech_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u306',weakKey:'general',mode:'quiz'};</script>
+</body></html>

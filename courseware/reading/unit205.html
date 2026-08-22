@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 5 · Happy Travels · 预备班阅读课 | George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--zoom-scale:1}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1),width .35s ease,height .35s ease;transform:translateX(40px) scale(var(--zoom-scale));transform-origin:top left;width:calc(100% / var(--zoom-scale));height:calc(100% / var(--zoom-scale));overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0) scale(var(--zoom-scale));z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.zoom-controls{display:flex;align-items:center;gap:3px;margin-left:2px;padding-left:8px;border-left:1px solid var(--card-bd)}
+.zoom-btn{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(11,130,53,.25);background:var(--xdf-gl);color:var(--xdf-green);font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;transition:all .15s;font-family:'Inter',sans-serif}
+.zoom-btn:hover{background:var(--xdf-green);color:#fff}
+.zoom-btn:active{transform:scale(.9)}
+.zoom-btn:disabled{opacity:.35;cursor:not-allowed;background:var(--xdf-gl);color:var(--xdf-green)}
+.zoom-level{font-size:11px;font-weight:700;color:var(--text-2);min-width:30px;text-align:center;font-family:'Inter',sans-serif;cursor:pointer;user-select:none}
+.zoom-level:hover{color:var(--xdf-green)}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:22px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter',sans-serif;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-card.flipped .flip-front{display:none}
+.flip-card.flipped .flip-back{display:flex!important}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-1)}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--text-1);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--text-1);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en[style*="inline"]{display:inline}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.mt-m{margin-top:16px}.mt-l{margin-top:28px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+.sigword{cursor:default;transition:all .3s;padding:1px 3px;border-radius:3px}
+.sigword.pending{color:inherit;background:transparent}
+.sigword.revealed-pos{color:var(--xdf-green);font-weight:700;background:#E8F5E9}
+.sigword.revealed-neg{color:var(--xdf-red);font-weight:700;background:#FFEBEE}
+.draggable{display:inline-block;padding:6px 14px;margin:4px;background:#fff;border:2px solid var(--card-bd);border-radius:8px;cursor:grab;font-size:18px;font-weight:600;color:var(--text-1);transition:all .2s;user-select:none}
+.draggable.correct-placed{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.draggable.wrong-placed{border-color:var(--xdf-red);background:#FFF5F5}
+.word-pool{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#fafafa;border-radius:10px;min-height:80px;border:1px solid rgba(0,0,0,0.05)}
+.word-pool.drag-over{background:var(--xdf-gl);border-color:var(--xdf-green)}
+.correct-revealed{background:var(--xdf-gp) !important;border:2.5px solid var(--xdf-green) !important;font-weight:800 !important}
+.mc-banner{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;margin-top:14px;border-radius:12px;font-size:17px;line-height:1.6}
+.mc-banner.mc-correct{background:var(--xdf-gp);border:2px solid var(--xdf-green);color:var(--xdf-green)}
+.mc-banner.mc-wrong{background:#FFF5F5;border:2px solid var(--xdf-red);color:var(--xdf-red)}
+.mc-banner .tick{font-size:28px;flex-shrink:0;line-height:1}
+.mc-banner .at{font-size:18px;font-weight:800;margin-bottom:4px}
+.mc-banner .asub{font-size:15px;color:var(--text-1);font-weight:500;line-height:1.7}
+.draggable:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.draggable.dragging{opacity:.4;cursor:grabbing}
+.draggable.correct-placed{background:#C8E6C9;border-color:#2E7D32}
+.draggable.wrong-placed{background:#FFCDD2;border-color:#C62828}
+.drop-zone{transition:all .2s}
+.drop-zone.drag-over .drop-content{background:var(--xdf-gl);border-color:var(--xdf-green);border-style:solid}
+.split-view{display:flex;gap:18px;margin-top:14px;max-height:680px}
+.split-left{flex:1.1;background:var(--xdf-gp);padding:18px 22px;border-radius:12px;overflow-y:auto;max-height:680px;border:1px solid var(--card-bd)}
+.split-left h4{font-size:16px;font-weight:800;color:var(--xdf-green);margin-bottom:10px}
+.split-right{flex:1;overflow-y:auto;max-height:680px}
+.passage-excerpt{font-size:22px;color:var(--text-1);line-height:1.85;margin-bottom:14px;padding:12px 16px;background:#fff;border-radius:10px;border-left:4px solid var(--xdf-green)}
+.passage-excerpt .para-num{font-size:11px;font-weight:800;color:var(--xdf-green);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.passage-excerpt .user-highlight{background:#FFE082;padding:2px 4px;border-radius:2px}
+.practice-mcq{background:#fff;border:2px solid var(--card-bd);border-radius:14px;padding:20px 24px;box-shadow:var(--card-sh)}
+.practice-mcq .pmcq-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--xdf-green);margin-bottom:12px}
+.practice-mcq .pmcq-q{font-size:17px;font-weight:800;margin-bottom:18px;line-height:1.5;color:var(--text-1)}
+.pmcq-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.pmcq-opt{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:10px;border:2px solid var(--card-bd);background:#FAFDF7;font-size:16px;color:var(--text-1);cursor:pointer;transition:all .2s}
+.pmcq-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.pmcq-opt.correct{border-color:#2E7D32;background:#C8E6C9;font-weight:700}
+.pmcq-opt.wrong{border-color:#C62828;background:#FFCDD2}
+.pmcq-opt.answered{cursor:default}
+.pmcq-opt .pl{width:30px;height:30px;border-radius:50%;background:var(--xdf-gl);color:var(--xdf-green);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ans-reveal{display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:2px solid var(--xdf-green);border-radius:10px;font-size:15px;line-height:1.7}
+.ans-reveal.show{display:block}
+.ans-banner{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ans-banner .tick{font-size:24px}
+.ans-banner .at{font-weight:800;font-size:18px;color:var(--xdf-green)}
+.ans-banner .asub{font-size:14px;color:var(--text-2);margin-top:2px}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}.split-view{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="course-tag">预备班·Unit5</span>
+  <span class="slide-title" id="topbarTitle">Happy Travels</span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="zoom-controls" id="zoomControls">
+    <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()" title="缩小文字">A−</button>
+    <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()" title="点击恢复 100%">100%</span>
+    <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()" title="放大文字">A+</button>
+  </div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck">
+<section class="slide is-active" data-title="封面 · Unit 5">
+<div style="margin: 0 auto;width:100%; ">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><img class="tb-avatar" src="avatar.jpg" alt="George"><div class="tb-name">陈成寓 George</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">预备班</div>
+</div>
+<div class="slide-h1">Happy <span class="accent">Travels</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">阅读课程 — Reading Skills</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 5 · Paper 1 Reading · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Skill Focus</div><div class="sm-value">Positive &amp; Negative Language</div><div class="sm-sub">Understanding tone &amp; attitude</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Travel &amp; Mental Well-being</div><div class="sm-sub">Hotel reviews &amp; personal stories</div></div>
+<div class="s1-meta-card"><div class="sm-label">DSE Link</div><div class="sm-value">Paper 1 Part A &amp; B1</div><div class="sm-sub">MCQ, Tone, T/F/NG, Matching</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">Warm-up + Concept</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">Examples + Practice</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">SB Independent</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">DSE + Exit Test</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>新东方 老师好!</span></div>
+</div></div>
+</section>
+<section class="slide" data-title="🚪 入门测">
+<div style="max-width:1100px;margin:0 auto;width:100%">
+<div class="sec-label">入门测 · 5 MIN</div>
+<div class="slide-h2">入门测：核心词汇 · 英译中</div>
+<div style="font-size:18px;color:var(--text-2);margin-bottom:12px">每题 1 分，满分 10 分 | 点击卡片查看答案</div>
+<div class="flip-grid g5"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">positive</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">正面的；积极的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">negative</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">负面的；消极的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">amazing</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">惊人的；了不起的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">terrible</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">糟糕的；可怕的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">delicious</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">美味的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">disgusting</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">令人恶心的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">recommend</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">推荐；建议</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">disappoint</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">使失望</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">beautiful</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">美丽的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">crowded</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">拥挤的</div></div></div></div></div></div>
+</section>
+<section class="slide" data-title="🎯 Warm-up: Hotel Vibes">
+<div style="max-width:900px;margin:0 auto;width:100%">
+<div class="sec-label">🎯 趣味引入</div>
+<div class="slide-h2">Hotel Vibes: 你的第一印象</div>
+<div class="split-compare" style="margin-top:16px">
+<div class="split-good">
+<div class="split-label good">🏨 Hotel A: Luxury Resort</div>
+<p style="font-size:20px;line-height:1.8">infinity pool, palm trees, sunset view, spacious rooms, 5-star service</p>
+<p id="hotelA-hint" style="display:none;font-size:18px;margin-top:12px;color:var(--xdf-green);font-weight:700">📝 描述参考：This is a place that makes you feel relaxed and pampered. The first impression is warmth, comfort, and luxury.</p>
+</div>
+<div class="split-bad">
+<div class="split-label bad">🏚️ Hotel B: Run-down Hostel</div>
+<p style="font-size:20px;line-height:1.8">cracked walls, messy room, flickering light, noisy neighbours, broken AC</p>
+<p id="hotelB-hint" style="display:none;font-size:18px;margin-top:12px;color:var(--xdf-red);font-weight:700">📝 描述参考：This is a place that makes you feel uncomfortable and unwelcome. The first impression is dirt, noise, and poor service.</p>
+</div>
+</div>
+<div class="card accent mt-l" style="text-align:center">
+<h4>✏️ Task: 用 3 个英文单词描述每家酒店给你的感觉</h4>
+<p>🕐 2 minutes</p>
+<button class="reveal-btn" onclick="document.getElementById('hotelA-hint').style.display='block';document.getElementById('hotelB-hint').style.display='block'" style="margin-top:10px">💡 点击查看描述参考</button>
+</div>
+</div>
+</section>
+<section class="slide" data-title="🎯 Key Insight">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">🎯 趣味引入</div>
+<div class="slide-h2">From Vibes to Reading</div>
+<div class="card accent mt-m">
+<p style="font-size:22px;line-height:1.8">When you read a text, the writer <b>drops clues</b> about their feelings through <b style="color:var(--xdf-green)">WORD CHOICE</b>.</p>
+<p style="font-size:18px;color:var(--text-1);margin-top:10px">⏸ 思考 30 秒：你能想到哪些 positive words 和 negative words？</p>
+</div>
+<div style="text-align:center;margin:18px 0">
+<button class="reveal-btn" id="s4-rev" onclick="var w=document.getElementById('s4-words');w.style.display=w.style.display==='none'?'grid':'none';this.textContent=w.style.display==='none'?'💡 点击显示参考词汇':'🙈 收起参考词汇'">💡 点击显示参考词汇</button>
+</div>
+<div id="s4-words" style="display:none;grid-template-columns:1fr 1fr;gap:18px">
+<div>
+<div style="font-size:20px;font-weight:700;margin-bottom:10px;color:var(--xdf-green)">✅ Positive Words</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">amazing</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">惊人的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">wonderful</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">极好的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">cosy</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">舒适的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">delicious</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">美味的</div></div></div></div>
+</div>
+</div>
+<div>
+<div style="font-size:20px;font-weight:700;margin-bottom:10px;color:var(--xdf-red)">❌ Negative Words</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">terrible</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">糟糕的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">disappointing</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">令人失望的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">rude</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">粗鲁的</div></div></div></div>
+<div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">overpriced</div><div class="flip-hint">点击看意思</div></div><div class="flip-face flip-back"><div class="flip-ans">过贵的</div></div></div></div>
+</div>
+</div>
+</div>
+<div class="card accent mt-l" style="text-align:center">
+<p>📌 <b>你的任务</b>：在 DSE 阅读里，你的任务就是 spot these clues → 找出作者态度</p>
+</div>
+</div>
+</section>
+<section class="slide" data-title="📖 Antonyms: Pos ↔ Neg">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">📖 概念总结</div>
+<div class="slide-h2">Positive ↔ Negative：反义词配对</div>
+<div style="font-size:18px;color:var(--text-1);margin-bottom:12px">👀 下面交替出现正面/负面词，先想想它们的反义词，再点按提示查看</div>
+<div class="ce-item"><div class="ce-cn">1. ✅ amazing <span style="color:var(--text-1);font-weight:400">(惊人的)</span> <span class="ce-en" id="ant1">→ <b>反义词</b>: terrible, awful, horrible</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant1').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">2. ❌ disappointing <span style="color:var(--text-1);font-weight:400">(令人失望的)</span> <span class="ce-en" id="ant2">→ <b>反义词</b>: satisfying, encouraging, uplifting</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant2').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">3. ✅ comfortable <span style="color:var(--text-1);font-weight:400">(舒适的)</span> <span class="ce-en" id="ant3">→ <b>反义词</b>: uncomfortable, cramped, claustrophobic</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant3').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">4. ❌ rude <span style="color:var(--text-1);font-weight:400">(粗鲁的)</span> <span class="ce-en" id="ant4">→ <b>反义词</b>: polite, friendly, welcoming</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant4').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">5. ✅ spacious <span style="color:var(--text-1);font-weight:400">(宽敞的)</span> <span class="ce-en" id="ant5">→ <b>反义词</b>: cramped, overcrowded, claustrophobic</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant5').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">6. ❌ overpriced <span style="color:var(--text-1);font-weight:400">(过贵的)</span> <span class="ce-en" id="ant6">→ <b>反义词</b>: affordable, reasonable, good value</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant6').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">7. ✅ recommend <span style="color:var(--text-1);font-weight:400">(推荐)</span> <span class="ce-en" id="ant7">→ <b>反义词</b>: avoid, warn against, steer clear of</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant7').style.display='inline'">💡 查看反义词</button></div>
+<div class="ce-item"><div class="ce-cn">8. ❌ forgettable <span style="color:var(--text-1);font-weight:400">(易忘的)</span> <span class="ce-en" id="ant8">→ <b>反义词</b>: unforgettable, memorable, lasting</span></div><button class="ce-btn ans-btn" onclick="document.getElementById('ant8').style.display='inline'">💡 查看反义词</button></div>
+<div class="card accent mt-m">
+<h4>📌 小结：Positive/Negative vocabulary 就像一对对反义词 — DSE 阅读里你要快速识别它们！</h4>
+</div>
+</div>
+</section>
+<section class="slide" data-title="📖 Santorini&apos;s: Positive Ad">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">📖 例子示范</div>
+<div class="slide-h2">Santorini&apos;s: The Best Pizza! 🍕</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:8px">Textbook p.174, A1 — Restaurant Advertisement</div>
+<div class="card accent" style="text-align:left">
+<p style="font-size:22px;line-height:2;white-space:pre-line;color:var(--text-1)">Established in 1920, Santorini&apos;s is an <span class="sigword pending" data-pair="authentic" data-zh="正宗的">authentic</span> Italian pizzeria that offers a <span class="sigword pending" data-pair="truly warm welcome" data-zh="热烈欢迎">truly warm welcome</span>. We have been serving diners for more than one hundred years, and we know how to keep our customers <span class="sigword pending" data-pair="happy" data-zh="开心">happy</span> — we treat them like <span class="sigword pending" data-pair="one of the family" data-zh="自家人">one of the family</span>!
+
+Made with only the <span class="sigword pending" data-pair="freshest" data-zh="最新鲜的">freshest</span> ingredients and cooked by the city&apos;s <span class="sigword pending" data-pair="most talented" data-zh="最有才华的">most talented</span> chefs, our pizzas are <span class="sigword pending" data-pair="finger-licking good" data-zh="好吃到舔手指">finger-licking good</span>! Choose from traditional margherita and quattro stagioni flavours, or try our new chilli-chocolate dessert pizza! Our menu also includes <span class="sigword pending" data-pair="delicious" data-zh="美味的">delicious</span> salads and <span class="sigword pending" data-pair="mouth-watering" data-zh="让人流口水">mouth-watering</span> desserts.</p>
+</div>
+<div class="card accent mt-m" style="text-align:center">
+<h4>✏️ 任务：在讲义上圈画所有正面信号词</h4>
+<p>每按一次提示按钮，页面会显示一个新的信号词和其中文翻译（用括号显示）</p>
+<button class="reveal-btn" id="s6-rev" onclick="revealNextSignal('s6')">💡 提示 <span id="s6-counter">0/9</span></button>
+<button class="reveal-btn" id="s6-reset" onclick="resetSignals('s6')" style="background:var(--xdf-red);margin-left:8px">↺ 重置</button>
+</div>
+</div>
+</section>
+<section class="slide" data-title="📖 Santorini&apos;s: Negative Review">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">📖 例子示范</div>
+<div class="slide-h2">Santorini&apos;s: The Worst Pizza! ★</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:8px">Textbook p.174, A1 — Customer Review</div>
+<div class="card accent" style="text-align:left;border-left-color:var(--xdf-red)">
+<p style="font-size:22px;line-height:2;white-space:pre-line;color:var(--text-1)">What can I say about Santorini&apos;s, except <span class="sigword pending" data-pair="avoid this place" data-zh="快点跑路">avoid this place</span>! When we arrived, our hostess was <span class="sigword pending" data-pair="not at all welcoming" data-zh="一点都不热情">not at all welcoming</span>; in fact I&apos;d say she was <span class="sigword pending" data-pair="rude" data-zh="粗鲁的">rude</span>. She didn&apos;t make eye contact with us, and she didn&apos;t smile even once!
+
+We had a long wait for our food to arrive. When it did, the pizzas were <span class="sigword pending" data-pair="cold and tasteless" data-zh="冷且无味">cold and tasteless</span>. We finished our meals as quickly as we could and <span class="sigword pending" data-pair="reluctantly" data-zh="不愿意地">reluctantly</span> paid the <span class="sigword pending" data-pair="extortionate" data-zh="太坑了">extortionate</span> bill of €175. If you&apos;re thinking of trying Santorini&apos;s, don&apos;t! It&apos;s an <span class="sigword pending" data-pair="overrated tourist trap" data-zh="名气虚高的旅游雷区">overrated tourist trap</span>.</p>
+</div>
+<div class="card accent mt-m" style="text-align:center">
+<h4>✏️ 任务：在讲义上圈画所有负面信号词</h4>
+<p>每按一次提示按钮，页面会显示一个新的信号词和其中文翻译（用括号显示）</p>
+<button class="reveal-btn" id="s7-rev" onclick="revealNextSignal('s7')">💡 提示 <span id="s7-counter">0/7</span></button>
+<button class="reveal-btn" id="s7-reset" onclick="resetSignals('s7')" style="background:var(--xdf-red);margin-left:8px">↺ 重置</button>
+</div>
+</div>
+</section>
+<section class="slide" data-title="📖 Drag &amp; Drop">
+<div style="max-width:1100px;margin:0 auto;width:100%">
+<div class="sec-label">📖 互动练习</div>
+<div class="slide-h2">把词语拖到正确的方框</div>
+<div style="font-size:18px;color:var(--text-2);margin-bottom:14px">👆 从下方列表拖拽词语到正确的方框（Positive 绿色 / Negative 红色）<br>💡 <b>提示</b>：可把已拖入的词语<b>拖回选项池</b>撤销（自动按字母顺序重排）</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
+<div class="drop-zone" id="dz-pos" data-cat="positive">
+<div style="font-size:20px;font-weight:800;color:var(--xdf-green);margin-bottom:10px">✅ Positive</div>
+<div class="drop-content" style="min-height:200px;padding:10px;background:var(--xdf-gp);border-radius:10px;border:2px dashed var(--xdf-green)"></div>
+</div>
+<div class="drop-zone" id="dz-neg" data-cat="negative">
+<div style="font-size:20px;font-weight:800;color:var(--xdf-red);margin-bottom:10px">❌ Negative</div>
+<div class="drop-content" style="min-height:200px;padding:10px;background:#FFF5F5;border-radius:10px;border:2px dashed var(--xdf-red)"></div>
+</div>
+</div>
+<div style="margin-bottom:18px">
+<div style="font-size:16px;color:var(--text-2);margin-bottom:8px">📦 词语池（拖拽下面的词语到上方方框）</div>
+<div id="word-pool" class="word-pool" style="display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:#fafafa;border-radius:10px;min-height:80px;border:1px solid rgba(0,0,0,0.05)">
+<span class="draggable" draggable="true" data-word="authentic" data-cat="positive">authentic</span>
+<span class="draggable" draggable="true" data-word="tourist trap" data-cat="negative">tourist trap</span>
+<span class="draggable" draggable="true" data-word="warm welcome" data-cat="positive">warm welcome</span>
+<span class="draggable" draggable="true" data-word="rude" data-cat="negative">rude</span>
+<span class="draggable" draggable="true" data-word="tasteless" data-cat="negative">tasteless</span>
+<span class="draggable" draggable="true" data-word="finger-licking good" data-cat="positive">finger-licking good</span>
+<span class="draggable" draggable="true" data-word="freshest" data-cat="positive">freshest</span>
+<span class="draggable" draggable="true" data-word="extortionate" data-cat="negative">extortionate</span>
+<span class="draggable" draggable="true" data-word="overrated" data-cat="negative">overrated</span>
+<span class="draggable" draggable="true" data-word="mouth-watering" data-cat="positive">mouth-watering</span>
+</div>
+</div>
+<div style="text-align:center">
+<button class="reveal-btn" onclick="checkDragDrop()">✅ 提交</button>
+<button class="reveal-btn" onclick="resetDragDrop()" style="background:var(--text-3);margin-left:10px">↺ 重置</button>
+</div>
+<div id="drag-result" style="display:none;margin-top:16px"></div>
+</div>
+</section>
+<section class="slide" data-title="🧑‍🏫 Level 1: Tower Bridge Hotel">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">🧑‍🏫 老师带练</div>
+<div class="slide-h2">Level 1: Tower Bridge Hotel 🏨</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:8px">Textbook p.175, A2 — Ruby Wong&apos;s review</div>
+<div class="card accent" style="text-align:left">
+<p style="font-size:22px;line-height:2;white-space:pre-line;color:var(--text-1)">I stayed here at the end of August and what a <span class="sigword pending" data-pair="disappointment" data-zh="令人失望">disappointment</span>! First, I had to wait more than 15 minutes to check in. I had booked online and paid extra for a room with a view of Tower Bridge, but in fact my room looked out at an <span class="sigword pending" data-pair="ugly alley" data-zh="丑陋的小巷">ugly alley</span> full of <span class="sigword pending" data-pair="rubbish" data-zh="垃圾">rubbish</span>! It was <span class="sigword pending" data-pair="depressing" data-zh="令人沮丧">depressing</span>!
+
+The room itself was <span class="sigword pending" data-pair="very small" data-zh="极小">very small</span>. It made me feel <span class="sigword pending" data-pair="claustrophobic" data-zh="幽闭恐惧">claustrophobic</span> and it was <span class="sigword pending" data-pair="not very well sound-proofed" data-zh="隔音不够">not very well sound-proofed</span>. This meant that when staff began cleaning at 6 a.m., it woke me up. When I&apos;m on holiday, I want to relax and have a nice lie-in, not get woken up <span class="sigword pending" data-pair="at the crack of dawn" data-zh="一大早">at the crack of dawn</span>!</p>
+</div>
+<div class="card accent mt-m" style="text-align:center">
+<h4>✏️ 任务：圈出所有负面信号词</h4>
+<p>每按一次提示按钮，显示一个信号词</p>
+<button class="reveal-btn" id="s9-rev" onclick="revealNextSignal('s9')">💡 提示 <span id="s9-counter">0/8</span></button>
+<button class="reveal-btn" id="s9-reset" onclick="resetSignals('s9')" style="background:var(--xdf-red);margin-left:8px">↺ 重置</button>
+</div>
+</div>
+</section>
+<section class="slide" data-title="🧑‍🏫 Level 2: Trysil Ski Lodge">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">🧑‍🏫 老师带练</div>
+<div class="slide-h2">Level 2: Trysil Ski Lodge ⛷️</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:8px">Textbook p.175, A2 — Aggy Smith&apos;s review</div>
+<div class="card accent" style="text-align:left">
+<p style="font-size:22px;line-height:2;white-space:pre-line;color:var(--text-1)">Wow, what an <span class="sigword pending" data-pair="amazing" data-zh="非常牛">amazing</span> hotel! I came here with my wife and two kids for a skiing holiday. The location of the Ski Lodge is <span class="sigword pending" data-pair="great" data-zh="很棒">great</span>, as it&apos;s right next to the slopes.
+
+The hotel is very <span class="sigword pending" data-pair="modern" data-zh="现代">modern</span> and has a <span class="sigword pending" data-pair="cosy" data-zh="舒适">cosy</span> feeling. In the lounge, there&apos;s a <span class="sigword pending" data-pair="lovely" data-zh="可爱">lovely</span> open fire, which is great to sit next to after you&apos;ve been outside in the cold all day.
+
+Our family room was very big and <span class="sigword pending" data-pair="exceptionally clean" data-zh="异常干净">exceptionally clean</span>. It had a large window and we had a <span class="sigword pending" data-pair="wonderful" data-zh="精彩">wonderful</span> view of the snow and mountains outside. <span class="sigword pending" data-pair="Highly recommended" data-zh="强烈推荐">Highly recommended</span>!</p>
+</div>
+<div class="card accent mt-m" style="text-align:center">
+<h4>✏️ 任务：圈出所有正面信号词</h4>
+<p>每按一次提示按钮，显示一个信号词</p>
+<button class="reveal-btn" id="s10-rev" onclick="revealNextSignal('s10')">💡 提示 <span id="s10-counter">0/8</span></button>
+<button class="reveal-btn" id="s10-reset" onclick="resetSignals('s10')" style="background:var(--xdf-red);margin-left:8px">↺ 重置</button>
+</div>
+<div class="card accent mt-m">
+<h4>🔑 &quot;If the writer removed &apos;amazing&apos;, would the tone change?&quot; → No! Multiple positive words create a cumulative effect.</h4>
+</div>
+</div>
+</section>
+<section class="slide" data-title="🧑‍🏫 Level 3: Mayan Dreams">
+<div style="max-width:1000px;margin:0 auto;width:100%">
+<div class="sec-label">🧑‍🏫 老师带练</div>
+<div class="slide-h2">Level 3: Mayan Dreams Resort 🌴</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:8px">Textbook p.175, A2 — Ricky Cheung&apos;s review (几乎全负面)</div>
+<div class="card accent" style="text-align:left;border-left-color:var(--xdf-red)">
+<p style="font-size:22px;line-height:2;white-space:pre-line;color:var(--text-1)">I <span class="sigword pending" data-pair="cannot recommend" data-zh="无法推荐">cannot recommend</span> this hotel. We were promised a &apos;premium&apos; room, but our room <span class="sigword pending" data-pair="smelled stale" data-zh="有霉味">smelled stale</span>, as though someone had been smoking inside. It was also <span class="sigword pending" data-pair="rather dirty" data-zh="非常脏">rather dirty</span>. We called reception to <span class="sigword pending" data-pair="report the problem" data-zh="上报问题">report the problem</span>, and were promised that someone would come and clean our room, but <span class="sigword pending" data-pair="no one ever did" data-zh="人们全都没动">no one ever did</span>. It was <span class="sigword pending" data-pair="like talking to a brick wall" data-zh="像对着一个砖墙说话">like talking to a brick wall</span>.
+
+The beach was also dirty, and there were <span class="sigword pending" data-pair="not enough sun loungers" data-zh="日光浴椅">not enough sun loungers</span> by the pool. When we arrived at the pool at 2 p.m., after check-in, they had run out of beach towels. <i>So much for a holiday in the sun.</i></p>
+</div>
+<div class="card accent mt-m" style="text-align:center">
+<h4>✏️ 任务：圈出所有负面信号词</h4>
+<p>每按一次提示按钮，显示一个信号词</p>
+<button class="reveal-btn" id="s11-rev" onclick="revealNextSignal('s11')">💡 提示 <span id="s11-counter">0/7</span></button>
+<button class="reveal-btn" id="s11-reset" onclick="resetSignals('s11')" style="background:var(--xdf-red);margin-left:8px">↺ 重置</button>
+<p style="font-size:14px;color:var(--text-3);margin-top:6px">📌 &quot;So much for a holiday in the sun&quot; 是作者反讽语气，不作为信号词标记。</p>
+</div>
+<div class="card accent mt-m" style="border-left-color:var(--xdf-gold)">
+<h4>🔑 &quot;Positive?&quot; — 这其实是个 trick！&apos;premium&apos; 用了引号（讽刺），没有任何真正的正面词。</h4>
+</div>
+</div>
+</section>
+<section class="slide" data-title="SB Q1"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq1">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q1 · Short Answer · 2 marks</div><div class="pmcq-q">What does the phrase &apos;Increasingly though&apos; (line 4) suggest about the writer&apos;s attitude towards expert opinion on travel?</div><button class="reveal-btn" onclick="toggleRev('ans-sbq1')">👁 点击显示答案</button><div id="ans-sbq1" class="ans-reveal"><div class="ans-banner"><div class="tick">✅</div><div><div class="at">参考答案</div><div class="asub">It suggests that the latest opinions are quite a recent development and/or that more and more people support this view.</div></div></div></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q2"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq2">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q2 · Short Answer · 2 marks</div><div class="pmcq-q">What does the phrase &apos;even better&apos; (line 10) suggest about Dr McCary&apos;s attitude towards the length of a trip?</div><button class="reveal-btn" onclick="toggleRev('ans-sbq2')">👁 点击显示答案</button><div id="ans-sbq2" class="ans-reveal"><div class="ans-banner"><div class="tick">✅</div><div><div class="at">参考答案</div><div class="asub">It suggests that she thinks the longer a trip is, the better.</div></div></div></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q3"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq3">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q3 · MC · 1 mark</div><div class="pmcq-q">When the writer says &apos;if you are prepared to go solo&apos; (lines 15–16), he/she means …</div><div class="pmcq-options" id="q-sbq3"><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq3', 'A wrong — Cost is not mentioned; &quot;go solo&quot; means travelling alone, not paying more.')"><div class="pl">A</div><div>solo travellers usually pay more for their holidays.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq3', 'B wrong — Social interactions are not the focus; the phrase is about willingness to travel alone.')"><div class="pl">B</div><div>solo travellers miss out on social interactions.</div></div><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq3', '✅ C correct! &quot;If you are prepared to go solo&quot; implies solo travel is something most people would not normally choose.')"><div class="pl">C</div><div>most people would not choose to travel this way.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq3', 'D wrong — Research is not mentioned; &quot;prepared&quot; means willing, not well-prepared.')"><div class="pl">D</div><div>most solo travellers do a lot of research before a trip.</div></div></div><div class="ans-reveal" id="ans-sbq3" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q4"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq4">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q4 · MC · 1 mark</div><div class="pmcq-q">When the writer says that Liam&apos;s world &apos;shrunk&apos; (line 23), he/she means …</div><div class="pmcq-options" id="q-sbq4"><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq4', '✅ A correct! After the accident Liam lost mobility, lost friends, struggled with simple tasks — his world literally became smaller.')"><div class="pl">A</div><div>Liam could not do as much as he used to.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq4', 'B wrong — &quot;World shrunk&quot; is metaphorical (lost mobility/friends), not literal (staying at home).')"><div class="pl">B</div><div>Liam stayed at home most of the time.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq4', 'C wrong — Liam\&apos;s injuries were to his lower legs, not his height; &quot;shrunk&quot; is metaphorical.')"><div class="pl">C</div><div>Liam was shorter after the motorbike accident.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq4', 'D wrong — Frustration is not the focus; the metaphor is about losing ability and social connections.')"><div class="pl">D</div><div>Liam became frustrated with his life.</div></div></div><div class="ans-reveal" id="ans-sbq4" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q5"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq5">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q5 · MC · 1 mark</div><div class="pmcq-q">When the writer says &apos;He was gone for just six weeks&apos; (line 29), he/she means …</div><div class="pmcq-options" id="q-sbq5"><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq5', 'A wrong — Number of countries is not mentioned; &quot;just&quot; emphasises time, not destination variety.')"><div class="pl">A</div><div>Liam should have travelled to more countries.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq5', 'B wrong — &quot;Just six weeks&quot; refers to the duration, not how quickly the trip was organised.')"><div class="pl">B</div><div>Liam organized his trip quickly.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq5', 'C wrong — Cost is not mentioned; &quot;just&quot; here means &quot;only&quot; referring to time.')"><div class="pl">C</div><div>Liam&apos;s trip was not expensive.</div></div><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq5', '✅ D correct! &quot;Just six weeks&quot; = only a short period. &quot;Just&quot; = &quot;only&quot; (emphasis on short duration).')"><div class="pl">D</div><div>Liam&apos;s trip was not very long.</div></div></div><div class="ans-reveal" id="ans-sbq5" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q6"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq6">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q6 · MC · 1 mark</div><div class="pmcq-q">When Liam says that the people he spoke to at the hostel did not think of him as &apos;poor Liam&apos; (line 36), he means …</div><div class="pmcq-options" id="q-sbq6"><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq6', '✅ A correct! Liam felt others saw him as &quot;poor Liam&quot; — they pitied him because of the accident.')"><div class="pl">A</div><div>many people who knew about his accident pitied him.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq6', 'B wrong — The issue is not difficulty in talking; it is the negative label &quot;poor Liam&quot;.')"><div class="pl">B</div><div>people often found it difficult to talk to him about his accident.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq6', 'C wrong — &quot;Poor&quot; here means pitiable (unfortunate), not financially poor.')"><div class="pl">C</div><div>his friends and family knew how little money he had.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq6', 'D wrong — Medical staff are not mentioned; the context is about people Liam met at the hostel.')"><div class="pl">D</div><div>the medical staff appreciated how brave he had been.</div></div></div><div class="ans-reveal" id="ans-sbq6" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q7"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq7">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q7 · MC · 1 mark</div><div class="pmcq-q">When the writer says Francis Tam &apos;experienced every skier&apos;s nightmare&apos; (line 51), he/she means …</div><div class="pmcq-options" id="q-sbq7"><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq7', 'A wrong — &quot;Nightmare&quot; refers to a bad event, not the emotion of being frightened.')"><div class="pl">A</div><div>Francis was feeling frightened when he fell.</div></div><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq7', '✅ B correct! &quot;Every skier\&apos;s nightmare&quot; = a worst-case scenario that any skier would dread.')"><div class="pl">B</div><div>no one would want to experience what Francis went through.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq7', 'C wrong — Sleep is not mentioned; the accident was caused by break-neck speed, not lack of sleep.')"><div class="pl">C</div><div>lack of sleep was the cause of Francis&apos;s accident.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq7', 'D wrong — Worrying beforehand is not the focus; &quot;nightmare&quot; describes the accident itself.')"><div class="pl">D</div><div>Francis had been worrying about having an accident.</div></div></div><div class="ans-reveal" id="ans-sbq7" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q8"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq8">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q8 · Short Answer · 2 marks</div><div class="pmcq-q">Why should we be positive about even a short holiday?</div><button class="reveal-btn" onclick="toggleRev('ans-sbq8')">👁 点击显示答案</button><div id="ans-sbq8" class="ans-reveal"><div class="ans-banner"><div class="tick">✅</div><div><div class="at">参考答案</div><div class="asub">because our stress levels fall when we are on holiday, and we can tap into feelings of calm when we get back</div></div></div></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q9"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq9">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q9 · Short Answer · 2 marks</div><div class="pmcq-q">What does the phrase &apos;If you were ever unsure&apos; (line 69) suggest about the writer&apos;s attitude towards evidence related to the benefits of travel?</div><button class="reveal-btn" onclick="toggleRev('ans-sbq9')">👁 点击显示答案</button><div id="ans-sbq9" class="ans-reveal"><div class="ans-banner"><div class="tick">✅</div><div><div class="at">参考答案</div><div class="asub">It suggests that there is no longer any reason to feel unsure.</div></div></div></div></div></div></div></div></section>
+<section class="slide" data-title="SB Q10 · Matching">
+<div class="slide-inner scrollable wide">
+<div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div>
+<div class="slide-h2" style="font-size:24px">SB Q10 · Matching · 4 marks</div>
+<div style="font-size:17px;color:var(--text-1);margin-bottom:10px">Match each person with one of the quotes below. Choose from A–F and write the letter in the box next to each person. Two of the quotes will NOT be used.</div>
+<div class="split-view" style="max-height:680px">
+<div class="split-left">
+<h4>📄 SB Text 原文</h4>
+<div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq10">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div>
+<p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮（高亮会跨页面保持）</p>
+</div>
+<div class="split-right">
+<div class="practice-mcq">
+<div class="pmcq-label">SB Q10 · Matching · 4 marks</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:10px">👆 把引用拖到对应人物框里 | 可<b>拖回选项池</b>撤销（自动按字母顺序重排）</div>
+<div class="word-pool" id="word-pool-sbq10" style="display:flex;flex-direction:column;gap:5px;padding:10px;background:#fafafa;border-radius:10px;margin-bottom:12px;min-height:60px">
+<span class="draggable" draggable="true" data-word="mA" data-cat="mccary" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>A.</b> "This bad experience has prepared me for any future problems I might encounter."</span>
+<span class="draggable" draggable="true" data-word="mB" data-cat="liam" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>B.</b> "Travelling made me feel like a new person."</span>
+<span class="draggable" draggable="true" data-word="mC" data-cat="" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>C.</b> "It&apos;s best to do a job that you feel passionate about."</span>
+<span class="draggable" draggable="true" data-word="mD" data-cat="amelia" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>D.</b> "I had to tell myself to stop being so emotional."</span>
+<span class="draggable" draggable="true" data-word="mE" data-cat="" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>E.</b> "Whenever I feel stressed, I book a holiday."</span>
+<span class="draggable" draggable="true" data-word="mF" data-cat="mccary" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>F.</b> "People who make big changes in their lives rarely feel sorry about it afterwards."</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+<div class="drop-zone" data-cat="mccary" id="dz-mccary" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">Dr Barbara McCary</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="liam" id="dz-liam" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">Liam Thomas</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="amelia" id="dz-amelia" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">Amelia Wong</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="francis" id="dz-francis" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">Francis Tam</div><div class="drop-content" style="min-height:50px"></div></div>
+</div>
+<div style="text-align:center">
+<button class="reveal-btn" onclick="checkMatching()">✅ 提交</button>
+<button class="reveal-btn" onclick="resetMatching()" style="background:var(--text-3);margin-left:10px">↺ 重置</button>
+</div>
+<div id="match-result" style="display:none;margin-top:12px"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="SB Q11 · 拖拽匹配">
+<div class="slide-inner scrollable wide">
+<div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div>
+<div class="slide-h2" style="font-size:24px">SB Q11 · 拖拽匹配 · 6 marks</div>
+<div style="font-size:17px;color:var(--text-1);margin-bottom:10px">💡 <b>题目</b>：Match each statement (i–vi) with the correct person (A–F). Use each letter ONCE only.</div>
+<div style="font-size:14px;color:var(--text-3);margin-bottom:14px">👆 把下面 6 个 statement 拖到对应的人物框里 | 先思考再拖 | <b>拖回选项池</b>可撤销（自动按 i/ii/iii 顺序重排）</div>
+<div class="split-view" style="max-height:680px">
+<div class="split-left">
+<h4>📄 人物介绍 (key context)</h4>
+<div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq11" style="font-size:15px">
+<b>A. Dr Barbara McCary</b> (psychologist) — &quot;We are so busy in our daily lives... we don&apos;t have time to stop and think about what is really meaningful to us.&quot;<br><br>
+<b>B. Liam Thomas</b> (founder of Room for One) — &quot;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&quot;<br><br>
+<b>C. Amelia Wong</b> (travelled alone in Europe) — &quot;When my passport was stolen... I gave myself a pep talk... It made me grow up.&quot;<br><br>
+<b>D. Francis Tam</b> (skier in Niseko) — &quot;I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all.&quot;<br><br>
+<b>E. Joe Burrill</b> (mindfulness expert) — &quot;If I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand.&quot;<br><br>
+<b>F.</b> (not mentioned in text)
+</div>
+</div>
+<div class="split-right">
+<div class="practice-mcq">
+<div class="pmcq-label">SB Q11 · 拖拽匹配 · 6 marks</div>
+<div class="pmcq-q" style="font-size:15px;line-height:1.6">Statements to match:</div>
+<div class="word-pool" id="word-pool-sbq11" style="display:flex;flex-direction:column;gap:5px;padding:10px;background:#fafafa;border-radius:10px;margin-bottom:14px;min-height:60px">
+<span class="draggable" draggable="true" data-word="i" data-cat="C" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>i)</b> After I dealt with a difficult experience, I felt more mature.</span>
+<span class="draggable" draggable="true" data-word="ii" data-cat="B" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>ii)</b> Accomplishing simple things can bring great satisfaction.</span>
+<span class="draggable" draggable="true" data-word="iii" data-cat="E" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>iii)</b> I&apos;m aware of when I start to feel nervous and I act to change how I feel.</span>
+<span class="draggable" draggable="true" data-word="iv" data-cat="F" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>iv)</b> Learning how to handle different currencies is useful.</span>
+<span class="draggable" draggable="true" data-word="v" data-cat="A" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>v)</b> Our everyday responsibilities prevent us from thinking about the important things in life.</span>
+<span class="draggable" draggable="true" data-word="vi" data-cat="D" style="padding:7px 11px;background:#fff;border:1.5px solid var(--card-bd);border-radius:6px;cursor:grab;font-size:14px;color:var(--text-1)"><b>vi)</b> I needed to change my flight reservation.</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+<div class="drop-zone" data-cat="A" id="dz-A-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">A. Dr McCary</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="B" id="dz-B-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">B. Liam T.</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="C" id="dz-C-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">C. Amelia W.</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="D" id="dz-D-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">D. Francis T.</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="E" id="dz-E-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">E. Joe B.</div><div class="drop-content" style="min-height:50px"></div></div>
+<div class="drop-zone" data-cat="F" id="dz-F-sbq11" style="padding:10px;background:var(--xdf-gp);border-radius:8px;border:2px dashed var(--xdf-green);min-height:80px"><div style="font-size:13px;font-weight:800;color:var(--xdf-green);margin-bottom:4px">F. (Not mentioned)</div><div class="drop-content" style="min-height:50px"></div></div>
+</div>
+<div style="text-align:center">
+<button class="reveal-btn" onclick="checkDragDropS11()">✅ 提交</button>
+<button class="reveal-btn" onclick="resetDragDropS11()" style="background:var(--text-3);margin-left:10px">↺ 重置</button>
+</div>
+<div id="drag-result-s11" style="display:none;margin-top:10px"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="SB Q12"><div class="slide-inner scrollable wide"><div class="phase-label ph-practice"><span class="dot-indicator"></span>独立练习</div><div class="slide-h2" style="font-size:24px">Skill Builder 原文 + 题目</div><div class="split-view" style="max-height:680px"><div class="split-left"><h4>📄 SB Text 原文</h4><div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-sbq12">[1] It seems fairly obvious that travel is good for us physically: whether we&apos;re strolling around a museum in a foreign capital or reading a good book on a sun lounger, a holiday offers us the chance to relax, de-stress from a hectic job or exams, and recharge our batteries. Increasingly though, experts are telling us that travel is also good for our mental well-being.
+[2] &apos;We are so busy in our daily lives—working, paying the bills, doing chores, looking after family members—that we don&apos;t have time to stop and think about what is really meaningful to us,&apos; says Dr Barbara McCary, a psychologist. &apos;A holiday or—even better—an extended trip abroad gives us the chance to hit the "pause" button and think about what we want out of life and prioritize what really makes us happy.&apos; Dr McCary says she has known clients who make dramatic career changes or even move to a different country after such overseas trips. &apos;And not one of them regretted it.&apos;
+[3] Travel also offers the opportunity to reinvent yourself, especially if you are prepared to go solo. In a foreign place with no friends or family around you, no one knows who you are, what your job is, where you come from or your history. You start with a clean slate. Liam Thomas founded a successful travel company catering to solo travellers, Room for One, after a life-changing holiday alone.
+[4] Liam had a terrible motorbike accident just after he graduated from university, sustaining injuries to his lower legs. He was in hospital for six months and the rehabilitation process was long and hard. During that time, he lost a lot of friends and his world shrunk as he struggled to manage simple tasks he had once taken for granted. &apos;It probably sounds ridiculous, but the day I could put on my socks by myself, I was so happy!&apos; he says with a grin. &apos;When I left the hospital, my confidence was at an all-time low,&apos; he explains. &apos;My life was bleak and I knew I needed to do something dramatic to try to get my life back on track.&apos;
+[5] As soon as he was able, Liam decided to travel around South America on his own. He was gone for just six weeks. &apos;Suddenly, I was in exotic surroundings, there was a language barrier and everything seemed alien to me. I was a bit hesitant, but I had to interact with the world around me, however confusing it seemed, and this gave me a new-found sense of wonder. It was like I was seeing things for the first time. My trip was relatively short, but it made me re-evaluate who I was as a person and what I believed in.&apos; When Liam met new people at the first hostel he stayed at in Buenos Aires, he told them he was a student taking a gap year. &apos;They didn&apos;t know anything about my motorbike accident, so to them I wasn&apos;t "poor Liam" who had spent half a year in hospital. I was a curious twenty-something who wanted to know more about another country and culture. It was like being reborn. Now I feel like the world is my oyster.&apos;
+[6] Going outside your comfort zone and planning a trip to a far-flung location or travelling on your own can seem a little bit frightening. When you actually do it, however, you might find that it is not as difficult as you expected. And even when things go wrong, travel can make you stronger emotionally, as you realize that you can handle situations that you might have shied away from at home.
+[7] Amelia Wong travelled around Europe for eight weeks last summer, on her own. She had to cope with missed trains, hotels being fully booked and having her passport stolen. &apos;It made me grow up,&apos; she says. &apos;When my passport was stolen, I panicked at first. But then I gave myself a pep talk and managed to calm down. I went to the consulate and told them everything as calmly and confidently as I could. It all worked out in the end. At the time it seemed like the end of the world, but getting a replacement passport was actually not that much of a hassle.&apos;
+[8] Francis Tam experienced every skier&apos;s nightmare when, travelling at break-neck speed down the slopes of Niseko, Japan, he fell and badly injured his knee. &apos;At the time it was a living hell,&apos; he recalls. &apos;I had to call for help to be able to get to the medical centre, and I had an operation at the hospital in Japan. Then I had to rearrange my flight back home, because I couldn&apos;t bend my knee at all and needed three seats on the plane to stretch my leg out on.&apos; Although the experience was awful, Francis says it has made him more resilient. &apos;If I&apos;m ever in trouble again when overseas, I&apos;ll know what to do and it won&apos;t faze me.&apos;
+[9] Even after a trip has ended, it can still have a positive impact on our mood and mental health. Studies have found that when we are on holiday, stress levels fall and we feel calmer. When we get back to our everyday lives, we can try to tap into those feelings of calm we experienced while away from home.
+[10] Joe Burrill, an expert in mindfulness, explains: &apos;One of the most relaxing holidays I have ever been on was in Boracay in the Philippines,&apos; says Burrill. &apos;Now, if I feel like I&apos;m starting to get a bit anxious about something, I just stop what I&apos;m doing for 30 seconds, close my eyes and imagine I&apos;m lying on that soft golden sand in Boracay. I take some deep breaths and try to remember what it felt like to be so relaxed. It helps me enormously when I need to calm down.&apos;
+[11] If you were ever unsure, the evidence now seems as clear as day: travel is good for your mind, body and soul.</div><p style="font-size:13px;color:var(--text-3);margin-top:10px">📌 右键拖动可选中段落内任意文字并高亮 | 按提示按钮可显示关键信号词</p></div><div class="split-right"><div class="practice-mcq"><div class="pmcq-label">SB Q12 · MC · 1 mark</div><div class="pmcq-q">Which of the following best describes the writer&apos;s intention?</div><div class="pmcq-options" id="q-sbq12"><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq12', 'A wrong — The writer is not pressurizing anyone; the tone is informative and encouraging.')"><div class="pl">A</div><div>To pressurize the reader into changing his/her lifestyle.</div></div><div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-sbq12', '✅ B correct! The writer lists various benefits of travel to persuade the reader that travelling is beneficial.')"><div class="pl">B</div><div>To persuade the reader of the benefits of a course of action.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq12', 'C wrong — While research is mentioned, the main purpose is not to explain scientific findings.')"><div class="pl">C</div><div>To explain the findings of recent scientific research.</div></div><div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-sbq12', 'D wrong — The writer is not defending personal spending choices; the article is about travel benefits in general.')"><div class="pl">D</div><div>To defend his reasons for the way he spends his money.</div></div></div><div class="ans-reveal" id="ans-sbq12" style="display:none"></div></div></div></div></div></section>
+<section class="slide" data-title="⭐ DSE 真题：2020 P1">
+<div class="slide-inner scrollable wide">
+<div class="phase-label ph-practice"><span class="dot-indicator"></span>DSE 真题</div>
+<div class="slide-h2" style="font-size:24px">DSE 真题 · 2020 Paper 1 Part A · Q12</div>
+<div class="split-view" style="max-height:600px">
+<div class="split-left">
+<h4>📄 Para [5] (Paragraph 5 of Restaurant Intern)</h4>
+<div class="passage-excerpt" oncontextmenu="handleHighlight(event, this)" id="passage-q12" style="font-size:18px;line-height:1.9">
+<div class="para-num">2020 DSE Paper 1 Part A · Q12 · 1 mark</div>
+<i>To be honest, I&apos;m not sure how I&apos;m going to make it through the next four months. I&apos;m counting down the hours until my internship ends—830 to go!</i>
+</div>
+</div>
+<div class="split-right">
+<div class="practice-mcq">
+<div class="pmcq-label">Q12 · 2020 P1 · MC · 1 mark</div>
+<div class="pmcq-q" style="font-size:17px;line-height:1.6">The tone of paragraph 5 can best be described as:</div>
+<div class="pmcq-options" id="q-q12">
+<div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-q12', 'A wrong — peaceful means calm/quiet, but the writer is anxious and stressed.')"><div class="pl">A</div><div>peaceful</div></div>
+<div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-q12', 'B wrong — excited means positive/anticipating, but the writer is worried and uncertain.')"><div class="pl">B</div><div>excited</div></div>
+<div class="pmcq-opt" data-correct="false" onclick="checkMC(this, false, 'q-q12', 'C wrong — angry means furious, but the writer is just worried, not angry.')"><div class="pl">C</div><div>angry</div></div>
+<div class="pmcq-opt" data-correct="true" onclick="checkMC(this, true, 'q-q12', '✅ D correct! &quot;I\&apos;m not sure how I\&apos;m going to make it through&quot; + &quot;counting down the hours&quot; both show the writer is anxious about whether they can survive the next four months.')"><div class="pl">D</div><div>anxious</div></div>
+</div>
+<div class="ans-reveal" id="ans-q12" style="display:none"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" data-title="🚪 出门测">
+<div style="max-width:1100px;margin:0 auto;width:100%">
+<div class="sec-label">出门测 · 5 MIN</div>
+<div class="slide-h2">出门测：核心词汇 · 英译中</div>
+<div style="font-size:18px;color:var(--text-2);margin-bottom:12px">每题 1 分，满分 10 分 | 点击卡片查看答案</div>
+<div class="flip-grid g5"><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">positive</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">正面的；积极的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">negative</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">负面的；消极的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">amazing</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">惊人的；了不起的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">terrible</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">糟糕的；可怕的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">delicious</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">美味的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">disgusting</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">令人恶心的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">recommend</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">推荐；建议</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">disappoint</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">使失望</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">beautiful</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">美丽的</div></div></div></div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">crowded</div><div class="flip-hint"></div></div><div class="flip-face flip-back"><div class="flip-ans">拥挤的</div></div></div></div></div></div>
+</section>
+<section class="slide" data-title="🎉 完成！">
+<div style="text-align:center;margin-top:80px">
+<div class="slide-h1">🎉 恭喜完成！</div>
+<p style="font-size:22px;color:var(--text-2);margin-top:20px">Unit 5 Reading · Happy Travels</p>
+<p style="font-size:18px;color:var(--xdf-green);margin-top:14px;font-weight:700">Positive &amp; Negative Language → Understanding Tone &amp; Attitude</p>
+</div>
+</section>
+</div>
+<script>
+// === Timer (v4 Unit2 完整重写) ===
+var timerDuration=300,timerRemaining=300,timerRunning=false,timerInterval=null,timerDone=false;
+var durations=[60,120,180,300,600],durIdx=3;
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60),sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;return m*60+s;
+}
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);timerInterval=null;timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='\u25b6';
+  }else{
+    if(timerDone){resetTimer();}
+    if(timerRemaining<=0){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}
+      else{timerDuration=60;timerRemaining=60;}
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='\u25b6';
+      }
+    },1000);
+    timerRunning=true;timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='\u23f8';
+  }
+}
+function resetTimer(){
+  clearInterval(timerInterval);timerInterval=null;
+  timerRunning=false;timerDone=false;
+  timerRemaining=timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='\u25b6';
+}
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];
+  timerRemaining=timerDuration;timerDone=false;
+  updateTimerDisplay();
+  clearInterval(timerInterval);timerInterval=null;timerRunning=false;
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='\u25b6';
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+// === Zoom controls (enlarge / shrink page text) ===
+var ZOOM_MIN=0.8,ZOOM_MAX=1.6,ZOOM_STEP=0.1;
+var zoomLevel=(function(){
+  var saved=parseFloat(localStorage.getItem('xdf-zoom-level'));
+  return (!isNaN(saved)&&saved>=ZOOM_MIN&&saved<=ZOOM_MAX)?saved:1;
+})();
+function applyZoom(){
+  zoomLevel=Math.round(Math.min(ZOOM_MAX,Math.max(ZOOM_MIN,zoomLevel))*100)/100;
+  document.documentElement.style.setProperty('--zoom-scale',zoomLevel);
+  var label=document.getElementById('zoomLevelLabel');
+  if(label)label.textContent=Math.round(zoomLevel*100)+'%';
+  var outBtn=document.getElementById('zoomOutBtn'),inBtn=document.getElementById('zoomInBtn');
+  if(outBtn)outBtn.disabled=zoomLevel<=ZOOM_MIN+1e-6;
+  if(inBtn)inBtn.disabled=zoomLevel>=ZOOM_MAX-1e-6;
+  try{localStorage.setItem('xdf-zoom-level',String(zoomLevel));}catch(e){}
+}
+function zoomIn(){zoomLevel+=ZOOM_STEP;applyZoom();}
+function zoomOut(){zoomLevel-=ZOOM_STEP;applyZoom();}
+function resetZoom(){zoomLevel=1;applyZoom();}
+applyZoom();
+
+// === Navigation ===
+var current=0;
+function initDots(){
+  var slides=document.querySelectorAll('.slide');
+  var dots=document.getElementById('progressDots');dots.innerHTML='';
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');d.className='dot';d.dataset.pn='\u7b2c'+(i+1)+'\u9875';
+    d.onclick=function(){goTo(i);};dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+  if(current===slides.length-1)launchConfetti();
+  reapplyAllHighlights();
+}
+function goTo(i){var slides=document.querySelectorAll('.slide');if(i<0||i>=slides.length||i===current)return;current=i;updateUI();}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){span.textContent=val;input.replaceWith(span);goTo(val-1);}
+    else{span.textContent=current+1;input.replaceWith(span);}
+  }
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();finish();}if(e.key==='Escape'){e.preventDefault();var s=document.createElement('span');s.className='pc-cur';s.id='pcCur';s.onclick=editPageCounter;s.textContent=current+1;input.replaceWith(s);}});
+  input.addEventListener('blur',finish);
+}
+
+// === Signal word progressive reveal ===
+var negList=['avoid this place','not at all welcoming','rude','cold and tasteless','reluctantly','extortionate','overrated tourist trap','disappointment','ugly alley','rubbish','depressing','very small','claustrophobic','not very well sound-proofed','at the crack of dawn','cannot recommend','smelled stale','rather dirty','no one ever did','like talking to a brick wall','not enough sun loungers','So much for a holiday in the sun'];
+function revealNextSignal(slideId){
+  var pool=document.querySelectorAll('.slide.is-active .sigword.pending');
+  if(!pool.length)return;
+  var target=pool[0];
+  var pair=target.dataset.pair||'';
+  var cls=negList.indexOf(pair)>=0?'revealed-neg':'revealed-pos';
+  var zh=target.dataset.zh||'';
+  var wrapper=document.createElement('span');
+  wrapper.className='sigword '+cls;
+  wrapper.dataset.pair=pair;
+  wrapper.dataset.zh=zh;
+  wrapper.innerHTML=pair+' <span style="font-size:14px;color:var(--xdf-blue);font-weight:600">('+zh+')</span>';
+  target.replaceWith(wrapper);
+  updateCounter(slideId);
+}
+function updateCounter(slideId){
+  var total=document.querySelectorAll('.slide.is-active .sigword').length;
+  var revealed=document.querySelectorAll('.slide.is-active .sigword.revealed-pos, .slide.is-active .sigword.revealed-neg').length;
+  var counter=document.getElementById(slideId+'-counter');
+  if(counter)counter.textContent=revealed+'/'+total;
+}
+function resetSignals(slideId){
+  var revealed=document.querySelectorAll('.slide.is-active .sigword.revealed-pos, .slide.is-active .sigword.revealed-neg');
+  revealed.forEach(function(el){
+    var pair=el.dataset.pair||'';
+    var zh=el.dataset.zh||'';
+    var newEl=document.createElement('span');
+    newEl.className='sigword pending';
+    newEl.dataset.pair=pair;
+    newEl.dataset.zh=zh;
+    newEl.textContent=pair;
+    el.replaceWith(newEl);
+  });
+  var counter=document.getElementById(slideId+'-counter');
+  if(counter){var total=document.querySelectorAll('.slide.is-active .sigword').length;counter.textContent='0/'+total;}
+}
+
+// === Drag & Drop ===
+function initDragDrop(scope){
+  // scope: optional - 限定到特定 slide
+  var draggables=document.querySelectorAll(scope?scope+' .draggable':'.draggable');
+  var zones=document.querySelectorAll(scope?scope+' .drop-zone':'.drop-zone');
+  // 也包括 word-pool 作为 drop target (拖回撤销)
+  var pools=document.querySelectorAll(scope?scope+' .word-pool':'.word-pool');
+  draggables.forEach(function(d){
+    d.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain',d.dataset.word);d.classList.add('dragging');});
+    d.addEventListener('dragend',function(e){d.classList.remove('dragging');});
+  });
+  zones.forEach(function(z){
+    z.addEventListener('dragover',function(e){
+      e.preventDefault();
+      z.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
+    });
+    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('.draggable[data-word="'+word+'"]');
+      if(dragged){
+        var content=z.querySelector('.drop-content');
+        if(content)content.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+      }
+    });
+  });
+  pools.forEach(function(p){
+    p.addEventListener('dragover',function(e){
+      e.preventDefault();
+      p.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,p);
+    });
+    p.addEventListener('dragleave',function(e){p.classList.remove('drag-over');});
+    p.addEventListener('drop',function(e){
+      e.preventDefault();p.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('.draggable[data-word="'+word+'"]');
+      if(dragged){
+        p.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+        if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(p);
+      }
+    });
+  });
+}
+function checkDragDrop(){
+  var placed=document.querySelectorAll('.draggable');
+  var correctCount=0,wrongCount=0;
+  placed.forEach(function(d){
+    var parent=d.closest('.drop-zone');
+    var cat=parent?parent.dataset.cat:'';
+    if(cat===d.dataset.cat){d.classList.add('correct-placed');d.classList.remove('wrong-placed');correctCount++;}
+    else{d.classList.add('wrong-placed');d.classList.remove('correct-placed');wrongCount++;}
+  });
+  var result=document.getElementById('drag-result');
+  result.style.display='block';
+  var total=placed.length;
+  var remaining=document.querySelectorAll('#word-pool .draggable').length;
+  result.innerHTML='<div class="card accent" style="text-align:center"><h4>\u63d0\u4ea4\u7ed3\u679c\uff1a\u2705 '+correctCount+' \u6b63\u786e / \u274c '+wrongCount+' \u9519\u8bef / \ud83d\udce6 '+remaining+' \u672a\u62d6\u5165</h4>'+(correctCount===total?'<p style="color:var(--xdf-green);font-size:20px;margin-top:10px">\ud83c\udf89 \u5168\u90e8\u6b63\u786e\uff01</p>':'')+'</div>';
+}
+function resetDragDrop(){
+  var pool=document.getElementById('word-pool');
+  if(pool){
+    document.querySelectorAll('#dz-pos .draggable, #dz-neg .draggable, #word-pool .draggable').forEach(function(d){
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
+    if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool);
+  }
+  document.getElementById('drag-result').style.display='none';
+}
+
+// === MC check (with explanation) ===
+function checkMC(el,isCorrect,containerId,explanation){
+  var container=document.getElementById(containerId);
+  if(!container)return;
+  if(el.classList.contains('answered'))return;
+  // 找到正确选项 (双重检测: data-correct 属性 或 onclick 中含 true)
+  var allOpts=container.querySelectorAll('.pmcq-opt');
+  var correctOpt=null;
+  allOpts.forEach(function(o){
+    var dc=o.getAttribute('data-correct');
+    if(dc==='true'){correctOpt=o;return;}
+    try{var oc=o.getAttribute('onclick')||'';if(oc.indexOf('checkMC(this, true')>=0||oc.indexOf('checkMC(this,true')>=0)correctOpt=o;}catch(e){}
+  });
+  el.classList.add('answered');
+  el.classList.add(isCorrect?'correct':'wrong');
+  // 移除旧 banner (在同一 practice-mcq 内找，避免跨 slide 干扰)
+  var practiceBox=el.closest('.practice-mcq')||container.parentNode;
+  var oldBanner=practiceBox.querySelector(':scope > .mc-banner');
+  if(!oldBanner){var tmp=practiceBox.querySelectorAll('.mc-banner');if(tmp.length)oldBanner=tmp[tmp.length-1];}
+  if(oldBanner)oldBanner.remove();
+  // 创建并插入 banner
+  var exp=explanation||'Think about why you chose this option.';
+  var banner=document.createElement('div');
+  banner.className=isCorrect?'mc-banner mc-correct':'mc-banner mc-wrong';
+  banner.innerHTML='<div class="tick">'+(isCorrect?'✅':'❌')+'</div><div><div class="at">'+(isCorrect?'Correct!':'Incorrect')+'</div><div class="asub">'+exp+'</div></div>';
+  container.insertAdjacentElement('afterend',banner);
+  // 答对 或 全部点完 才显示正解答案区
+  var answeredCount=container.querySelectorAll('.pmcq-opt.answered').length;
+  var allAnswered=answeredCount>=allOpts.length;
+  if(isCorrect||allAnswered){
+    if(correctOpt&&!isCorrect)correctOpt.classList.add('correct-revealed');
+    var ansId=containerId.replace('q-','ans-');
+    var ans=document.getElementById(ansId);
+    if(ans){
+      ans.style.display='block';
+      var letters=['A','B','C','D','E'];
+      var correctLetter=correctOpt?letters[Array.from(allOpts).indexOf(correctOpt)]||'?':'?';
+      ans.innerHTML='<div class="ans-banner"><div class="tick">✨</div><div><div class="at">Correct Answer &amp; Analysis</div><div class="asub">The correct answer is <b>'+correctLetter+'</b>. '+(isCorrect?explanation:'Correct: '+explanation)+'</div></div></div>';
+    }
+    container.classList.add('answered');
+  }
+}
+function toggleRev(id){var el=document.getElementById(id);if(el)el.classList.toggle('show');}
+
+// === SB Q10 Matching (Drag & Drop) ===
+function checkMatching(){
+  var answers={mA:'francis',mB:'liam',mD:'amelia',mF:'mccary'};
+  var names={mA:'A',mB:'B',mC:'C',mD:'D',mE:'E',mF:'F'};
+  var personNames={mccary:'Dr Barbara McCary',liam:'Liam Thomas',amelia:'Amelia Wong',francis:'Francis Tam'};
+  var allDrag=document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable');
+  var correct=0,wrong=0,unplaced=0;
+  var details=[];
+  allDrag.forEach(function(d){
+    var parent=d.closest('.drop-zone');
+    var letter=names[d.dataset.word]||'?';
+    if(!parent){
+      unplaced++;
+      if(d.dataset.cat!=='')details.push('<span style="color:#999">'+letter+': 未拖入</span>');
+    }else{
+      var cat=parent.dataset.cat;
+      var expected=d.dataset.cat;
+      if(cat===expected&&expected!==''){
+        correct++;
+        details.push('<span style="color:var(--xdf-green)">✅ '+letter+' → '+personNames[cat]+'</span>');
+      }else if(expected===''){
+        wrong++;
+        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (此引用不在答案中)</span>');
+      }else{
+        wrong++;
+        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (应拖到 '+personNames[expected]+')</span>');
+      }
+    }
+  });
+  var result=document.getElementById('match-result');
+  result.style.display='block';
+  result.innerHTML='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' 正确 / ❌ '+wrong+' 错误 / ⏳ '+unplaced+' 未拖</h4><div style="margin-top:10px;font-size:15px;line-height:2;text-align:left">'+details.join('<br>')+'</div><div style="margin-top:10px;font-size:16px;color:var(--text-1)">正确答案：McCary→F · Liam→B · Amelia→D · Francis→A<br>C 和 E 不用</div><div style="margin-top:8px;font-size:18px;font-weight:800;color:'+(correct===4?'var(--xdf-green)':'var(--xdf-red)')+'">得分：'+correct+' / 4</div></div>';
+}
+function resetMatching(){
+  var pool=document.getElementById('word-pool-sbq10');
+  if(pool){
+    document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable').forEach(function(d){
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
+  }
+  document.getElementById('match-result').style.display='none';
+}
+function initSBQ10DragDrop(){
+  var zoneIds=['dz-mccary','dz-liam','dz-amelia','dz-francis','word-pool-sbq10'];
+  zoneIds.forEach(function(id){
+    var z=document.getElementById(id);
+    if(!z)return;
+    z.addEventListener('dragover',function(e){
+      e.preventDefault();
+      z.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
+    });
+    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('.draggable[data-word="'+word+'"]');
+      if(dragged){
+        var content=z.querySelector('.drop-content')||z;
+        content.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+        if(id==='word-pool-sbq10'&&typeof sortDraggablesInPool==='function')sortDraggablesInPool(content);
+      }
+    });
+  });
+}
+// 按 data-word 字母顺序排序选项池
+function sortDraggablesInPool(pool){
+  if(!pool)return;
+  var items=Array.from(pool.querySelectorAll('.draggable'));
+  items.sort(function(a,b){return (a.dataset.word||'').localeCompare(b.dataset.word||'');});
+  items.forEach(function(it){pool.appendChild(it);});
+}
+// 查找元素最近的可滚动祖先（真正会出现滚动条的容器）
+function findScrollableAncestor(el){
+  var node=el;
+  while(node&&node!==document.body&&node!==document.documentElement){
+    var cs=window.getComputedStyle(node);
+    if((cs.overflowY==='auto'||cs.overflowY==='scroll')&&node.scrollHeight-node.clientHeight>2){
+      return node;
+    }
+    node=node.parentElement;
+  }
+  return null;
+}
+var __edgeScroll={raf:null,container:null,dir:0,speed:0};
+function stopEdgeAutoScroll(){
+  if(__edgeScroll.raf)cancelAnimationFrame(__edgeScroll.raf);
+  __edgeScroll.raf=null;__edgeScroll.container=null;__edgeScroll.dir=0;__edgeScroll.speed=0;
+}
+function runEdgeAutoScroll(){
+  if(!__edgeScroll.container||!__edgeScroll.dir){__edgeScroll.raf=null;return;}
+  __edgeScroll.container.scrollTop+=__edgeScroll.dir*__edgeScroll.speed;
+  __edgeScroll.raf=requestAnimationFrame(runEdgeAutoScroll);
+}
+// 拖拽接近可滚动区域边缘时，缓慢自动滚动该区域，让被遮住的方框（如屏幕下方的拖放框）露出来
+// e: 当前的 dragover 事件（用于获取鼠标位置）；refEl: 拖拽悬停的目标元素（用于定位最近的可滚动容器）
+function autoScrollToVisible(e,refEl){
+  try{
+    var container=findScrollableAncestor(refEl||(e&&e.target));
+    if(!container||!e||typeof e.clientY!=='number'){stopEdgeAutoScroll();return;}
+    var rect=container.getBoundingClientRect();
+    var edge=55;
+    var distBottom=rect.bottom-e.clientY;
+    var distTop=e.clientY-rect.top;
+    if(distBottom>=0&&distBottom<edge&&container.scrollTop+container.clientHeight<container.scrollHeight-1){
+      __edgeScroll.container=container;__edgeScroll.dir=1;
+      __edgeScroll.speed=2+(edge-distBottom)/edge*7; // 越靠近边缘滚动越快，整体保持缓慢
+      if(!__edgeScroll.raf)__edgeScroll.raf=requestAnimationFrame(runEdgeAutoScroll);
+    }else if(distTop>=0&&distTop<edge&&container.scrollTop>0){
+      __edgeScroll.container=container;__edgeScroll.dir=-1;
+      __edgeScroll.speed=2+(edge-distTop)/edge*7;
+      if(!__edgeScroll.raf)__edgeScroll.raf=requestAnimationFrame(runEdgeAutoScroll);
+    }else{
+      stopEdgeAutoScroll();
+    }
+  }catch(err){}
+}
+document.addEventListener('dragend',stopEdgeAutoScroll);
+document.addEventListener('drop',stopEdgeAutoScroll);
+
+// === Right-click highlight in passage ===
+// 高亮持久化: localStorage
+function passageHash(text){
+  var h=0;for(var i=0;i<text.length;i++){h=((h<<5)-h)+text.charCodeAt(i);h|=0;}
+  return 'hl_'+Math.abs(h);
+}
+function getHighlights(passageEl){
+  var key=passageHash(passageEl.textContent);
+  try{return JSON.parse(localStorage.getItem(key)||'[]');}catch(e){return [];}
+}
+function saveHighlights(passageEl,arr){
+  var key=passageHash(passageEl.textContent);
+  try{localStorage.setItem(key,JSON.stringify(arr));}catch(e){}
+}
+function escapeRegex(s){return s.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&');}
+function applyHighlights(passageEl){
+  var list=getHighlights(passageEl);
+  if(!list.length)return;
+  list.forEach(function(txt){
+    if(!txt||!txt.trim())return;
+    if(passageEl.innerHTML.indexOf('<span class="user-highlight">'+escapeRegex(txt)+'</span>')>=0)return;
+    // 仅在文本节点(非span内)中替换
+    function walkAndReplace(node){
+      if(node.nodeType===3){
+        var val=node.nodeValue;
+        if(val.indexOf(txt)>=0){
+          var span=document.createElement('span');
+          span.className='user-highlight';
+          var idx=val.indexOf(txt);
+          span.textContent=txt;
+          var before=document.createTextNode(val.substring(0,idx));
+          var after=document.createTextNode(val.substring(idx+txt.length));
+          var parent=node.parentNode;
+          parent.insertBefore(before,node);
+          parent.insertBefore(span,node);
+          parent.insertBefore(after,node);
+          parent.removeChild(node);
+        }
+      }else if(node.nodeType===1&&node.nodeName!=='SCRIPT'&&!node.classList.contains('user-highlight')){
+        var children=Array.from(node.childNodes);
+        children.forEach(walkAndReplace);
+      }
+    }
+    walkAndReplace(passageEl);
+  });
+}
+function handleHighlight(e,el){
+  e.preventDefault();
+  var sel=window.getSelection();
+  if(!sel||sel.isCollapsed)return;
+  var range=sel.getRangeAt(0);
+  if(!el.contains(range.commonAncestorContainer)&&!el.contains(range.startContainer))return;
+  var startNode=range.startContainer;
+  var parent=startNode.nodeType===3?startNode.parentNode:startNode;
+  var existingHl=parent.closest&&parent.closest('.user-highlight');
+  if(existingHl){
+    var hlText=existingHl.textContent;
+    var text=document.createTextNode(hlText);
+    existingHl.parentNode.replaceChild(text,existingHl);
+    var list=getHighlights(el);
+    var idx=list.indexOf(hlText);
+    if(idx>=0)list.splice(idx,1);
+    saveHighlights(el,list);
+  }else{
+    try{
+      var span=document.createElement('span');
+      span.className='user-highlight';
+      var fragment=range.extractContents();
+      var hlText=fragment.textContent;
+      span.appendChild(fragment);
+      range.insertNode(span);
+      if(hlText&&hlText.trim()){
+        var list=getHighlights(el);
+        if(list.indexOf(hlText)<0)list.push(hlText);
+        saveHighlights(el,list);
+      }
+    }catch(err){}
+  }
+  sel.removeAllRanges();
+}
+function reapplyAllHighlights(){
+  document.querySelectorAll('.passage-excerpt').forEach(applyHighlights);
+}
+document.addEventListener('DOMContentLoaded',function(){
+  reapplyAllHighlights();
+});
+
+// === Confetti ===
+function launchConfetti(){
+  var wrap=document.createElement('div');wrap.className='confetti-wrap';document.body.appendChild(wrap);
+  var colors=['#0B8235','#4CAF50','#C85D0A','#1A6DAF','#C0392B','#FFD54F'];
+  for(var i=0;i<60;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'%';
+    p.style.width=(6+Math.random()*10)+'px';p.style.height=p.style.width;
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration=(2+Math.random()*3)+'s';
+    p.style.animationDelay=(Math.random()*2)+'s';wrap.appendChild(p);
+  }
+  setTimeout(function(){wrap.remove();},6000);
+}
+
+// === SB Q11 拖拽匹配专用 ===
+function checkDragDropS11(){
+  var allDrag=document.querySelectorAll('#word-pool-sbq11 .draggable');
+  var placed=0,correct=0,wrong=0,unplaced=0;
+  allDrag.forEach(function(d){
+    var parent=d.closest('.drop-zone');
+    if(parent){
+      placed++;
+      if(parent.dataset.cat===d.dataset.cat){d.classList.add('correct-placed');d.classList.remove('wrong-placed');correct++;}
+      else{d.classList.add('wrong-placed');d.classList.remove('correct-placed');wrong++;}
+    }else{unplaced++;}
+  });
+  var result=document.getElementById('drag-result-s11');
+  result.style.display='block';
+  var msg='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' / 6 正确 / ❌ '+wrong+' 错误 / 📦 '+unplaced+' 未拖</h4>';
+  if(correct===6)msg+='<p style="color:var(--xdf-green);font-size:16px;margin-top:8px">🎉 全部正确！</p>';
+  else if(placed>0)msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">💡 正确答案：<br>i)→C · ii)→B · iii)→E · iv)→F · v)→A · vi)→D</p>';
+  else msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">👆 请先把 statements 拖到对应人物框内再提交。</p>';
+  msg+='</div>';
+  result.innerHTML=msg;
+}
+function resetDragDropS11(){
+  var pool=document.getElementById('word-pool-sbq11');
+  if(pool){
+    document.querySelectorAll('#word-pool-sbq11 .draggable').forEach(function(d){
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
+  }
+  document.getElementById('drag-result-s11').style.display='none';
+}
+
+// 初始化 SB Q11 拖拽事件
+function initS11DragDrop(){
+  // SB Q11 - 6 个 drop-zones
+  ['A','B','C','D','E','F'].forEach(function(letter){
+    var z=document.getElementById('dz-'+letter+'-sbq11');
+    if(!z)return;
+    z.addEventListener('dragover',function(e){
+      e.preventDefault();
+      z.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
+    });
+    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
+      if(dragged){
+        var content=z.querySelector('.drop-content');
+        content.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+      }
+    });
+  });
+  var pool11=document.getElementById('word-pool-sbq11');
+  if(pool11){
+    pool11.addEventListener('dragover',function(e){
+      e.preventDefault();
+      pool11.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,pool11);
+    });
+    pool11.addEventListener('dragleave',function(e){pool11.classList.remove('drag-over');});
+    pool11.addEventListener('drop',function(e){
+      e.preventDefault();pool11.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
+      if(dragged){
+        pool11.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+        if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool11);
+      }
+    });
+  }
+}
+
+initDots();updateUI();initDragDrop();
+document.addEventListener('DOMContentLoaded',function(){initSBQ10DragDrop();initS11DragDrop();});
+
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u205',weakKey:'pronoun',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

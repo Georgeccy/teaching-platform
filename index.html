@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 学习主页</title>
+  <link rel="icon" type="image/png" href="assets/app-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4ECD8;
+      --card: #FFFFFF;
+      --text: #2E2A3B;
+      --line: #2E2A3B;
+      --muted: #6B6478;
+      --pink: #FF5D8F;
+      --blue: #4D7CFE;
+      --yellow: #FFC83D;
+      --green: #4FC46A;
+      --shadow: #2E2A3B;
+    }
+    body.dark {
+      --bg: #1A1726;
+      --card: #2E2A3B;
+      --text: #F4ECD8;
+      --line: #F4ECD8;
+      --muted: #B4B2A9;
+      --shadow: #000000;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans SC", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background .25s ease, color .25s ease;
+    }
+    .pixel { font-family: "Press Start 2P", monospace; }
+
+    /* layout */
+    .app { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      border-right: 3px solid var(--line);
+      padding: 24px 16px;
+      display: flex; flex-direction: column;
+      position: sticky; top: 0; height: 100vh;
+    }
+    .main { flex: 1; min-width: 0; padding: 24px 32px 48px; }
+
+    /* logo */
+    .logo {
+      font-family: "Press Start 2P", monospace;
+      font-size: 13px; line-height: 1.7;
+      border: 3px solid var(--line);
+      background: var(--yellow);
+      color: #2E2A3B;
+      padding: 10px 12px;
+      box-shadow: 4px 4px 0 var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    /* nav */
+    .nav { display: flex; flex-direction: column; gap: 6px; }
+    .nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 12px;
+      color: var(--text); text-decoration: none;
+      border: 3px solid transparent;
+      font-weight: 500;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .nav a .dot { width: 12px; height: 12px; background: var(--blue); border: 2px solid var(--line); flex-shrink: 0; }
+    .nav a:hover { transform: translate(-2px,-2px); border-color: var(--line); box-shadow: 3px 3px 0 var(--shadow); background: var(--card); }
+    .nav a.active { background: var(--pink); color: #fff; border-color: var(--line); box-shadow: 4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background: #fff; }
+    .nav-sep { font-family:"Press Start 2P",monospace; font-size:8px; color:var(--muted); margin:16px 0 6px; padding-left:12px; letter-spacing:1px; }
+    .nav a.tool .dot { background:var(--teal); }
+    .nav a.tool:hover { background:var(--teal); color:#04201f; }
+
+    .sidebar-foot { margin-top: auto; display: flex; justify-content: center; padding-top: 20px; }
+
+    /* topbar */
+    .topbar { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .search {
+      flex: 1; display: flex; align-items: center; gap: 10px;
+      border: 3px solid var(--line);
+      background: var(--card);
+      padding: 10px 14px;
+      box-shadow: 4px 4px 0 var(--shadow);
+    }
+    .search input { flex: 1; border: none; background: transparent; outline: none; font-family: inherit; font-size: 15px; color: var(--text); }
+    .search .mag { width: 14px; height: 14px; border: 3px solid var(--line); border-radius: 50%; position: relative; }
+    .search .mag::after { content: ""; position: absolute; width: 8px; height: 3px; background: var(--line); bottom: -6px; right: -5px; transform: rotate(45deg); }
+
+    .icon-btn {
+      width: 46px; height: 46px; flex-shrink: 0;
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .12s ease;
+    }
+    .icon-btn:hover { transform: translate(-2px,-2px); }
+    .sync-chip { display:flex; align-items:center; gap:7px; font-size:12px; font-weight:500; border:3px solid var(--line); background:var(--card); box-shadow:3px 3px 0 var(--shadow); padding:8px 11px; color:var(--muted); white-space:nowrap; transition:background .2s,color .2s; }
+    .sync-chip .led { width:10px; height:10px; border:2px solid var(--line); background:var(--green); flex-shrink:0; }
+    .sync-chip.busy .led { background:var(--yellow); animation:pulse .9s infinite; }
+    .sync-chip.err .led { background:var(--pink); }
+    .sync-chip.busy { color:var(--text); }
+    .sync-chip.err { color:var(--pink); }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+    @media (max-width:760px) { .sync-chip { display:none; } }
+    .sync-btn { font-family:"Press Start 2P",monospace; font-size:9px; color:#fff; background:var(--blue); border:3px solid var(--line); box-shadow:3px 3px 0 var(--shadow); padding:9px 11px; cursor:pointer; transition:transform .12s, opacity .2s; white-space:nowrap; }
+    .sync-btn:hover { transform:translate(-2px,-2px); }
+    .sync-btn:disabled { opacity:.6; cursor:default; transform:none; }
+    .avatar { width: 46px; height: 46px; flex-shrink: 0; background: var(--green); border: 3px solid var(--line); box-shadow: 4px 4px 0 var(--shadow); display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size:10px; color:#2E2A3B; }
+
+    /* hero */
+    .hero {
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 26px;
+      display: flex; gap: 24px; align-items: center;
+      margin-bottom: 34px;
+    }
+    .hero .thumb { width: 150px; height: 150px; flex-shrink: 0; background: var(--blue); border: 3px solid var(--line); display:flex; align-items:center; justify-content:center; }
+    .hero .tag { display:inline-block; font-family:"Press Start 2P"; font-size:9px; background: var(--yellow); color:#2E2A3B; padding:6px 8px; border:2px solid var(--line); margin-bottom: 12px; }
+    .hero h1 { font-size: 22px; margin-bottom: 10px; }
+    .hero p { color: var(--muted); margin-bottom: 16px; max-width: 520px; }
+    .btn {
+      display: inline-block; font-family:"Press Start 2P"; font-size: 11px;
+      background: var(--pink); color: #fff;
+      border: 3px solid var(--line);
+      padding: 12px 18px;
+      box-shadow: 4px 4px 0 var(--shadow);
+      cursor: pointer; text-decoration: none;
+      transition: transform .12s ease;
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--shadow); }
+
+    /* section heading */
+    .sec-head { display:flex; align-items:flex-end; justify-content:space-between; margin: 8px 0 18px; }
+    .sec-head h2 { font-size: 18px; }
+    .sec-head .pixel { font-size: 10px; color: var(--muted); }
+
+    /* grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+    .card {
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 18px;
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--shadow); }
+    .card .cap { width: 100%; height: 92px; border: 3px solid var(--line); margin-bottom: 14px; display:flex; align-items:center; justify-content:center; }
+    .card h3 { font-size: 16px; margin-bottom: 4px; }
+    .card .sub { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .card .desc { color: var(--muted); font-size: 12px; line-height: 1.5; margin-bottom: 14px; }
+    .bar { height: 16px; border: 3px solid var(--line); background: var(--bg); margin-bottom: 14px; position: relative; }
+    .bar > i { display: block; height: 100%; background: var(--green); }
+    .bar > span { position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"Press Start 2P"; font-size:8px; color:#2E2A3B; }
+    .card .row { display:flex; align-items:center; justify-content:space-between; }
+    .card .go { font-family:"Press Start 2P"; font-size:9px; background: var(--blue); color:#fff; border:3px solid var(--line); padding:8px 10px; cursor:pointer; box-shadow:3px 3px 0 var(--shadow); }
+    .card .go:hover { transform: translate(-2px,-2px); }
+
+    .mascot-row { display:flex; gap: 4px; align-items:center; }
+
+    footer { margin-top: 40px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    @media (max-width: 760px) {
+      .sidebar { display: none; }
+      .main { padding: 18px; }
+      .hero { flex-direction: column; text-align: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">智学<br />PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html" class="active"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <!-- pixel blob mascot -->
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="topbar">
+        <div class="search">
+          <span class="mag"></span>
+          <input type="text" placeholder="搜索单元 / 题目 / 知识点" />
+        </div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+        <span id="syncChip" class="sync-chip" title="课件源目录实时同步状态"><span class="led"></span><span id="syncText">同步：就绪</span></span>
+        <button class="sync-btn" id="syncNowBtn" title="立即把课件源目录同步到平台">立即同步</button>
+      </div>
+
+      <!-- GRID -->
+      <div class="sec-head">
+        <h2>我的单元</h2>
+        <span class="pixel">3 UNITS</span>
+      </div>
+      <section class="grid">
+        <div class="card">
+          <div class="cap" style="background:var(--pink)">
+          <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+            <rect x="4" y="16" width="26" height="34" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="34" y="16" width="26" height="34" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="30" y="14" width="4" height="38" fill="#2E2A3B"/>
+            <rect x="9" y="24" width="16" height="2" fill="#2E2A3B"/>
+            <rect x="9" y="30" width="14" height="2" fill="#2E2A3B"/>
+            <rect x="9" y="36" width="16" height="2" fill="#2E2A3B"/>
+            <rect x="9" y="42" width="12" height="2" fill="#2E2A3B"/>
+            <rect x="39" y="24" width="16" height="2" fill="#2E2A3B"/>
+            <rect x="39" y="30" width="14" height="2" fill="#2E2A3B"/>
+            <rect x="39" y="36" width="16" height="2" fill="#2E2A3B"/>
+            <rect x="39" y="42" width="12" height="2" fill="#2E2A3B"/>
+          </svg>
+        </div>
+          <h3>Reading 单元库</h3>
+          <div class="sub">阅读理解 · Paper 1 · 4 个单元</div>
+          <div class="desc">考试认知 / 题型策略 / 真实 DSE 篇章精读：网络交友、价值观、瞬逝艺术、西九文化区等主题。</div>
+          <div class="bar"><i style="width:60%"></i><span>60%</span></div>
+          <div class="row"><span class="sub">已学 6/10 节</span><a class="go" href="reading.html" data-enter="reading.html">进入 →</a></div>
+        </div>
+
+        <div class="card">
+          <div class="cap" style="background:var(--blue)">
+          <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+            <rect x="10" y="40" width="44" height="18" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="14" y="46" width="18" height="2" fill="#2E2A3B"/>
+            <rect x="14" y="52" width="26" height="2" fill="#2E2A3B"/>
+            <rect x="4" y="22" width="48" height="10" fill="#FFC83D" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="0" y="22" width="6" height="10" fill="#FF5D8F" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="6" y="20" width="4" height="14" fill="#D0D0D0" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="52" y="24" width="6" height="6" fill="#F4ECD8" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="58" y="25" width="4" height="4" fill="#2E2A3B"/>
+            <rect x="12" y="26" width="36" height="2" fill="#2E2A3B" opacity="0.45"/>
+          </svg>
+        </div>
+          <h3>Writing 单元库</h3>
+          <div class="sub">写作训练 · Paper 2 · 4 个单元</div>
+          <div class="desc">审题构思 / 文章结构 / 描述性语言库 / PEER 论证：读者来信、课外活动、年鉴条目、叙事文章。</div>
+          <div class="bar"><i style="width:30%"></i><span>30%</span></div>
+          <div class="row"><span class="sub">已学 3/10 节</span><a class="go" href="writing.html" data-enter="writing.html">进入 →</a></div>
+        </div>
+
+        <div class="card">
+          <div class="cap" style="background:var(--green)">
+          <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+            <rect x="28" y="18" width="8" height="8" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="24" y="26" width="16" height="4" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="20" y="30" width="24" height="4" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="12" y="34" width="8" height="22" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="44" y="34" width="8" height="22" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="20" y="40" width="24" height="4" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="52" y="2" width="4" height="14" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="47" y="7" width="14" height="4" fill="#FFF5E1" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="0" y="18" width="3" height="3" fill="#FFF5E1"/>
+            <rect x="60" y="48" width="3" height="3" fill="#FFF5E1"/>
+          </svg>
+        </div>
+          <h3>Grammar 单元库</h3>
+          <div class="sub">语法 · Oxford Success · 4 个单元</div>
+          <div class="desc">词形转换 · 连词语序 · 不及物动词陷阱 · 综合薄弱点混合训练。</div>
+          <div class="bar"><i style="width:80%"></i><span>80%</span></div>
+          <div class="row"><span class="sub">已学 8/10 节</span><a class="go" href="grammar.html" data-enter="grammar.html">进入 →</a></div>
+        </div>
+      </section>
+
+      <!-- 最近学习 -->
+      <section id="recents" hidden style="margin-top:38px">
+        <div class="sec-head">
+          <h2>最近学习</h2>
+          <span class="pixel">RESUME</span>
+        </div>
+        <div class="grid" id="recentGrid"></div>
+      </section>
+
+      <footer>智学平台 · 混合架构 v0.5 · 学生主页（Node 后端 + 进度持久化）</footer>
+    </main>
+  </div>
+
+  <script>
+    // 进入单元前要求登录（以便保存进度）
+    function enterCourse(href) {
+      ZhiXue.ensureLogin().then(() => { window.location.href = href; })
+        .catch(() => ZhiXue.toast('已取消，进度不会被保存', 'err'));
+    }
+    document.querySelectorAll('[data-enter]').forEach((a) => {
+      a.addEventListener('click', (e) => { e.preventDefault(); enterCourse(a.dataset.enter); });
+    });
+  </script>
+  <script src="assets/app.js"></script>
+  <script src="assets/polish.js"></script>
+  <script>
+    ZhiXue.initAuthChip();
+
+    // 实时同步状态指示：轮询 .watch_status.json
+    (function () {
+      var chip = document.getElementById('syncChip');
+      var txt = document.getElementById('syncText');
+      function fmt(ts) {
+        if (!ts) return '未知';
+        var d = new Date(ts), s = Math.floor((Date.now() - d.getTime()) / 1000);
+        if (s < 5) return '刚刚';
+        if (s < 60) return s + ' 秒前';
+        if (s < 3600) return Math.floor(s / 60) + ' 分钟前';
+        return d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+      }
+      function poll() {
+        fetch('/.watch_status.json', { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (s) {
+            if (!s) { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; return; }
+            if (s.status === 'running') {
+              chip.className = 'sync-chip busy'; txt.textContent = '同步中…';
+            } else if (s.status === 'error') {
+              chip.className = 'sync-chip err'; txt.textContent = '同步失败 · 见日志';
+            } else {
+              chip.className = 'sync-chip'; txt.textContent = '最后同步 · ' + fmt(s.updatedAt);
+            }
+          })
+          .catch(function () { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; });
+      }
+      poll();
+      setInterval(poll, 5000);
+    })();
+
+    // 「立即同步」按钮：手动触发 /api/sync，并轮询状态给出反馈
+    (function () {
+      var btn = document.getElementById('syncNowBtn');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        btn.disabled = true;
+        btn.textContent = '同步中…';
+        fetch('/api/sync', { method: 'POST' })
+          .then(function (r) { return r.json(); })
+          .then(function () {
+            var iv = setInterval(function () {
+              fetch('/.watch_status.json', { cache: 'no-store' })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (s) {
+                  if (s && s.status && s.status !== 'running') {
+                    clearInterval(iv);
+                    btn.disabled = false;
+                    btn.textContent = '立即同步';
+                    if (s.status === 'ok') ZhiXue.toast('课件已同步到最新', 'ok');
+                    else if (s.status === 'error') ZhiXue.toast('同步失败，详见日志', 'err');
+                  }
+                });
+            }, 1200);
+          })
+          .catch(function () {
+            btn.disabled = false;
+            btn.textContent = '立即同步';
+            ZhiXue.toast('同步请求失败', 'err');
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

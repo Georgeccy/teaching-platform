@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 错题本</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/shell.css" />
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">智学<br/>PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input type="text" placeholder="搜索单元 / 题目 / 知识点" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+      </div>
+
+      <div id="content"><div class="loading">正在加载你的错题本…</div></div>
+
+      <footer>智学平台 · 错题本：基于你的练习记录自动整理薄弱维度与复习建议</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    const WEAK = { tfng:'T/F/NG 判断', pronoun:'代词指代', attitude:'态度词推断', wordform:'词形转换', conjunction:'连词语序', intransitive:'不及物陷阱' };
+    const WEAK_COLOR = { tfng:'#FF5D8F', pronoun:'#4D7CFE', attitude:'#FFC83D', wordform:'#4FC46A', conjunction:'#2DD4BF', intransitive:'#9B6BF2' };
+
+    function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function loginGate() {
+      const c = document.getElementById('content');
+      c.innerHTML = '<div class="empty"><p style="margin-bottom:16px">请先登录，查看你的专属错题本</p><button class="btn" id="loginNow">登录 / 注册</button></div>';
+      document.getElementById('loginNow').addEventListener('click', () => {
+        ZhiXue.openLogin().then(() => window.location.reload());
+      });
+    }
+
+    function render(p) {
+      const acc = p.stats.total ? Math.round((p.stats.correct / p.stats.total) * 100) : 0;
+      const weakArr = Object.keys(p.weakPoints).map(k => ({ k, v: p.weakPoints[k] })).sort((a,b) => a.v - b.v);
+      const weakest = weakArr[0];
+      const strongest = weakArr[weakArr.length - 1];
+      const recs = (p.history || []).slice().reverse().slice(0, 12);
+
+      const weakBars = weakArr.map(({k, v}) => {
+        const low = v < 60;
+        return `<div class="weak-row">
+          <div class="top"><span>${esc(WEAK[k] || k)} ${low ? '<span style="color:var(--orange)">· 需加强</span>' : ''}</span><span class="pixel" style="font-size:10px">${v}</span></div>
+          <div class="weak-bar"><i style="width:${v}%;background:${WEAK_COLOR[k]}"></i></div>
+        </div>`;
+      }).join('');
+
+      const histHtml = recs.length
+        ? recs.map((h, i) => {
+            const ok = h.score >= 60;
+            return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:2px solid var(--line);${i === recs.length-1 ? 'border-bottom:none' : ''}">
+              <div><span class="tag" style="margin:0 10px 0 0;background:${ok ? 'var(--green)' : 'var(--pink)'};color:#2E2A3B">${ok ? '过关' : '待巩固'}</span>${esc(h.date)} · ${esc(h.type || '练习')}</div>
+              <div class="pixel" style="font-size:11px;color:${ok ? 'var(--green)' : 'var(--pink)'}">${h.score}%</div>
+            </div>`;
+          }).join('')
+        : '<div class="empty">还没有练习记录，去 <a href="reading.html" style="color:var(--blue)">阅读单元</a> 做一题吧~</div>';
+
+      const recUnits = {
+        tfng: ['reading.html', 'Reading 判断题型'],
+        pronoun: ['reading.html', 'Reading 指代题'],
+        attitude: ['reading.html', 'Reading 态度推断'],
+        wordform: ['grammar.html', '语法 · 词形转换'],
+        conjunction: ['grammar.html', '语法 · 连词逻辑'],
+        intransitive: ['writing.html', 'Writing 动词搭配'],
+      };
+      const rec = recUnits[weakest.k] || ['dashboard.html', '我的看板'];
+
+      document.getElementById('content').innerHTML = `
+        <div class="hero">
+          <div class="avatar-big">${esc((ZhiXue.user.name||'?').slice(0,1))}</div>
+          <div>
+            <h1>错题本 · ${esc(ZhiXue.user.name)}</h1>
+            <p>系统已根据 ${p.history.length} 次练习，整理出你最该关注的维度与复习方向。</p>
+            <a class="btn" href="${rec[0]}">去加强：${esc(rec[1])} →</a>
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi"><div class="label">最弱维度</div><div class="val pink" style="font-size:14px;line-height:1.4">${esc(WEAK[weakest.k])}</div><div class="label" style="margin-top:6px">掌握度 ${weakest.v}</div></div>
+          <div class="kpi"><div class="label">平均正确率</div><div class="val blue">${acc}%</div></div>
+          <div class="kpi"><div class="label">练习次数</div><div class="val green">${p.history.length}</div></div>
+          <div class="kpi"><div class="label">连续打卡</div><div class="val yellow">${p.stats.streak}</div><div class="label" style="margin-top:6px">最高 ${p.stats.maxStreak} 天</div></div>
+        </div>
+
+        <div class="cols">
+          <div class="panel">
+            <h3>薄弱维度掌握度（由弱到强）</h3>
+            ${weakBars}
+          </div>
+          <div class="panel">
+            <h3>最近练习记录</h3>
+            ${histHtml}
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:22px">
+          <h3>复习建议</h3>
+          <p style="color:var(--muted);line-height:1.8">
+            你当前最需加强的是 <b style="color:${WEAK_COLOR[weakest.k]}">${esc(WEAK[weakest.k])}</b>（掌握度 ${weakest.v}）。
+            建议优先完成 <a href="${rec[0]}" style="color:var(--blue)">${esc(rec[1])}</a> 的相关单元；
+            相对擅长 <b>${esc(WEAK[strongest.k])}</b>（${strongest.v}），可适度减少投入、保持手感。
+          </p>
+        </div>`;
+    }
+
+    (async function () {
+      ZhiXue.initAuthChip();
+      if (!ZhiXue.user) { loginGate(); return; }
+      try {
+        const p = await ZhiXue.loadProgress();
+        if (!p) { loginGate(); return; }
+        render(p);
+      } catch (e) {
+        document.getElementById('content').innerHTML = '<div class="alert warn">加载失败：' + esc(e.message) + '</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

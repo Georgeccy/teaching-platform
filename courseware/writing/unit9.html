@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 9 · Persuasive Letter · 香港加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Unit9</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter">
+  <span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span>
+  <span class="pc-total" id="pcTotal"></span>
+</div>
+<div class="deck"><section class="slide is-active" data-title="封面 · Unit 9">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">G</div>
+      <div class="tb-name">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">香港加速班</div>
+  </div>
+  <div class="slide-h1">Persuasive Letter<br><span class="accent">Food Donation Initiative</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Letter — 说服信写作</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 9 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Persuasive Letter</div><div class="sm-sub">Formal letter to businesses</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Food Donation</div><div class="sm-sub">Food waste in Hong Kong</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Model Essay</div><div class="sm-value">~472 words</div><div class="sm-sub">5 paragraphs</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题+构思</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">结构+开头</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段+结尾</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">句式练习+总结</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives</p>
+<h2 class="slide-h2">🎯 本课目标</h2>
+<div class="card accent" style="border-left:4px solid var(--xdf-red);margin-bottom:16px">
+  <h4>1. 文体认知 Genre Awareness</h4>
+  <p>了解并初步掌握 <b>persuasive letter</b> 的文体结构和语气特征</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+  <h4>2. 论证思路 Content Development</h4>
+  <p>运用<b>「措施评估型」</b>通用论证思路，支持一个方案或行动</p>
+</div>
+<div class="card accent" style="margin-bottom:16px">
+  <h4>3. 段落组织 Paragraph Organisation</h4>
+  <p>运用 <b>PEER 结构</b>展开和组织 persuasive letter 的主体段落</p>
+</div>
+<div class="card accent">
+  <h4>4. 说服策略 Persuasive Strategies</h4>
+  <p>了解并初步掌握 persuasive letter 常见说服策略及句式表达</p>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Part 2 · Understanding the Question</p>
+<h2 class="slide-h2">📋 审题五要素</h2>
+<div class="task-quote">You recently read an article about a supermarket asking customers to donate food to poor families. Having collected some information about the problem of food waste in Hong Kong, you would like to persuade the supermarkets, food shops and restaurants in your local area into donating food to the poor. Write a letter to the supermarkets, food shops and restaurants about the initiative.</div>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你是谁）+ 2. Audience（写给谁）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Role：A concerned member of the community / a local resident<br>Audience：Supermarkets, food shops and restaurants in the local area</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Persuade supermarkets, food shops and restaurants to <b>donate surplus food to poor families</b></div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. Register（正式程度）</div>
+  <div class="quiz-card" data-correct="0" style="border:none;padding:0;margin:0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
+    </div>
+    <div class="quiz-ans">✅ <b>formal</b> — 写给本地商家的正式信件，需礼貌而正式</div>
+  </div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">5. Tone（语气，可多选）— 勾选后点击「检查答案」</div>
+  <div style="display:flex;flex-direction:column;gap:2px;margin:6px 0">
+    <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> logical（有逻辑）</label>
+    <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> persuasive（有说服力）</label>
+    <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> descriptive and vivid（生动、有画面感）</label>
+    <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> polite（有礼貌）</label>
+  </div>
+  <button class="ce-btn" onclick="checkTones(this)">✅ 检查答案</button>
+  <div class="ce-en">✅ 应选：logical / persuasive / polite。说服信以理服人、以礼待人，不需要 narrative/descriptive 的画面感。</div>
+</div>
+</section><section class="slide" data-title="🧠 想论点 ①">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 思考 3.1 & 3.2</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考3.1：评估一个方法或措施时，可以从哪几个方面思考？（复习 Unit 1）</span></div>
+<div class="ce-item">
+  <div class="ce-cn">评估措施的四个角度：</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">① 这个方法真的做得到吗？<b>Feasibility 可行性</b><br>② 这个方法真的有效吗？<b>Effectiveness 效果</b><br>③ 会不会带来新的问题？<b>Drawbacks 副作用</b><br>④ 是否有必要这样做？<b>Necessity 必要性</b></div>
+</div>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考3.2：为什么 supermarkets, food shops and restaurants 有必要捐食物？</span></div>
+<div style="margin-top:8px">
+  <textarea class="student-ta" id="bs32" placeholder="在此输入你的想法..."></textarea>
+  <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+    <button class="submit-btn" id="bs32-sb" onclick="submitAnswer(this,'bs32','bs32-ans')">✏️ 提交我的回答</button>
+    <button class="ce-btn" onclick="var a=document.getElementById('bs32-ref');a.classList.toggle('show')">📖 参考答案</button>
+  </div>
+  <div class="student-answer" id="bs32-ans"></div>
+  <button class="edit-btn" id="bs32-eb" onclick="continueEdit('bs32','bs32-ans','bs32-sb')" style="display:none">✏️ 继续输入</button>
+  <div class="ce-en" id="bs32-ref">① 每天仍有大量可食用食物被浪费<br>② 许多低收入家庭难以负担日常餐食<br>③ 作为食品相关企业，他们有<b>环境责任</b>（减少食物浪费）和<b>社会责任</b>（帮助有需要的人）</div>
+</div>
+</section><section class="slide" data-title="🧠 想论点 ②">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 思考 3.3 & 3.4</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考3.3：supermarkets, food shops and restaurants 捐赠食物是否容易实施？</span></div>
+<div class="ce-item">
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">容易。原因：<br> ① 已有资源 <b>have access to food supplies</b><br>② 有专业知识 <b>know how to store and handle food safely</b><br>③ 成本较低 <b>can work with nearby charities or allow families to collect the food directly</b><br>→ 企业能以较低成本快速而有效地将食物送到有需要的人手中。</div>
+</div>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考3.4：这个计划能为 supermarkets, food shops and restaurants 带来什么好处？</span></div>
+<div class="ce-item">
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">三类好处：<br>① <b>对环境</b>：减少食物浪费和对环境造成的影响<br>② <b>对社会</b>：帮助贫困家庭获得食物<br>③ <b>对企业</b>：提升企业形象和声誉，展现社会责任感，从而赢得顾客的信任和支持<br><br>📌 评估措施时，除了考虑它是否有效解决问题（effectiveness），也可以分析它带来的<b>额外好处（added benefits）</b></div>
+</div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 Persuasive Letter 整体结构</h2>
+<table class="rule-table mt-m">
+  <tr><th style="width:32%">Paragraph</th><th>Main content</th></tr>
+  <tr><td class="col-type">Opening</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="State purpose of writing (introduce the issue) + state opinion —— 写信目的（介绍食物浪费问题）+ 表达立场（支持食物捐赠）" style="min-width:340px;display:inline-block;text-align:left">点击查看</span></td></tr>
+  <tr><td class="col-type">Body 1<br><span style="font-size:13px;color:var(--text-3)">Necessity / Responsibility</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain why food donation is necessary and why food businesses should take responsibility —— 说明为什么食物捐赠有必要，以及食品企业为何应承担责任" style="min-width:340px;display:inline-block;text-align:left">点击查看</span></td></tr>
+  <tr><td class="col-type">Body 2<br><span style="font-size:13px;color:var(--text-3)">Feasibility</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain why food donation is practical, easy to implement and low-cost —— 说明食物捐赠容易实施、成本较低且操作方便" style="min-width:340px;display:inline-block;text-align:left">点击查看</span></td></tr>
+  <tr><td class="col-type">Body 3<br><span style="font-size:13px;color:var(--text-3)">Benefits</span></td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain the benefits to the environment, society and businesses —— 说明对环境、社会及企业本身的好处" style="min-width:340px;display:inline-block;text-align:left">点击查看</span></td></tr>
+  <tr><td class="col-type">Conclusion</td><td class="col-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Restate opinion + call for action —— 重申立场 + 呼吁企业参与计划" style="min-width:340px;display:inline-block;text-align:left">点击查看</span></td></tr>
+</table>
+<div class="notes-box mt-l"><b>📌 框架记忆：</b>Opening（目的+立场）→ Body 1（必要性）→ Body 2（可行性）→ Body 3（好处）→ Conclusion（重申+呼吁）。与 Unit 1「措施评估型」一脉相承，但本文从<b>正面</b>论证，因此多了 Body 3 的 added benefits。</div>
+</section><section class="slide" data-title="✍️ 开头段">
+<p class="sec-label">Part 5 · Opening Paragraph</p>
+<h2 class="slide-h2">✍️ 开头段：三步走</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 <b>Task 5A</b>：点击 <b>①</b> 的空白，补全段首句（写信目的）。</p>
+<div class="para-quote">
+Dear Sir/Madam,<br><br>
+<span class="fn-tag">① PURPOSE</span>I am writing to urge（敦促/呼吁）<span class="cloze" onclick="revealCloze(this)" data-answer=" supermarkets, food shops and restaurants in our local area to support a food donation initiative." style="min-width:520px;display:inline-block;text-align:left">______</span><br><br>
+<span class="fn-tag">② PROBLEM</span><i>Food waste has become <span class="hl-chunk">one of the most serious</span> environmental problems in Hong Kong, while many low-income families still <span class="hl-chunk">struggle to afford daily meals</span>.</i><br><br>
+<span class="fn-tag">③ WHY ACT</span><i>As food-related businesses, you can <span class="hl-chunk">play an important role in</span> reducing food waste and helping people in need.</i>
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s7-structure');a.classList.toggle('show')">📖 查看结构与句式模版</button>
+<div id="s7-structure" class="ce-en" style="display:none">
+<table class="rule-table">
+  <tr><th style="width:34%">功能</th><th>句式</th></tr>
+  <tr><td class="col-type">第一句说明写信目的</td><td class="col-example"><i>I am writing to urge + sb + to do sth.</i><br>我写信是为了呼吁某人采取行动。</td></tr>
+  <tr><td class="col-type">第二句介绍问题背景</td><td class="col-example"><i>Problem A has become one of the most serious ... problems, while Problem B continues to affect ...</i><br>介绍当前存在的问题和现状。</td></tr>
+  <tr><td class="col-type">第三句说明对方可发挥的作用</td><td class="col-example"><i>As ..., you can play an important role in ...</i><br>说明对方能够发挥的重要作用。</td></tr>
+</table>
+</div>
+</section><section class="slide" data-title="🔘 开头说服策略">
+<p class="sec-label">Part 5 · Content Bank — Opening</p>
+<h2 class="slide-h2">🔘 开头段常用说服策略</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:10px">开头段三句话，分别对应三种说服策略。点击卡片查看英文例句 →</p>
+<div class="flip-grid" style="grid-template-columns:repeat(3,1fr);gap:14px">
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q">1. Stronger Language</div>
+        <div class="flip-hint">强调问题严重性 · 加强语气</div>
+      </div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="font-size:18px;line-height:1.7">Food waste has become <b>one of the most serious</b> environmental and social <b>problems</b> in Hong Kong.</div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q">2. Emotional Appeal</div>
+        <div class="flip-hint">引起同情与关注 · 情感诉求</div>
+      </div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="font-size:18px;line-height:1.7">many low-income families still <b>struggle to afford daily meals</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-q">3. Impact Language</div>
+        <div class="flip-hint">强调行动的重要影响</div>
+      </div>
+      <div class="flip-face flip-back" style="text-align:left;align-items:flex-start;padding:18px 20px">
+        <div class="flip-ans" style="font-size:18px;line-height:1.7">you can <b>play an important role in</b> reducing food waste and helping people in need</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="notes-box mt-l"><b>💡 记忆钩子：</b>开头段 = <b>严重（Stronger）→ 同情（Emotional）→ 你能改变（Impact）</b>，三步把读者「拉进」问题里。</div>
+</section><section class="slide" data-title="✍️ 主体段1 · 必要性">
+<p class="sec-label">Part 6 · Body Paragraph 1 — Necessity</p>
+<h2 class="slide-h2">✍️ 主体段1：必要性（环境+社会责任）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 <b>Task 6A</b>：点击每个 <b>______</b> 补全关键表达，观察每句的 PEER 功能标签。</p>
+<div class="para-quote">
+<span class="fn-tag">POINT</span><i>First of all, as food-related businesses, you have both an environmental responsibility to</i> <span class="cloze" onclick="revealCloze(this)" data-answer="reduce food waste">______</span> <i>and a social responsibility to</i> <span class="cloze" onclick="revealCloze(this)" data-answer="support people in need">______</span>.<br><br>
+<span class="fn-tag">EXPLAIN 1</span><i>Every day,</i> <span class="cloze" onclick="revealCloze(this)" data-answer="large amounts of edible food are thrown away instead of being put to good use" style="min-width:300px">______</span>.<br><br>
+<span class="fn-tag">RESULT</span><i>If this situation continues, valuable resources such as</i> <span class="cloze" onclick="revealCloze(this)" data-answer="water, energy and labour used to produce food" style="min-width:280px">______</span> <i>will be wasted, while</i> <span class="cloze" onclick="revealCloze(this)" data-answer="our landfills will become full much earlier than expected" style="min-width:280px">______</span>.<br><br>
+<span class="fn-tag">EXPLAIN 2 + EXAMPLE</span><i>At the same time, many low-income families</i> <span class="cloze" onclick="revealCloze(this)" data-answer="still cannot afford to buy enough food for themselves" style="min-width:260px">______</span>, <i>and some children even</i> <span class="cloze" onclick="revealCloze(this)" data-answer="go to school without having a proper meal" style="min-width:220px">______</span>.<br><br>
+<span class="fn-tag">RESULT</span><i>By donating surplus food, businesses can</i> <span class="cloze" onclick="revealCloze(this)" data-answer="help provide support to those who need it most" style="min-width:240px">______</span>.
+</div>
+<div class="notes-box mt-l"><b>📝 写作要点：</b>本段把<b>环境责任</b>（食物浪费→资源浪费→堆填区爆满）和<b>社会责任</b>（贫困家庭→儿童吃不饱）两条线并排展开，最后用 Result 句收束到「捐赠能帮助最需要的人」。</div>
+</section><section class="slide" data-title="📐 PEER 复习">
+<p class="sec-label">Part 7 · PEER Structure Review</p>
+<h2 class="slide-h2">📐 PEER 论证公式（复习）</h2>
+<table class="rule-table mt-m">
+  <tr><th style="width:26%">步骤</th><th style="width:30%">引导问题</th><th>作用</th></tr>
+  <tr><td class="col-type"><i>P (Point)</i></td><td class="col-example"><i>What is your point?</i></td><td class="col-example">表明观点</td></tr>
+  <tr><td class="col-type"><i>E (Explain)</i></td><td class="col-example"><i>Why / How?</i></td><td class="col-example">展开解释（为什么 / 如何）</td></tr>
+  <tr><td class="col-type"><i>E (Example)</i></td><td class="col-example"><i>How / what?</i></td><td class="col-example">举例 / 列举 / 具体化</td></tr>
+  <tr><td class="col-type"><i>R (Result)</i></td><td class="col-example"><i>So what? Why it matters?</i></td><td class="col-example">结果 / 影响 / 最终判断</td></tr>
+</table>
+<div class="think-prompt mt-l"><span class="think-icon">🤔</span><span class="think-text">思考7.1：supermarkets, food shops and restaurants 一般有哪些未出售但仍可食用的食物或产品？</span></div>
+<div class="ce-item">
+  <div class="ce-cn">可捐赠的剩余食物举例：</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">① <b>products close to their best-before dates</b>（临近最佳食用日期的产品）<br>② <b>unsold bread</b>（未售出的面包）<br>③ <b>leftover cooked food</b>（剩余熟食）<br>④ <b>unused ingredients</b>（未使用的食材）</div>
+</div>
+</section><section class="slide" data-title="✍️ 主体段2 · 可行性">
+<p class="sec-label">Part 7 · Body Paragraph 2 — Feasibility</p>
+<h2 class="slide-h2">✍️ 主体段2：可行性</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 <b>Task 7A</b>：对照 P3 Structure 表格，点击 <b>______</b> 补全段落。</p>
+<div class="para-quote">
+<span class="fn-tag">POINT</span><b><i>Food donation is a realistic and easy initiative for food-related businesses to support.</i></b><br><br>
+<span class="fn-tag">EXPLAIN 1</span><i>Many food businesses</i> <span class="cloze" onclick="revealCloze(this)" data-answer="already have access to food supplies and often have surplus items that are still suitable for consumption" style="min-width:380px">______</span>.<br><br>
+<span class="fn-tag">EXAMPLE</span><i>This includes</i> <span class="cloze" onclick="revealCloze(this)" data-answer="products close to their best-before dates, unsold bread, leftover cooked food and unused ingredients" style="min-width:380px">______</span>.<br><br>
+<span class="fn-tag">EXPLAIN 2</span><i>In addition, food-related businesses understand how to</i> <span class="cloze" onclick="revealCloze(this)" data-answer="store, transport and handle food safely, making the donation process much easier" style="min-width:340px">______</span>.<br><br>
+<span class="fn-tag">EXPLAIN 3</span><i>The cost is usually low because</i> <span class="cloze" onclick="revealCloze(this)" data-answer="businesses can work with nearby charities or community groups, while some families may even collect the food directly" style="min-width:380px">______</span>.<br><br>
+<span class="fn-tag">RESULT</span><i>Therefore, food can</i> <span class="cloze" onclick="revealCloze(this)" data-answer="be distributed to people in need quickly and efficiently" style="min-width:260px">______</span>.
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s11-structure');a.classList.toggle('show')">📖 查看 P3 Structure 表</button>
+<div id="s11-structure" class="ce-en" style="display:none">
+<table class="rule-table">
+  <tr><th style="width:26%">Sentence</th><th style="width:30%">Function</th><th>Content Hint</th></tr>
+  <tr><td class="col-type">1. Point</td><td class="col-example">State the main idea</td><td class="col-example">easy / realistic</td></tr>
+  <tr><td class="col-type">2. Explanation 1</td><td class="col-example">Reason 1</td><td class="col-example">already have food supplies</td></tr>
+  <tr><td class="col-type">3. Example</td><td class="col-example">Example</td><td class="col-example">Surplus items</td></tr>
+  <tr><td class="col-type">4. Explanation 2</td><td class="col-example">Reason 2</td><td class="col-example">know how to store and handle food</td></tr>
+  <tr><td class="col-type">5. Explanation 3</td><td class="col-example">Reason 3</td><td class="col-example">low cost</td></tr>
+  <tr><td class="col-type">6. Result</td><td class="col-example">Result</td><td class="col-example">food reaches people quickly</td></tr>
+</table>
+</div>
+</section><section class="slide" data-title="🔘 措施评估通用论点">
+<p class="sec-label">Part 7 · Content Bank — 措施评估类</p>
+<h2 class="slide-h2">🔘 措施评估类四大通用论点（复习 & 更新）</h2>
+<table class="rule-table mt-m">
+  <tr><th style="width:22%">中文</th><th style="width:34%">英文</th><th>说明</th></tr>
+  <tr><td class="col-type">可行性</td><td class="col-example"><i>Feasibility</i></td><td class="col-example">做得到吗</td></tr>
+  <tr><td class="col-type">效果</td><td class="col-example"><i>Effectiveness</i></td><td class="col-example">能否解决问题</td></tr>
+  <tr><td class="col-type">副作用</td><td class="col-example"><i>Side effects / drawbacks</i></td><td class="col-example">会不会带来新问题</td></tr>
+  <tr><td class="col-type"><b>额外好处 ★</b></td><td class="col-example"><b><i>Added benefits</i></b></td><td class="col-example"><b>除了直接解决问题以外，还能带来什么额外好处</b></td></tr>
+  <tr><td class="col-type">必要性</td><td class="col-example"><i>Necessity</i></td><td class="col-example">是否有必要</td></tr>
+</table>
+<div class="notes-box mt-l"><b>△ 更新提醒：</b><b>added benefits</b> 是本课新补充的角度。此前的题目多是「吐槽某个策略」（负面评估），今天的 persuasive letter 从<b>正面</b>论证，因此多了 added benefits 这一条——评估措施时，除了考虑它是否有效解决问题，也可以分析它带来的额外好处。</div>
+</section><section class="slide" data-title="✍️ 主体段3 · 好处">
+<p class="sec-label">Part 8 · Body Paragraph 3 — Benefits</p>
+<h2 class="slide-h2">✍️ 主体段3：好处逻辑链</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 <b>Task 8A</b>：点击 <b>______</b> 将企业捐赠食物带来好处的逻辑链条补充完整。</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin:18px 0">
+  <div style="background:var(--xdf-green);color:#fff;padding:10px 28px;border-radius:12px;font-size:20px;font-weight:800">捐赠食物</div>
+  <div style="font-size:24px;color:var(--xdf-green);font-weight:800">↓</div>
+  <div style="background:var(--xdf-gp);border:1.5px solid var(--xdf-green);padding:10px 28px;border-radius:12px;font-size:19px">提升企业的 <span class="cloze" onclick="revealCloze(this)" data-answer="公众形象（public image）">______</span></div>
+  <div style="font-size:24px;color:var(--xdf-green);font-weight:800">↓</div>
+  <div style="background:var(--xdf-gp);border:1.5px solid var(--xdf-green);padding:10px 28px;border-radius:12px;font-size:19px">展现企业 <span class="cloze" onclick="revealCloze(this)" data-answer="关爱社会、积极承担社会责任（caring and socially responsible）">______</span></div>
+  <div style="font-size:24px;color:var(--xdf-green);font-weight:800">↓</div>
+  <div style="background:var(--xdf-gp);border:1.5px solid var(--xdf-green);padding:10px 28px;border-radius:12px;font-size:19px">顾客更愿意 <span class="cloze" onclick="revealCloze(this)" data-answer="信任和支持企业（trust and support the company）">______</span></div>
+  <div style="font-size:24px;color:var(--xdf-green);font-weight:800">↓</div>
+  <div style="background:#FFF9C4;border:1.5px solid var(--xdf-gold);padding:10px 28px;border-radius:12px;font-size:19px">企业的 <span class="cloze" onclick="revealCloze(this)" data-answer="声誉（reputation）">______</span> 得到提升</div>
+</div>
+<div class="hw-card mt-m">
+  <h4>📝 Homework</h4>
+  <p>参考本页逻辑链条，补全 P4 段落写作（下一页练习填句）。</p>
+</div>
+</section><section class="slide" data-title="✍️ P4 段落 · 作业">
+<p class="sec-label">Part 8 · Homework — Complete Body Paragraph 3</p>
+<h2 class="slide-h2">✍️ 作业：完成 P4 主体段3</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">📝 <b>Homework</b>：参考逻辑链条（捐赠 → 公众形象 → 社会责任 → 顾客信任 → 声誉提升），点击 <b>______</b> 补全 P4 段落。</p>
+<div class="para-quote">
+<span class="fn-tag">P4</span><i>Supporting this initiative can bring significant benefits to both society and your business. For the community, food donation helps ensure that edible food is put to good use rather than wasted, while families facing financial difficulties can receive much-needed support. Even a small donation from a business can make a huge difference to a family in need. For your company, regular food donation can</i> <span class="cloze" onclick="revealCloze(this)" data-answer="also improve your public image. Today, many customers prefer businesses that act responsibly and care about society. By taking part in this initiative, your company can demonstrate that it is a caring and socially responsible organization. Customers are more likely to trust and support businesses that are willing to help others. As a result, food donation can strengthen your reputation while creating a positive impact on the wider community." style="min-width:480px">______</span>
+</div>
+<div class="notes-box mt-l"><b>📝 写作要点：</b>本段是 <b>Body 3（Benefits / Added Benefits）</b>——前半段讲<b>对社会的好处</b>（put to good use / make a huge difference），后半段用逻辑链条展开<b>对企业的好处</b>（improve your public image → caring and socially responsible → trust and support → strengthen your reputation）。课后请合上答案，根据逻辑链条独立完成整段写作。</div>
+</section><section class="slide" data-title="✍️ 结尾段">
+<p class="sec-label">Part 9 · Ending Paragraph</p>
+<h2 class="slide-h2">✍️ 结尾段：信念 + 呼吁 + 影响</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">🌟 <b>Task 10A</b>：点击 <b>______</b> 补全结尾段的关键表达。</p>
+<div class="para-quote">
+<i>We</i> <span class="cloze" onclick="revealCloze(this)" data-answer="firmly believe">______</span> <i>that together we can</i> <span class="cloze" onclick="revealCloze(this)" data-answer="make a real and lasting difference" style="min-width:220px">______</span>. <i>Therefore, I</i> <span class="cloze" onclick="revealCloze(this)" data-answer="strongly encourage">______</span> <i>your business to join this food donation initiative and work with nearby charities or community groups. Your support can help</i> <span class="cloze" onclick="revealCloze(this)" data-answer="reduce food waste">______</span>, <span class="cloze" onclick="revealCloze(this)" data-answer="support families in need" style="min-width:180px">______</span> <i>and create a more</i> <span class="cloze" onclick="revealCloze(this)" data-answer="caring">______</span> <i>future for</i> <span class="cloze" onclick="revealCloze(this)" data-answer="everyone">______</span>.<br><br>
+Yours faithfully,<br>
+Chris Wong
+</div>
+<button class="ce-btn" onclick="var a=document.getElementById('s14-structure');a.classList.toggle('show')">📖 查看结尾段句式模版</button>
+<div id="s14-structure" class="ce-en" style="display:none">
+<table class="rule-table">
+  <tr><th style="width:36%">功能</th><th>句式</th></tr>
+  <tr><td class="col-type">第一句表达信念<br><span style="font-size:13px;font-weight:400;color:var(--text-3)">展现真诚与可信度</span></td><td class="col-example"><i>We firmly believe that...</i></td></tr>
+  <tr><td class="col-type">第二句呼吁行动<br><span style="font-size:13px;font-weight:400;color:var(--text-3)">鼓励读者采取行动</span></td><td class="col-example"><i>Therefore, I strongly encourage sb to do sth.</i></td></tr>
+  <tr><td class="col-type">第三句强调影响<br><span style="font-size:13px;font-weight:400;color:var(--text-3)">总结行动带来的积极改变</span></td><td class="col-example"><i>Your support can help... and create a better / more ... future.</i></td></tr>
+</table>
+</div>
+</section><section class="slide" data-title="🔘 说服策略总表">
+<p class="sec-label">Part 9 · Content Bank — Persuasive Strategies</p>
+<h2 class="slide-h2">🔘 说服信四大说服策略</h2>
+<table class="rule-table mt-m">
+  <tr><th style="width:24%">Strategy</th><th style="width:28%">Purpose</th><th>Example</th></tr>
+  <tr><td class="col-type">1. Stronger Language</td><td class="col-example">强调问题的重要性和严重性<br>加强语气</td><td class="col-example"><i>one of <b>the most serious</b> environmental and social problems</i></td></tr>
+  <tr><td class="col-type">2. Emotional Appeal</td><td class="col-example">引起同情与关注<br>情感诉求 / 情感打动</td><td class="col-example"><i>many low-income families still <b>struggle to afford</b> daily meals</i><br><i>some children even <b>go to school without having a proper meal</b></i></td></tr>
+  <tr><td class="col-type">3. Impact Language</td><td class="col-example">强调行动带来的积极影响<br>影响力用语</td><td class="col-example"><i><b>play an important role in</b> reducing food waste and helping people in need</i><br><i><b>make a huge difference to</b> a family in need</i><br><i><b>create a more caring future for everyone</b></i><br><i>we can <b>make a real and lasting difference</b></i></td></tr>
+  <tr><td class="col-type">4. Belief Statements</td><td class="col-example">展现真诚与可信度<br>信念表达</td><td class="col-example"><i><b>We firmly believe</b> that together we can…</i></td></tr>
+</table>
+<div class="notes-box mt-l"><b>💡 使用建议：</b>开头段用 Stronger + Emotional 引起关注；主体段用 Impact Language 强调好处；结尾段用 Belief Statements + Impact Language 收束，首尾呼应。</div>
+</section><section class="slide" data-title="✏️ 句式练习 · Intro">
+<p class="sec-label">Part 10 · Sentence Translation Practice</p>
+<h2 class="slide-h2">✏️ 说服策略句式翻译练习</h2>
+<div class="notes-box mt-m" style="font-size:18px;line-height:1.8">
+  <b>📖 练习说明</b><br>
+  ● 四大策略各对应 1–2 个句子，共 <b>8 句</b>，按策略分组<br>
+  ● 先点击 <b>「💡 词伙提示」</b>查看关键表达<br>
+  ● 在输入框中写下你的英文翻译<br>
+  ● 点击 <b>「✅ 提交」</b>后可对照参考答案<br>
+  ● 🌟 本练习对应讲义 Task 10B（Page 8-9）
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)"><h4>(1) Stronger Language</h4><p>句 ①–② · 加强语气</p></div>
+  <div class="card accent" style="border-left:4px solid #E65100"><h4>(2) Emotional Appeal</h4><p>句 ③–④ · 情感诉求</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-blue)"><h4>(3) Impact Language</h4><p>句 ⑤–⑦ · 影响力用语</p></div>
+  <div class="card accent" style="border-left:4px solid var(--xdf-green)"><h4>(4) Belief Statements</h4><p>句 ⑧ · 信念表达</p></div>
+</div>
+</section><section class="slide" data-title="✏️ 练习 ①② 加强语气">
+<p class="sec-label">Practice (1) · Stronger Language</p>
+<h2 class="slide-h2">✏️ 加强语气 · 句 ①–②</h2>
+<div class="ce-item">
+  <div class="ce-cn">1. 随着塑料垃圾不断增加，海洋污染已经成为全球最严重的环境问题之一。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>one of the most serious environmental problems 最严重的环境问题之一</span><span>as the amount of plastic waste continues to increase 随着塑料垃圾不断增加</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr1" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr1','trAns1')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns1">Marine pollution has become one of the most serious environmental problems in the world as the amount of plastic waste continues to increase.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. 由于许多人过度依赖社交媒体，网络欺凌已经成为学生面临的最严重问题之一。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>one of the most serious problems faced by students 学生面临的最严重问题之一</span><span>rely too heavily on social media 过度依赖社交媒体</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr2" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr2','trAns2')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns2">Cyberbullying has become one of the most serious problems faced by students because many people rely too heavily on social media.</div>
+</div>
+</section><section class="slide" data-title="✏️ 练习 ③④ 情感诉求">
+<p class="sec-label">Practice (2) · Emotional Appeal</p>
+<h2 class="slide-h2">✏️ 情感诉求 · 句 ③–④</h2>
+<div class="ce-item">
+  <div class="ce-cn">3. 许多长者独自生活，并且缺乏家人照顾，这让他们感到孤独和无助。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>live alone 独自生活</span><span>receive little support from their families 缺乏家人照顾</span><span>making them feel lonely and helpless 让他们感到孤独和无助</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr3" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr3','trAns3')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns3">Many elderly people live alone and receive little support from their families, making them feel lonely and helpless.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. 有些儿童甚至没有足够的学习资源，这可能会影响他们未来的发展。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>do not even have access to 甚至没有……的机会</span><span>sufficient learning resources 足够的学习资源</span><span>which may affect their future development 这可能会影响他们未来的发展</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr4" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr4','trAns4')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns4">Some children do not even have access to sufficient learning resources, which may affect their future development.</div>
+</div>
+</section><section class="slide" data-title="✏️ 练习 ⑤⑥⑦ 影响力用语">
+<p class="sec-label">Practice (3) · Impact Language</p>
+<h2 class="slide-h2">✏️ 影响力用语 · 句 ⑤–⑦</h2>
+<div class="ce-item">
+  <div class="ce-cn">5. 即使是一个小小的善举，也能给独居的长者带来巨大的改变。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>a small act of kindness 一个小小的善举</span><span>make a huge difference to 给……带来巨大的改变</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr5" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr5','trAns5')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns5">Even a small act of kindness can make a huge difference to elderly people who live alone.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">6. 通过参加义工活动，学生可以帮助建设一个更加关爱和包容的校园。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>By taking part in volunteer activities 通过参加义工活动</span><span>a more caring and inclusive school community 更加关爱和包容的校园</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr6" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr6','trAns6')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns6">By taking part in volunteer activities, students can help create a more caring and inclusive school community.</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">7. 如果更多市民愿意保护环境，我们就能够为下一代带来真正而持久的改变。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>be willing to protect the environment 愿意保护环境</span><span>make a real and lasting difference 带来真正而持久的改变</span><span>future generations 下一代</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr7" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr7','trAns7')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns7">If more citizens are willing to protect the environment, we can make a real and lasting difference for future generations.</div>
+</div>
+</section><section class="slide" data-title="✏️ 练习 ⑧ 信念表达">
+<p class="sec-label">Practice (4) · Belief Statements</p>
+<h2 class="slide-h2">✏️ 信念表达 · 句 ⑧</h2>
+<div class="ce-item">
+  <div class="ce-cn">8. 我们坚信，通过社会各界 (different sectors of society) 的共同努力，我们能够为有需要的人提供更多帮助。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.parentElement.querySelector('.ce-hints');h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>We firmly believe that 我们坚信</span><span>by working together 通过共同努力</span><span>different sectors of society 社会各界</span><span>provide more support for people in need 为有需要的人提供更多帮助</span></div>
+  <div style="margin-top:8px">
+    <textarea class="student-ta" id="tr8" placeholder="Write your translation here..."></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <button class="submit-btn" onclick="submitTrans(this,'tr8','trAns8')">✅ 提交</button>
+    </div>
+  </div>
+  <div class="ce-en" id="trAns8">We firmly believe that, by working together, different sectors of society can provide more support for people in need.</div>
+</div>
+<div class="notes-box mt-l"><b>🎯 完成检查：</b>8 句全部完成后，对照参考答案用红笔修改，标注出你与范文的差异——差异处往往就是你的提分点。</div>
+</section><section class="slide" data-title="📝 作业">
+<p class="sec-label">Part 11 · Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成 P4 主体段3 写作</h4>
+  <p>参考 Page 6 逻辑链条提示（捐赠食物 → 提升公众形象 → 展现社会责任 → 赢得信任 → 声誉提升），完成 Page 7 的 P4 段落写作。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 复习四大说服策略句式</h4>
+  <p>Stronger Language / Emotional Appeal / Impact Language / Belief Statements——能独立默写每种策略至少 1 个核心句式。</p>
+</div>
+<div class="notes-box mt-l"><b>💡 提示：</b>P4 写作时记得用上 <i>improve your public image / act responsibly / demonstrate that it is a caring and socially responsible organization / strengthen your reputation</i> 等表达，与逻辑链条一一对应。</div>
+</section><section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Part 12 · Summary</p>
+<h2 class="slide-h2">✅ Check Your Learning</h2>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>文体认知 Genre Awareness</b>：了解 persuasive letter 的基本特点——以说服读者支持某项计划、活动或行动为主要目的，初步掌握其语气特点</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>文章结构 Overall Structure</b>：Opening（Purpose + Problem + Why act）→ Body 1（Necessity / Responsibility）→ Body 2（Feasibility）→ Body 3（Benefits / Added Benefits）→ Conclusion（Belief + Call for Action + Impact）</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>内容组织 Content Development</b>：措施评估类题目的展开思路——Necessity / Responsibility → Feasibility → Benefits</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>说服策略 Persuasive Strategies</b>：Stronger Language（加强语气）/ Emotional Appeal（情感诉求）/ Impact Language（影响力用语）/ Belief Statements（信念表达）</span></div>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span><b>常用表达 Useful Expressions</b>：掌握 persuasive letter 常见句式（见下方按钮）</span></div>
+<button class="ce-btn" style="margin-top:12px" onclick="var a=document.getElementById('s22-exp');a.classList.toggle('show')">📖 查看常用表达</button>
+<div id="s22-exp" class="ce-en" style="display:none;line-height:2">
+  <i>1. I am writing to urge sb to do sth.</i><br>
+  <i>2. As ..., you can play an important role in ...</i><br>
+  <i>3. By doing sth, sb can ...</i><br>
+  <i>4. Even a small ... can make a huge difference to ...</i><br>
+  <i>5. We firmly believe that, by doing sth, sb can do sth.</i><br>
+  <i>6. I strongly encourage sb to do sth.</i><br>
+  <i>7. Your support can help ... and create a more ... future.</i>
+</div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">附录 · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Persuasive Letter — Food Donation Initiative</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:6px">Task: Write a letter to the supermarkets, food shops and restaurants about the food donation initiative.（约 472 words）</p>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:2;font-weight:400;color:var(--text-1)">
+<p style="margin-bottom:14px">Dear Sir/Madam,</p>
+<p style="margin-bottom:14px"><i>I am writing to urge supermarkets, food shops and restaurants in our local area to support a food donation initiative. Food waste has become <span class="hl-chunk">one of the most serious</span> environmental problems in Hong Kong, while many low-income families still <span class="hl-chunk">struggle to afford daily meals</span>. As food-related businesses, you can <span class="hl-chunk">play an important role in</span> reducing food waste and helping people in need.</i></p>
+<p style="margin-bottom:14px"><i>First of all, as food-related businesses, you have both an environmental responsibility to <span class="hl-chunk">reduce food waste</span> and a social responsibility to <span class="hl-chunk">support people in need</span>. Every day, <span class="hl-chunk">large amounts of edible food are thrown away instead of being put to good use</span>. If this situation continues, valuable resources such as water, energy and labour used to produce food will be wasted, while <span class="hl-chunk">our landfills will become full much earlier than expected</span>. At the same time, many low-income families still cannot afford to buy enough food for themselves, and some children even <span class="hl-chunk">go to school without having a proper meal</span>. By donating surplus food, businesses can <span class="hl-chunk">help provide support to those who need it most</span>.</i></p>
+<p style="margin-bottom:14px"><i>Food donation is a realistic and easy initiative for food-related businesses to support. Many food businesses <span class="hl-chunk">already have access to food supplies</span> and often have surplus items that are still suitable for consumption. This includes <span class="hl-chunk">products close to their best-before dates, unsold bread, leftover cooked food and unused ingredients</span>. In addition, food-related businesses understand how to <span class="hl-chunk">store, transport and handle food safely</span>, making the donation process much easier. The cost is usually low because businesses can <span class="hl-chunk">work with nearby charities or community groups</span>, while some families may even collect the food directly. Therefore, food can <span class="hl-chunk">be distributed to people in need quickly and efficiently</span>.</i></p>
+<p style="margin-bottom:14px"><i>Supporting this initiative can bring significant benefits to both society and your business. For the community, food donation helps ensure that edible food is <span class="hl-chunk">put to good use</span> rather than wasted, while families facing financial difficulties can receive much-needed support. <span class="hl-chunk">Even a small donation</span> from a business can <span class="hl-chunk">make a huge difference to a family in need</span>. For your company, regular food donation can also <span class="hl-chunk">improve your public image</span>. Today, many customers prefer businesses that act responsibly and care about society. By taking part in this initiative, your company can demonstrate that it is a <span class="hl-chunk">caring and socially responsible</span> organization. Customers are more likely to <span class="hl-chunk">trust and support</span> businesses that are willing to help others. As a result, food donation can <span class="hl-chunk">strengthen your reputation</span> while creating a positive impact on the wider community.</i></p>
+<p style="margin-bottom:14px"><i><span class="hl-chunk">We firmly believe</span> that together we can <span class="hl-chunk">make a real and lasting difference</span>. Therefore, I <span class="hl-chunk">strongly encourage</span> your business to join this food donation initiative and work with nearby charities or community groups. Your support can help reduce food waste, support families in need and <span class="hl-chunk">create a more caring future for everyone</span>.</i></p>
+<p style="margin-bottom:6px">Yours faithfully,</p>
+<p>Chris Wong</p>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:10px;text-align:right">✅ 字数：约 472 词</p>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Unit 9！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:680px;line-height:1.8;margin-bottom:10px">你今天学习了：persuasive letter 文体特征 → 审题五要素 → 措施评估论证思路（Necessity → Feasibility → Benefits）→ PEER 主体段结构 → 四大说服策略（Stronger / Emotional / Impact / Belief）→ 句式翻译练习</p>
+  <p style="font-size:18px;color:var(--xdf-gold);margin-bottom:28px">📝 别忘了作业：参考逻辑链条完成 P4 主体段3 写作！</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── Basic keydown (arrows only, for V4–V6 courseware) ──
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='u9persuasive_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u9',weakKey:'general',mode:'quiz'};</script>
+</body>
+</html>

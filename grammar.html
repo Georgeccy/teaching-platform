@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · Grammar 单元库</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F4ECD8;
+      --card: #FFFFFF;
+      --text: #2E2A3B;
+      --line: #2E2A3B;
+      --muted: #6B6478;
+      --pink: #FF5D8F;
+      --blue: #4D7CFE;
+      --yellow: #FFC83D;
+      --green: #4FC46A;
+      --shadow: #2E2A3B;
+    }
+    body.dark {
+      --bg: #1A1726;
+      --card: #2E2A3B;
+      --text: #F4ECD8;
+      --line: #F4ECD8;
+      --muted: #B4B2A9;
+      --shadow: #000000;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans SC", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background .25s ease, color .25s ease;
+    }
+    .pixel { font-family: "Press Start 2P", monospace; }
+
+    /* layout */
+    .app { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 220px; flex-shrink: 0;
+      border-right: 3px solid var(--line);
+      padding: 24px 16px;
+      display: flex; flex-direction: column;
+      position: sticky; top: 0; height: 100vh;
+    }
+    .main { flex: 1; min-width: 0; padding: 24px 32px 48px; }
+
+    /* logo */
+    .logo {
+      font-family: "Press Start 2P", monospace;
+      font-size: 13px; line-height: 1.7;
+      border: 3px solid var(--line);
+      background: var(--yellow);
+      color: #2E2A3B;
+      padding: 10px 12px;
+      box-shadow: 4px 4px 0 var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    /* nav */
+    .nav { display: flex; flex-direction: column; gap: 6px; }
+    .nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 12px;
+      color: var(--text); text-decoration: none;
+      border: 3px solid transparent;
+      font-weight: 500;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .nav a .dot { width: 12px; height: 12px; background: var(--blue); border: 2px solid var(--line); flex-shrink: 0; }
+    .nav a:hover { transform: translate(-2px,-2px); border-color: var(--line); box-shadow: 3px 3px 0 var(--shadow); background: var(--card); }
+    .nav a.active { background: var(--pink); color: #fff; border-color: var(--line); box-shadow: 4px 4px 0 var(--shadow); }
+    .nav a.active .dot { background: #fff; }
+
+    .sidebar-foot { margin-top: auto; display: flex; justify-content: center; padding-top: 20px; }
+
+    /* topbar */
+    .topbar { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .search {
+      flex: 1; display: flex; align-items: center; gap: 10px;
+      border: 3px solid var(--line);
+      background: var(--card);
+      padding: 10px 14px;
+      box-shadow: 4px 4px 0 var(--shadow);
+    }
+    .search input { flex: 1; border: none; background: transparent; outline: none; font-family: inherit; font-size: 15px; color: var(--text); }
+    .search .mag { width: 14px; height: 14px; border: 3px solid var(--line); border-radius: 50%; position: relative; }
+    .search .mag::after { content: ""; position: absolute; width: 8px; height: 3px; background: var(--line); bottom: -6px; right: -5px; transform: rotate(45deg); }
+
+    .icon-btn {
+      width: 46px; height: 46px; flex-shrink: 0;
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .12s ease;
+    }
+    .icon-btn:hover { transform: translate(-2px,-2px); }
+    .avatar { width: 46px; height: 46px; flex-shrink: 0; background: var(--green); border: 3px solid var(--line); box-shadow: 4px 4px 0 var(--shadow); display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size:10px; color:#2E2A3B; }
+
+    /* breadcrumb */
+    .crumb { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; font-size: 13px; color: var(--muted); }
+    .crumb a { color: var(--blue); text-decoration: none; font-weight: 500; }
+    .crumb a:hover { text-decoration: underline; }
+
+    /* hero */
+    .hero {
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 6px 6px 0 var(--shadow);
+      padding: 26px;
+      display: flex; gap: 24px; align-items: center;
+      margin-bottom: 34px;
+    }
+    .hero .thumb { width: 150px; height: 150px; flex-shrink: 0; background: var(--green); border: 3px solid var(--line); display:flex; align-items:center; justify-content:center; }
+    .hero .tag { display:inline-block; font-family:"Press Start 2P"; font-size:9px; background: var(--yellow); color:#2E2A3B; padding:6px 8px; border:2px solid var(--line); margin-bottom: 12px; }
+    .hero h1 { font-size: 22px; margin-bottom: 10px; }
+    .hero p { color: var(--muted); margin-bottom: 16px; max-width: 520px; }
+
+    /* section heading */
+    .sec-head { display:flex; align-items:flex-end; justify-content:space-between; margin: 8px 0 18px; }
+    .sec-head h2 { font-size: 18px; }
+    .sec-head .pixel { font-size: 10px; color: var(--muted); }
+
+    /* grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+    .card {
+      border: 3px solid var(--line);
+      background: var(--card);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 18px;
+      display: flex; flex-direction: column;
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--shadow); }
+    .card .cap { width: 100%; height: 92px; border: 3px solid var(--line); margin-bottom: 14px; display:flex; align-items:center; justify-content:center; font-family:"Press Start 2P"; font-size: 18px; color:#2E2A3B; }
+    .card h3 { font-size: 16px; margin-bottom: 4px; }
+    .card .sub { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .card .desc { color: var(--muted); font-size: 12.5px; line-height: 1.6; margin-bottom: 16px; flex: 1; }
+    .card .go {
+      display: inline-block; align-self: flex-start;
+      font-family:"Press Start 2P"; font-size:9px; background: var(--blue); color:#fff;
+      border:3px solid var(--line); padding:9px 11px; cursor:pointer;
+      box-shadow:3px 3px 0 var(--shadow); text-decoration: none;
+      transition: transform .12s ease;
+    }
+    .card .go:hover { transform: translate(-2px,-2px); }
+
+    /* sprint banner */
+    .sprint-banner { border: 3px solid var(--line); background: var(--card); box-shadow: 6px 6px 0 var(--shadow); padding: 22px 26px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+    .sprint-banner h2 { font-size: 19px; margin: 6px 0 8px; }
+    .sprint-banner p { color: var(--muted); font-size: 13px; max-width: 640px; margin: 0; }
+    .sprint-banner .go { flex-shrink: 0; }
+    @media (max-width: 760px) { .sprint-banner { flex-direction: column; align-items: flex-start; } }
+
+    /* 语法单元占位提示（内容补齐前显示） */
+    .notice { border: 3px dashed var(--line); background: var(--card); box-shadow: 4px 4px 0 var(--shadow); padding: 24px 26px; margin: 6px 0 30px; }
+    .notice h2 { font-size: 19px; margin: 8px 0 10px; }
+    .notice p { color: var(--muted); font-size: 14px; max-width: 640px; }
+
+    footer { margin-top: 40px; color: var(--muted); font-size: 13px; text-align: center; }
+
+    @media (max-width: 760px) {
+      .sidebar { display: none; }
+      .main { padding: 18px; }
+      .hero { flex-direction: column; text-align: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/polish.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">智学<br />PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="reading.html"><span class="dot"></span>Reading 单元</a>
+        <a href="writing.html"><span class="dot"></span>Writing 单元</a>
+        <a href="grammar.html" class="active"><span class="dot"></span>Grammar 单元</a>
+        <a href="#"><span class="dot"></span>错题本</a>
+        <a href="#"><span class="dot"></span>作业</a>
+        <a href="#"><span class="dot"></span>排行榜</a>
+        <a href="#"><span class="dot"></span>设置</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="topbar">
+        <div class="search">
+          <span class="mag"></span>
+          <input type="text" placeholder="搜索单元 / 题目 / 知识点" />
+        </div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <div class="avatar">成</div>
+      </div>
+
+      <div class="crumb">
+        <a href="index.html">学习主页</a> <span>›</span> <span>Grammar 单元库</span>
+      </div>
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="thumb">
+          <svg viewBox="0 0 40 40" width="64" height="64" aria-hidden="true">
+            <rect x="4" y="8" width="15" height="24" fill="#F4ECD8" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="21" y="8" width="15" height="24" fill="#F4ECD8" stroke="#2E2A3B" stroke-width="2"/>
+            <rect x="18" y="6" width="4" height="28" fill="#2E2A3B"/>
+            <rect x="7" y="13" width="9" height="2" fill="#2E2A3B"/>
+            <rect x="7" y="18" width="9" height="2" fill="#2E2A3B"/>
+            <rect x="24" y="13" width="9" height="2" fill="#2E2A3B"/>
+            <rect x="24" y="18" width="9" height="2" fill="#2E2A3B"/>
+          </svg>
+        </div>
+        <div>
+          <span class="tag">GRAMMAR · OXFORD</span>
+          <h1>Grammar 单元库</h1>
+          <p>牛津语法专项（Oxford Success in Grammar）：从词形转换、连词语序到不及物动词陷阱，按薄弱点逐点突破。点击单元即可打开对应课件。</p>
+        </div>
+      </section>
+
+      <!-- GRID -->
+      <!-- SPRINT BANNER -->
+      <section class="sprint-banner">
+        <div>
+          <span class="tag">SHORT-TERM SPRINT · 短期冲刺</span>
+          <h2>语法短期冲刺 · 讲练结合课程</h2>
+          <p>由「语法讲义_讲练教案」生成：4 大单元（课程介绍 → 基本句型 → 单句组合 → 附录），覆盖 5 大基本句型、It / There be、并列 / 状语 / 定语 / 名词性从句、强调句与复杂句，附大量讲练与 AI 辅助指令。带侧边目录，可整篇阅读与练习。</p>
+        </div>
+        <a class="go" href="courseware/grammar/sprint.html" target="_blank">打开冲刺课 →</a>
+      </section>
+
+      <!-- 语法单元：占位内容暂隐藏。补齐真实 Oxford 课件后，删除下面 <div id="grammarUnits" hidden> 的 hidden 属性即可重新显示 -->
+      <div id="grammarUnits" hidden>
+      <div class="sec-head">
+        <h2>语法单元 · 4 个</h2>
+        <span class="pixel">4 UNITS</span>
+      </div>
+      <section class="grid">
+        <div class="card">
+          <div class="cap" style="background:var(--green)">U1</div>
+          <h3>Unit 1 · 词形转换</h3>
+          <div class="sub">DSE 高频 · 后缀规律</div>
+          <div class="desc">名词 ↔ 动词 ↔ 形容词 ↔ 副词相互转化：常见后缀（-tion / -ment / -able / -ly）、易错拼写与上下文判断。</div>
+          <a class="go" href="courseware/grammar/unit1.html" target="_blank">打开课件 →</a>
+        </div>
+
+        <div class="card">
+          <div class="cap" style="background:var(--yellow)">U2</div>
+          <h3>Unit 2 · 连词语序</h3>
+          <div class="sub">段落衔接 · 逻辑信号</div>
+          <div class="desc">理清连词的语义与排序：因果 / 转折 / 递进 / 并列，让论证衔接自然、避免逻辑断裂。</div>
+          <a class="go" href="courseware/grammar/unit2.html" target="_blank">打开课件 →</a>
+        </div>
+
+        <div class="card">
+          <div class="cap" style="background:var(--pink)">U3</div>
+          <h3>Unit 3 · 不及物动词</h3>
+          <div class="sub">易错陷阱 · 介词搭配</div>
+          <div class="desc">攻克不及物动词：arrive / happen / occur / die 等不可直接接宾语，必须搭配正确介词。</div>
+          <a class="go" href="courseware/grammar/unit3.html" target="_blank">打开课件 →</a>
+        </div>
+
+        <div class="card">
+          <div class="cap" style="background:var(--blue)">U4</div>
+          <h3>Unit 4 · 综合薄弱点</h3>
+          <div class="sub">查漏补缺 · 混合训练</div>
+          <div class="desc">代词指代 + 态度词识别 + T/F/NG 判断的综合混合训练，针对唐子涵薄弱点定向强化。</div>
+          <a class="go" href="courseware/grammar/unit4.html" target="_blank">打开课件 →</a>
+        </div>
+      </section>
+      </div>
+
+      <!-- 占位提示：真实语法内容补齐前显示 -->
+      <section class="notice">
+        <span class="tag">COMING SOON</span>
+        <h2>语法单元内容更新中</h2>
+        <p>牛津语法专项（词形转换 / 连词语序 / 不及物动词 / 综合薄弱点）课件正在整理，补齐真实内容后将在此处显示。可先使用上方「语法短期冲刺」讲练课进行复习。</p>
+      </section>
+
+      <footer>智学平台 · 静态原型 v0.4 · Grammar 单元库（含短期冲刺讲练课 + 4 个薄弱点单元）</footer>
+    </main>
+  </div>
+
+  <script src="assets/polish.js"></script>
+</body>
+</html>

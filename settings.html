@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 设置</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/shell.css" />
+  <link rel="stylesheet" href="assets/polish.css" />
+  <style>
+    .opt { display:flex; gap:10px; flex-wrap:wrap; }
+    .opt button { font-family:"Noto Sans SC"; font-size:14px; font-weight:600; padding:11px 16px; border:3px solid var(--line); background:var(--card); box-shadow:3px 3px 0 var(--shadow); cursor:pointer; transition:transform .1s; }
+    .opt button:hover { transform:translate(-2px,-2px); }
+    .opt button.active { background:var(--pink); color:#fff; }
+    .field-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:2px solid var(--line); }
+    .field-row:last-child { border-bottom:none; }
+    .field-row .k { font-weight:700; }
+    .field-row .v { color:var(--muted); }
+    .danger { border-color:var(--pink) !important; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">智学<br/>PLATFORM</div>
+      <nav class="nav">
+        <a href="index.html"><span class="dot"></span>学习主页</a>
+        <a href="dashboard.html"><span class="dot"></span>我的看板</a>
+        <a href="reading.html"><span class="dot"></span>阅读单元</a>
+        <a href="writing.html"><span class="dot"></span>写作单元</a>
+        <a href="grammar.html"><span class="dot"></span>语法单元</a>
+        <a href="games.html"><span class="dot"></span>课间小游戏</a>
+        <div class="nav-sep">工具</div>
+        <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+      </nav>
+      <div class="sidebar-foot">
+        <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+          <rect x="6" y="8" width="4" height="24" fill="#6B5235"/>
+          <rect x="8" y="6" width="24" height="28" fill="#A0826D"/>
+          <rect x="8" y="30" width="24" height="4" fill="#D4C5A8"/>
+          <rect x="14" y="12" width="14" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="17" width="10" height="2" fill="#D4C5A8"/>
+          <rect x="14" y="22" width="12" height="2" fill="#D4C5A8"/>
+        </svg>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><span class="mag"></span><input type="text" placeholder="搜索单元 / 题目 / 知识点" /></div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+        <span id="authChip"></span>
+      </div>
+
+      <div id="content"><div class="loading">正在加载设置…</div></div>
+
+      <footer>智学平台 · 设置</footer>
+    </main>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+    function applyTheme(mode) {
+      const dark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.body.classList.toggle('dark', dark);
+      try { localStorage.setItem('zhixue-theme', mode); } catch (e) {}
+      document.querySelectorAll('[data-theme]').forEach(b => b.classList.toggle('active', b.dataset.theme === mode));
+    }
+
+    function loginGate() {
+      const c = document.getElementById('content');
+      c.innerHTML = '<div class="empty"><p style="margin-bottom:16px">请先登录，管理你的设置</p><button class="btn" id="loginNow">登录 / 注册</button></div>';
+      document.getElementById('loginNow').addEventListener('click', () => { ZhiXue.openLogin().then(() => window.location.reload()); });
+    }
+
+    function render() {
+      const u = ZhiXue.user;
+      const cur = (function(){ try { return localStorage.getItem('zhixue-theme') || 'system'; } catch(e){ return 'system'; } })();
+      document.getElementById('content').innerHTML = `
+        <h1 style="font-size:22px;margin-bottom:24px">设置</h1>
+
+        <div class="panel" style="margin-bottom:22px">
+          <h3>外观主题</h3>
+          <div class="opt" style="margin:8px 0 6px">
+            <button data-theme="light">☀️ 浅色</button>
+            <button data-theme="dark">🌙 深色</button>
+            <button data-theme="system">🌗 跟随系统</button>
+          </div>
+          <p style="font-size:12px;color:var(--muted)">也可随时点击右上角图标快速切换。</p>
+        </div>
+
+        <div class="panel" style="margin-bottom:22px">
+          <h3>账户信息</h3>
+          <div class="field-row"><span class="k">昵称</span><span class="v">${esc(u.name)}</span></div>
+          <div class="field-row"><span class="k">用户名</span><span class="v">${esc(u.username)}</span></div>
+          <div class="field-row"><span class="k">身份</span><span class="v">${u.role === 'teacher' ? '教师' : '学生'}</span></div>
+        </div>
+
+        <div class="panel" style="margin-bottom:22px">
+          <h3>学习数据</h3>
+          <p style="color:var(--muted);font-size:13px;margin-bottom:14px">重置将清空你的练习统计、历史与已完成单元，薄弱点恢复初始值。此操作不可撤销。</p>
+          <button class="btn ghost danger" id="resetBtn">重置我的学习进度</button>
+        </div>
+
+        <div class="panel">
+          <h3>登录状态</h3>
+          <button class="btn" id="logoutBtn">退出登录</button>
+        </div>`;
+
+      document.querySelectorAll('[data-theme]').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.theme)));
+      applyTheme(cur);
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        ZhiXue.clearSession();
+        window.location.href = 'index.html';
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', async () => {
+        if (!confirm('确定要重置全部学习进度吗？此操作不可撤销。')) return;
+        try {
+          await ZhiXue.api('/api/progress/reset', { method: 'POST' });
+          ZhiXue.toast('学习进度已重置', 'ok');
+          setTimeout(() => window.location.reload(), 900);
+        } catch (e) { ZhiXue.toast('重置失败：' + e.message, 'err'); }
+      });
+    }
+
+    (async function () {
+      ZhiXue.initAuthChip();
+      if (!ZhiXue.user) { loginGate(); return; }
+      render();
+    })();
+  </script>
+</body>
+</html>

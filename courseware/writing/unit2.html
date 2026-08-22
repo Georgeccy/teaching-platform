@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Unit 2 · Extra-curricular Activities · 香港加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:flex;align-items:center;justify-content:center;background:var(--xdf-green);color:#fff;font-weight:800;font-size:16px;flex-shrink:0}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.task-box{background:var(--xdf-gl);border:1.5px solid var(--accent);border-radius:14px;padding:20px 24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.task-title{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:12px;line-height:1.5}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.pe-tag{display:inline-block;font-size:13px;font-weight:800;padding:1px 9px;border-radius:8px;margin-right:8px;vertical-align:middle;letter-spacing:.5px}
+.pe-point{background:var(--xdf-gp);color:var(--xdf-green);border:1px solid rgba(11,130,53,.25)}
+.pe-explain{background:#E3F2FD;color:var(--xdf-blue);border:1px solid #BBDEFB}
+.pe-example{background:#FFF3E0;color:var(--xdf-gold);border:1px solid rgba(200,93,10,.25)}
+.pe-result{background:#FFEBEE;color:var(--xdf-red);border:1px solid rgba(192,57,43,.2)}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+/* ── V5/V6 additions ── */
+.student-input-wrap{margin-top:10px}
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2);margin-bottom:4px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.teacher-note{background:#EAF2FB;border:1.5px solid rgba(26,109,175,.25);border-radius:12px;padding:12px 18px;margin:12px 0;font-size:17px;line-height:1.7;color:#0d4f86}
+.teacher-note b{color:var(--xdf-blue)}
+.teacher-note::before{content:'📌 教师提示 · ';font-weight:800;color:var(--xdf-blue)}
+.purpose-cb,.tone-cb{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.s2-item{opacity:0;transform:translateY(16px);animation:s2-item-in 300ms cubic-bezier(0.165,0.84,0.44,1) forwards}
+.s2-item:nth-child(1){animation-delay:50ms}
+.s2-item:nth-child(2){animation-delay:120ms}
+.s2-item:nth-child(3){animation-delay:190ms}
+.s2-item:nth-child(4){animation-delay:260ms}
+@keyframes s2-item-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.s2-item{opacity:1;transform:none;animation:none}}
+</style>
+</head><body>
+<div class="topbar">
+  <span class="course-tag">香港加速班·Unit2</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" title="分钟" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" title="秒" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()" title="开始 / 暂停">▶</button>
+    <button class="timer-reset" onclick="resetTimer()" title="重置">↺</button>
+  </div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide" data-title="封面 · Unit 2">
+<div style="max-width:880px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar"><div class="xdf-logo-text">新东方 <span>XDF.CN</span></div><div class="xdf-sub-text">国际教育</div></div>
+<div style="padding:16px 28px 12px">
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+<div class="teacher-badge"><div class="tb-avatar">G</div><div class="tb-name">陈成寓 George</div><div class="tb-tag">授课教师</div></div>
+<div class="class-badge" style="margin-left:auto">香港加速班</div>
+</div>
+<div class="slide-h1">The Pros and Cons of<br><span class="accent">Extra-curricular Activities</span></div>
+<div class="slide-h3" style="color:#666;font-weight:600">Argumentative essay — 议论文写作</div>
+<div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Unit 2 · Paper 2 Writing · DSE</div>
+<div class="s1-meta-grid">
+<div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Argumentative essay</div><div class="sm-sub">Two-sided / balanced</div></div>
+<div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Extra-curricular</div><div class="sm-sub">Pros &amp; cons</div></div>
+<div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">~400 words</div><div class="sm-sub">6 paragraphs</div></div>
+</div>
+<div class="timeline-row">
+<div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">审题构思</div></div>
+<div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">结构+开头</div></div>
+<div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">主体段(PEER)</div></div>
+<div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">结尾+总结</div></div>
+</div>
+</div>
+<div class="xdf-checker-pattern"><span>香港加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Course Objectives · 学习目标</p>
+<h2 class="slide-h2">🎯 本节课结束后，学生将能够</h2>
+<div style="display:grid;gap:14px;margin-top:8px"><div class="card accent s2-item"><h4>● 文体认知 Genre Awareness</h4><p>掌握 argumentative essay 的文体特征与篇章结构：双边论证 + 明确立场 + 结论。</p></div><div class="card accent s2-item"><h4>● 构思观点 Brainstorming</h4><p>运用"利弊通用论点（人类需求）"框架系统构思写作观点。</p></div><div class="card accent s2-item"><h4>● 段落论证 PEER</h4><p>灵活运用 PEER 结构（Point→Explain→Example→Result）完成主体段论述。</p></div><div class="card accent s2-item"><h4>● 句式运用 Sentence Patterns</h4><p>使用所给开头段 / 结尾段句式，完成有逻辑的起承转合。</p></div></div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Part 2 · Understanding the question</p>
+<h2 class="slide-h2">📋 审题：提取关键信息</h2>
+<div class="task-box">
+  <div class="task-title">📝 Task</div>
+  <p style="font-size:18px;line-height:1.7;margin-bottom:8px">Write about 400 words for the following topic:</p>
+  <p style="font-size:18px;line-height:1.7;margin-bottom:8px">You are doing a <strong>Bachelor of Education degree course in Secondary Education</strong> and you have been given the following essay question to answer as an assignment:</p>
+  <blockquote style="font-size:18px;font-style:italic;line-height:1.7;border-left:4px solid var(--accent);padding-left:16px;margin:10px 0;color:var(--text-2)">Most secondary school students in Hong Kong take part in at least four to five extra-curricular activities. What are the pros and cons of extra-curricular activities? Discuss.</blockquote>
+  <ul style="font-size:18px;line-height:1.7;margin:8px 0 0 20px;list-style:disc">
+    <li>Write a <strong>two-sided argumentative essay</strong>.</li>
+    <li>Discuss the <strong>pros and cons</strong> of students taking up extra-curricular activities.</li>
+    <li>Give your essay a <strong>title</strong>.</li>
+  </ul>
+</div>
+<div class="ce-item ">
+  <div class="ce-cn">1. Role（你是谁）</div>
+  
+  
+  <button class="ce-btn" onclick="checkAndReveal(this)" style="margin-top:8px">✅ 检查答案</button>
+  <div class="ce-en">a student doing a Bachelor of Education degree course in Secondary Education</div>
+</div>
+<div class="ce-item ">
+  <div class="ce-cn">2. Audience（写给谁）</div>
+  
+  
+  <button class="ce-btn" onclick="checkAndReveal(this)" style="margin-top:8px">✅ 检查答案</button>
+  <div class="ce-en">lecturer / professor / course instructor</div>
+</div>
+<div class="ce-item ">
+  <div class="ce-cn">3. Purpose（写作目的，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="purpose-cb" data-correct="false"> discuss whether or not secondary school students should take part in multiple extracurricular activities</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="purpose-cb" data-correct="true"> discuss the benefits of extracurricular activities for secondary school students</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="purpose-cb" data-correct="true"> discuss the disadvantages of extracurricular activities for secondary school students</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="purpose-cb" data-correct="true"> reach a reasoned conclusion</label>
+</div>
+  
+  <div class="ce-en">✅ 前三项（benefits / disadvantages / reach a reasoned conclusion）是题目明确要求。第一项是陷阱——题目问的是 pros & cons，并非"是否应该参加"。</div>
+  <button class="ce-btn" onclick="checkAndReveal(this)" style="margin-top:8px">✅ 检查答案</button>
+</div>
+<div class="ce-item ">
+  <div class="ce-cn">4. Register（正式程度）</div>
+  <div class="quiz-card" data-correct="0" style="border:none;padding:0;margin:8px 0"><div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">formal</button><button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button><button class="quiz-opt" onclick="checkQuiz(this)">informal</button></div><div class="quiz-ans">✅ <b>formal</b> — 这是提交给大学讲师的课程作业，语气需正式、客观。</div></div>
+  
+  
+</div>
+<div class="ce-item ">
+  <div class="ce-cn">5. Tone（语气，可多选）</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin:8px 0">
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="tone-cb" data-correct="true"> logical</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="tone-cb" data-correct="false"> neutral</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="tone-cb" data-correct="true"> objective / balanced</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="tone-cb" data-correct="true"> persuasive</label>
+<label style="display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px"><input type="checkbox" class="tone-cb" data-correct="false"> vivid and descriptive</label>
+</div>
+  
+  <div class="ce-en">✅ 议论文语气应 logical + objective/balanced + persuasive。neutral 与 persuasive 略冲突；vivid and descriptive 属于记叙文/描写文，不适合议论文。</div>
+  <button class="ce-btn" onclick="checkAndReveal(this)" style="margin-top:8px">✅ 检查答案</button>
+</div>
+<div class="teacher-note">虽然题目没有明确要求学生给出自己的观点，但建议最后仍给一个结论（如"何种情况下才是有利的"）。议论文通常不是单纯列举优缺点，而是要做出分析与判断。</div>
+</section><section class="slide" data-title="🧠 想论点">
+<p class="sec-label">Part 3 · Brainstorming</p>
+<h2 class="slide-h2">🧠 想论点：从"人类需求"出发</h2>
+<div class="ce-item">
+  <div class="ce-cn">思考 3.1：你参加过课外活动吗？若有，介绍一项你感兴趣 / 不喜欢的；若无，说明不参加的理由。</div>
+  <div class="student-input-wrap">
+    <textarea class="student-ta" id="b31" placeholder="在此输入你的想法..."></textarea>
+    <button class="submit-btn" id="b31-sb" onclick="submitAnswer('b31-sb','b31','b31-ans')">✏️ 提交我的回答</button>
+    <div class="student-answer" id="b31-ans"></div>
+    <button class="edit-btn" id="b31-eb" onclick="continueEdit('b31','b31-ans','b31-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ref-ans');a.classList.toggle('show')" style="margin-top:10px">👀 参考答案</button>
+  <div class="ce-en ref-ans">开放性问题，旨在结合学生自身经历，更容易联想到利弊观点。例如：喜欢——释放压力、感受乐趣、锻炼身体；不喜欢——太累、家长要求参加；不参加——没时间、没精力。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">思考 3.2：参加课外活动除了培养技能，是否也能培养某种价值观？举例说明。</div>
+  <div class="student-input-wrap">
+    <textarea class="student-ta" id="b32" placeholder="在此输入你的想法..."></textarea>
+    <button class="submit-btn" id="b32-sb" onclick="submitAnswer('b32-sb','b32','b32-ans')">✏️ 提交我的回答</button>
+    <div class="student-answer" id="b32-ans"></div>
+    <button class="edit-btn" id="b32-eb" onclick="continueEdit('b32','b32-ans','b32-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ref-ans');a.classList.toggle('show')" style="margin-top:10px">👀 参考答案</button>
+  <div class="ce-en ref-ans">可以。如团队性体育活动培养协作意识、抗压能力；志愿活动培养责任感与同理心。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">思考 3.3：从个人理想与未来发展看，参加课外活动能带来什么好处？</div>
+  <div class="student-input-wrap">
+    <textarea class="student-ta" id="b33" placeholder="在此输入你的想法..."></textarea>
+    <button class="submit-btn" id="b33-sb" onclick="submitAnswer('b33-sb','b33','b33-ans')">✏️ 提交我的回答</button>
+    <div class="student-answer" id="b33-ans"></div>
+    <button class="edit-btn" id="b33-eb" onclick="continueEdit('b33','b33-ans','b33-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ref-ans');a.classList.toggle('show')" style="margin-top:10px">👀 参考答案</button>
+  <div class="ce-en ref-ans">探索并发现自己的兴趣与特长，有利于未来的职业选择与发展。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">思考 3.4：题目提到 at least four to five，是否意味着可能过度参与？会带来什么问题？</div>
+  <div class="student-input-wrap">
+    <textarea class="student-ta" id="b34" placeholder="在此输入你的想法..."></textarea>
+    <button class="submit-btn" id="b34-sb" onclick="submitAnswer('b34-sb','b34','b34-ans')">✏️ 提交我的回答</button>
+    <div class="student-answer" id="b34-ans"></div>
+    <button class="edit-btn" id="b34-eb" onclick="continueEdit('b34','b34-ans','b34-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ref-ans');a.classList.toggle('show')" style="margin-top:10px">👀 参考答案</button>
+  <div class="ce-en ref-ans">会。压力大、不利于心理健康；难以平衡学习与课后活动，影响成绩。</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">思考 3.5：有的父母认为某些课外班能培养技能，便擅自给孩子报班。这会带来什么问题？</div>
+  <div class="student-input-wrap">
+    <textarea class="student-ta" id="b35" placeholder="在此输入你的想法..."></textarea>
+    <button class="submit-btn" id="b35-sb" onclick="submitAnswer('b35-sb','b35','b35-ans')">✏️ 提交我的回答</button>
+    <div class="student-answer" id="b35-ans"></div>
+    <button class="edit-btn" id="b35-eb" onclick="continueEdit('b35','b35-ans','b35-sb')" style="display:none">✏️ 继续输入</button>
+  </div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ref-ans');a.classList.toggle('show')" style="margin-top:10px">👀 参考答案</button>
+  <div class="ce-en ref-ans">忽略孩子的兴趣与意愿，造成孩子压力，违背了课外活动的初衷。</div>
+</div>
+<div class="card mt-l"><h4>📚 Content Bank — 利弊七大通用论点（人类需求）</h4><table class="rule-table"><tr><th>人类需求</th><th>细分</th><th>英文表达 (English)</th></tr><tr><td>生存需求</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="1. 安全与健康">______</span></td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Safety and health (physical &amp; mental health)">______</span></td></tr><tr><td>生存需求</td><td>2. 时间</td><td>Time / efficiency / flexibility / convenience</td></tr><tr><td>生存需求</td><td>3. 钱</td><td>Money / cost / income</td></tr><tr><td>认知需求</td><td>4. 信息与知识</td><td>Information &amp; knowledge</td></tr><tr><td>认知需求</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="5. 技能、品质、价值观">______</span></td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Skills/abilities, qualities, and values/beliefs">______</span></td></tr><tr><td>情感与精神需求</td><td>6. 爱、归属感、社会关系</td><td>Love, belonging, and social relationships (family bond / friendship / a sense of belonging / identity)</td></tr><tr><td>情感与精神需求</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="7. 兴趣、理想、个人实现">______</span></td><td><span class="cloze" onclick="revealCloze(this)" data-answer="Interest, ambition, self-actualization">______</span></td></tr></table></div>
+</section><section class="slide" data-title="📊 文章结构">
+<p class="sec-label">Part 4 · Overall Structure</p>
+<h2 class="slide-h2">📊 文章结构：Opening → Pro1 → Pro2 → Con1 → Con2 → Conclusion</h2>
+<table class="rule-table"><tr><th>Paragraph</th><th>Main content</th></tr><tr><td>Opening</td><td>introduce the topic (optional paraphrase) + state opinion（引出话题，可改写题目 + 表明立场/观点）</td></tr><tr><td>Body 1</td><td>Pro 1: develop positive inner qualities（好处1：培养积极的内在品质，如技能与价值观）</td></tr><tr><td>Body 2</td><td>Pro 2: explore interests and aptitudes（好处2：探索兴趣与天赋）</td></tr><tr><td>Body 3</td><td>Con 1: create significant pressure（坏处1：造成明显压力）</td></tr><tr><td>Body 4</td><td>Con 2: demotivation (pressured by parents to participate)（坏处2：失去动力，被家长安排参加）</td></tr><tr><td>Conclusion</td><td>Summarize arguments + draw a conclusion（总结论点 + 得出结论）</td></tr></table>
+</section><section class="slide" data-title="✍️ 开头段">
+<p class="sec-label">Part 5 · Opening paragraph</p>
+<h2 class="slide-h2">✍️ 开头段：引入话题 + 表达立场</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">思考 5.1：三位同学起了三个标题，你认为哪个合适？为什么？</span></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px"><div class="card"><h4>A</h4><p>The Pros and Cons of Extra-curricular Activities</p></div><div class="card"><h4>B</h4><p>Benefit or Burden: The Role of Extra-curricular Activities</p></div><div class="card"><h4>C</h4><p>Finding the Right Balance of Extra-curricular Activities</p></div></div>
+<button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">👀 参考答案</button><div class="ce-en" style="margin-top:8px">✅ 三个标题都可行，分别对应三种起标题方法：A 直接概括题目（稳妥）；B 对立式标题（体现争议，易引发思考，最适合双边议论文）；C 体现核心立场（"好但要适度"）。<table class="rule-table" style="margin-top:10px;color:var(--text-1);font-weight:400"><tr><th>方法</th><th>示例</th><th>说明</th></tr><tr><td>直接概括题目</td><td>The Pros and Cons of Extra-curricular Activities</td><td>较稳妥，无特别思路时可直接概括题目</td></tr><tr><td>对立式 (A or B?)</td><td>Benefit or Burden: The Role of Extra-curricular Activities</td><td>体现争议性，适合双边议论文，易引发读者思考</td></tr><tr><td>体现核心立场</td><td>Finding the Right Balance of Extra-curricular Activities</td><td>根据自己的核心立场起标题</td></tr></table></div>
+
+<h3 class="slide-h3 mt-l">Task 5A：根据提示补齐开头段</h3>
+<div class="card accent"><h4>Benefit or Burden: The Role of Extra-curricular Activities</h4><p style="font-size:20px;line-height:2.1;margin-bottom:10px"><span class="cloze" onclick="revealCloze(this)" data-answer="It is quite common">______</span><span style="color:var(--text-3);font-size:17px">（"……是很常见的"，用于背景引入）</span> for secondary school students in Hong Kong these days to take part in several extra-curricular activities. <span class="cloze" onclick="revealCloze(this)" data-answer="While some people believe">______</span><span style="color:var(--text-3);font-size:17px">（引出一方观点：有些人认为……）</span> these activities are beneficial because they help students develop important skills and interests, <span class="cloze" onclick="revealCloze(this)" data-answer="others argue that">______</span><span style="color:var(--text-3);font-size:17px">（引出另一方观点：其他人则主张……）</span> they may place unnecessary pressure on students. <span class="cloze" onclick="revealCloze(this)" data-answer="This essay will discuss the advantages and disadvantages of taking part in extra-curricular activities.">______</span><span style="color:var(--text-3);font-size:17px">（路线图句：本文将要讨论……的利弊）</span></p></div>
+<h3 class="slide-h3 mt-l">结构与句式 · 开头段模板</h3>
+<table class="rule-table"><tr><th>位置</th><th>句式（点击查看）</th></tr><tr><td>第一句 背景引入</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="It is quite common for sb. to do sth.">______</span> / It has become increasingly common for sb. to do sth. / In recent years, ... has become increasingly popular among sb.</td></tr><tr><td>第二句 呈现争议</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="While some people believe that A, others argue that B.">______</span> / Some people claim that ..., whereas others maintain that ... / Opinions are divided as to whether ...</td></tr><tr><td>第三句 路线图/立场</td><td><span class="cloze" onclick="revealCloze(this)" data-answer="This essay will discuss the advantages and disadvantages of ...">______</span> / <span class="cloze" onclick="revealCloze(this)" data-answer="The following discussion will evaluate both the positive and negative impacts of ...">______</span></td></tr></table>
+</section><section class="slide" data-title="🟢 主体段1">
+<p class="sec-label">Part 6 · Body paragraph 1 (Pro 1)</p>
+<h2 class="slide-h2">🟢 主体段1：好处1 — 培养人格品质</h2>
+<div class="card accent"><h4>Task 6A：补全段落（点击空白处揭晓）</h4><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-point"><span class="cloze" onclick="revealCloze(this)" data-answer="Point">______</span></span><span class="cloze" onclick="revealCloze(this)" data-answer="One major advantage">______</span> of extra-curricular activities is that they help students develop valuable skills and positive personal qualities.</p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-explain"><span class="cloze" onclick="revealCloze(this)" data-answer="Explain">______</span></span>While school lessons mainly <span class="cloze" onclick="revealCloze(this)" data-answer="focus on academic knowledge">______</span>, many activities provide opportunities for students to <span class="cloze" onclick="revealCloze(this)" data-answer="practise teamwork, leadership, communication and problem-solving skills">______</span>.</p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-example"><span class="cloze" onclick="revealCloze(this)" data-answer="Example">______</span></span>For example, members of sports teams or competition clubs often learn how to cooperate with others and <span class="cloze" onclick="revealCloze(this)" data-answer="perform under pressure">______</span>. In addition, activities such as volunteer service or charity events can help students <span class="cloze" onclick="revealCloze(this)" data-answer="become more responsible">______</span> and <span class="cloze" onclick="revealCloze(this)" data-answer="develop greater empathy">______</span> for people in need.</p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-result"><span class="cloze" onclick="revealCloze(this)" data-answer="Result">______</span></span>As a result, students not only gain practical skills but also develop important values and qualities that can benefit them throughout their lives.</p></div>
+<div class="notes-box">💡 每段用 <b>PEER</b> 展开：先 Point 表明观点，再 Explain 解释、Example 举例、Result 收束。</div>
+<h3 class="slide-h3 mt-l">Language Bank — Skills &amp; personal qualities</h3>
+<table class="rule-table"><tr><th>Skills &amp; personal qualities</th><th>中文</th></tr><tr><td>perform under pressure</td><td>能够承受压力并发挥水准</td></tr><tr><td>develop greater empathy</td><td>培养更强的同理心</td></tr><tr><td>focus on academic knowledge</td><td>专注于学术知识</td></tr><tr><td>practise teamwork, leadership, communication and problem-solving skills</td><td>锻炼团队合作、领导力、沟通和解决问题的技能</td></tr><tr><td>become more responsible</td><td>变得更有责任心</td></tr></table>
+<h3 class="slide-h3 mt-l">Task 6B：PEER 论证公式</h3>
+<table class="rule-table"><tr><th>PEER</th><th>What?</th><th>中文</th></tr><tr><td>P (Point)</td><td>What is your point?</td><td>表明观点</td></tr><tr><td>E (Explain)</td><td>Why / How?</td><td>展开解释（为什么 / 如何）</td></tr><tr><td>E (Example)</td><td>How / what?</td><td>举例 / 列举 / 具体化</td></tr><tr><td>R (Result)</td><td>So what? Why it matters?</td><td>结果 / 影响 / 最终判断</td></tr></table>
+</section><section class="slide" data-title="🟢 主体段2">
+<p class="sec-label">Part 7 · Body paragraph 2 (Pro 2)</p>
+<h2 class="slide-h2">🟢 主体段2：好处2 — 探索兴趣天赋</h2>
+<div class="hw-card"><h4>Homework：完成主体段2（好处2 — 探索兴趣天赋）</h4><p>Point：课外活动有利于学生探索兴趣与天赋（参考下方引出并列论点的句式）。Explain：丰富活动种类提供尝试机会。Example：如戏剧社发现表演/演讲天赋。Result：帮助选择适合职业。Further Result：回扣论点。</p></div><button class="reveal-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">👀 显示参考段落 (P3)</button><div class="ce-en" style="line-height:2">Another benefit is that extra-curricular activities allow students to explore their interests and discover their aptitudes. By participating in different clubs and activities, students may find subjects or fields that they genuinely enjoy or naturally good at. For example, a student who joins a science club may develop a strong interest in scientific research, while a student who participates in drama activities may discover a talent for public speaking. Understanding their interests and aptitudes can help students stay motivated in their studies and make better decisions about their future career paths. Therefore, these activities can play an important role in students' long-term development.</div>
+<h3 class="slide-h3 mt-l">Language Bank — Introducing another point of view</h3>
+<table class="rule-table"><tr><th>引出并列论点（好处）</th><th>引出并列论点（坏处）</th></tr><tr><td>Another advantage/benefit/merit is that...</td><td>Another drawback is that ...</td></tr><tr><td>Equally important, ...</td><td>A further concern is that ...</td></tr><tr><td>Apart from ...（承接上一观点，引出新观点）</td><td>More importantly, ...</td></tr></table>
+</section><section class="slide" data-title="🔴 主体段3">
+<p class="sec-label">Part 8 · Body paragraph 3 (Con 1)</p>
+<h2 class="slide-h2">🔴 主体段3：坏处1 — 造成压力</h2>
+<div class="card accent"><h4>Task 8A：完成第三个主体段</h4><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-point">Point</span><span class="cloze" onclick="revealCloze(this)" data-answer="However, taking part in too many extra-curricular activities can create significant pressure for students.">______</span> <span style="color:var(--text-3);font-size:17px">（但是，参加过多的课外活动会给学生带来巨大的压力）</span></p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-explain">Explain+Example</span>As students progress to higher forms, they often face heavier workloads and more demanding examinations. If they spend too much time on activities, <span class="cloze" onclick="revealCloze(this)" data-answer="they may have less time for rest and relaxation">______</span>. <span style="color:var(--text-3);font-size:17px">（他们可能拥有更少的休息和放松时间）</span></p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-result">Result</span>Over time, <span class="cloze" onclick="revealCloze(this)" data-answer="this may lead to stress, exhaustion and even burnout">______</span> <span style="color:var(--text-3);font-size:17px">（这可能会导致压力、疲惫，甚至倦怠）</span>, which can negatively affect their mental well-being.</p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-explain">Further explain+example</span><span class="cloze" onclick="revealCloze(this)" data-answer="In addition, students who are constantly busy may struggle to concentrate in class or complete assignments on time.">______</span> <span style="color:var(--text-3);font-size:17px">（此外，总是忙个不停的学生可能难以集中注意力，或无法按时完成作业）</span></p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-result">Result</span><span class="cloze" onclick="revealCloze(this)" data-answer="As a result, their academic performance may gradually decline.">______</span> <span style="color:var(--text-3);font-size:17px">（因此，学业成绩可能逐渐下滑）</span></p><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="pe-tag pe-result">Further result</span>Therefore, joining too many activities can sometimes do more harm than good.</p></div>
+<div class="teacher-note">PEER 是论证的整体思路，并不代表每一部分都要单独写一句，或每部分只能出现一次。例如本段第二句，explain 和 example 可放在一句中；第五句再次并列展开 further explain+example，进一步阐述学业压力。</div>
+</section><section class="slide" data-title="🔴 主体段4">
+<p class="sec-label">Part 9 · Body paragraph 4 (Con 2)</p>
+<h2 class="slide-h2">🔴 主体段4：坏处2 — 动力缺失</h2>
+<div class="hw-card"><h4>Homework：完成主体段4（坏处2 — 动力缺失）</h4><p>Point：有的课外活动是家长的个人安排（参考引出并列论点句式）。<br>Explain：家长认为某活动能培养技能、有利前途。<br>Example：语言班/体育俱乐部等热门但不一定人人热爱。<br>Result：学生失去动力，甚至失去探索天赋的机会。<br>Further Result：回扣论点。</p></div><button class="reveal-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">👀 显示参考段落 (P5)</button><div class="ce-en" style="line-height:2">Another disadvantage of extra-curricular activities is that some students are pressured by their parents to participate in activities that do not reflect their genuine interests. In Hong Kong, many parents believe that learning a wide range of skills can enhance their children's competitiveness and future career prospects. As a result, students may be required to attend numerous classes, such as music lessons, language courses and sports training, regardless of their personal preferences. This lack of choice can reduce students' motivation and enjoyment of learning. More importantly, it may prevent them from exploring their own talents and developing a strong sense of identity. Consequently, extra-curricular activities may become a source of stress rather than an opportunity for personal growth.</div>
+</section><section class="slide" data-title="🏁 结尾段">
+<p class="sec-label">Part 10 · Ending paragraph</p>
+<h2 class="slide-h2">🏁 结尾段：总结 + 结论</h2>
+<div class="card accent"><h4>Task 10A：完成结论段</h4><p style="font-size:20px;line-height:2.1;margin-bottom:8px"><span class="cloze" onclick="revealCloze(this)" data-answer="In conclusion, extra-curricular activities have both advantages and disadvantages.">______</span> <span style="color:var(--text-3);font-size:17px">（总之，课外活动既有优点也有缺点）</span>On the one hand, they help students develop useful skills, positive values and a better understanding of their interests and strengths. On the other hand, excessive participation and a lack of freedom in choosing activities may create unnecessary pressure and reduce the benefits students receive. Ultimately, extra-curricular activities are most beneficial when <span class="cloze" onclick="revealCloze(this)" data-answer="students are able to choose activities that genuinely interest them and participate in a balanced and manageable way.">______</span> <span style="color:var(--text-3);font-size:17px">（学生能选择真正感兴趣的活动，并以平衡可控的方式参与）</span></p></div>
+<h3 class="slide-h3 mt-l">结构与句式 · 结论段模板</h3>
+<table class="rule-table"><tr><th>位置</th><th>句式</th></tr><tr><td>第一句 总结总论点</td><td>In conclusion, ... / To conclude, ... / In summary, ...</td></tr><tr><td>第二句 结论/立场</td><td>Having examined both sides of the issue, I believe the key lies in finding the right balance between ... and ... / Ultimately, moderation is the key to maximizing the benefits while minimizing the drawbacks. / ... are most likely to benefit when they ...</td></tr></table>
+</section><section class="slide" data-title="📝 作业">
+<p class="sec-label">Part 11 · Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card"><h4>1. 完成主体段2</h4><p>见讲义 Part 7。运用 PEER 结构，参考 Language Bank 引出并列论点的句式，写完"探索兴趣天赋"段落。</p></div>
+<div class="hw-card"><h4>2. 完成主体段4</h4><p>见讲义 Part 9。围绕"家长安排导致动力缺失"展开，注意回扣论点。</p></div>
+</section><section class="slide" data-title="📋 总结">
+<p class="sec-label">Part 12 · Summary</p>
+<h2 class="slide-h2">📋 知识清单 Check Your Learning</h2>
+<div class="card accent" style="margin-bottom:14px"><h4>● 文体认知 Genre Awareness</h4><p>明确表达立场、充分陈述双边理由、最后给出结论。</p></div><div class="card accent" style="margin-bottom:14px"><h4>● 文章结构 Overall Structure</h4><p>Opening → Pro 1 → Pro 2 → Con 1 → Con 2 → Conclusion</p></div><div class="card accent" style="margin-bottom:14px"><h4>● 段落结构 PEER</h4><p>Point → Explain → Example → Result；可合并或增补（如 explain+example 合一）。</p></div>
+<h3 class="slide-h3 mt-l">今天掌握的核心技能</h3>
+
+<button class="ce-btn" onclick="var a=document.getElementById('s13-exp');a.classList.toggle('show')">📖 查看常用表达</button><div id="s13-exp" class="ce-en" style="display:none;margin-top:8px">1. It is quite common for sb. to do sth.<br>2. It has become increasingly common for sb. to do sth.<br>3. Some people claim that ..., whereas others maintain that ...<br>4. Opinions are divided as to whether ...<br>5. This essay will discuss the advantages and disadvantages of ...<br>6. The following discussion will evaluate both the positive and negative impacts of ...<br>7. Having examined both sides of the issue, I believe the key lies in finding the right balance between ... and ...<br>8. Ultimately, moderation is the key to maximizing the benefits while minimizing the drawbacks.</div>
+<h3 class="slide-h3 mt-l">自我核对</h3>
+<div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>掌握 Argumentative essay 文体特征（双边观点 + 立场 + 结论）</span></div><div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>熟悉文章结构：Opening → Pro1 → Pro2 → Con1 → Con2 → Conclusion</span></div><div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>能运用 PEER 完成主体段论述</span></div><div class="check-item"><div class="ci-box" onclick="this.classList.toggle('checked')"></div><span>能使用开头段 / 结尾段模板句式</span></div>
+</section><section class="slide" data-title="📝 范文附录">
+<p class="sec-label">Appendix · Model Answer</p>
+<h2 class="slide-h2">📝 范文：Benefit or Burden</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:6px">Task: Write a two-sided argumentative essay (~400 words) on the pros and cons of extra-curricular activities.</p>
+<button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">📖 显示范文</button>
+<div class="ce-en" style="line-height:2;margin-top:10px;display:none"><p style="margin-bottom:14px"><b>Benefit or Burden: The Role of Extra-curricular Activities</b></p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">It is quite common</span> for secondary school students in Hong Kong these days to take part in several extra-curricular activities. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">While some people believe</span> these activities are beneficial because they help students develop important skills and interests, <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">others argue that</span> they may place unnecessary pressure on students. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">This essay will discuss the advantages and disadvantages of taking part in extra-curricular activities.</span></p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">One major advantage</span> of extra-curricular activities is that they help students develop valuable skills and positive personal qualities. While school lessons mainly <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">focus on academic knowledge</span>, many activities provide opportunities for students to <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">practise teamwork, leadership, communication and problem-solving skills</span>. For example, members of sports teams or competition clubs often learn how to cooperate with others and <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">perform under pressure</span>. In addition, activities such as volunteer service or charity events can help students <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">become more responsible</span> and <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">develop greater empathy</span> for people in need. As a result, students not only gain practical skills but also develop important values and qualities that can benefit them throughout their lives.</p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Another benefit is that</span> extra-curricular activities allow students to explore their interests and discover their aptitudes. By participating in different clubs and activities, students may find subjects or fields that they genuinely enjoy or naturally good at. For example, a student who joins a science club may develop a strong interest in scientific research, while a student who participates in drama activities may discover a talent for public speaking. Understanding their interests and aptitudes can help students stay motivated in their studies and make better decisions about their future career paths. Therefore, these activities can play an important role in students' long-term development.</p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">However, taking part in too many extra-curricular activities can create significant pressure for students.</span> As students progress to higher forms, they often face heavier workloads and more demanding examinations. If they spend too much time on activities, they may have less time for rest and relaxation. Over time, this may lead to stress, exhaustion and even burnout, which can negatively affect their mental wellbeing. In addition, students who are constantly busy may struggle to concentrate in class or complete assignments on time. As a result, their academic performance may gradually decline. Therefore, joining too many activities can sometimes do more harm than good.</p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Another disadvantage of extra-curricular activities is that</span> some students are pressured by their parents to participate in activities that do not reflect their genuine interests. In Hong Kong, many parents believe that learning a wide range of skills can enhance their children's competitiveness and future career prospects. As a result, students may be required to attend numerous classes, such as music lessons, language courses and sports training, regardless of their personal preferences. This lack of choice can reduce students' motivation and enjoyment of learning. More importantly, it may prevent them from exploring their own talents and developing a strong sense of identity. Consequently, extra-curricular activities may become a source of stress rather than an opportunity for personal growth.</p>
+<p style="margin-bottom:12px"><span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">In conclusion, extra-curricular activities have both advantages and disadvantages.</span> On the one hand, they help students develop useful skills, positive values and a better understanding of their interests and strengths. On the other hand, excessive participation and a lack of freedom in choosing activities may create unnecessary pressure and reduce the benefits students receive. <span style="background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600">Ultimately, extra-curricular activities are most beneficial when students are able to choose activities that genuinely interest them and participate in a balanced and manageable way.</span></p></div>
+<p style="font-size:18px;color:var(--text-3);margin-top:10px;text-align:right">✅ 字数：约 400 词 · 浅绿高亮为关键句式与词伙</p>
+</section><section class="slide" data-title="🔤 拓展翻译（上）">
+<p class="sec-label">Extension · 拓展翻译练习</p>
+<h2 class="slide-h2">🔤 全文句子翻译练习（上）</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">将以下中文句子翻译为英文。先查看词伙提示再尝试翻译，完成后点击"显示答案"核对。</p>
+
+<div class="card accent" style="margin-bottom:8px"><h4>一、开头段（Introduction）</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#1 虽然国际人才有明显优势，但这也给本地居民带来了潜在挑战。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>global talent</span> <span>obvious merits</span> <span>hidden challenges</span> <span>local residents</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">While global talent brings obvious merits, it also creates hidden challenges for local residents.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#2 本文分析其利弊，并提出保障本地群体权益的可行方法。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>analyses</span> <span>benefits and drawbacks</span> <span>feasible ways</span> <span>protect local people</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">This essay analyses its benefits, drawbacks and feasible ways to protect local people.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>二、益处一：注入多元思维与专业技能</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#3 国际人才的一大好处，是为本地行业注入多元思维与专业技能。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>one major benefit</span> <span>injecting</span> <span>diverse thinking</span> <span>professional skills</span> <span>local industries</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">One major benefit of international talent is injecting diverse thinking and professional skills into local industries.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#4 海外专业人士拥有跨文化视野和不同工作思维，能打破僵化的本地工作模式，在日常业务中带来新颖的解决思路。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>cross-cultural exposure</span> <span>working mindsets</span> <span>break rigid local routines</span> <span>creative problem-solving</span> <span>daily business operation</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Professionals from overseas own cross-cultural exposure and different working mindsets, which break rigid local routines and inspire creative problem-solving in daily business operation.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#5 例如香港跨国企业里的美籍员工，擅长跨境营销策略、数字化商业模式与国际客户谈判，助力企业开拓海外市场。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>multinationals</span> <span>cross-border marketing tactics</span> <span>digital business models</span> <span>global client negotiation</span> <span>expand overseas markets</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">For instance, American employees in Hong Kong multinationals master cross-border marketing tactics, digital business models and global client negotiation skills, helping firms expand overseas markets effectively.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#6 相比之下，只聘用本地员工的团队往往欠缺这种国际视野与跨国运营经验。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>relying purely on</span> <span>local hires</span> <span>global vision</span> <span>international operation experience</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, teams relying purely on local hires often lack such global vision and international operation experience.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>三、益处二：推动经济发展与产业升级</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#7 国际人才也有力推动香港整体经济发展与产业升级。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>strongly fuels</span> <span>economic development</span> <span>industrial upgrading</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Global talent also strongly fuels Hong Kong's overall economic development and industrial upgrading.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#8 作为国际金融中心，香港长期在金融科技、创新科技等领域缺少高端专业人才。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>international financial hub</span> <span>faces shortages</span> <span>high-end professionals</span> <span>fintech</span> <span>innovation sectors</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">As an international financial hub, Hong Kong always faces shortages of high-end professionals in fintech, innovation and technological sectors.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#9 海外人才填补技能缺口，提升企业生产力，带动产业链发展，也间接为普通本地人创造更多配套岗位。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>fill skill gaps</span> <span>corporate productivity</span> <span>drive industrial chain</span> <span>supporting jobs</span> <span>ordinary local citizens</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Foreign experts fill these skill gaps, improve corporate productivity, drive industrial chain development and indirectly create more supporting jobs for ordinary local citizens.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#10 相比之下，单纯依靠本地劳动力会拖慢产业发展，削弱香港的全球竞争力。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>depending merely on</span> <span>local labour</span> <span>slow down</span> <span>global competitiveness</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, depending merely on local labour would slow down industry progress and weaken Hong Kong's global competitiveness.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>四、挑战一：就业竞争加剧</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#11 最直接的挑战是就业竞争加剧，给本地毕业生和求职者带来巨大压力。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>the most direct challenge</span> <span>fiercer job competition</span> <span>huge pressure</span> <span>local graduates and job seekers</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">The most direct challenge is fiercer job competition putting huge pressure on local graduates and job seekers.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#12 国际求职者拥有名校学历和海外工作阅历，在高薪专业岗位上更受雇主青睐。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>international candidates</span> <span>prestigious academic backgrounds</span> <span>rich overseas work experience</span> <span>more favoured</span> <span>high-salary professional posts</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">International candidates hold prestigious academic backgrounds and rich overseas work experience, making them more favoured by employers for high-salary professional posts.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#13 金融行业里，国际金融分析师、跨境财富顾问等岗位要求多语能力和全球法规知识，很多本地毕业生并不具备。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>finance sector</span> <span>international financial analyst</span> <span>cross-border wealth consultant</span> <span>multilingual ability</span> <span>global regulatory knowledge</span> <span>not fully mastered</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">In the finance sector, roles like international financial analyst and cross-border wealth consultant require multilingual ability and global regulatory knowledge, which many local graduates have not fully mastered.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#14 相比之下，过去本地年轻人在这些行业原本能轻松获得稳定且有前景的职业发展路径。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>local youngsters</span> <span>easily secured</span> <span>stable and promising career paths</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, local youngsters once easily secured stable and promising career paths in these industries in the past.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>五、挑战二：公共资源压力加大</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#15 另一无法回避的挑战是香港有限的公共资源承受的压力不断加大。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>unavoidable challenge</span> <span>mounting pressure</span> <span>limited public resources</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Another unavoidable challenge is mounting pressure on Hong Kong's limited public resources.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#16 香港本就住房不足、学位紧张，大量高收入国际人才涌入进一步加大住房需求，推高租金与楼价。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>insufficient housing supply</span> <span>limited school places</span> <span>high-income global talent</span> <span>raises housing demand</span> <span>rental and property prices</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">The city already suffers from insufficient housing supply and limited school places; the arrival of large numbers of high-income global talent further raises housing demand and pushes up rental and property prices.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#17 其子女也会争抢优质资助及公立学校学位，挤占原本留给本地学生的教育资源。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>compete for places</span> <span>subsidized and public schools</span> <span>squeeze</span> <span>educational opportunities</span> <span>reserved for</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Their children also compete for places in reputable subsidized and public schools, squeezing educational opportunities originally reserved for local students.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#18 相比之下，以往只在本地招聘时，公共资源的压力要小得多。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>far less strained</span> <span>recruitment</span> <span>local communities</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, public resources were far less strained when recruitment was limited to local communities only.</div>
+</div>
+
+</section><section class="slide" data-title="🔤 拓展翻译（下）">
+<p class="sec-label">Extension · 拓展翻译练习</p>
+<h2 class="slide-h2">🔤 全文句子翻译练习（下）</h2>
+<p style="font-size:18px;color:var(--text-2);margin-bottom:10px">继续完成以下句子的翻译练习。</p>
+
+<div class="card accent" style="margin-bottom:8px"><h4>六、解决方案一：系统化技能培训</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#19 提供系统化技能培训，是提升本地人竞争力的务实做法。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>systematic upskilling training</span> <span>practical way</span> <span>competitiveness</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Offering systematic upskilling training is a practical way to enhance local people's competitiveness.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#20 政府可开设金融科技、数字技能、跨境商务等免费或低价课程，内容严格贴合市场真实需求。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>free or low-cost courses</span> <span>fintech</span> <span>digital skills</span> <span>cross-border business</span> <span>market demands</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">The government can launch free or low-cost courses covering fintech, digital skills and cross-border business knowledge, designed closely according to real market demands.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#21 培训采用弹性课时，并和企业招聘挂钩，让学员学到实用技能、看到职业出路，愿意主动参与而非流于形式。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>flexible schedules</span> <span>enterprise recruitment</span> <span>career paths</span> <span>practical skills</span> <span>willing to join</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Training should adopt flexible schedules and link with enterprise recruitment, giving learners clear career paths and practical working skills, so locals are willing to join instead of ignoring such programmes.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#22 相比之下，缺少这类精心规划的培训，本地人在专业能力上难以追上国际人才。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>well-planned training</span> <span>catch up with</span> <span>professional ability</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, without such well-planned training, locals cannot catch up with global talent in professional ability.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>七、解决方案二：建立公平就业市场规则</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#23 建立公平的就业市场规则，能有效避免本地群体被边缘化。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>fair labour market rules</span> <span>prevent</span> <span>neglected</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Establishing fair labour market rules can effectively prevent local residents from being neglected.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#24 政府可制定合理招聘指引，要求企业在招聘入门及专业岗位时，优先考虑本地申请者，再聘请海外人才。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>recruitment guidelines</span> <span>prioritise</span> <span>local applicants</span> <span>overseas talent</span> <span>entry-level and professional positions</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Authorities can set reasonable recruitment guidelines, requiring companies to prioritise local applicants before hiring overseas talent for entry-level and professional positions.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#25 严格监管能杜绝雇主刻意跳过本地人、只为压缩成本而低价聘用外籍员工的行为。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>strict supervision</span> <span>bypassing</span> <span>cheaper foreign labour</span> <span>cut costs</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Strict supervision can stop employers from deliberately bypassing local talents and employing cheaper foreign labour to cut costs.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#26 相比之下，规则宽松会让本地人丧失机会，遭遇不公平的职业竞争。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>by contrast</span> <span>loose regulations</span> <span>lose chances</span> <span>unfair career competition</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">By contrast, loose regulations would make local workers lose chances and face unfair career competition.</div>
+</div>
+
+<div class="card accent" style="margin-bottom:8px;margin-top:16px"><h4>八、结尾段（Conclusion）</h4></div>
+
+<div class="ce-item">
+  <div class="ce-cn">#27 总之，国际人才为香港带来创新与经济活力，同时也造成就业和资源压力。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>innovation and economic vitality</span> <span>employment and resource pressure</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">In conclusion, international talent brings innovation and economic vitality to Hong Kong, along with employment and resource pressure.</div>
+</div>
+
+<div class="ce-item">
+  <div class="ce-cn">#28 完善的培训计划与公平就业政策，能完美平衡全球引才与本地居民利益。</div>
+  <button class="ce-btn hint-btn" onclick="var h=this.nextElementSibling;h.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>training schemes</span> <span>fair employment policies</span> <span>balance</span> <span>global recruitment</span> <span>local interests</span></div>
+  <button class="ce-btn" onclick="var a=this.nextElementSibling;a.classList.toggle('show')">✅ 显示答案</button>
+  <div class="ce-en">Proper training schemes and fair employment policies can balance global recruitment and local interests perfectly.</div>
+</div>
+
+<div class="notes-box mt-m">💡 <b>全文共 28 句</b>，涵盖开头段 → 益处 ×2 → 挑战 ×2 → 解决方案 ×2 → 结尾段，构成完整 DSE Paper 2 议论文范文。建议逐句翻译后再通读全文，比对英文范文的整体衔接与论证逻辑。</div>
+
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+<div style="font-size:72px;margin-bottom:24px">🎉</div>
+<h2 class="slide-h2">恭喜完成 Unit 2！</h2>
+<p style="font-size:20px;color:var(--text-2);max-width:640px;line-height:1.8;margin-bottom:28px">你今天学习了：审题构思（人类需求框架）→ 文章结构 → 开头段句式 → 主体段 PEER 论证 → 结尾段结论 → 范文精读。</p>
+<button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);timerInterval=null;timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    if(timerDone){resetTimer();}
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+      else{timerDuration=60;timerRemaining=60;}
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+function resetTimer(){
+  clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=false;
+  timerRemaining=timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];timerRemaining=timerDuration;
+  clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){timerDuration=v;timerRemaining=v;}
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+// ── V5 student input ──
+function submitAnswer(btnId,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  document.getElementById(btnId).style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+// ── multi-select self-check ──
+function checkChecklist(btn){
+  var ce=btn.closest('.ce-item');
+  if(!ce)return;
+  var cbs=ce.querySelectorAll('input[type=checkbox]');
+  cbs.forEach(function(cb){
+    var correct=cb.dataset.correct==='true';
+    var lbl=cb.parentElement;
+    if(cb.checked){
+      lbl.style.background=correct?'var(--xdf-gp)':'#FFF5F5';
+    }else{
+      lbl.style.background=correct?'#FFF9E0':'transparent';
+    }
+  });
+  var ans=ce.querySelector('.ce-en');if(ans)ans.classList.add('show');
+}
+// ── page 3 (审题): 检查答案并同时显示解析 ──
+function checkAndReveal(btn){
+  var ce=btn.closest('.ce-item');
+  if(!ce)return;
+  var cbs=ce.querySelectorAll('input[type=checkbox]');
+  if(cbs.length>0){
+    checkChecklist(btn);
+  }else{
+    var ans=ce.querySelector('.ce-en');
+    if(ans)ans.classList.add('show');
+  }
+}
+initDots();updateUI();
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u2',weakKey:'conjunction',mode:'quiz'};</script>
+</body></html>

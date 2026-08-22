@@ -1,0 +1,32 @@
+# 智学平台 · systemd 服务单元
+# 安装：
+#   sudo cp zhixue.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now zhixue
+# 查看状态：sudo systemctl status zhixue
+# 查看日志：sudo journalctl -u zhixue -f
+
+[Unit]
+Description=Zhixue DSE Learning Platform (Node, zero-dep)
+After=network.target
+
+[Service]
+Type=simple
+# 改成你服务器上项目实际绝对路径
+WorkingDirectory=/opt/zhixue-platform
+ExecStart=/usr/bin/node /opt/zhixue-platform/server/index.js
+# 生产环境关闭 Live Reload（避免向浏览器注入 SSE 客户端）
+Environment=LIVERELOAD=0
+# 关键：后端只监听 127.0.0.1，外部由 Caddy 反代
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+Restart=always
+RestartSec=3
+# 用非 root 用户运行更安全（请先创建：sudo useradd -r -s /usr/sbin/nologin zhixue）
+User=zhixue
+Group=zhixue
+# 文件描述符 / 进程数上限
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

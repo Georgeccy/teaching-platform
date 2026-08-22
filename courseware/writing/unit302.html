@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 2 · Health, Well-being & Wonderful Things · 加速班写作课 | 陈成寓 George</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;background:#FFFFFF;color:#1A1D23;font-size:20px;line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none}
+:root{--xdf-green:#0B8235;--xdf-gd:#096B2C;--xdf-gl:#E8F5E9;--xdf-gp:#F5F9F0;--xdf-gold:#C85D0A;--xdf-red:#C0392B;--xdf-blue:#1A6DAF;--text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;--card-bd:#D9E5D5;--card-sh:0 1px 6px rgba(0,0,0,0.05);--r:14px;--rs:8px}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:64px 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1);transform:translateX(40px);overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
+.topbar{position:fixed;top:0;left:0;right:0;height:38px;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 10px;border-radius:12px}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s}
+.dot.active{background:var(--xdf-green);transform:scale(1.5)}
+.dot.passed{background:#96C291}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--xdf-green),#4CAF50);transition:width .4s ease;z-index:100}
+/* page counter */
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.page-counter .pc-cur-input{width:28px;background:var(--xdf-gl);border:1.5px solid var(--xdf-green);border-radius:6px;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Inter',sans-serif;-moz-appearance:textfield}
+.page-counter .pc-cur-input::-webkit-inner-spin-button,.page-counter .pc-cur-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.page-counter .pc-total{color:var(--text-3)}
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Inter',sans-serif}
+.timer-input-wrap:hover{background:#d5ecd5}
+.timer-input-wrap.running{background:var(--xdf-green);border-color:var(--xdf-green)}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--xdf-red);border-color:var(--xdf-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap}
+.timer-input-wrap.done .timer-done-label{display:inline}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:26px;min-width:26px;background:transparent;border:none;color:var(--xdf-green);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Inter','Courier New',monospace;padding:0;-moz-appearance:textfield}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-min::-webkit-outer-spin-button,.t-sec::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.t-min:focus,.t-sec:focus{background:rgba(255,255,255,.5);border-radius:3px}
+.t-colon{color:var(--xdf-green);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--xdf-green);color:#fff}
+.timer-play.running{background:var(--xdf-green);color:#fff;border-color:var(--xdf-green)}
+.timer-play.done{background:var(--xdf-red);color:#fff;border-color:var(--xdf-red)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--xdf-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--xdf-green);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--xdf-green);border-radius:1px}
+.accent{color:var(--xdf-green)}
+/* slide 1 cover */
+.s1-card-wrapper{background:#fff;border:2px solid var(--card-bd);border-radius:16px;box-shadow:var(--card-sh);position:relative;padding-bottom:44px;overflow:hidden}
+.xdf-header-bar{background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);border-radius:16px 16px 0 0;padding:16px 24px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-20px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06)}
+.xdf-header-bar .xdf-logo-text{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:14px;opacity:.85}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.8);font-weight:600}
+.xdf-checker-pattern{position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(45deg,var(--xdf-gp) 0px,var(--xdf-gp) 8px,rgba(11,130,53,.06) 8px,rgba(11,130,53,.06) 16px);border-radius:0 0 16px 16px;display:flex;align-items:center;justify-content:center}
+.xdf-checker-pattern span{font-size:14px;font-weight:900;color:var(--xdf-green);letter-spacing:2px;background:#fff;padding:4px 18px;border-radius:16px;box-shadow:0 2px 8px rgba(11,130,53,.1)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--xdf-green);border-radius:36px;padding:8px 20px;box-shadow:0 3px 16px rgba(11,130,53,.1)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;border:1.5px solid rgba(11,130,53,.2)}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--xdf-green);background:var(--xdf-gl);padding:3px 9px;border-radius:10px;font-weight:700}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:#fff;border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1)}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.timeline-row{display:flex;gap:0;margin-top:14px;border-radius:12px;overflow:hidden;box-shadow:var(--card-sh)}
+.tl-seg{flex:1;padding:10px 14px;background:#fff;text-align:center;border-right:1px solid var(--xdf-gl)}
+.tl-seg:last-child{border-right:none}
+.tl-seg .seg-ph{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--xdf-green);margin-bottom:4px}
+.tl-seg .seg-name{font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:2px}
+.tl-seg.c1{border-top:4px solid var(--xdf-red)}.tl-seg.c2{border-top:4px solid var(--xdf-green)}.tl-seg.c3{border-top:4px solid var(--xdf-gold)}.tl-seg.c4{border-top:4px solid var(--xdf-blue)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--xdf-green) 0%,#0A6B2C 100%);color:#fff;padding:8px 20px;border-radius:36px;box-shadow:0 3px 16px rgba(11,130,53,.2);font-weight:800;font-size:15px;letter-spacing:1px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,1fr)}
+.flip-grid{display:grid;gap:14px;width:100%}.flip-grid.g2{grid-template-columns:repeat(2,1fr)}.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-card{min-height:120px;cursor:pointer;width:100%;border-radius:18px;position:relative}
+.flip-card-inner{width:100%}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center}
+.flip-face.flipped{display:none}
+.flip-front{background:#f8f9fb;border:1.5px solid rgba(0,0,0,.06)}
+.flip-back{background:#f0f7f0;border:1.5px solid rgba(11,130,53,.2);display:none}
+.flip-back.show{display:flex!important}
+.flip-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:20px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:20px;line-height:1.5;color:var(--xdf-green);font-weight:600}
+.cloze{display:inline-block;min-width:80px;padding:4px 14px;margin:2px 4px;border-bottom:2px dashed var(--xdf-green);color:var(--xdf-green);font-weight:600;cursor:pointer;transition:all .25s;background:transparent;border-radius:4px 4px 0 0;text-align:center;font-size:20px;vertical-align:baseline}
+.cloze:hover{background:rgba(11,130,53,.06)}
+.cloze.revealed{border-bottom-color:transparent;background:var(--xdf-gl);color:var(--xdf-green);padding:4px 14px;border-radius:6px;cursor:default;letter-spacing:normal;font-size:20px}
+.ce-item{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.ce-cn{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.7}
+.ce-hints{font-size:20px;color:var(--xdf-blue);background:#E3F2FD;padding:10px 16px;border-radius:10px;line-height:2;margin-bottom:10px;display:none}
+.ce-hints.show{display:block}
+.ce-hints span{display:inline-block;background:#fff;padding:3px 12px;margin:2px 4px;border-radius:12px;font-weight:600;font-size:20px;border:1px solid #BBDEFB}
+.ce-en{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;background:var(--xdf-gp);padding:14px 18px;border-radius:10px;line-height:1.8;margin-top:8px;border:1.5px solid rgba(11,130,53,.2)}
+.ce-en.show{display:block}
+.ce-btn{background:transparent;color:var(--xdf-green);border:2px solid var(--xdf-green);padding:6px 16px;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:4px}
+.ce-btn:hover{background:var(--xdf-green);color:#fff}
+.ce-btn.hint-btn{border-color:var(--xdf-blue);color:var(--xdf-blue)}
+.ce-btn.hint-btn:hover{background:var(--xdf-blue);color:#fff}
+.gw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:14px;padding:22px 26px;margin-bottom:14px}
+.gw-main-idea{font-size:20px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gp);padding:12px 18px;border-radius:10px;margin-bottom:14px;line-height:1.7}
+.gw-pattern{font-size:20px;line-height:1.8;padding:8px 16px;background:#E3F2FD;border-radius:8px;color:var(--xdf-blue);margin-bottom:10px}
+.gw-answer{display:none;margin-top:12px;padding:16px 20px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;color:var(--xdf-gd);font-weight:600;line-height:1.9}
+.gw-answer.show{display:block}
+/* vocab reveal button (Chinese-first) */
+.vr-btn{display:inline-flex;align-items:center;gap:4px;background:var(--xdf-gl);padding:4px 12px;border-radius:8px;margin:3px 4px;border:1.5px solid rgba(11,130,53,.2);cursor:pointer;transition:all .25s;font-size:20px;font-weight:600;font-family:inherit}
+.vr-btn:hover{background:#d5ecd5}
+.vr-btn .vr-cn{color:var(--text-1);font-weight:700}
+.vr-btn .vr-en{display:none;color:var(--xdf-green);font-weight:600;margin-left:4px}
+.vr-btn.revealed .vr-cn{display:none}
+.vr-btn.revealed .vr-en{display:inline}
+.vr-btn.revealed{background:var(--xdf-gp);border-color:var(--xdf-green)}
+/* quiz cards for grammar interactivity */
+.quiz-card{background:#fff;border:1.5px solid var(--card-bd);border-radius:12px;padding:16px 20px;margin-top:14px}
+.quiz-q{font-size:20px;font-weight:700;color:var(--text-1);margin-bottom:10px;line-height:1.6}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.quiz-opt{padding:6px 18px;border-radius:20px;border:2px solid var(--card-bd);font-size:20px;font-weight:600;cursor:pointer;transition:all .2s;background:#fff}
+.quiz-opt:hover{border-color:var(--xdf-green);background:var(--xdf-gp)}
+.quiz-opt.chosen{border-color:var(--xdf-green);background:var(--xdf-gl);color:var(--xdf-green)}
+.quiz-opt.correct{border-color:#2E7D32;background:#C8E6C9;color:#1B5E20;font-weight:700}
+.quiz-opt.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+.big-opt{font-size:20px!important;line-height:1.8;padding:18px 24px!important;text-align:left;white-space:normal}
+.pe-wrong.pending{color:inherit;border-bottom-color:transparent;cursor:default;background:transparent!important}
+.pe-wrong.pending:hover{background:transparent!important}
+.quiz-reveal-btn{background:var(--xdf-gold);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s}
+.quiz-reveal-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-ans{display:none;margin-top:8px;padding:10px 14px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:8px;font-size:20px;color:var(--xdf-gd);font-weight:700;line-height:1.7}
+.quiz-ans.show{display:block}
+/* think-prompt */
+.think-prompt{display:inline-flex;align-items:center;gap:10px;background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:10px 18px;margin:12px 0;font-size:20px;line-height:1.6}
+.think-icon{font-size:24px}.think-text{font-weight:600;color:var(--xdf-gold)}
+.err-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:10px;margin-bottom:10px;background:#fff;border:1px solid rgba(0,0,0,.05)}
+.err-row .err-num{width:30px;height:30px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex-shrink:0}
+.err-row .err-wrong{flex:1;font-size:20px;line-height:1.6;color:#e53935;text-decoration:line-through;text-decoration-color:rgba(229,57,53,.3)}
+.err-row .err-right{display:none;flex:1;font-size:20px;line-height:1.6;color:var(--xdf-green);font-weight:600;padding:8px 14px;background:var(--xdf-gp);border-radius:8px}
+.err-row .err-right.show{display:block}
+.mc-item{padding:12px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.mc-item .mc-q{font-size:20px;font-weight:600;color:var(--text-1);margin-bottom:8px}
+.mc-item .mc-ans{display:none;font-size:20px;color:var(--xdf-green);font-weight:700;padding:6px 14px;background:var(--xdf-gl);border-radius:6px;margin-top:6px}
+.mc-item .mc-ans.show{display:inline-block}
+.para-err{font-size:20px;line-height:2.2;padding:18px 22px;background:#fafafa;border-radius:12px;border:1px solid rgba(0,0,0,.05);margin-bottom:16px}
+.pe-wrong{color:#e53935;cursor:pointer;border-bottom:2px dotted #e53935;transition:all .2s;position:relative}
+.pe-wrong.revealed{color:var(--xdf-green);border-bottom-color:var(--xdf-green);cursor:default}
+.pe-wrong:hover:not(.revealed){background:rgba(229,57,53,.06)}
+.rule-table{width:100%;border-collapse:collapse;font-size:20px;margin-top:12px}
+.rule-table th{background:var(--xdf-green);color:#fff;padding:10px 14px;font-size:20px;font-weight:800;text-align:left}
+.rule-table td{padding:12px 14px;border-bottom:1px solid var(--card-bd);font-size:20px}
+.rule-table tr:hover td{background:var(--xdf-gp)}
+.col-type{font-weight:700;color:var(--xdf-green);white-space:nowrap}
+.col-example{color:var(--text-2)}
+.reveal-btn{background:var(--xdf-green);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--xdf-gd);transform:translateY(-1px);box-shadow:0 3px 12px rgba(11,130,53,.25)}
+.card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh)}
+.card.accent{border-left:4px solid var(--xdf-green)}
+.card h4{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-2)}
+.split-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.split-bad{padding:20px 24px;background:#FFF5F5;border-radius:14px;border:1.5px solid rgba(229,57,53,.15)}
+.split-good{padding:20px 24px;background:#f0f7f0;border-radius:14px;border:1.5px solid rgba(11,130,53,.2)}
+.split-label{font-size:20px;font-weight:700;margin-bottom:10px}
+.split-label.bad{color:#e53935}.split-label.good{color:var(--xdf-green)}
+.mt-s{margin-top:8px}.mt-m{margin-top:16px}.mt-l{margin-top:28px}.mb-m{margin-bottom:16px}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.show{display:block!important}
+@media(max-width:900px){.slide{padding:52px 28px 40px}.g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}.timeline-row{flex-direction:column}}
+
+
+
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--xdf-green);color:#fff;font-size:13px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20}
+.dot[data-pn]{position:relative}
+
+/* ── V5/V6 components ── */
+.student-ta{width:100%;min-height:72px;border:1.5px solid var(--card-bd);border-radius:10px;padding:10px 14px;font-size:17px;font-family:inherit;line-height:1.6;resize:vertical;background:#fafafa;user-select:text}
+.student-ta:focus{outline:none;border-color:var(--xdf-green);background:#fff}
+.submit-btn{display:inline-flex;align-items:center;gap:6px;background:var(--xdf-green);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:16px;font-weight:700;cursor:pointer}
+.submit-btn:hover{background:var(--xdf-gd)}
+.student-answer{display:none;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;padding:12px 16px;font-size:18px;line-height:1.6;color:var(--text-1);white-space:pre-wrap;margin-top:8px}
+.student-answer.show{display:block}
+.edit-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;color:var(--xdf-blue);border:1.5px solid var(--xdf-blue);border-radius:8px;padding:4px 14px;font-size:14px;font-weight:600;cursor:pointer;margin-top:6px}
+.notes-box{background:#FFF9C4;border:1.5px solid rgba(200,93,10,.2);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:18px;line-height:1.7;color:var(--text-1)}
+.notes-box b{color:var(--xdf-gold)}
+.hw-card{background:#fff;border:1.5px solid rgba(0,0,0,.06);border-radius:12px;padding:18px 22px;margin-bottom:14px}
+.hw-card h4{font-size:20px;font-weight:700;color:var(--xdf-blue);margin-bottom:8px}
+.hw-card p{font-size:18px;line-height:1.7;color:var(--text-2)}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:18px;line-height:1.6}
+.check-item .ci-box{width:22px;height:22px;border:2px solid var(--card-bd);border-radius:6px;flex-shrink:0;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:3px}
+.check-item .ci-box.checked{background:var(--xdf-green);border-color:var(--xdf-green)}
+.check-item .ci-box.checked::after{content:'✓';color:#fff;font-size:14px;font-weight:700}
+.stu-trans-card{background:#E3F2FD;border:1.5px solid #BBDEFB;border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:18px;line-height:1.7;color:var(--text-1)}
+.cb-label{display:flex;align-items:center;gap:8px;font-size:18px;cursor:pointer;padding:4px 0}
+.cb-label input[type=checkbox]{width:18px;height:18px;accent-color:var(--xdf-green);cursor:pointer}
+.fn-tag{display:inline-block;background:#E3F2FD;color:var(--xdf-blue);font-size:13px;font-weight:800;padding:2px 10px;border-radius:10px;vertical-align:middle;margin-right:6px;letter-spacing:.5px}
+.para-quote{font-size:20px;line-height:2.1;padding:18px 24px;background:#fafafa;border-radius:14px;border:1.5px solid rgba(0,0,0,.06);margin:14px 0;user-select:text}
+.hl-chunk{background:var(--xdf-gl);padding:2px 8px;border-radius:4px;font-weight:600}
+.task-quote{font-size:19px;line-height:1.9;padding:16px 22px;background:var(--xdf-gp);border-left:4px solid var(--xdf-green);border-radius:0 12px 12px 0;margin:12px 0;font-style:italic}
+/* ── TOC drawer ── */
+.toc-btn{display:inline-flex;align-items:center;gap:5px;background:var(--xdf-gl);color:var(--xdf-green);border:1.5px solid rgba(11,130,53,.25);border-radius:16px;padding:3px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;transition:all .2s}
+.toc-btn:hover{background:var(--xdf-green);color:#fff}
+.toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
+.toc-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{position:fixed;top:0;left:0;bottom:0;width:320px;background:#fff;z-index:201;box-shadow:4px 0 24px rgba(0,0,0,.12);transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.toc-drawer.open{transform:translateX(0)}
+.toc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--card-bd);font-size:17px;font-weight:800;color:var(--text-1)}
+.toc-close{background:transparent;border:none;font-size:16px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px}
+.toc-close:hover{background:var(--xdf-gl);color:var(--xdf-green)}
+.toc-list{flex:1;overflow-y:auto;padding:10px 12px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-2);transition:all .15s}
+.toc-item:hover{background:var(--xdf-gp);color:var(--text-1)}
+.toc-item.active{background:var(--xdf-gl);color:var(--xdf-green);font-weight:800}
+.toc-item .toc-num{width:24px;height:24px;border-radius:50%;background:#eef2ee;color:var(--text-3);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toc-item.active .toc-num{background:var(--xdf-green);color:#fff}
+/* ── Notes panel ── */
+.notes-fab{position:fixed;right:18px;bottom:56px;z-index:150;width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--card-bd);box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.notes-fab:hover{transform:translateY(-2px);border-color:var(--xdf-green)}
+.notes-fab.has-note::after{content:'';position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--xdf-gold)}
+.notes-panel{position:fixed;right:18px;bottom:112px;z-index:151;width:340px;max-height:52vh;background:#fff;border:1.5px solid var(--card-bd);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.16);display:none;flex-direction:column;overflow:hidden}
+.notes-panel.open{display:flex}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--xdf-gp);border-bottom:1px solid var(--card-bd);font-size:14px;font-weight:800;color:var(--text-1)}
+.np-close{background:transparent;border:none;font-size:14px;color:var(--text-3);cursor:pointer;padding:2px 6px;border-radius:6px}
+.np-close:hover{color:var(--xdf-red)}
+.np-ta{flex:1;min-height:130px;border:none;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:none;outline:none;user-select:text}
+.np-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 14px;border-top:1px solid var(--card-bd);font-size:12px;color:var(--text-3)}
+.np-clear{background:transparent;border:none;color:var(--xdf-red);font-size:12px;font-weight:700;cursor:pointer;padding:2px 6px;border-radius:4px}
+.np-clear:hover{background:rgba(192,57,43,.08)}
+/* ── responsive (V7 enhanced) ── */
+@media(max-width:900px){
+  .slide{padding:52px 28px 40px}
+  .g2,.flip-grid.g2,.flip-grid.g5,.split-compare,.s1-meta-grid{grid-template-columns:1fr}
+  .timeline-row{flex-direction:column}
+  .toc-drawer{width:84vw}
+  .notes-panel{right:12px;left:12px;width:auto;bottom:104px}
+  .notes-fab{right:12px;bottom:50px}
+  .topbar .slide-title{display:none}
+  .topbar{padding:0 10px;gap:6px}
+  .para-quote{font-size:17px;padding:14px 16px}
+  .task-quote{font-size:16px}
+  .cb-label{font-size:16px}
+}
+</style>
+</head><body>
+
+<div class="topbar">
+  <button class="toc-btn" onclick="toggleTOC()" title="目录导航">☰ 目录</button>
+  <span class="course-tag">加速班·Module2</span>
+  <span class="slide-title" id="topbarTitle"></span>
+  <div class="progress-dots" id="progressDots"></div>
+  <div class="timer-wrap">
+    <div class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="⏱ 右键切换预设时长 (1/2/3/5/10 min)">
+      <input type="number" class="t-min" id="timerMin" value="5" min="0" max="99" onfocus="this.select()">
+      <span class="t-colon">:</span>
+      <input type="number" class="t-sec" id="timerSec" value="00" min="0" max="59" onfocus="this.select()">
+      <span class="timer-done-label">计时结束</span>
+    </div>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">↺</button>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="page-counter" id="pageCounter"><span class="pc-cur" id="pcCur" onclick="editPageCounter()"></span><span class="pc-total" id="pcTotal"></span></div>
+<div class="deck"><section class="slide" data-title="封面 · Module 2">
+<div style="max-width:860px;margin:0 auto;width:100%">
+<div class="s1-card-wrapper" style="padding-bottom:28px">
+<div class="xdf-header-bar">
+  <div class="xdf-logo-text">新东方 <span>XDF.CN</span></div>
+  <div class="xdf-sub-text">国际教育</div>
+</div>
+<div style="padding:16px 28px 12px">
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+    <div class="teacher-badge">
+      <div class="tb-avatar" style="display:flex;align-items:center;justify-content:center;background:var(--xdf-gl);color:var(--xdf-green);font-weight:900;font-size:15px">G</div>
+      <div class="tb-name">陈成寓 George</div>
+      <div class="tb-tag">授课教师</div>
+    </div>
+    <div class="class-badge" style="margin-left:auto">加速班</div>
+  </div>
+  <div class="slide-h1">Health, Well-being<br>& Wonderful Things<br><span class="accent">Module 2</span></div>
+  <div class="slide-h3" style="color:#666;font-weight:600">Letter of Advice & Two-Sided Argumentative Writing</div>
+  <div class="sec-label" style="margin-top:6px;margin-bottom:0;font-size:16px">Module 2 · Paper 2 Writing · DSE</div>
+  <div class="s1-meta-grid">
+    <div class="s1-meta-card"><div class="sm-label">Genre</div><div class="sm-value">Letter of Advice + Essay</div><div class="sm-sub">建议信 + 议论文</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">Health & Well-being</div><div class="sm-sub">Mental health, Body image, Habits</div></div>
+    <div class="s1-meta-card"><div class="sm-label">Word Count</div><div class="sm-value">160-180 + 320-350 words</div><div class="sm-sub">Part A + Part B</div></div>
+  </div>
+  <div class="timeline-row">
+    <div class="tl-seg c1"><div class="seg-ph">Phase 1</div><div class="seg-name">建议信结构</div></div>
+    <div class="tl-seg c2"><div class="seg-ph">Phase 2</div><div class="seg-name">建议类词伙</div></div>
+    <div class="tl-seg c3"><div class="seg-ph">Phase 3</div><div class="seg-name">双面议论文</div></div>
+    <div class="tl-seg c4"><div class="seg-ph">Phase 4</div><div class="seg-name">范文+实战</div></div>
+  </div>
+</div>
+<div class="xdf-checker-pattern"><span>加速班 · 写作课</span></div>
+</div></div>
+</section><section class="slide" data-title="🎯 课程目标">
+<p class="sec-label">Learning Objectives</p>
+<h2 class="slide-h2">🎯 本课学习目标</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>① 掌握 Letter of Advice 结构</h4>
+    <p>学会写建议信/建议邮件：Salutation → Opening → Body → Closing → Close，掌握 Part A 160-180词写作要求</p>
+  </div>
+  <div class="card accent">
+    <h4>② 积累建议类词伙</h4>
+    <p>掌握 Be sympathetic / Be positive / Support / Encourage 四大原则，以及 I suggest that... / Why don't you... 等核心句式</p>
+  </div>
+  <div class="card accent">
+    <h4>③ 掌握双面议论文框架</h4>
+    <p>理解 Two-Sided Argument：呈现正反两面观点，掌握 Objective vs Subjective 两种写法，学会使用 balance phrases 和 rhetorical questions</p>
+  </div>
+  <div class="card accent">
+    <h4>④ 完成实战写作</h4>
+    <p>通过翻译练习、大意写作、范文分析、互动练习，完成从输入到输出的完整训练</p>
+  </div>
+</div>
+</section><section class="slide" data-title="📋 审题分析">
+<p class="sec-label">Task Analysis</p>
+<h2 class="slide-h2">📋 审题：Letter of Advice 考什么？</h2>
+<div class="task-quote">Your friend Susan has sent you a letter saying that she is very worried about her exams. She studies until midnight every night. She feels depressed because her grades are dropping, even though she is working hard. Write a letter to your friend giving her advice.</div>
+<div class="ce-item">
+  <div class="ce-cn">1. Role（你的身份）——你是谁？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">A friend of Susan（Susan 的朋友）— 语气要亲切、支持、有同理心</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">2. Audience（读者）——写给谁看？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">Susan（你的朋友）— 因此语气要 sympathetic、positive、encouraging</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">3. Purpose（写作目的）——为什么写？</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">To give advice on how to deal with exam stress and improve study habits（就如何应对考试压力、改善学习习惯给出建议）</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn">4. Register（语域）——用什么语气？</div>
+  <div class="quiz-card" data-correct="1" style="border:none;padding:0;margin:0">
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal / informal</button>
+      <button class="quiz-opt" onclick="checkQuiz(this)">very formal</button>
+    </div>
+    <div class="quiz-ans">✅ <b>semi-formal / informal</b> — 写给朋友的建议信，语气亲切自然，像朋友聊天</div>
+  </div>
+</div>
+</section><section class="slide" data-title="💝 建议信四大原则">
+<p class="sec-label">Four Principles</p>
+<h2 class="slide-h2">💝 建议信的四大写作原则</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent" style="border-left:4px solid var(--xdf-red)">
+    <h4>① Be sympathetic 有同理心</h4>
+    <p>Show sympathy for your reader's problem(s).<br>例：I'm very sorry to hear that you're feeling depressed and tired.</p>
+  </div>
+  <div class="card accent">
+    <h4>② Be positive 保持积极</h4>
+    <p>Give positive comments and useful suggestions.<br>例：I'd like to give you some suggestions that might help.</p>
+  </div>
+  <div class="card accent">
+    <h4>③ Support the reader 支持读者</h4>
+    <p>Offer advice to a friend — he or she will appreciate your support.<br>例：I also get stressed because of my grades, so I can understand how you feel.</p>
+  </div>
+  <div class="card accent">
+    <h4>④ Offer encouragement 给予鼓励</h4>
+    <p>Encourage your reader to be hopeful and be positive.<br>例：I'm sure things will improve soon!</p>
+  </div>
+</div>
+<div class="notes-box mt-l">
+  <b>📝 核心心法：</b>建议信 = 同理心开场 + 具体建议 + 积极结尾。永远让读者感到被理解、被支持。
+</div>
+</section><section class="slide" data-title="📐 建议信结构">
+<p class="sec-label">Structure</p>
+<h2 class="slide-h2">📐 Letter of Advice 的标准结构</h2>
+<table class="rule-table">
+  <tr><th style="width:25%">部分</th><th>功能与常用句式</th></tr>
+  <tr><td class="col-type">Salutation</td><td class="col-example">Dear/Hi (given name)</td></tr>
+  <tr><td class="col-type">Opening</td><td class="col-example">Thanks for your letter... / You seem to be worried about...<br>I'd like to give you some suggestions that might help.</td></tr>
+  <tr><td class="col-type">Body</td><td class="col-example">每个问题一段：You mentioned that... / I understand how you must feel...<br>As for your worries about... / I suggest that... / Why don't you try...</td></tr>
+  <tr><td class="col-type">Closing remark</td><td class="col-example">I really hope my advice is useful.<br>Hopefully, things will improve very soon.</td></tr>
+  <tr><td class="col-type">Complimentary close</td><td class="col-example">Best wishes / Regards / All the best<br><b>注意：</b>Yours sincerely 太正式，不用于朋友</td></tr>
+</table>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s5-sample');a.classList.toggle('show')">📖 查看范文示例</button>
+<div id="s5-sample" class="ce-en" style="display:none">
+  <b>Hi Susan</b><br><br>
+  Thanks for your letter. I'm very sorry to hear that you're feeling depressed and tired. I'd like to give you some suggestions that might help.<br><br>
+  <b>[Body]</b> You said in your letter that you study until midnight every night. I think you are not getting enough sleep...<br><br>
+  <b>[Closing]</b> Try these suggestions and see if they help. I'm sure things will improve soon!<br><br>
+  <b>Best wishes,</b><br>Sam
+</div>
+</section><section class="slide" data-title="🧠 建议词伙 A">
+<p class="sec-label">Part One · 建议句式</p>
+<h2 class="slide-h2">🧠 核心建议句式（中→英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我建议……</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I suggest that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">你为什么不试试……？</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Why don't you try...?</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">你有没有想过……？</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Have you thought about...?</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我认为你应该……</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I think you should...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">你可以试着……</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">You might try to...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">关于……</div><div class="flip-hint">Section A</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">As for... / Regarding...</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="🧠 建议词伙 B">
+<p class="sec-label">Part One · 同理心表达</p>
+<h2 class="slide-h2">🧠 同理心与支持表达（中→英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">听到你感到……我很难过</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I'm very sorry to hear that you're feeling...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我理解你的感受</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I understand how you must feel</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我也有同样的压力</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I also get stressed because of...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">我确定情况会好转的</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I'm sure things will improve soon</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">希望我的建议有用</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I really hope my advice is useful</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">在这个困难时期我挂念着你</div><div class="flip-hint">Section B</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">I'm thinking of you at this difficult time</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="✍️ 翻译练习 · 建议信">
+<p class="sec-label">Part Two · 中翻英</p>
+<h2 class="slide-h2">✍️ 逐句翻译：建议信写作</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据中文提示，将句子翻译成英文。先思考，再看答案！</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：听到你感到沮丧和疲惫，我很难过。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>I'm very sorry to hear</span><span>depressed</span><span>tired</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">I'm very sorry to hear that you're feeling depressed and tired.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：我想给你一些可能有用的建议。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>I'd like to give you</span><span>suggestions</span><span>might help</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">I'd like to give you some suggestions that might help.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：如果你睡眠不足，你就无法集中注意力。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>don't get enough sleep</span><span>won't be able to</span><span>concentrate</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">If you don't get enough sleep, you won't be able to concentrate.</div>
+</div>
+</section><section class="slide" data-title="🔴 大意写作 · 建议信">
+<p class="sec-label">Part Two · Guided Writing</p>
+<h2 class="slide-h2">🔴 大意提示写作：给朋友 Michael 的建议</h2>
+<div class="gw-card">
+  <div class="gw-main-idea">📌 整段大意：关于你提到的垃圾食品问题，我理解有时候很难坚持健康饮食。我建议你不要在上学路上买早餐，而是自己在家准备。午餐时，像我一样在食堂只点一份饭菜。</div>
+  <div style="margin-bottom:12px"><b style="font-size:20px">🔧 必用句式：</b></div>
+  <div class="gw-pattern" style="margin-bottom:6px">「I understand that...」我理解……</div>
+  <div class="gw-pattern" style="margin-bottom:6px">「I suggest that...」我建议……</div>
+  <div class="gw-pattern" style="margin-bottom:12px">「Why don't you...?」你为什么不……？</div>
+  <div style="margin-bottom:10px"><b style="font-size:20px">📋 必用词伙（先看中文，点击显示英文）：</b></div>
+  <p style="font-size:20px;line-height:2.4;padding:10px 16px;background:#f8f9fb;border-radius:8px">
+<button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">坚持健康饮食</span><span class="vr-en">survive on healthy food</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">垃圾食品</span><span class="vr-en">junk food</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">在上学路上</span><span class="vr-en">on the way to school</span></button><button class="vr-btn" onclick="this.classList.toggle('revealed')"><span class="vr-cn">一份饭菜</span><span class="vr-en">one serving of food</span></button>
+  </p>
+  <button class="reveal-btn mt-m" onclick="this.nextElementSibling.classList.toggle('show')">📖 看参考答案</button>
+  <div class="gw-answer">I understand that it's hard sometimes to survive on healthy food and avoid all types of junk food. I suggest that you don't buy your breakfast on the way to school. Why not prepare it at home instead? At lunchtime, why don't you have only one serving of food in the canteen like I do?</div>
+</div>
+</section><section class="slide" data-title="📐 双面议论文引入">
+<p class="sec-label">Part Three · Two-Sided Argument</p>
+<h2 class="slide-h2">📐 什么是 Two-Sided Argument？</h2>
+<div class="think-prompt"><span class="think-icon">🤔</span><span class="think-text">先想一想：下面哪段话更符合双面议论文的特点？点击你的选择！</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:14px" data-ans-id="s10-ans1">
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,false,this.parentElement)">A. Dieting is terrible. Everyone should exercise instead. People who diet are just lazy.</button>
+  <button class="quiz-opt big-opt" onclick="checkBigOpt(this,true,this.parentElement)">B. Some people believe that dieting is the best way to get fit. On the other hand, others argue that exercise is more important. Both sides have valid points.</button>
+</div>
+<div id="s10-ans1" style="display:none;margin-top:14px;padding:14px 18px;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);border-radius:10px;font-size:20px;line-height:1.8">✅ <b>B</b> 是正确的！双面议论文需要呈现 <b>both sides</b>（正反两面），保持 <b>balance</b>（平衡），尊重不同观点。</div>
+<div class="notes-box mt-l">
+  <b>📖 定义：</b>A two-sided argument must present the different sides of an issue and can put forward an opinion. It should show different points of view so that it is objective.
+</div>
+</section><section class="slide" data-title="📊 Objective vs Subjective">
+<p class="sec-label">Part Three · Two Approaches</p>
+<h2 class="slide-h2">📊 Objective vs Subjective：两种写法</h2>
+<div class="split-compare">
+  <div class="split-bad" style="background:#E3F2FD;border-color:#BBDEFB">
+    <div class="split-label" style="color:var(--xdf-blue)">Objective 客观写法</div>
+    <p style="font-size:20px;line-height:1.8">present both sides and write objectively<br>不表明个人立场，平衡呈现正反两面</p>
+  </div>
+  <div class="split-good">
+    <div class="split-label good">Subjective 主观写法</div>
+    <p style="font-size:20px;line-height:1.8">make your point of view clear from the start<br>从一开始就明确表明立场，但仍尊重对方观点</p>
+  </div>
+</div>
+<table class="rule-table mt-m">
+  <tr><th>写法</th><th>特点</th><th>适用场景</th></tr>
+  <tr><td class="col-type">Objective</td><td class="col-example">平衡呈现，不下结论</td><td class="col-example">要求"讨论正反两面"的题目</td></tr>
+  <tr><td class="col-type">Subjective</td><td class="col-example">明确立场，理性反驳</td><td class="col-example">要求"表达个人观点"的题目</td></tr>
+</table>
+<div class="notes-box mt-l">
+  <b>⚠️ 重要提醒：</b>If you choose to make your point of view clear, be sure to respect other points of view. You can still challenge them, and this is common in debates.
+</div>
+</section><section class="slide" data-title="📐 双面议论文语言技巧">
+<p class="sec-label">Part Three · Language Choices</p>
+<h2 class="slide-h2">📐 双面议论文的四大语言技巧</h2>
+<div class="grid g2 mt-m">
+  <div class="card accent">
+    <h4>① Have balance 保持平衡</h4>
+    <p>On the one hand... / On the other hand...<br>Some people believe that... / Some people argue that...</p>
+  </div>
+  <div class="card accent">
+    <h4>② Use rhetorical questions 反问</h4>
+    <p>Do tired students perform well at school?<br>Is being underweight healthy?<br><b>注意：</b>不要过多使用</p>
+  </div>
+  <div class="card accent">
+    <h4>③ Pay attention to tone 注意语气</h4>
+    <p>Sadly, / Worryingly, / Shockingly,<br>表达 concerned / troubled / shocked</p>
+  </div>
+  <div class="card accent">
+    <h4>④ Use strong verbs 强动词</h4>
+    <p>Many people claim... (stronger than "say")<br>Our health is vital. (stronger than "important")</p>
+  </div>
+</div>
+</section><section class="slide" data-title="🧠 双面议论文词伙">
+<p class="sec-label">Part Three · 核心表达</p>
+<h2 class="slide-h2">🧠 双面议论文必备词伙（中→英）</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看英文表达 →</p>
+<div class="flip-grid g2">
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">一方面……另一方面……</div><div class="flip-hint">Balance</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">On the one hand... / On the other hand...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">有些人认为……</div><div class="flip-hint">Balance</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Some people believe that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">有些人主张……</div><div class="flip-hint">Balance</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Some people argue that...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">相反地</div><div class="flip-hint">Balance</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Conversely...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">事实上</div><div class="flip-hint">Emphasis</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">In fact...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">令人担忧的是</div><div class="flip-hint">Tone</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Worryingly,...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">令人震惊的是</div><div class="flip-hint">Tone</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Shockingly,...</div></div>
+  </div>
+</div><div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}">
+  <div class="flip-card-inner">
+    <div class="flip-face flip-front"><div class="flip-q">总而言之</div><div class="flip-hint">Conclusion</div></div>
+    <div class="flip-face flip-back"><div class="flip-ans">Overall,...</div></div>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="✍️ 翻译练习 · 双面议论文">
+<p class="sec-label">Part Three · 中翻英</p>
+<h2 class="slide-h2">✍️ 逐句翻译：双面议论文写作</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据中文提示，将句子翻译成英文。</p>
+<div class="ce-item">
+  <div class="ce-cn">句一：有些人认为节食是保持健康的最佳方式。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>Some people believe that</span><span>the best way to</span><span>go on a diet</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">Some people believe that the best way to keep fit is to go on a diet.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句二：另一方面，其他人认为运动更重要。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>On the other hand</span><span>argue that</span><span>more important</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">On the other hand, others argue that exercise is more important.</div>
+</div><div class="ce-item">
+  <div class="ce-cn">句三：总而言之，我认为节食和运动都很重要。</div>
+  <button class="ce-btn hint-btn" onclick="this.nextElementSibling.classList.toggle('show')">💡 词伙提示</button>
+  <div class="ce-hints"><span>Overall</span><span>both...and...</span><span>important</span></div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')" style="margin-top:8px">✅ 看答案</button>
+  <div class="ce-en">Overall, I think both dieting and exercise are important.</div>
+</div>
+</section><section class="slide" data-title="📝 辩论稿分析">
+<p class="sec-label">Part Three · Analysis</p>
+<h2 class="slide-h2">📝 辩论稿分析：Objective 还是 Subjective？</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">阅读以下辩论稿片段，判断它是客观还是主观写法。</p>
+<div class="para-quote">
+  <b>Title: 'The best way to keep fit is to go on a diet?'</b><br><br>
+  <b>Introduction:</b> People living in cities are often unfit. Some of them believe that the best way to get fit is to go on a diet. There are, however, other better and healthier ways through which to get fit.<br><br>
+  <b>Body:</b> Dieting usually means eating less. Fitness means being healthy and strong... To exercise, people need energy from food... Too much exercise can be unhealthy...<br><br>
+  <b>Conclusion:</b> To conclude, dieting to get fit is unwise. Instead, people need to make sure that they do not over- or under-eat. In addition, regular exercise should be accompanied by a healthy diet.
+</div>
+<div class="quiz-card" data-correct="1">
+  <div class="quiz-q">这篇辩论稿是 Objective 还是 Subjective？</div>
+  <div class="quiz-opts">
+    <button class="quiz-opt" onclick="checkQuiz(this)">Objective（客观）</button>
+    <button class="quiz-opt" onclick="checkQuiz(this)">Subjective（主观）</button>
+  </div>
+  <div class="quiz-ans">✅ <b>Subjective</b> — 作者在 Introduction 就表明立场（"There are, however, other better and healthier ways"），Body 主要论证反方观点，Conclusion 明确说 "dieting to get fit is unwise"。虽然提到了对方观点，但整体是为主观立场服务的。</div>
+</div>
+</section><section class="slide" data-title="⚠️ 常见错误">
+<p class="sec-label">Part Three · Common Mistakes</p>
+<h2 class="slide-h2">⚠️ 双面议论文常见错误</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">点击卡片查看解析 →</p>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}" style="margin-bottom:16px">
+<div class="flip-card-inner">
+  <div class="flip-face flip-front" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:#e53935;margin-bottom:8px">错误 1：这句话哪里错了？</div>
+    <p style="font-size:20px;line-height:1.8">Some people think dieting is good. But I think they are all wrong and stupid. Only exercise works.</p>
+    <p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 点击卡片查看解析</p>
+  </div>
+  <div class="flip-face flip-back" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:var(--xdf-green);margin-bottom:8px">✅ 解析</div>
+    <p style="font-size:20px;line-height:1.8;margin-bottom:8px">问题：语气不礼貌，攻击对方。双面议论文必须尊重不同观点，即使要反驳也要理性。</p>
+    <p style="font-size:20px;color:var(--xdf-green)">✓ While some people believe that dieting is effective, I would argue that exercise is more important for long-term health.</p>
+  </div>
+</div>
+</div>
+<div class="flip-card" onclick="var a=this.querySelector('.flip-back');var b=this.querySelector('.flip-front');if(a.classList.contains('show')){a.classList.remove('show');b.classList.remove('flipped')}else{a.classList.add('show');b.classList.add('flipped')}" style="margin-bottom:16px">
+<div class="flip-card-inner">
+  <div class="flip-face flip-front" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:#e53935;margin-bottom:8px">错误 2：这句话哪里错了？</div>
+    <p style="font-size:20px;line-height:1.8">Do you think dieting is good? Do you think exercise is good? Do you think health is important? Do you think we should care? Of course we should!</p>
+    <p style="font-size:18px;color:var(--text-3);margin-top:8px">💡 点击卡片查看解析</p>
+  </div>
+  <div class="flip-face flip-back" style="text-align:left;align-items:flex-start">
+    <div style="font-size:20px;font-weight:700;color:var(--xdf-green);margin-bottom:8px">✅ 解析</div>
+    <p style="font-size:20px;line-height:1.8;margin-bottom:8px">问题：反问句过多，显得啰嗦且不够专业。rhetorical questions 应该适度使用，增强说服力而非堆砌。</p>
+    <p style="font-size:20px;color:var(--xdf-green)">✓ Do tired students perform well at school? Of course not. This shows why adequate sleep is essential for academic success.</p>
+  </div>
+</div>
+</div>
+</section><section class="slide" data-title="📝 范文翻译 · Part A">
+<p class="sec-label">附录 · Model Translation</p>
+<h2 class="slide-h2">📝 范文翻译：Part A — Letter of Advice</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">写给 Susan 的建议信 · 共 9 句 · 逐句中译英。 先看<b style="color:var(--xdf-blue)">中文内容提示</b>构思英文，卡住时再看<b style="color:var(--xdf-gold)">词伙提示</b>，最后对照原文。</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">感谢你的来信。听到你感到沮丧和疲惫，我很难过。你学习很努力，但你的学习方法高效吗？我想给你一些可能有用的建议。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Thanks for your letter</span><span>I'm very sorry to hear</span><span>depressed and tired</span><span>working efficiently</span><span>suggestions that might help</span></div>
+  <div class="ce-en">Thanks for your letter. <span class="hl-chunk">I'm very sorry to hear</span> that you're feeling <span class="hl-chunk">depressed and tired</span>. You're working very hard, but are you <span class="hl-chunk">working efficiently</span>? I'd like to give you some <span class="hl-chunk">suggestions that might help</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">你在信中说你每晚学习到午夜。我认为你睡眠不足。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>You said in your letter</span><span>study until midnight</span><span>not getting enough sleep</span></div>
+  <div class="ce-en"><span class="hl-chunk">You said in your letter</span> that you <span class="hl-chunk">study until midnight</span> every night. I think you are <span class="hl-chunk">not getting enough sleep</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">如果你睡眠不足，你就无法集中注意力。你可能会开始感到沮丧和疲惫，你的成绩可能会开始下降。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>If you don't get enough sleep</span><span>won't be able to concentrate</span><span>start to feel</span><span>grades may start to drop</span></div>
+  <div class="ce-en"><span class="hl-chunk">If you don't get enough sleep</span>, you <span class="hl-chunk">won't be able to concentrate</span>. You may <span class="hl-chunk">start to feel</span> depressed and tired, and your <span class="hl-chunk">grades may start to drop</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">我认为这可能是你正在经历的一部分原因。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>part of what you may be experiencing</span></div>
+  <div class="ce-en">I think this is <span class="hl-chunk">part of what you may be experiencing</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">为什么不给你的学习设定一个时间限制呢？试着只在晚上 6 点到 9 点学习。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Why not set a time limit</span><span>Try studying only from...to...</span></div>
+  <div class="ce-en"><span class="hl-chunk">Why not set a time limit</span> on your studies? <span class="hl-chunk">Try studying only from</span> 6.00-9.00 pm in the evening.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">学习之后，或许你可以和家人聊聊天、放松一下？尽量在合理的时间上床睡觉，这样你醒来时会感觉精神焕发，准备好上学。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>chat with your family</span><span>get to bed at a reasonable time</span><span>wake up feeling refreshed</span><span>ready for school</span></div>
+  <div class="ce-en">After studying, perhaps you could <span class="hl-chunk">chat with your family</span> and relax? Try to <span class="hl-chunk">get to bed at a reasonable time</span> so that you <span class="hl-chunk">wake up feeling refreshed</span> and <span class="hl-chunk">ready for school</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">至于你下滑的成绩，我认为一旦你开始获得足够的睡眠，它们就会改善。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>As for your falling grades</span><span>once you start getting enough sleep</span><span>improve</span></div>
+  <div class="ce-en"><span class="hl-chunk">As for your falling grades</span>, I think these will <span class="hl-chunk">improve</span> <span class="hl-chunk">once you start getting enough sleep</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">8</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">我也因为成绩而感到压力，所以我能理解你的感受。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>get stressed because of</span><span>understand how you feel</span></div>
+  <div class="ce-en">I also <span class="hl-chunk">get stressed because of</span> my grades, so I can <span class="hl-chunk">understand how you feel</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">9</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">试试这些建议，看看是否有帮助。我确定情况很快就会好转的！给我写信告诉我进展如何。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Try these suggestions</span><span>see if they help</span><span>things will improve soon</span><span>Drop me a line</span><span>let me know how things are going</span></div>
+  <div class="ce-en"><span class="hl-chunk">Try these suggestions</span> and <span class="hl-chunk">see if they help</span>. I'm sure <span class="hl-chunk">things will improve soon</span>! <span class="hl-chunk">Drop me a line</span> to <span class="hl-chunk">let me know how things are going</span>.</div>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 全篇约 160-180 词</p>
+</section><section class="slide" data-title="📝 范文翻译 · Part B ①">
+<p class="sec-label">附录 · Model Translation</p>
+<h2 class="slide-h2">📝 范文翻译：Part B ① — Debate Speech (Introduction + Body)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">双面议论文 · 第 1-3 段（Introduction + Body 前两段）· 共 8 句。 先看<b style="color:var(--xdf-blue)">中文内容提示</b>构思英文，卡住时再看<b style="color:var(--xdf-gold)">词伙提示</b>，最后对照原文。</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">1</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">生活在城市里的人往往不够健康。他们中的一些人认为，保持健康的最佳方式是节食。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>People living in cities</span><span>often unfit</span><span>the best way to get fit</span><span>go on a diet</span></div>
+  <div class="ce-en"><span class="hl-chunk">People living in cities</span> are often <span class="hl-chunk">unfit</span>. Some of them believe that <span class="hl-chunk">the best way to get fit</span> is to <span class="hl-chunk">go on a diet</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">2</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">然而，还有其他更好、更健康的健身方式。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>There are, however</span><span>other better and healthier ways</span></div>
+  <div class="ce-en"><span class="hl-chunk">There are, however</span>, <span class="hl-chunk">other better and healthier ways</span> through which to get fit.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">3</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">节食通常意味着吃得少。健康意味着身体强壮。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Dieting usually means</span><span>Fitness means</span><span>healthy and strong</span></div>
+  <div class="ce-en"><span class="hl-chunk">Dieting usually means</span> eating less. <span class="hl-chunk">Fitness means</span> being <span class="hl-chunk">healthy and strong</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">4</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">一些身体健康强壮的人也稍微有点超重。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>healthy and strong</span><span>a little overweight</span></div>
+  <div class="ce-en">Some people who are <span class="hl-chunk">healthy and strong</span> are also <span class="hl-chunk">a little overweight</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">5</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">健康需要运动，而且我们定期运动很重要。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Fitness requires exercise</span><span>it is important that</span><span>exercise regularly</span></div>
+  <div class="ce-en"><span class="hl-chunk">Fitness requires exercise</span>, and <span class="hl-chunk">it is important that</span> we <span class="hl-chunk">exercise regularly</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">6</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">为了运动，人们需要从食物中获取能量。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>need energy from food</span></div>
+  <div class="ce-en">To exercise, people <span class="hl-chunk">need energy from food</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">7</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">如果有人在节食，他们可能没有足够的能量去运动。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>If someone is dieting</span><span>may not have enough energy</span></div>
+  <div class="ce-en"><span class="hl-chunk">If someone is dieting</span>, they <span class="hl-chunk">may not have enough energy</span> to exercise.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">8</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">这不是一种健康的生活方式。这会让他们感到非常疲惫，好像没有足够的能量。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>a healthy way to live</span><span>feel very tired</span><span>do not have enough energy</span></div>
+  <div class="ce-en">This is not <span class="hl-chunk">a healthy way to live</span>. This can make them <span class="hl-chunk">feel very tired</span> and like they <span class="hl-chunk">do not have enough energy</span>.</div>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 第 1-3 段 · 全篇约 320-350 词</p>
+</section><section class="slide" data-title="📝 范文翻译 · Part B ②">
+<p class="sec-label">附录 · Model Translation</p>
+<h2 class="slide-h2">📝 范文翻译：Part B ② — Debate Speech (Body + Conclusion)</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">双面议论文 · 第 4-5 段（Body 后段 + Conclusion）· 共 6 句。 先看<b style="color:var(--xdf-blue)">中文内容提示</b>构思英文，卡住时再看<b style="color:var(--xdf-gold)">词伙提示</b>，最后对照原文。</p>
+<div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">9</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">过度运动也可能不健康。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Too much exercise</span><span>unhealthy</span></div>
+  <div class="ce-en"><span class="hl-chunk">Too much exercise</span> can be <span class="hl-chunk">unhealthy</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">10</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">如果某人运动过度，他们的身体将没有足够的时间休息和恢复。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>exercises too much</span><span>not have enough time</span><span>rest and recover</span></div>
+  <div class="ce-en">If someone <span class="hl-chunk">exercises too much</span>, their body will <span class="hl-chunk">not have enough time</span> to <span class="hl-chunk">rest and recover</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">11</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">过度运动可能导致身体透支，甚至受伤。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>result in</span><span>physical exhaustion</span><span>injury</span></div>
+  <div class="ce-en">Too much exercise can <span class="hl-chunk">result in</span> <span class="hl-chunk">physical exhaustion</span> and even <span class="hl-chunk">injury</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">12</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">总而言之，通过节食来健身是不明智的。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>To conclude</span><span>dieting to get fit</span><span>unwise</span></div>
+  <div class="ce-en"><span class="hl-chunk">To conclude</span>, <span class="hl-chunk">dieting to get fit</span> is <span class="hl-chunk">unwise</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">13</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">相反，人们需要确保他们不过量或不足量进食。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>Instead</span><span>make sure that</span><span>over- or under-eat</span></div>
+  <div class="ce-en"><span class="hl-chunk">Instead</span>, people need to <span class="hl-chunk">make sure that</span> they do not <span class="hl-chunk">over- or under-eat</span>.</div>
+</div><div class="ce-item">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="width:28px;height:28px;border-radius:8px;background:var(--xdf-gl);color:var(--xdf-green);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">14</span>
+    <button class="ce-btn hint-btn" onclick="var a=this.closest('.ce-item').querySelector('.cn-hint');a.style.display=(a.style.display==='block'?'none':'block')" style="margin:0">📖 中文内容提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-hints');a.classList.toggle('show')" style="margin:0;border-color:var(--xdf-gold);color:var(--xdf-gold)">🧩 英文词伙提示</button>
+    <button class="ce-btn" onclick="var a=this.closest('.ce-item').querySelector('.ce-en');a.classList.toggle('show')" style="margin:0">✅ 显示原文</button>
+  </div>
+  <div class="ce-cn cn-hint" style="display:none;margin-top:10px">此外，定期运动应该伴随着健康的饮食。这是保持健康和强壮的最佳方式。</div>
+  <div class="ce-hints" style="margin-top:10px"><span>In addition</span><span>regular exercise</span><span>accompanied by a healthy diet</span><span>the best way to stay fit and healthy</span></div>
+  <div class="ce-en"><span class="hl-chunk">In addition</span>, <span class="hl-chunk">regular exercise</span> should be <span class="hl-chunk">accompanied by a healthy diet</span>. This is <span class="hl-chunk">the best way to stay fit and healthy</span>.</div>
+</div>
+<p style="font-size:18px;color:var(--text-3);margin-top:14px;text-align:right">✅ 第 4-5 段 · 全篇约 320-350 词</p>
+</section><section class="slide" data-title="📝 互动练习 · 建议信">
+<p class="sec-label">Part Four · Practice</p>
+<h2 class="slide-h2">📝 建议信填空练习</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">根据提示完成建议信内容。</p>
+<div class="ce-item">
+  <div class="ce-cn"><b>Opening:</b> I'm very sorry to ______ that you're feeling depressed and tired. (听到)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">hear</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Suggestion:</b> Why not ______ a time limit on your studies? (设定)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">set</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Sympathy:</b> I understand how you must ______. (感受)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">feel</div>
+</div>
+<div class="ce-item">
+  <div class="ce-cn"><b>Encouragement:</b> I'm sure things will ______ soon. (好转)</div>
+  <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
+  <div class="ce-en">improve / get better</div>
+</div>
+</section><section class="slide" data-title="📝 互动练习 · 选择题">
+<p class="sec-label">Part Four · Practice</p>
+<h2 class="slide-h2">📝 写作知识选择题</h2>
+<div class="quiz-card" data-correct="2">
+  <div class="quiz-q">Letter of advice 的四大原则不包括以下哪一项？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">Be sympathetic</button><button class="quiz-opt" onclick="checkQuiz(this)">Be positive</button><button class="quiz-opt" onclick="checkQuiz(this)">Be critical</button><button class="quiz-opt" onclick="checkQuiz(this)">Offer encouragement</button></div>
+  <div class="quiz-ans">✅ <b>Be critical</b> — 建议信应该支持鼓励，而不是批评指责。</div>
+</div><div class="quiz-card" data-correct="1">
+  <div class="quiz-q">Two-sided argument 的核心要求是什么？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">只呈现自己的观点</button><button class="quiz-opt" onclick="checkQuiz(this)">呈现正反两面观点</button><button class="quiz-opt" onclick="checkQuiz(this)">完全客观不表态</button><button class="quiz-opt" onclick="checkQuiz(this)">只反驳对方观点</button></div>
+  <div class="quiz-ans">✅ <b>呈现正反两面观点</b> — 双面议论文必须展示不同视角。</div>
+</div><div class="quiz-card" data-correct="1">
+  <div class="quiz-q">以下哪个词可以替换 "important" 使语气更强？</div>
+  <div class="quiz-opts"><button class="quiz-opt" onclick="checkQuiz(this)">good</button><button class="quiz-opt" onclick="checkQuiz(this)">vital</button><button class="quiz-opt" onclick="checkQuiz(this)">nice</button><button class="quiz-opt" onclick="checkQuiz(this)">ok</button></div>
+  <div class="quiz-ans">✅ <b>vital</b> — "Our health is vital" 比 "Our health is important" 语气更强。</div>
+</div>
+</section><section class="slide" data-title="✏️ 学生作品提交">
+<p class="sec-label">Part Five · Submission</p>
+<h2 class="slide-h2">✏️ 学生作品提交与反馈</h2>
+<p style="font-size:20px;color:var(--text-2);margin-bottom:16px">完成以下练习，提交你的写作成果。</p>
+<div class="student-input-wrap">
+<label>📌 <b>Task 1: Letter of Advice Practice</b><br>假设你的朋友 Tom 因为沉迷手机而睡眠不足、成绩下滑，请给他写一封建议信的开头段（Opening）：<br>要求：表达同理心 + 表明写信目的（2-3 句话）</label>
+<textarea class="student-ta" id="my-ta1" placeholder="在此输入你的 Opening..."></textarea>
+<button class="submit-btn" id="my-sb1" onclick="submitAnswer(this,'my-ta1','my-ans1')">✏️ 提交我的回答</button>
+<div class="student-answer" id="my-ans1"></div>
+<button class="edit-btn" id="my-ta1-eb" onclick="continueEdit('my-ta1','my-ans1','my-sb1')" style="display:none">✏️ 继续输入</button>
+</div>
+<div class="student-input-wrap mt-l">
+<label>📌 <b>Task 2: Two-Sided Argument Opening</b><br>请为以下双面议论文题目写一个 Introduction（2-3 句话）：<br><i>"Should students be allowed to use smartphones at school?"</i><br>要求：呈现正反两面观点，可以选择表明或不表明你的立场。</label>
+<textarea class="student-ta" id="my-ta2" placeholder="在此输入你的 Introduction..."></textarea>
+<button class="submit-btn" id="my-sb2" onclick="submitAnswer(this,'my-ta2','my-ans2')">✏️ 提交我的回答</button>
+<div class="student-answer" id="my-ans2"></div>
+<button class="edit-btn" id="my-ta2-eb" onclick="continueEdit('my-ta2','my-ans2','my-sb2')" style="display:none">✏️ 继续输入</button>
+</div>
+</section><section class="slide" data-title="📝 作业布置">
+<p class="sec-label">Part Six · Homework</p>
+<h2 class="slide-h2">📝 课后作业</h2>
+<div class="hw-card">
+  <h4>1. 完成 Letter of Advice（Part A 模拟）</h4>
+  <p>假设你的朋友因为过度使用社交媒体而感到焦虑，请写一封建议信，包含 Opening + 2 个 Body 段落 + Closing，约 160-180 词。</p>
+</div>
+<div class="hw-card">
+  <h4>2. 完成 Two-Sided Argument 大纲（Part B 准备）</h4>
+  <p>从以下题目任选一个，写出完整的 Introduction + 3 个 Body paragraph 的主题句 + Conclusion：<br>
+  ① "Social media does more harm than good to teenagers."<br>
+  ② "School uniforms should be abolished."<br>
+  ③ "Homework should be banned in primary schools."</p>
+</div>
+<div class="hw-card">
+  <h4>3. 词伙背诵</h4>
+  <p>背诵本课 14 个核心词伙（建议句式 6 个 + 同理心表达 6 个 + 双面议论文表达 8 个），下节课抽查。</p>
+</div>
+</section><section class="slide" data-title="✅ 总结 Checklist">
+<p class="sec-label">Summary</p>
+<h2 class="slide-h2">✅ 本课知识清单</h2>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 Letter of Advice 结构：Salutation → Opening → Body → Closing → Close</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握建议信四大原则：Be sympathetic / Be positive / Support / Encourage</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 6 个核心建议句式（I suggest that... / Why don't you...? / Have you thought about...?）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握 6 个同理心表达（I'm sorry to hear... / I understand how you feel...）</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>理解 Two-Sided Argument：Objective vs Subjective 两种写法</span>
+</div>
+<div class="check-item">
+  <div class="ci-box" onclick="this.classList.toggle('checked')"></div>
+  <span>掌握双面议论文四大语言技巧：balance / rhetorical questions / tone / strong verbs</span>
+</div>
+<button class="ce-btn mt-m" onclick="var a=document.getElementById('s23-exp');a.classList.toggle('show')">📖 查看常用表达汇总</button>
+<div id="s23-exp" class="ce-en" style="display:none">
+  <b>建议句式：</b>I suggest that... / Why don't you try...? / Have you thought about...? / I think you should... / You might try to... / As for...<br><br>
+  <b>同理心表达：</b>I'm very sorry to hear that... / I understand how you must feel / I also get stressed because of... / I'm sure things will improve soon<br><br>
+  <b>双面议论文表达：</b>On the one hand... / On the other hand... / Some people believe that... / Some people argue that... / Conversely... / In fact... / Overall,...
+</div>
+</section><section class="slide" data-title="🎉 完成！">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">恭喜完成 Module 2！</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">你今天学习了：建议信四大原则 → 建议信结构 → 建议类词伙 → 逐句翻译 → 大意写作 → 双面议论文引入 → Objective vs Subjective → 语言技巧 → 双面议论文词伙 → 辩论稿分析 → 常见错误 → 范文逐句翻译 → 互动练习 → 实战写作</p>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 撒花庆祝</button>
+</div>
+</section></div>
+
+<div class="toc-overlay" id="tocOverlay" onclick="closeTOC()"></div>
+<nav class="toc-drawer" id="tocDrawer">
+  <div class="toc-head">📑 课程目录<span class="toc-close" onclick="closeTOC()">✕</span></div>
+  <div class="toc-list" id="tocList"></div>
+</nav>
+
+
+<button class="notes-fab" id="notesFab" onclick="toggleNotes()" title="课堂笔记（自动保存在本机）">📝</button>
+<div class="notes-panel" id="notesPanel">
+  <div class="np-head"><span id="npPage">第 1 页</span><button class="np-close" onclick="toggleNotes()">✕</button></div>
+  <textarea class="np-ta" id="npTa" placeholder="在此记录本页笔记、好句或疑问…自动保存在本机"></textarea>
+  <div class="np-foot"><span id="npSaved">已自动保存 ✓</span><button class="np-clear" onclick="clearNote()">清空本页</button></div>
+</div>
+
+<div class="confetti-wrap" id="confetti"></div>
+<script>
+let current=0;
+// ── slide navigation ──
+function initDots(){
+  var dots=document.getElementById('progressDots');
+  dots.innerHTML='';
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');
+    d.className='dot';
+    d.title='第'+(i+1)+'页';
+    d.setAttribute('data-pn',i+1);
+    d.onclick=function(){goTo(i)};
+    dots.appendChild(d);
+  });
+}
+function updateUI(){
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){s.classList.toggle('is-active',i===current)});
+  var dots=document.getElementById('progressDots').querySelectorAll('.dot');
+  dots.forEach(function(d,i){d.classList.toggle('active',i===current);d.classList.toggle('passed',i<current)});
+  var pct=slides.length>1?Math.round((current/(slides.length-1))*100):0;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('topbarTitle').textContent=slides[current].dataset.title||'';
+  document.getElementById('pcCur').textContent=(current+1);
+  document.getElementById('pcTotal').textContent=' / '+slides.length;
+  slides[current].scrollTop=0;
+}
+function editPageCounter(){
+  var curEl=document.getElementById('pcCur');
+  var total=document.querySelectorAll('.slide').length;
+  var input=document.createElement('input');
+  input.type='number';input.className='pc-cur-input';
+  input.min=1;input.max=total;input.value=current+1;
+  curEl.replaceWith(input);
+  input.focus();input.select();
+  function finish(){
+    var val=parseInt(input.value);
+    var span=document.createElement('span');
+    span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;
+    if(!isNaN(val)&&val>=1&&val<=total&&val!==current+1){
+      span.textContent=val;
+      input.replaceWith(span);
+      goTo(val-1);
+    }else{
+      span.textContent=current+1;
+      input.replaceWith(span);
+    }
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault();finish();}
+    if(e.key==='Escape'){e.preventDefault();var span=document.createElement('span');span.className='pc-cur';span.id='pcCur';span.onclick=editPageCounter;span.textContent=current+1;input.replaceWith(span);}
+  });
+  input.addEventListener('blur',finish);
+}
+function goTo(i){
+  var slides=document.querySelectorAll('.slide');
+  if(i<0||i>=slides.length||i===current)return;
+  current=i;updateUI();
+}
+// ── V7: keydown with ESC for TOC/Notes ──
+// Replaces the basic arrow-only handler when TOC/Notes are present.
+// Usage: if the courseware has NO toc-drawer or notes-panel, the simple
+// handler (arrows only) is sufficient. If TOC/Notes ARE present, include
+// this enhanced version instead:
+// document.addEventListener('keydown',function(e){
+//   var tag=e.target.tagName;
+//   if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+//   if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+//   if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+//   if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+// });
+// ── Basic keydown (arrows only, for V4–V6 courseware) ──
+document.addEventListener('keydown',function(e){
+  var tag=e.target.tagName;
+  if(e.key==='Escape'){closeTOC();var np=document.getElementById('notesPanel');if(np)np.classList.remove('open');return;}
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(current-1);
+});
+function revealCloze(el){
+  if(el.classList.contains('revealed')){
+    el.textContent='______';el.classList.remove('revealed');
+  }else{
+    el.textContent=el.dataset.answer;el.classList.add('revealed');
+  }
+}
+// // ── countdown timer ──
+// var durations=[60,120,180,300,600];
+// var durIdx=3;
+// var timerDuration=durations[durIdx];
+// var timerRemaining=timerDuration;
+// var timerRunning=false;
+// var timerInterval=null;
+// var timerDone=false;
+
+// function updateTimerDisplay(){
+//   var min=Math.floor(timerRemaining/60);
+//   var sec=timerRemaining%60;
+//   document.getElementById('timerMin').value=min;
+//   document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+// }
+
+// function readTimerFromInputs(){
+//   var m=parseInt(document.getElementById('timerMin').value)||0;
+//   var s=parseInt(document.getElementById('timerSec').value)||0;
+//   if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+//   return m*60+s;
+// }
+
+// function toggleTimer(){
+//   if(timerRunning){
+//     // pause
+//     clearInterval(timerInterval);
+//     timerRunning=false;
+//     document.getElementById('timerWrap').classList.remove('running');
+//     document.getElementById('timerPlayBtn').classList.remove('running');
+//     document.getElementById('timerPlayBtn').textContent='▶';
+//   }else{
+//     // if done, reset first then start
+//     if(timerDone){
+//       resetTimer();
+//       return;
+//     }
+//     // if remaining is 0, read from inputs
+//     if(timerRemaining<=0){
+//       var inputSec=readTimerFromInputs();
+//       if(inputSec>0){timerDuration=inputSec;timerRemaining=inputSec;}
+//       else{timerDuration=60;timerRemaining=60;}
+//       updateTimerDisplay();
+//     }
+//     timerInterval=setInterval(function(){
+//       timerRemaining--;
+//       updateTimerDisplay();
+//       if(timerRemaining<=0){
+//         clearInterval(timerInterval);
+//         timerRunning=false;
+//         timerDone=true;
+//         document.getElementById('timerWrap').classList.remove('running');
+//         document.getElementById('timerWrap').classList.add('done');
+//         document.getElementById('timerPlayBtn').classList.remove('running');
+//         document.getElementById('timerPlayBtn').classList.add('done');
+//         document.getElementById('timerPlayBtn').textContent='▶';
+//       }
+//     },1000);
+//     timerRunning=true;
+//     document.getElementById('timerWrap').classList.add('running');
+//     document.getElementById('timerPlayBtn').classList.add('running');
+//     document.getElementById('timerPlayBtn').textContent='⏸';
+//   }
+// }
+
+// function resetTimer(){
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   // read current input as new duration
+//   var inputSec=readTimerFromInputs();
+//   if(inputSec<=0)inputSec=60;
+//   timerDuration=inputSec;
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+
+// function cycleDuration(){
+//   durIdx=(durIdx+1)%durations.length;
+//   timerDuration=durations[durIdx];
+//   timerRemaining=timerDuration;
+//   updateTimerDisplay();
+//   clearInterval(timerInterval);
+//   timerRunning=false;
+//   timerDone=false;
+//   document.getElementById('timerWrap').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').classList.remove('running','done');
+//   document.getElementById('timerPlayBtn').textContent='▶';
+// }
+
+// // sync: when user edits inputs while paused, update duration
+// document.addEventListener('DOMContentLoaded',function(){
+//   var minEl=document.getElementById('timerMin');
+//   var secEl=document.getElementById('timerSec');
+//   function syncFromInputs(){
+//     if(!timerRunning&&!timerDone){
+//       var v=readTimerFromInputs();
+//       if(v>0){timerDuration=v;timerRemaining=v;}
+//     }
+//   }
+//   if(minEl)minEl.addEventListener('change',syncFromInputs);
+//   if(secEl)secEl.addEventListener('change',syncFromInputs);
+// });
+
+// ── countdown timer (最终修复版) ──
+var durations=[60,120,180,300,600];
+var durIdx=3;
+var timerDuration=durations[durIdx];  // 保存原始时长
+var timerRemaining=timerDuration;
+var timerRunning=false;
+var timerInterval=null;
+var timerDone=false;
+
+function updateTimerDisplay(){
+  var min=Math.floor(timerRemaining/60);
+  var sec=timerRemaining%60;
+  requestAnimationFrame(function(){
+    document.getElementById('timerMin').value=min;
+    document.getElementById('timerSec').value=sec<10?'0'+sec:sec;
+  });
+}
+
+function readTimerFromInputs(){
+  var m=parseInt(document.getElementById('timerMin').value)||0;
+  var s=parseInt(document.getElementById('timerSec').value)||0;
+  if(m<0)m=0;if(s<0)s=0;if(s>59)s=59;
+  return m*60+s;
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    // pause
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerRunning=false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent='▶';
+  }else{
+    // 如果已结束，先重置但不return，继续开始
+    if(timerDone){
+      resetTimer();
+    }
+    // 如果剩余时间为0，从输入框读取新时长
+    if(timerRemaining<=0){
+      var inputSec=readTimerFromInputs();
+      if(inputSec>0){
+        timerDuration=inputSec;  // 更新原始时长
+        timerRemaining=inputSec;
+      }else{
+        timerDuration=60;
+        timerRemaining=60;
+      }
+      updateTimerDisplay();
+    }
+    timerInterval=setInterval(function(){
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerRunning=false;
+        timerDone=true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent='▶';
+      }
+    },1000);
+    timerRunning=true;
+    timerDone=false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent='⏸';
+  }
+}
+
+// ✅ 【核心修复】重置：恢复到 timerDuration（用户最初设置的时长）
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  
+  // ✅ 关键修复：恢复到原始设置的时长，而不是读取输入框
+  timerRemaining = timerDuration;
+  
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+function cycleDuration(){
+  durIdx=(durIdx+1)%durations.length;
+  timerDuration=durations[durIdx];  // 更新原始时长
+  timerRemaining=timerDuration;
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerRunning=false;
+  timerDone=false;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent='▶';
+}
+
+// sync: when user edits inputs while paused, update duration
+document.addEventListener('DOMContentLoaded',function(){
+  var minEl=document.getElementById('timerMin');
+  var secEl=document.getElementById('timerSec');
+  function syncFromInputs(){
+    if(!timerRunning&&!timerDone){
+      var v=readTimerFromInputs();
+      if(v>0){
+        timerDuration=v;  // ✅ 同时更新原始时长
+        timerRemaining=v;
+      }
+    }
+  }
+  if(minEl)minEl.addEventListener('change',syncFromInputs);
+  if(secEl)secEl.addEventListener('change',syncFromInputs);
+});
+
+
+// ── quiz card check ──
+function checkQuiz(el){
+  var card=el.closest('.quiz-card');
+  if(!card||card.classList.contains('answered'))return;
+  var opts=card.querySelectorAll('.quiz-opt');
+  var ci=parseInt(card.dataset.correct);
+  var clicked=Array.from(opts).indexOf(el);
+  if(clicked===ci){el.classList.add('correct')}
+  else{el.classList.add('wrong');opts[ci].classList.add('correct')}
+  card.classList.add('answered');
+  var ans=card.querySelector('.quiz-ans');if(ans)ans.style.display='block';
+  var btn=card.querySelector('.quiz-reveal-btn');if(btn)btn.style.display='none';
+}
+function checkBigOpt(el,isCorrect,container){
+  if(container.classList.contains('answered'))return;
+  container.classList.add('answered');
+  var opts=container.querySelectorAll('.big-opt');
+  if(isCorrect){el.classList.add('correct')}
+  else{
+    el.classList.add('wrong');
+    for(var i=0;i<opts.length;i++){if(opts[i]!==el)opts[i].classList.add('correct')}
+  }
+  var ansId=container.dataset.ansId;
+  if(ansId){var ans=document.getElementById(ansId);if(ans)ans.style.display='block';}
+}
+// ── S22 progressive reveal ──
+var s22Revealed=0;
+function revealNextError(){
+  var marks=document.querySelectorAll('#s22-para .pe-wrong.pending');
+  if(marks.length===0)return;
+  marks[0].classList.remove('pending');
+  s22Revealed++;
+  var counter=document.getElementById('s22-counter');
+  if(counter)counter.textContent='已找到 '+s22Revealed+' / 5';
+}
+// ── confetti ──
+function launchConfetti(){
+  var c=document.getElementById('confetti');c.innerHTML='';
+  var colors=['#0B8235','#4CAF50','#C85D0A','#FFD700','#E53935','#1A6DAF','#0E7C63','#FF6F00','#AB47BC','#26C6DA'];
+  for(var i=0;i<120;i++){
+    var p=document.createElement('div');p.className='c-piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    p.style.width=(8+Math.random()*10)+'px';
+    p.style.height=(10+Math.random()*14)+'px';
+    p.style.borderRadius=Math.random()>0.5?'50%':'3px';
+    p.style.animation='cfall '+(2+Math.random()*3)+'s '+Math.random()*2+'s linear forwards';
+    c.appendChild(p);
+  }
+  setTimeout(function(){c.innerHTML=''},6000);
+}
+initDots();updateUI();
+
+// ══════════════════════════════════════════════════════════════
+// V7 新增组件 — TOC drawer / Notes panel / checkTones / submit /
+// continueEdit / submitTrans / updateUI wrapping
+// ══════════════════════════════════════════════════════════════
+// 以下函数仅当 HTML 中包含对应 DOM 元素时才生效。
+// V4–V6 课件不含这些元素，函数内的 null guard 会直接 return。
+// ══════════════════════════════════════════════════════════════
+
+// ── wrap updateUI to sync TOC + notes ──
+// ⚠️ 必须放在 initDots();updateUI(); 之后，确保原始 updateUI 已定义
+var _baseUpdateUI = updateUI;
+updateUI = function(){
+  _baseUpdateUI();
+  // sync TOC active item
+  var items=document.querySelectorAll('.toc-item');
+  if(items.length){
+    items.forEach(function(it,i){it.classList.toggle('active',i===current)});
+  }
+  // load per-slide note
+  loadNote();
+};
+
+// ── TOC drawer ──
+function buildTOC(){
+  var list=document.getElementById('tocList');
+  if(!list)return;
+  var slides=document.querySelectorAll('.slide');
+  slides.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='toc-item';
+    d.innerHTML='<span class="toc-num">'+(i+1)+'</span><span>'+(s.dataset.title||('第'+(i+1)+'页'))+'</span>';
+    d.onclick=function(){goTo(i);closeTOC();};
+    list.appendChild(d);
+  });
+}
+function toggleTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(!dr)return;
+  var open=dr.classList.contains('open');
+  if(open){closeTOC();}else{dr.classList.add('open');ov.classList.add('open');}
+}
+function closeTOC(){
+  var dr=document.getElementById('tocDrawer');
+  var ov=document.getElementById('tocOverlay');
+  if(dr)dr.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+}
+
+// ── Notes (per-slide, localStorage) ──
+// ⚠️ NOTE_KEY must be unique per courseware (e.g. 'u7taichi_note_')
+//    to avoid cross-courseware note collisions.
+var NOTE_KEY='m2health_note_';
+function loadNote(){
+  var ta=document.getElementById('npTa');
+  if(!ta)return;
+  ta.value=localStorage.getItem(NOTE_KEY+current)||'';
+  var p=document.getElementById('npPage');
+  if(p){
+    var slides=document.querySelectorAll('.slide');
+    p.textContent='第 '+(current+1)+' 页 · '+(slides[current]?slides[current].dataset.title:'');
+  }
+  updateNoteDot();
+}
+function updateNoteDot(){
+  var fab=document.getElementById('notesFab');
+  if(!fab)return;
+  var v=localStorage.getItem(NOTE_KEY+current);
+  fab.classList.toggle('has-note',!!(v&&v.trim()));
+}
+function toggleNotes(){
+  var p=document.getElementById('notesPanel');
+  if(!p)return;
+  p.classList.toggle('open');
+  if(p.classList.contains('open')){
+    loadNote();
+    setTimeout(function(){var ta=document.getElementById('npTa');if(ta)ta.focus();},220);
+  }
+}
+function clearNote(){
+  localStorage.removeItem(NOTE_KEY+current);
+  var ta=document.getElementById('npTa');
+  if(ta)ta.value='';
+  var sv=document.getElementById('npSaved');
+  if(sv)sv.textContent='已清空';
+  updateNoteDot();
+}
+// auto-save on input + buildTOC on DOMContentLoaded
+document.addEventListener('DOMContentLoaded',function(){
+  var ta=document.getElementById('npTa');
+  if(ta){
+    ta.addEventListener('input',function(){
+      localStorage.setItem(NOTE_KEY+current,ta.value);
+      var s=document.getElementById('npSaved');
+      if(s)s.textContent='已自动保存 ✓';
+      updateNoteDot();
+    });
+  }
+  buildTOC();
+  updateUI();
+});
+
+// ── student submit (with continue-edit) ──
+function submitAnswer(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ans.textContent=text;
+  ta.style.display='none';
+  ans.classList.add('show');
+  btn.style.display='none';
+  var eb=document.getElementById(areaId+'-eb');
+  if(eb)eb.style.display='inline-flex';
+}
+function continueEdit(areaId,answerId,submitBtnId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var sb=document.getElementById(submitBtnId);
+  ta.value=ans.textContent;
+  ta.style.display='';
+  ans.classList.remove('show');
+  document.getElementById(areaId+'-eb').style.display='none';
+  sb.style.display='inline-flex';
+  setTimeout(function(){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);},100);
+}
+
+// ── translation submit (dual-card display) ──
+function submitTrans(btn,areaId,answerId){
+  var ta=document.getElementById(areaId);
+  var ans=document.getElementById(answerId);
+  var text=ta.value.trim();
+  if(!text){ta.focus();return;}
+  ta.style.display='none';
+  btn.style.display='none';
+  ans.classList.add('show');
+  var stuDiv=document.createElement('div');
+  stuDiv.className='stu-trans-card';
+  stuDiv.innerHTML='<b style="color:var(--xdf-blue)">✏️ 你的回答：</b><br>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  ans.parentElement.insertBefore(stuDiv,ans);
+}
+
+// ── tone multi-checkbox check ──
+function checkTones(btn){
+  var wrap=btn.parentElement;
+  var cbs=wrap.querySelectorAll('.tone-cb');
+  for(var i=0;i<cbs.length;i++){
+    var cb=cbs[i];
+    var lab=cb.closest('label');
+    var ok=(cb.dataset.correct==='true')===cb.checked;
+    lab.style.color=ok?'var(--xdf-green)':'var(--xdf-red)';
+    lab.style.fontWeight=ok?'700':'600';
+  }
+  var ans=wrap.querySelector('.ce-en');
+  if(ans)ans.classList.add('show');
+}
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'writing',unit:'writing-u302',weakKey:'conjunction',mode:'quiz'};</script>
+</body></html>

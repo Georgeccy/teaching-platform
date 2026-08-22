@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 DSE Paper 1 Reading — 香港加速班 (V8 MAX)</title>
+<style>
+/* ============================================================
+   DSE Reading Courseware MAX — Style System V8
+   Inspired by: freeCodeCamp + Khan Academy
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+
+:root{
+  --brand-green:#0B8235;--brand-green-dark:#096B2C;--brand-green-light:#E8F5E9;--brand-green-pale:#F5F9F0;
+  --brand-gold:#C85D0A;--brand-red:#C0392B;--brand-blue:#1A6DAF;
+  --fcc-purple:#dbb8ff;--fcc-yellow:#f1be32;--fcc-blue:#99c9ff;--fcc-green:#acd157;
+  --fcc-purple-dark:#5a01a7;--fcc-yellow-dark:#4d3800;--fcc-blue-dark:#002ead;--fcc-green-dark:#00471b;
+  --khan-blue:#1868d7;--khan-teal:#14bf96;--khan-teal-light:#d8f5ed;--khan-bg:#f6f7f8;
+  --text-1:#1A1D23;--text-2:#55596a;--text-3:#9ca1b0;
+  --surface-0:#FFFFFF;--surface-1:#f6f7f8;--surface-2:#f0f1f3;
+  --card-bd:#D9E5D5;--card-bd-subtle:rgba(0,0,0,.06);
+  --card-sh:0 1px 6px rgba(0,0,0,.05);--card-sh-hover:0 4px 16px rgba(0,0,0,.1);
+  --r:14px;--r-lg:20px;
+  --sidebar-w:260px;--sidebar-collapsed-w:56px;
+  --sidebar-bg:#0a0a23;--sidebar-text:#dfdfe2;--sidebar-text-dim:#8b8ba7;
+  --sidebar-active:#dbb8ff;--sidebar-hover-bg:#1b1b32;
+  --topbar-h:44px;--topbar-bg:rgba(255,255,255,.97);
+  --score-bg:#0a0a23;--score-text:#acd157;
+  --ease:cubic-bezier(.4,0,.2,1);--ease-bounce:cubic-bezier(.34,1.56,.64,1);
+  --zoom-scale:1;
+  --dark-bg:#0a0a23;--dark-surface:#1b1b32;--dark-surface-2:#2a2a40;
+  --dark-text:#dfdfe2;--dark-text-dim:#8b8ba7;--dark-card-bd:#3b3b4f;
+}
+body.dark{
+  --surface-0:#1b1b32;--surface-1:#2a2a40;--surface-2:#3b3b4f;
+  --text-1:#dfdfe2;--text-2:#8b8ba7;--text-3:#6b6b87;
+  --card-bd:#3b3b4f;--card-bd-subtle:rgba(255,255,255,.08);
+  --card-sh:0 1px 6px rgba(0,0,0,.3);--card-sh-hover:0 4px 16px rgba(0,0,0,.4);
+  --topbar-bg:rgba(10,10,35,.97);--brand-green-light:#0d3d1e;--brand-green-pale:#0a2e16;--khan-bg:#1b1b32;
+}
+body.dark .topbar{border-bottom-color:var(--card-bd)}
+body.dark .page-counter{background:rgba(10,10,35,.92);color:var(--text-2);border-color:var(--card-bd)}
+body.dark .s1-card-wrapper{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .s1-meta-card{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .s1-meta-card .sm-value{color:var(--dark-text)}
+body.dark .s1-meta-card .sm-sub{color:var(--dark-text-dim)}
+body.dark .split-left{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .passage-excerpt{background:var(--dark-surface-2);border-left-color:var(--brand-green);color:var(--dark-text)}
+body.dark .passage-excerpt .para-num{color:var(--fcc-green)}
+body.dark .practice-mcq{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .pmcq-opt{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .pmcq-opt:hover{border-color:var(--fcc-purple);background:rgba(90,1,167,.1)}
+body.dark .pmcq-opt .pl{background:rgba(90,1,167,.2);color:var(--fcc-purple)}
+body.dark .flip-front{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .flip-back{background:rgba(90,1,167,.1);border-color:rgba(90,1,167,.3)}
+body.dark .flip-q{color:var(--dark-text)}body.dark .flip-ans{color:var(--fcc-green)}
+body.dark .tfng-btn{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+body.dark .tfng-btn:hover{border-color:var(--fcc-purple)}
+body.dark .cloze{color:var(--text-3);border-bottom-color:var(--fcc-purple)}
+body.dark .cloze:hover{background:rgba(90,1,167,.1);color:var(--fcc-purple)}
+body.dark .mc-banner.mc-correct{background:rgba(0,71,27,.15);border-color:var(--fcc-green);color:var(--fcc-green)}
+body.dark .mc-banner.mc-wrong{background:rgba(192,57,43,.12);border-color:var(--brand-red);color:#ff6b6b}
+body.dark .sa-result{background:var(--dark-surface);border-color:var(--fcc-green)}
+body.dark .reveal-btn{background:var(--fcc-purple-dark)}
+body.dark .timeline-row .tl-seg{background:var(--dark-surface);border-right-color:var(--dark-card-bd)}
+body.dark .timeline-row .tl-seg .seg-name{color:var(--dark-text)}
+body.dark .user-highlight{background:rgba(219,184,255,.25)}
+body.dark .sec-label{color:var(--fcc-purple)}body.dark .sec-label::before{background:var(--fcc-purple)}
+body.dark .slide-h1,.slide-h2,.slide-h3{color:var(--dark-text)}
+body.dark .card{background:var(--dark-surface);border-color:var(--dark-card-bd)}
+body.dark .card h4,.card p{color:var(--dark-text)}
+
+body{
+  font-family:'Microsoft YaHei','PingFang SC','Inter','Segoe UI',sans-serif;
+  background:var(--surface-0);color:var(--text-1);font-size:20px;
+  line-height:1.75;-webkit-font-smoothing:antialiased;user-select:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+.mono,.course-tag,.pmcq-label,.sec-label,.sm-label,.seg-ph,.dz-label,.score-badge-val,.topbar .slide-title{
+  font-family:'Hack','JetBrains Mono','Fira Code','SF Mono','Menlo',monospace;
+}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--surface-0);display:flex;transition:background .4s var(--ease)}
+
+/* === Sidebar === */
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar-bg);color:var(--sidebar-text);display:flex;flex-direction:column;transition:width .3s var(--ease),min-width .3s var(--ease);overflow:hidden;z-index:50;position:relative}
+.sidebar.collapsed{width:var(--sidebar-collapsed-w);min-width:var(--sidebar-collapsed-w)}
+.sidebar-header{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06);min-height:52px}
+.sidebar-logo{font-family:'Hack','JetBrains Mono',monospace;font-size:15px;font-weight:800;color:var(--fcc-purple);white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .sidebar-logo{display:none}
+.sidebar-toggle{width:28px;height:28px;border-radius:6px;border:none;background:rgba(255,255,255,.06);color:var(--sidebar-text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;flex-shrink:0}
+.sidebar-toggle:hover{background:var(--sidebar-hover-bg);color:var(--fcc-purple)}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 0;scrollbar-width:thin;scrollbar-color:var(--sidebar-hover-bg) transparent}
+.sidebar-section-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-text-dim);padding:12px 16px 4px;white-space:nowrap}
+.sidebar.collapsed .sidebar-section-label{display:none}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;transition:all .15s;white-space:nowrap;color:var(--sidebar-text-dim);font-size:13px;font-weight:600;border-left:3px solid transparent;position:relative}
+.sidebar-item:hover{background:var(--sidebar-hover-bg);color:var(--sidebar-text)}
+.sidebar-item.active{color:var(--sidebar-active);border-left-color:var(--sidebar-active);background:rgba(219,184,255,.08)}
+.sidebar-item .si-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+.sidebar-item .si-label{overflow:hidden;text-overflow:ellipsis}
+.sidebar.collapsed .sidebar-item{padding:10px 0;justify-content:center}
+.sidebar.collapsed .sidebar-item .si-label{display:none}
+.sidebar-score{padding:14px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px}
+.score-ring{width:36px;height:36px;position:relative;flex-shrink:0}
+.score-ring svg{width:36px;height:36px;transform:rotate(-90deg)}
+.score-ring .ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:3}
+.score-ring .ring-fg{fill:none;stroke:var(--fcc-green);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s var(--ease)}
+.score-ring .ring-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--fcc-green);font-family:'Hack',monospace}
+.sidebar.collapsed .sidebar-score .score-detail{display:none}
+.score-detail{display:flex;flex-direction:column;overflow:hidden}
+.score-detail .sd-label{font-size:10px;color:var(--sidebar-text-dim);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.score-detail .sd-val{font-size:14px;font-weight:800;color:var(--fcc-green);font-family:'Hack',monospace}
+.sidebar-footer{padding:10px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.theme-toggle{width:28px;height:28px;border-radius:6px;border:none;background:rgba(255,255,255,.06);color:var(--sidebar-text);cursor:pointer;font-size:14px;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{background:var(--sidebar-hover-bg);color:var(--fcc-yellow)}
+.sidebar.collapsed .theme-label{display:none}
+.theme-label{font-size:12px;color:var(--sidebar-text-dim);font-weight:600}
+
+/* === Main Area === */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;min-width:0}
+
+/* === Topbar === */
+.topbar{height:var(--topbar-h);background:var(--topbar-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--card-bd);display:flex;align-items:center;padding:0 16px;z-index:100;gap:10px;transition:background .4s var(--ease),border-color .4s var(--ease)}
+.topbar .course-tag{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--fcc-purple-dark);background:rgba(90,1,167,.08);padding:3px 10px;border-radius:12px;transition:all .3s}
+body.dark .topbar .course-tag{color:var(--fcc-purple);background:rgba(219,184,255,.12)}
+.topbar .slide-title{font-size:12px;font-weight:700;color:var(--text-1);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px}
+.progress-dots{display:flex;gap:5px;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8DCC4;cursor:pointer;transition:background .25s,transform .2s;position:relative}
+.dot.active{background:var(--fcc-purple);transform:scale(1.5)}
+.dot.passed{background:var(--fcc-green)}
+.dot[data-pn]:hover::after{content:attr(data-pn);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--sidebar-bg);color:var(--fcc-purple);font-size:12px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;pointer-events:none;z-index:20;font-family:'Hack',monospace}
+.zoom-controls{display:flex;align-items:center;gap:3px;margin-left:2px;padding-left:8px;border-left:1px solid var(--card-bd)}
+.zoom-btn{width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(90,1,167,.25);background:rgba(90,1,167,.06);color:var(--fcc-purple-dark);font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;transition:all .15s;font-family:'Hack',monospace}
+.zoom-btn:hover{background:var(--fcc-purple-dark);color:#fff}.zoom-btn:active{transform:scale(.9)}.zoom-btn:disabled{opacity:.35;cursor:not-allowed}
+body.dark .zoom-btn{border-color:rgba(219,184,255,.3);background:rgba(219,184,255,.08);color:var(--fcc-purple)}
+body.dark .zoom-btn:hover{background:var(--fcc-purple);color:var(--sidebar-bg)}
+.zoom-level{font-size:11px;font-weight:700;color:var(--text-2);min-width:30px;text-align:center;font-family:'Hack',monospace;cursor:pointer;user-select:none}
+.zoom-level:hover{color:var(--fcc-purple)}
+.timer-wrap{display:flex;align-items:center;gap:4px}
+.timer-input-wrap{display:inline-flex;align-items:center;gap:2px;background:rgba(90,1,167,.06);color:var(--fcc-purple-dark);border:1.5px solid rgba(90,1,167,.25);border-radius:20px;padding:2px 10px 2px 6px;font-size:13px;font-weight:700;transition:all .2s;font-family:'Hack',monospace}
+.timer-input-wrap:hover{background:rgba(90,1,167,.12)}
+.timer-input-wrap.running{background:var(--fcc-purple-dark);border-color:var(--fcc-purple-dark);color:#fff}
+.timer-input-wrap.running .t-min,.timer-input-wrap.running .t-sec,.timer-input-wrap.running .t-colon{color:#fff}
+.timer-input-wrap.done{background:var(--brand-red);border-color:var(--brand-red);animation:timerFlash .6s ease infinite}
+.timer-input-wrap.done .t-min,.timer-input-wrap.done .t-sec,.timer-input-wrap.done .t-colon{color:#fff}
+.timer-done-label{display:none;color:#fff;font-size:11px;font-weight:800;margin-left:4px;white-space:nowrap;font-family:'Hack',monospace}
+.timer-input-wrap.done .timer-done-label{display:inline}
+body.dark .timer-input-wrap{background:rgba(219,184,255,.08);border-color:rgba(219,184,255,.25);color:var(--fcc-purple)}
+body.dark .timer-input-wrap.running{background:var(--fcc-purple);color:var(--sidebar-bg)}
+@keyframes timerPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes timerFlash{0%,100%{opacity:1}50%{opacity:.4}}
+.t-min,.t-sec{width:22px;background:transparent;border:none;color:var(--fcc-purple-dark);font-size:13px;font-weight:700;text-align:center;outline:none;font-family:'Hack',monospace;padding:0;-moz-appearance:textfield}
+body.dark .t-min,body.dark .t-sec{color:var(--fcc-purple)}
+.t-min::-webkit-inner-spin-button,.t-sec::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.t-colon{color:var(--fcc-purple-dark);font-size:13px;font-weight:700;padding:0 1px}
+.timer-play{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:rgba(90,1,167,.06);color:var(--fcc-purple-dark);border:1.5px solid rgba(90,1,167,.25);border-radius:50%;font-size:14px;cursor:pointer;transition:all .2s;padding:0;line-height:1}
+.timer-play:hover{background:var(--fcc-purple-dark);color:#fff}
+.timer-play.running{background:var(--fcc-purple-dark);color:#fff;border-color:var(--fcc-purple-dark)}
+.timer-reset{background:transparent;color:var(--text-3);border:1.5px solid transparent;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s}
+.timer-reset:hover{color:var(--brand-red);background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.15)}
+.score-badge{display:flex;align-items:center;gap:4px;background:var(--score-bg);color:var(--score-text);padding:3px 10px;border-radius:20px;font-size:12px;font-weight:800;font-family:'Hack',monospace;letter-spacing:.5px;transition:all .3s var(--ease)}
+.score-badge .sb-correct{color:var(--fcc-green)}
+.score-badge .sb-divider{color:rgba(255,255,255,.3)}
+.score-badge .sb-total{color:rgba(255,255,255,.5)}
+.score-badge.pulse{animation:scorePulse .4s var(--ease-bounce)}
+@keyframes scorePulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--fcc-purple),var(--fcc-green),var(--fcc-yellow));transition:width .4s ease;z-index:100;background-size:200% 100%;animation:gradientShift 3s ease infinite}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.page-counter{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Hack',monospace;font-size:13px;font-weight:700;color:var(--text-2);background:var(--topbar-bg);backdrop-filter:blur(8px);padding:5px 16px;border-radius:20px;border:1px solid var(--card-bd);letter-spacing:.5px;display:flex;align-items:center;gap:0;cursor:default;transition:all .3s}
+.page-counter .pc-cur{display:inline-block;min-width:14px;text-align:center;cursor:pointer;border-radius:4px;padding:1px 4px;transition:background .15s}
+.page-counter .pc-cur:hover{background:rgba(90,1,167,.08);color:var(--fcc-purple-dark)}
+body.dark .page-counter .pc-cur:hover{background:rgba(219,184,255,.12);color:var(--fcc-purple)}
+.page-counter .pc-cur-input{width:28px;background:rgba(90,1,167,.06);border:1.5px solid var(--fcc-purple-dark);border-radius:6px;color:var(--fcc-purple-dark);font-size:13px;font-weight:700;text-align:center;outline:none;padding:1px 2px;font-family:'Hack',monospace;-moz-appearance:textfield}
+.page-counter .pc-total{color:var(--text-3)}
+
+/* === Slides === */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--topbar-h) + 20px) 72px 48px;opacity:0;pointer-events:none;transition:opacity .45s var(--ease),transform .45s var(--ease);transform:translateX(40px) scale(var(--zoom-scale));transform-origin:top left;width:calc(100% / var(--zoom-scale));height:calc(100% / var(--zoom-scale));overflow-y:auto}
+.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0) scale(var(--zoom-scale));z-index:2}
+.slide-h1{font-size:clamp(36px,5vw,56px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px;color:var(--text-1)}
+.slide-h2{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.2;margin-bottom:10px;color:var(--text-1)}
+.slide-h3{font-size:clamp(20px,2.5vw,28px);font-weight:800;line-height:1.3;margin-bottom:8px;color:var(--text-1)}
+.slide-h4{font-size:clamp(17px,2vw,22px);font-weight:700;line-height:1.4;margin-bottom:8px;color:var(--text-1)}
+.sec-label{font-size:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fcc-purple-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--fcc-purple-dark);border-radius:1px}
+.accent{color:var(--fcc-purple-dark)}body.dark .accent{color:var(--fcc-purple)}
+
+/* === Cover === */
+.s1-card-wrapper{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:var(--r-lg);box-shadow:var(--card-sh);position:relative;padding-bottom:52px;overflow:hidden;transition:all .4s var(--ease)}
+.xdf-header-bar{background:linear-gradient(135deg,var(--sidebar-bg) 0%,#1b1b32 50%,var(--fcc-purple-dark) 100%);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:18px 28px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.xdf-header-bar::after{content:'';position:absolute;right:-30px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(219,184,255,.08)}
+.xdf-header-bar .xdf-logo-text{font-family:'Hack','JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#fff;letter-spacing:2px}
+.xdf-header-bar .xdf-logo-text span{font-weight:400;font-size:13px;opacity:.7;letter-spacing:0}
+.xdf-header-bar .xdf-sub-text{margin-left:auto;font-size:13px;color:rgba(255,255,255,.6);font-weight:600;font-family:'Hack',monospace;letter-spacing:1px}
+.xdf-grid-pattern{position:absolute;bottom:0;left:0;right:0;height:48px;background:repeating-linear-gradient(90deg,rgba(219,184,255,.06) 0px,rgba(219,184,255,.06) 1px,transparent 1px,transparent 24px),repeating-linear-gradient(0deg,rgba(219,184,255,.06) 0px,rgba(219,184,255,.06) 1px,transparent 1px,transparent 24px),var(--sidebar-bg);border-radius:0 0 var(--r-lg) var(--r-lg);display:flex;align-items:center;justify-content:center}
+.xdf-grid-pattern span{font-family:'Hack',monospace;font-size:12px;font-weight:800;color:var(--fcc-purple);letter-spacing:3px;background:var(--sidebar-bg);padding:4px 20px;border-radius:20px;box-shadow:0 0 12px rgba(219,184,255,.15)}
+.teacher-badge{display:inline-flex;align-items:center;gap:10px;background:var(--surface-0);border:2px solid var(--fcc-purple-dark);border-radius:44px;padding:8px 22px;box-shadow:0 3px 16px rgba(90,1,167,.1);transition:all .3s}
+body.dark .teacher-badge{border-color:var(--fcc-purple);background:var(--dark-surface)}
+.teacher-badge .tb-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--fcc-purple-dark),var(--fcc-purple));color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;font-family:'Hack',monospace}
+.teacher-badge .tb-name{font-size:15px;font-weight:700;color:var(--text-1)}
+.teacher-badge .tb-tag{font-size:11px;color:var(--fcc-purple-dark);background:rgba(90,1,167,.08);padding:3px 10px;border-radius:12px;font-weight:700;font-family:'Hack',monospace;letter-spacing:.5px}
+body.dark .teacher-badge .tb-tag{color:var(--fcc-purple);background:rgba(219,184,255,.1)}
+.class-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--sidebar-bg) 0%,var(--fcc-purple-dark) 100%);color:#fff;padding:8px 22px;border-radius:36px;box-shadow:0 3px 16px rgba(90,1,167,.2);font-weight:800;font-size:15px;letter-spacing:1px;font-family:'Hack',monospace}
+.s1-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;margin-bottom:16px}
+.s1-meta-card{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:12px;padding:14px 16px;box-shadow:var(--card-sh);transition:all .2s}
+.s1-meta-card:hover{box-shadow:var(--card-sh-hover);transform:translateY(-1px)}
+.s1-meta-card .sm-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--fcc-purple-dark);margin-bottom:4px}
+body.dark .s1-meta-card .sm-label{color:var(--fcc-purple)}
+.s1-meta-card .sm-value{font-size:17px;font-weight:800;color:var(--text-1);font-family:'Hack',monospace}
+.s1-meta-card .sm-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+
+/* === Flip Cards === */
+.flip-grid{display:grid;gap:14px;width:100%}
+.flip-grid.g5{grid-template-columns:repeat(5,1fr)}
+.flip-grid.g4{grid-template-columns:repeat(4,1fr)}
+.flip-card{min-height:140px;cursor:pointer;width:100%;border-radius:18px;position:relative;perspective:800px}
+.flip-card-inner{width:100%;display:grid;grid-template:1fr/1fr;transition:transform .5s var(--ease-bounce);transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-face{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 22px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;grid-area:1/1}
+.flip-front{background:var(--surface-1);border:1.5px solid var(--card-bd-subtle);z-index:1}
+.flip-back{background:rgba(90,1,167,.06);border:1.5px solid rgba(90,1,167,.2);transform:rotateY(180deg);z-index:0}
+.flip-card.flipped .flip-front{z-index:0}
+.flip-card.flipped .flip-back{z-index:1}
+.flip-q{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.flip-hint{font-size:13px;color:var(--text-3);font-weight:400}
+.flip-ans{font-size:17px;line-height:1.5;color:var(--fcc-green-dark);font-weight:600}
+body.dark .flip-ans{color:var(--fcc-green)}
+
+/* === Split View === */
+.split-view{display:flex;gap:18px;margin-top:14px;max-height:680px}
+.split-left{flex:1.1;background:var(--brand-green-pale);padding:18px 22px;border-radius:12px;overflow-y:auto;max-height:680px;border:1px solid var(--card-bd);transition:all .3s}
+.split-left h4{font-size:16px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:10px;font-family:'Hack',monospace;letter-spacing:.5px}
+body.dark .split-left h4{color:var(--fcc-purple)}
+.split-right{flex:1;overflow-y:auto;max-height:680px}
+.passage-excerpt{font-family:'Times New Roman',Times,serif;font-size:25px;color:var(--text-1);line-height:1.85;margin-bottom:14px;padding:12px 16px;background:var(--surface-0);border-radius:10px;border-left:4px solid var(--fcc-purple-dark);transition:all .3s}
+body.dark .passage-excerpt{border-left-color:var(--fcc-purple)}
+.passage-excerpt .para-num{font-size:11px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-family:'Hack',monospace}
+body.dark .passage-excerpt .para-num{color:var(--fcc-purple)}
+.passage-excerpt .user-highlight{background:#FFEB3B;color:#000;padding:2px 4px;border-radius:2px}
+body.dark .user-highlight{background:#FFEB3B;color:#000}
+
+/* === MCQ === */
+.practice-mcq{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:14px;padding:20px 24px;box-shadow:var(--card-sh);margin-bottom:16px;transition:all .3s}
+.practice-mcq .pmcq-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--fcc-purple-dark);margin-bottom:12px;font-family:'Hack',monospace}
+body.dark .practice-mcq .pmcq-label{color:var(--fcc-purple)}
+.practice-mcq .pmcq-q{font-family:'Times New Roman',Times,serif;font-size:20px;font-weight:800;margin-bottom:18px;line-height:1.5;color:var(--text-1)}
+.pmcq-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.pmcq-opt{display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:10px;border:2px solid var(--card-bd);background:var(--surface-1);font-size:20px;color:var(--text-1);cursor:pointer;transition:all .2s}
+.pmcq-opt:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04);transform:translateX(2px)}
+body.dark .pmcq-opt:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.06)}
+.pmcq-opt.correct{border-color:var(--fcc-green-dark);background:#C8E6C9;font-weight:700}
+body.dark .pmcq-opt.correct{border-color:var(--fcc-green);background:rgba(0,71,27,.2)}
+.pmcq-opt.wrong{border-color:#C62828;background:#FFCDD2}
+body.dark .pmcq-opt.wrong{border-color:#ff6b6b;background:rgba(192,57,43,.15)}
+.pmcq-opt.answered{cursor:default}
+.pmcq-opt .pl{width:30px;height:30px;border-radius:50%;background:rgba(90,1,167,.08);color:var(--fcc-purple-dark);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Hack',monospace;transition:all .2s}
+body.dark .pmcq-opt .pl{background:rgba(219,184,255,.1);color:var(--fcc-purple)}
+.pmcq-opt.correct .pl{background:var(--fcc-green-dark);color:#fff}
+.pmcq-opt.wrong .pl{background:#C62828;color:#fff}
+.mc-banner{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;margin-top:14px;border-radius:12px;font-size:20px;line-height:1.6}
+.mc-banner.mc-correct{background:rgba(172,209,87,.1);border:2px solid var(--fcc-green-dark);color:var(--fcc-green-dark)}
+body.dark .mc-banner.mc-correct{background:rgba(0,71,27,.15);border-color:var(--fcc-green);color:var(--fcc-green)}
+.mc-banner.mc-wrong{background:#FFF5F5;border:2px solid var(--brand-red);color:var(--brand-red)}
+body.dark .mc-banner.mc-wrong{background:rgba(192,57,43,.12);border-color:#ff6b6b;color:#ff6b6b}
+.mc-banner .tick{font-size:28px;flex-shrink:0;line-height:1}
+.mc-banner .at{font-size:20px;font-weight:800;margin-bottom:4px}
+.mc-banner .asub{font-size:20px;color:var(--text-1);font-weight:500;line-height:1.7}
+
+/* === TFNG === */
+.tfng-group{display:flex;gap:10px;margin:6px 0 14px}
+.tfng-btn{display:inline-block;padding:8px 20px;border:2px solid var(--card-bd);border-radius:8px;cursor:pointer;font-size:20px;font-weight:700;background:var(--surface-1);transition:all .2s;font-family:'Hack',monospace}
+.tfng-btn:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04)}
+body.dark .tfng-btn:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.06)}
+.tfng-btn.correct{border-color:var(--fcc-green-dark);background:#C8E6C9;color:var(--fcc-green-dark)}
+body.dark .tfng-btn.correct{border-color:var(--fcc-green);color:var(--fcc-green)}
+.tfng-btn.wrong{border-color:#C62828;background:#FFCDD2;color:#C62828}
+body.dark .tfng-btn.wrong{border-color:#ff6b6b;color:#ff6b6b}
+.tfng-group.answered .tfng-btn{cursor:default}
+
+/* === Cloze === */
+.cloze{display:inline-block;min-width:80px;border-bottom:2px dashed var(--fcc-purple-dark);cursor:pointer;padding:2px 6px;font-weight:700;color:var(--text-3);transition:all .2s;font-size:20px}
+.cloze:hover{background:rgba(90,1,167,.06);color:var(--fcc-purple-dark)}
+body.dark .cloze{border-bottom-color:var(--fcc-purple)}
+body.dark .cloze:hover{background:rgba(219,184,255,.06);color:var(--fcc-purple)}
+.cloze.revealed{color:var(--fcc-green-dark);border-bottom-style:solid;background:rgba(0,71,27,.06);font-weight:800}
+
+/* === Short Answer === */
+.sa-input-wrap{margin-top:12px;display:flex;gap:10px;align-items:flex-start}
+.sa-input{flex:1;padding:10px 14px;border:2px solid var(--card-bd);border-radius:10px;font-size:20px;font-family:'Microsoft YaHei','Inter',sans-serif;color:var(--text-1);background:var(--surface-1);resize:vertical;min-height:44px;max-height:120px;transition:border-color .2s}
+.sa-input:focus{outline:none;border-color:var(--fcc-purple-dark);background:var(--surface-0)}
+body.dark .sa-input:focus{border-color:var(--fcc-purple)}
+.sa-submit{padding:10px 20px;background:var(--fcc-purple-dark);color:#fff;border:none;border-radius:10px;font-size:20px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.sa-submit:hover{filter:brightness(1.15)}
+.sa-result{display:none;margin-top:12px;padding:14px 18px;background:rgba(90,1,167,.04);border:2px solid var(--fcc-purple-dark);border-radius:10px;font-size:20px;line-height:1.7}
+.sa-result.show{display:block}
+body.dark .sa-result{background:rgba(219,184,255,.06);border-color:var(--fcc-purple)}
+.sa-your-ans{color:var(--fcc-blue-dark);font-weight:700;margin-bottom:8px}
+.sa-correct-ans{color:var(--fcc-green-dark);font-weight:700}
+
+/* === Cards === */
+.card{background:var(--surface-0);border:1.5px solid var(--card-bd-subtle);border-radius:var(--r);padding:22px 24px;box-shadow:var(--card-sh);transition:all .2s}
+.card:hover{box-shadow:var(--card-sh-hover)}
+.card.accent{border-left:4px solid var(--fcc-purple-dark)}
+body.dark .card.accent{border-left-color:var(--fcc-purple)}
+.card h4{font-weight:700;margin-bottom:6px;color:var(--text-1)}
+.card p{font-size:20px;line-height:1.65;color:var(--text-1)}
+
+/* === Reveal Button === */
+.reveal-btn{background:var(--fcc-purple-dark);color:#fff;border:none;padding:8px 20px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.reveal-btn:hover{background:var(--fcc-purple-dark);filter:brightness(1.15);transform:translateY(-1px)}
+
+/* === Toast === */
+.toast{position:fixed;top:60px;right:20px;z-index:200;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:700;color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:toastIn .3s var(--ease-bounce),toastOut .3s var(--ease) 2.7s forwards;pointer-events:none;font-family:'Hack',monospace}
+.toast.success{background:var(--fcc-green-dark)}
+.toast.error{background:var(--brand-red)}
+.toast.info{background:var(--fcc-purple-dark)}
+@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}
+
+/* === Streak === */
+.streak-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--fcc-yellow-dark),var(--fcc-yellow));color:var(--sidebar-bg);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;font-family:'Hack',monospace;box-shadow:0 2px 8px rgba(241,190,50,.3);animation:streakGlow 2s ease infinite}
+@keyframes streakGlow{0%,100%{box-shadow:0 2px 8px rgba(241,190,50,.3)}50%{box-shadow:0 2px 16px rgba(241,190,50,.5)}}
+.streak-fire{font-size:14px}
+
+/* === Clear Highlights === */
+.clear-hl-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:transparent;color:var(--text-3);border:1px solid var(--card-bd);border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;margin-left:6px}
+.clear-hl-btn:hover{color:var(--brand-red);border-color:var(--brand-red);background:rgba(192,57,43,.06)}
+.hardmode-btn{margin-left:6px;padding:3px 12px;border-radius:12px;cursor:pointer;font-size:11px;font-weight:700;border:1.5px solid var(--card-bd);background:transparent;color:var(--text-3);transition:all .2s;font-family:'Hack',monospace}
+.hardmode-btn:hover{border-color:var(--brand-red);color:var(--brand-red);background:rgba(192,57,43,.06)}
+.hardmode-btn.active{background:var(--brand-red);color:#fff;border-color:var(--brand-red)}
+
+/* === Answer Reveal === */
+.ans-reveal{display:none;margin-top:14px;padding:14px 18px;background:rgba(90,1,167,.04);border:2px solid var(--fcc-purple-dark);border-radius:10px;font-size:20px;line-height:1.7}
+.ans-reveal.show{display:block}
+body.dark .ans-reveal{background:rgba(219,184,255,.06);border-color:var(--fcc-purple)}
+.ans-banner{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ans-banner .tick{font-size:24px}
+.ans-banner .at{font-weight:800;font-size:20px;color:var(--fcc-purple-dark)}
+body.dark .ans-banner .at{color:var(--fcc-purple)}
+
+/* === Proofreading Hidden Row (two-step reveal from Unit 1) === */
+.q1-hidden-row .cloze {
+  visibility: visible; display: inline;
+  min-width: 0; padding: 0; border-bottom: none;
+  cursor: default; color: inherit; font-weight: inherit; font-size: inherit; background: none;
+}
+.q1-hidden-row .cloze:hover { background: none; color: inherit; }
+.q1-hidden-row.revealed .cloze {
+  display: inline-block; min-width: 80px; padding: 2px 6px;
+  border-bottom: 2px dashed var(--fcc-purple-dark);
+  cursor: pointer; color: var(--text-3); font-weight: 700; background: none;
+}
+.q1-hidden-row.revealed .cloze:hover { background: rgba(90,1,167,.06); color: var(--fcc-purple-dark); }
+.q1-hidden-row .q1-no-mistake { visibility: hidden; }
+.q1-hidden-row.revealed .q1-no-mistake { visibility: visible; }
+.q1-tap-btn{display:inline-block;padding:4px 14px;background:var(--fcc-purple-dark);color:#fff;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none}
+.q1-tap-btn:hover{filter:brightness(1.15)}
+.q1-tap-btn:disabled{opacity:.5;cursor:default}
+
+/* === Drag-Drop (from Unit 1 Q17/Q20) === */
+.draggable{display:inline-block;padding:6px 14px;margin:4px;background:var(--surface-0);border:2px solid var(--card-bd);border-radius:8px;cursor:grab;font-size:24px;font-weight:800;color:var(--text-1);transition:all .2s;user-select:none;font-family:'Hack',monospace}
+.draggable:hover{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.04)}
+.draggable.dragging{opacity:.4;cursor:grabbing}
+.draggable.correct-placed{background:#C8E6C9;border-color:var(--fcc-green-dark)}
+.draggable.wrong-placed{background:#FFCDD2;border-color:#C62828}
+body.dark .draggable{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
+#vocab-c-pool .draggable, #vocab-d-pool .draggable{font-size:15px;font-weight:600;padding:3px 10px}
+#vocab-c-box .drop-zone .draggable, #vocab-d-box .drop-zone .draggable, #vocab-d-box .drop-zone-inline .draggable{font-size:13px;font-weight:600;padding:2px 8px}
+body.dark .draggable:hover{border-color:var(--fcc-purple);background:rgba(219,184,255,.08)}
+body.dark .draggable.correct-placed{background:rgba(0,71,27,.2);border-color:var(--fcc-green)}
+body.dark .draggable.wrong-placed{background:rgba(192,57,43,.15);border-color:#ff6b6b}
+.word-pool{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:var(--surface-1);border-radius:10px;min-height:60px;border:1px solid var(--card-bd-subtle);transition:all .2s;margin-bottom:12px;justify-content:center}
+.word-pool.drag-over{background:rgba(90,1,167,.06);border-color:var(--fcc-purple-dark)}
+body.dark .word-pool{background:var(--dark-surface-2);border-color:var(--dark-card-bd)}
+body.dark .word-pool.drag-over{background:rgba(219,184,255,.06);border-color:var(--fcc-purple)}
+.drop-zone{transition:all .2s;padding:10px 12px;background:var(--surface-1);border-radius:8px;border:2px dashed rgba(90,1,167,.3);min-height:52px;margin-bottom:8px;display:flex;align-items:center}
+.drop-zone .dz-label{flex:1;font-size:16px;font-weight:700;color:var(--text-1);line-height:1.4}
+.drop-zone .drop-content{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center}
+body.dark .drop-zone{border-color:rgba(219,184,255,.4);background:var(--dark-surface)}
+body.dark .drop-zone .dz-label{color:var(--fcc-purple)}
+.drop-zone-inline{display:inline-block;min-width:80px;border-bottom:2px dashed rgba(90,1,167,.4);padding:2px 4px;font-weight:700;color:var(--text-3);text-align:center;transition:all .15s;vertical-align:middle;border-radius:4px}
+.drop-zone-inline.drag-over{border-color:var(--fcc-purple-dark);background:rgba(90,1,167,.08)}
+.drop-zone-inline .draggable{display:inline-block;padding:2px 8px;margin:0;font-size:inherit;background:transparent;border:none;cursor:default;font-weight:700}
+.drop-zone-inline .draggable.correct-placed{color:var(--fcc-green-dark);background:rgba(0,71,27,.08);border-radius:4px}
+.drop-zone-inline .draggable.wrong-placed{color:#C62828;background:rgba(192,57,43,.08);border-radius:4px}
+.drop-zone.correct{border-color:var(--fcc-green-dark)!important;background:rgba(172,209,87,.08)!important}
+.drop-zone.wrong{border-color:#C62828!important;background:rgba(192,57,43,.06)!important}
+
+/* === Confetti === */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
+.c-piece{position:absolute;top:-40px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+/* === Tables === */
+.tb-wrap{overflow-x:auto;margin:12px 0}
+.tb-wrap table{width:100%;border-collapse:collapse;font-size:20px}
+.tb-wrap th,.tb-wrap td{padding:10px 14px;border:1px solid var(--card-bd);text-align:left;vertical-align:top}
+.tb-wrap th{background:rgba(90,1,167,.06);color:var(--fcc-purple-dark);font-weight:700}
+body.dark .tb-wrap th{background:rgba(219,184,255,.08);color:var(--fcc-purple)}
+
+/* === Method Badge === */
+.method-badge{display:inline-flex;align-items:center;gap:6px;background:var(--fcc-yellow);color:var(--sidebar-bg);padding:4px 12px;border-radius:20px;font-size:20px;font-weight:700;font-family:'Hack',monospace;margin-bottom:8px}
+.method-wrap{display:none;margin-top:10px}
+
+/* === Responsive === */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .slide{padding:52px 28px 40px}
+  .flip-grid.g5,.flip-grid.g4{grid-template-columns:repeat(2,1fr)}
+  .s1-meta-grid{grid-template-columns:1fr}
+  .split-view{flex-direction:column}
+  .passage-excerpt{font-size:20px}
+}
+@media(max-width:768px){
+  .slide{padding:42px 14px 36px}
+  .topbar .course-tag{display:none}
+  .topbar .progress-dots{display:none}
+  .topbar{padding:0 8px;gap:6px;height:34px}
+  .topbar .slide-title{font-size:11px;min-width:0}
+  .slide-h1{font-size:clamp(26px,6vw,36px)!important}
+  .slide-h2{font-size:clamp(20px,5vw,28px)!important}
+  .slide-h3{font-size:clamp(17px,4vw,22px)!important}
+  .flip-card{min-height:110px}
+  .flip-grid.g5,.flip-grid.g4{grid-template-columns:repeat(3,1fr)}
+  .flip-q,.flip-ans{font-size:14px}
+  .split-view{flex-direction:column;max-height:none;gap:12px}
+  .split-left,.split-right{max-height:none;flex:none}
+  .split-left{max-height:35vh}
+  .passage-excerpt{font-size:18px;padding:10px 12px;line-height:1.7}
+  .practice-mcq{padding:14px 16px}
+  .practice-mcq .pmcq-q{font-size:17px;margin-bottom:12px}
+  .pmcq-opt{padding:10px 12px;font-size:17px;gap:10px}
+  .tfng-btn{padding:6px 14px;font-size:17px}
+  .sa-input{font-size:17px}
+  .mc-banner{font-size:17px;padding:10px 12px}
+  .mc-banner .at{font-size:17px}
+  .mc-banner .asub{font-size:15px}
+  .tb-wrap table{font-size:16px!important}
+  .tb-wrap th,.tb-wrap td{padding:6px 8px!important}
+  .zoom-controls{display:none}
+  .page-counter{font-size:12px;padding:4px 12px;bottom:10px}
+  .progress-bar{height:2px}
+  .ans-reveal{font-size:17px;padding:10px 12px}
+  .method-badge{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">&lt;/&gt; READING</div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+  </div>
+  <div class="sidebar-nav" id="sidebarNav"></div>
+  <div class="sidebar-score">
+    <div class="score-ring">
+      <svg viewBox="0 0 36 36">
+        <circle class="ring-bg" cx="18" cy="18" r="14"/>
+        <circle class="ring-fg" cx="18" cy="18" r="14" stroke-dasharray="87.96" stroke-dashoffset="87.96"/>
+      </svg>
+      <div class="ring-text">0%</div>
+    </div>
+    <div class="score-detail"><div class="sd-label">Score</div><div class="sd-val">0/0</div></div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode (D)">☽</button>
+    <span class="theme-label">Dark Mode</span>
+  </div>
+</aside>
+
+<div class="main-area">
+
+<!-- Topbar -->
+<div class="topbar">
+  <span class="course-tag">香港加速班</span>
+  <span class="slide-title mono" id="topbarTitle"></span>
+  <span class="progress-dots" id="progressDots"></span>
+  <span class="score-badge"><span class="sb-correct">0</span><span class="sb-divider">/</span><span class="sb-total">0</span></span>
+  <span class="streak-badge" style="display:none"><span class="streak-fire">🔥</span><span class="streak-count">0</span></span>
+  <span class="zoom-controls">
+    <button class="zoom-btn" id="zoomOutBtn" onclick="zoomOut()">−</button>
+    <span class="zoom-level" id="zoomLevelLabel" onclick="resetZoom()">100%</span>
+    <button class="zoom-btn" id="zoomInBtn" onclick="zoomIn()">+</button>
+  </span>
+  <span class="timer-wrap">
+    <span class="timer-input-wrap" id="timerWrap" oncontextmenu="event.preventDefault();cycleDuration()" title="Right-click to cycle presets">
+      <input class="t-min" id="timerMin" type="number" min="0" max="99" value="5">
+      <span class="t-colon">:</span>
+      <input class="t-sec" id="timerSec" type="number" min="0" max="59" value="00">
+      <span class="timer-done-label">TIME UP</span>
+    </span>
+    <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">▶</button>
+    <button class="timer-reset" onclick="resetTimer()">Reset</button>
+  </span>
+  <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">🗑 Clear</button>
+  <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()">🔒 Easy</button>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="page-counter">
+  <span class="pc-cur" id="pcCur" onclick="editPageCounter()">1</span>
+  <span class="pc-total" id="pcTotal"></span>
+</div>
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide is-active" data-title="Lesson 04 · WKCD" data-section="cover" data-part="Part A">
+<div class="s1-card-wrapper">
+  <div class="xdf-header-bar">
+    <div class="xdf-logo-text">DSE READING <span>// Paper 1</span></div>
+    <div class="xdf-sub-text">Lesson 04 · Part A</div>
+  </div>
+  <div style="padding:28px 32px">
+    <div class="slide-h1" style="text-align:center;margin-bottom:6px">Reading Lesson 04</div>
+    <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">West Kowloon Cultural District</div>
+    <div style="display:flex;justify-content:center;margin-bottom:24px">
+      <div class="teacher-badge">
+        <div class="tb-avatar">G</div>
+        <div class="tb-name">陈成寓 George</div>
+        <div class="tb-tag">TEACHER</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:20px">
+      <div class="class-badge">香港加速班</div>
+    </div>
+    <div class="s1-meta-grid">
+      <div class="s1-meta-card"><div class="sm-label">Part A</div><div class="sm-value">Q1–Q23</div><div class="sm-sub">Text 1</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Skills</div><div class="sm-value">3 Focus</div><div class="sm-sub">Proofreading · Chronological · Figurative</div></div>
+      <div class="s1-meta-card"><div class="sm-label">Topic</div><div class="sm-value">WKCD</div><div class="sm-sub">Hong Kong Social &amp; Cultural</div></div>
+    </div>
+  </div>
+  <div class="xdf-grid-pattern"><span>USE ARROW KEYS // SWIPE TO NAVIGATE</span></div>
+</div>
+</section>
+
+<!-- ============ SLIDE 2: COURSE OBJECTIVES ============ -->
+<section class="slide" data-title="课程目标" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Section 1</div>
+<div class="slide-h2">课程目标 Course Objectives</div>
+<div class="card" style="margin-top:16px;padding:24px 28px">
+  <p style="font-size:20px;margin-bottom:16px">By the end of this lesson, students will be able to:</p>
+  <ul style="font-size:20px;line-height:2.2;padding-left:24px">
+    <li>🔍 Understand DSE Part A HK local social/cultural articles — use <strong>Skimming</strong> to predict structure &amp; main ideas</li>
+    <li>✏️ Master <strong>Proofreading</strong> strategy — compare summary vs original text, identify &amp; correct errors</li>
+    <li>📊 Master <strong>Chronological Ordering</strong> — reconstruct event timelines using time markers</li>
+    <li>💡 Master <strong>Figurative Language</strong> — interpret idioms, metaphors &amp; non-literal expressions in context</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============ SLIDE 3: LEAD-IN ============ -->
+<section class="slide" data-title="Lead-In Activity" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Section 2A · Lead-In</div>
+<div class="slide-h2">The 70-Billion-Dollar Question</div>
+<p style="font-size:17px;color:var(--text-2);margin-bottom:6px">a) Quick Fact File — Look at the picture and guess the missing information.</p>
+<div class="split-view" style="max-height:620px">
+  <div class="split-left" style="flex:1">
+    <h4>📍 Landmark Profile: WKCD &amp; M+</h4>
+    <div class="passage-excerpt" style="font-size:19px;padding:10px 14px">
+      <div class="para-num" style="font-size:11px">Location</div>
+      Next to Victoria Harbour (维多利亚港).
+    </div>
+    <div class="passage-excerpt" style="font-size:19px;padding:10px 14px">
+      <div class="para-num" style="font-size:11px">What is it?</div>
+      A massive arts hub (艺术枢纽) and Hong Kong's newest global museum of visual culture.
+    </div>
+    <div class="passage-excerpt" style="font-size:19px;padding:10px 14px">
+      <div class="para-num" style="font-size:11px">Collections</div>
+      Unlike traditional museums, M+ does not show ancient antiques. It focuses on 20th &amp; 21st-century contemporary <span class="cloze" data-answer="B. visual art, design, and architecture" onclick="revealCloze(this)">________</span>. (A. dinosaur fossils / B. visual art, design, and architecture)
+    </div>
+    <div class="passage-excerpt" style="font-size:19px;padding:10px 14px">
+      <div class="para-num" style="font-size:11px">Size</div>
+      40 hectares (hectares = 公顷) — one of the largest cultural projects in the world!
+    </div>
+    <div class="passage-excerpt" style="font-size:19px;padding:10px 14px">
+      <div class="para-num" style="font-size:11px">Special Feature</div>
+      It has a giant <span class="cloze" data-answer="glass dome" onclick="revealCloze(this)">________</span> facing the harbour. (A. LED screen / B. glass dome)
+    </div>
+  </div>
+  <div class="split-right" style="flex:0.9">
+    <div class="card" style="margin-bottom:14px;padding:14px 16px">
+      <h4 style="font-size:17px">💬 Quick Fact Check</h4>
+      <ol style="font-size:16px;padding-left:18px;margin-top:6px">
+        <li>Have you ever visited the M+ museum or the West Kowloon Cultural District? What was your impression?</li>
+        <li>If you had to guess, how much money do you think it costs the government to build this entire district?</li>
+      </ol>
+    </div>
+    <div class="card" style="margin-bottom:14px;padding:14px 16px">
+      <h4 style="font-size:17px">💰 b) The Reality Check (Discussion)</h4>
+      <p style="font-size:16px;font-style:italic;margin-bottom:8px">The M+ museum is estimated to cost <strong>HK$70 billion</strong> to build.</p>
+      <p style="font-size:16px;margin-bottom:6px"><strong>Discuss with your partner:</strong></p>
+      <p style="font-size:16px">With 70 billion dollars, the government could build multiple public housing estates or hospitals.</p>
+      <ul style="font-size:16px;padding-left:18px;margin-top:6px">
+        <li>Do you think spending this much on an "arts hub" is a waste of taxpayers' money?</li>
+        <li>Or is it a necessary investment for Hong Kong's future? Why?</li>
+      </ul>
+    </div>
+    <button class="reveal-btn" onclick="toggleRev('leadin-ans')">👩‍🏫 Teaching Guide</button>
+    <div class="ans-reveal" id="leadin-ans">
+      <div class="ans-banner"><span class="tick">💡</span><div><div class="at">教学指引 Teaching Guide</div></div></div>
+      <p><strong>Collections Answer:</strong> B. visual art, design, and architecture</p>
+      <p><strong>Special Feature Answer:</strong> B. glass dome</p>
+      <p><strong>Discussion — For (waste):</strong> Could fund hospitals, public housing, schools. Opportunity cost is huge.</p>
+      <p><strong>Discussion — Against (investment):</strong> Cultural infrastructure boosts HK's global competitiveness, tourism revenue, and local arts ecology. Compare with Lesson 02.</p>
+      <p><strong>Key vocab:</strong> taxpayers' money, public housing, return on investment, cultural capital.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 4: VOCABULARY MATCHING (c) ============ -->
+<section class="slide" data-title="词汇匹配" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Section 2A · Vocab Matching</div>
+<div class="slide-h2">Drag Words to Definitions</div>
+<div class="slide-h3" style="margin-bottom:10px">c) Read the sentences on the left. Then drag each word to match its definition on the right.</div>
+<div class="split-view" style="max-height:620px">
+  <div class="split-left" style="flex:1;overflow-y:auto">
+    <h4>📖 Sentences for Reference</h4>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">1. The government's new tax policy is highly <strong>controversial</strong>, causing heated debates across the country.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">2. Since its <strong>inception</strong> in 1990, the charity has helped millions of homeless people.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">3. What started as a small disagreement quickly <strong>ballooned</strong> into a massive argument.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">4. The company faced a severe <strong>backlash</strong> from fans after they suddenly cancelled the popular TV show.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">5. He bought an <strong>extravagant</strong> diamond necklace that cost more than a sports car.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">6. The old system was completely <strong>scrapped</strong> because it was too slow and expensive to fix.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">7. Before starting a new business, you must study its financial <strong>viability</strong> to ensure it can survive.</p>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:8px">
+      <p style="font-size:16px">8. The instructions on the medicine bottle were very <strong>explicit</strong>: take one pill every 12 hours.</p>
+    </div>
+  </div>
+  <div class="split-right" style="flex:1;overflow-y:auto">
+    <h4>✏️ Drag to Match</h4>
+    <div class="card" style="padding:10px 12px" id="vocab-c-box">
+      <div class="word-pool" id="vocab-c-pool">
+        <div class="draggable" draggable="true" data-word="controversial" id="vc-d1">controversial</div>
+        <div class="draggable" draggable="true" data-word="inception" id="vc-d2">inception</div>
+        <div class="draggable" draggable="true" data-word="ballooned" id="vc-d3">ballooned</div>
+        <div class="draggable" draggable="true" data-word="backlash" id="vc-d4">backlash</div>
+        <div class="draggable" draggable="true" data-word="extravagant" id="vc-d5">extravagant</div>
+        <div class="draggable" draggable="true" data-word="scrapped" id="vc-d6">scrapped</div>
+        <div class="draggable" draggable="true" data-word="viability" id="vc-d7">viability</div>
+        <div class="draggable" draggable="true" data-word="explicit" id="vc-d8">explicit</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+        <div class="drop-zone" data-accept="controversial" id="vc-z-a"><div class="dz-label">a) causing a lot of public disagreement and argument</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="backlash" id="vc-z-b"><div class="dz-label">b) a strong negative reaction from a large number of people</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="extravagant" id="vc-z-c"><div class="dz-label">c) spending too much money, or costing more than is reasonable</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="scrapped" id="vc-z-d"><div class="dz-label">d) cancelled or got rid of a plan, system, or idea</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="explicit" id="vc-z-e"><div class="dz-label">e) clear and exact; leaving no doubt</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="inception" id="vc-z-f"><div class="dz-label">f) the start of an institution, organization, or activity</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="viability" id="vc-z-g"><div class="dz-label">g) the ability to work successfully or survive</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="ballooned" id="vc-z-h"><div class="dz-label">h) increased rapidly in amount or size</div><div class="drop-content"></div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:10px">
+        <button class="reveal-btn" onclick="checkVocabC()">Check</button>
+        <button class="reveal-btn" onclick="resetVocabC()" style="background:var(--text-3)">Reset</button>
+        <button class="reveal-btn" onclick="toggleRev('vocab-c-ans')" style="font-size:14px">Show Answers</button>
+      </div>
+      <div class="ans-reveal" id="vocab-c-ans" style="margin-top:8px">
+        <p>a. <strong>controversial</strong> (引起大量公众争议和争论的) &nbsp; b. <strong>backlash</strong> (强烈抵制/强烈反对)</p>
+        <p>c. <strong>extravagant</strong> (极其昂贵的/挥霍的/奢华的) &nbsp; d. <strong>scrapped</strong> (取消/废弃/搁置)</p>
+        <p>e. <strong>explicit</strong> (明确的/直截了当的) &nbsp; f. <strong>inception</strong> (开端/创立/成立)</p>
+        <p>g. <strong>viability</strong> (可行性/生存能力) &nbsp; h. <strong>ballooned</strong> (激增/迅速膨胀)</p>
+      </div>
+      <div class="ans-reveal" id="vocab-c-result" style="margin-top:6px"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 5: VOCABULARY FILL-IN-BLANK (d) ============ -->
+<section class="slide" data-title="词汇填空" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Section 2A · Vocab Practice</div>
+<div class="slide-h2">Drag Words into Sentences</div>
+<div class="slide-h3" style="margin-bottom:10px">d) Use the words in the box to complete the sentences below.</div>
+<div class="card" style="padding:12px 14px" id="vocab-d-box">
+  <div class="word-pool" id="vocab-d-pool">
+    <div class="draggable" draggable="true" data-word="high-profile" id="vd-d1">high-profile</div>
+    <div class="draggable" draggable="true" data-word="plagued" id="vd-d2">plagued</div>
+    <div class="draggable" draggable="true" data-word="nurturing" id="vd-d3">nurturing</div>
+    <div class="draggable" draggable="true" data-word="flamboyant" id="vd-d4">flamboyant</div>
+    <div class="draggable" draggable="true" data-word="interim" id="vd-d5">interim</div>
+    <div class="draggable" draggable="true" data-word="demolished" id="vd-d6">demolished</div>
+    <div class="draggable" draggable="true" data-word="shortfall" id="vd-d7">shortfall</div>
+    <div class="draggable" draggable="true" data-word="rectify" id="vd-d8">rectify</div>
+  </div>
+  <div class="split-view" style="max-height:440px;margin-top:8px">
+    <div class="split-left" style="flex:1;overflow-y:auto">
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">1. A <span class="drop-zone-inline" data-accept="high-profile" id="vd-s1">______</span> trial involving two famous Hollywood actors has dominated the news all week.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">2. The project was delayed because it was <span class="drop-zone-inline" data-accept="plagued" id="vd-s2">______</span> by technical issues from the very beginning.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">3. Good teachers spend a lot of time <span class="drop-zone-inline" data-accept="nurturing" id="vd-s3">______</span> their students' talents so they can reach their full potential.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">4. The singer is known for her <span class="drop-zone-inline" data-accept="flamboyant" id="vd-s4">______</span> stage outfits, often wearing bright feathers and sparkling jewels.</p>
+      </div>
+    </div>
+    <div class="split-right" style="flex:1;overflow-y:auto">
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">5. The new president takes office in March, but a temporary leader will be in charge during the <span class="drop-zone-inline" data-accept="interim" id="vd-s5">______</span>.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">6. After the earthquake, many unsafe buildings were <span class="drop-zone-inline" data-accept="demolished" id="vd-s6">______</span> by the city to prevent further accidents.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">7. The charity relies on donations to make up for the 10,000-dollar <span class="drop-zone-inline" data-accept="shortfall" id="vd-s7">______</span> in their budget.</p>
+      </div>
+      <div class="card" style="padding:10px 14px;margin-bottom:8px">
+        <p style="font-size:16px">8. The manager apologized for the mistake in the contract and promised to <span class="drop-zone-inline" data-accept="rectify" id="vd-s8">______</span> the situation immediately.</p>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:10px">
+    <button class="reveal-btn" onclick="checkVocabD()">Check</button>
+    <button class="reveal-btn" onclick="resetVocabD()" style="background:var(--text-3)">Reset</button>
+    <button class="reveal-btn" onclick="toggleRev('vocab-d-ans')" style="font-size:14px">Show Answers</button>
+  </div>
+  <div class="ans-reveal" id="vocab-d-ans" style="margin-top:8px">
+    <p>1. <strong>high-profile</strong>（备受瞩目的 / 高调的）— The high-profile court case attracted reporters from all over the world.</p>
+    <p>2. <strong>plagued</strong>（困扰 / 折磨 / 使烦恼）— The construction project was plagued by a series of financial problems.</p>
+    <p>3. <strong>nurturing</strong>（培育 / 培养 / 扶持）— The city is trying to transform the old industrial area into a modern arts hub, nurturing local talent along the way.</p>
+    <p>4. <strong>flamboyant</strong>（艳丽的 / 炫耀的 / 惹人注目的）— The singer is known for her flamboyant stage outfits, often wearing bright feathers and sparkling jewels.</p>
+    <p>5. <strong>interim</strong>（过渡期 / 期间）— During the interim between the two CEOs, the company was run by a temporary management team.</p>
+    <p>6. <strong>demolished</strong>（拆毁 / 摧毁）— After the earthquake, many unsafe buildings were demolished by the city to prevent further damage.</p>
+    <p>7. <strong>shortfall</strong>（差额 / 短缺）— The charity reported a shortfall of $2 million compared to what they had expected to raise.</p>
+    <p>8. <strong>rectify</strong>（纠正 / 矫正 / 补救）— Please check your spelling and rectify any mistakes before submitting the report.</p>
+  </div>
+  <div class="ans-reveal" id="vocab-d-result" style="margin-top:6px"></div>
+</div>
+</section>
+
+<!-- ============ SLIDE 6: VOCABULARY ENTRY TEST (FLIP CARDS) ============ -->
+<section class="slide" data-title="词汇预习" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Part A · Vocabulary Preview</div>
+<div class="slide-h3" style="margin-bottom:12px">Key Vocabulary — tap to flip</div>
+<div class="flip-grid g5">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">controversial</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">引起争议的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">high-profile</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">备受瞩目的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">ill-fated</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">命运多舛的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">backlash</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">强烈抵制</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">extravagant</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">极其昂贵的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">inception</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">开端/创立</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">balloon (v)</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">激增/迅速膨胀</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">scrapped</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">取消/废弃</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">viability</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">可行性</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">explicit</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">明确的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">deservedly</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">理所应当地</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">rectify</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">纠正/矫正</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">plague (v)</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">困扰/折磨</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">flamboyant</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">炫耀的/浮夸的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">outcry</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">强烈抗议</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">a relative bargain</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">相对划算的交易</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">exaggeration</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">夸张/夸大其词</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">culture vulture</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">文化狂热分子</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">redeem</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">挽回（声誉）</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">optimistic</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">乐观的</div></div></div></div>
+</div>
+</section>
+
+<!-- ============ SLIDE 7: MORE VOCABULARY FLIP CARDS ============ -->
+<section class="slide" data-title="词汇更多" data-section="entry-test" data-part="Part A">
+<div class="sec-label">Part A · More Vocabulary</div>
+<div class="slide-h3" style="margin-bottom:12px">More Key Words — tap to flip</div>
+<div class="flip-grid g5">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">spanking new</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">崭新的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">slated</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">预定的/计划的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">harbourfront</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">海滨的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">pandemic</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">大流行病</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">setback</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">挫折/阻碍</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">mishap</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">小事故/倒霉事</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">controversy</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">争议/争论</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">arts hub</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">艺术中心/枢纽</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">iconic</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">标志性的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">gigantic</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">巨大的/庞大的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">canopy</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">顶篷/树冠</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">propose</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">提议/建议</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">break ground</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">破土动工</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">demolish</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">拆毁/摧毁</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">temporary</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">暂时的/临时的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">permanent</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">永久的/固定的</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">revenue</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">收入/收益</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">outlay</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">开支/花费</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">shortfall</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">差额/短缺</div></div></div></div>
+  <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-face flip-front"><div class="flip-q">primarily</div><div class="flip-hint">tap</div></div><div class="flip-face flip-back"><div class="flip-ans">主要地</div></div></div></div>
+</div>
+</section>
+
+<!-- ============ SLIDE 8: SKIMMING PREDICTION ============ -->
+<section class="slide" data-title="Skimming &amp; Prediction" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2A · Skimming</div>
+<div class="slide-h3">Predicting Structure from Topic Sentences</div>
+<div class="card accent" style="margin-bottom:12px;padding:14px 20px">
+  <p style="font-size:16px"><strong>📖 Skimming Strategy Tip:</strong></p>
+  <ul style="font-size:16px;padding-left:20px;margin:4px 0">
+    <li>Focus on <strong>Topic Sentences</strong> — read the first sentence of each paragraph to grasp the main idea.</li>
+    <li>Pay attention to <strong>Contrast Signals</strong> — words like <i>While</i>, <i>also</i>, <i>more optimistic</i> and expert names often signal a new viewpoint.</li>
+  </ul>
+</div>
+<p style="font-size:20px;margin-bottom:14px">Read the title and the first sentences of Paragraphs 9, 10, and 11, then answer:</p>
+<div class="split-view" style="max-height:600px">
+  <div class="split-left" style="flex:1">
+    <h4>📖 First Sentences</h4>
+    <div class="passage-excerpt" style="font-size:22px">
+      <div class="para-num">¶9</div>
+      While the arts hub now seems to have redeemed itself somewhat with the opening of M+, questions certainly remain about the viability of the project.
+    </div>
+    <div class="passage-excerpt" style="font-size:22px">
+      <div class="para-num">¶10</div>
+      Professor Wong also expressed concerns about visitor numbers at the various venues within the arts hub.
+    </div>
+    <div class="passage-excerpt" style="font-size:22px">
+      <div class="para-num">¶11</div>
+      Art historian Dr Ephraim Kwan was among those who take a more optimistic view.
+    </div>
+  </div>
+  <div class="split-right" style="flex:0.9">
+    <div class="practice-mcq" id="q-skim-box">
+      <div class="pmcq-label">Skimming · 1 mark</div>
+      <div class="pmcq-q">Q1. Based on the title and these first sentences, what is the main structure of the second half of this article?</div>
+      <div class="pmcq-options" id="q-skim-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>A step-by-step guide on how the government built the M+ museum.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>A contrast between different experts' opinions (negative vs. positive) on the cultural district project.</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q-skim2-box" style="margin-top:12px">
+      <div class="pmcq-label">Q2 · 1 mark</div>
+      <div class="pmcq-q">Which expert is likely to criticize the project, and which is likely to support it?</div>
+      <div class="card" style="margin-bottom:12px">
+        <p><strong>Criticize:</strong> <span style="color:var(--text-3)">________</span></p>
+        <p><strong>Support:</strong> <span style="color:var(--text-3)">________</span></p>
+      </div>
+      <button class="reveal-btn" onclick="toggleRev('skim-ans')">Show Answer</button>
+      <div class="ans-reveal" id="skim-ans">
+        <div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div>
+        <p><strong>Criticize:</strong> Professor Lolo Wong — "less than impressed" (negative about cost management)</p>
+        <p><strong>Support:</strong> Dr Ephraim Kwan — "takes a more optimistic view"</p>
+        <p><strong>Key signals:</strong> "less than impressed" = negative; "more optimistic" = positive.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 9: Q1-Q4 (Paragraphs 1-3) ============ -->
+  <section class="slide" data-title="Q1–Q4 · Summary Cloze" data-section="practice" data-part="Part A" data-hard-group="text1">
+    <div class="sec-label">Section 2B · Q1–Q4</div>
+    <div class="slide-h3">Paragraphs 1–3: Summary Cloze &amp; Word Hunt</div>
+    <div class="split-view">
+      <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraphs 1–3</h4>
+    <div class="passage-excerpt">
+      <div class="para-num">¶1</div>
+      The twelfth of November 2021 saw the public opening of Hong Kong's spanking new visual art museum, M+, the most high-profile by far of the facilities slated to be included in the harbourfront West Kowloon Cultural District development.
+    </div>
+    <div class="passage-excerpt">
+      <div class="para-num">¶2</div>
+      Widely praised for its expansive collections and cutting-edge architecture—courtesy of Swiss firm Herzog &amp; de Meuron—the museum regularly drew daily crowds of more than 10,000 eager art lovers in its first seven weeks of being open. Then, rather characteristically for the ill-fated arts hub, the fifth wave of the Covid pandemic struck and forced the museum to shut its doors for more than three months.
+    </div>
+    <div class="passage-excerpt">
+      <div class="para-num">¶3</div>
+      This setback was only the latest in a long line of mishaps and controversies that have plagued the West Kowloon Cultural District project since even before its inception.
+    </div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q1-box">
+      <div class="pmcq-label">Q1 · Summary Cloze · 4 marks</div>
+      <div class="pmcq-q">Complete the summary by selecting the best option:</div>
+      <div class="card" style="margin-bottom:12px;padding:14px 16px">
+        <p style="font-size:16px">The M+ museum is the <strong>(i)____</strong> venue planned for the WKCD development. While the museum has been <strong>(ii)____</strong>, it was open <strong>(iii)____</strong> before it had to close. This was just one of the many setbacks the <strong>(iv)____</strong> project has experienced.</p>
+      </div>
+      <div class="pmcq-options" id="q1i-opts">
+        <div class="pmcq-label" style="font-size:11px">(i)</div>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>latest</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">B</span>most prominent</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>most controversial</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>only public</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q1ii-box">
+      <div class="pmcq-label">(ii)</div>
+      <div class="pmcq-options" id="q1ii-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>criticized</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>expensive</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>well received</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>expanded</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q1iii-box">
+      <div class="pmcq-label">(iii)</div>
+      <div class="pmcq-options" id="q1iii-opts">
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>for less than two months</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>for more than three months</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>in November 2021</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>daily</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q1iv-box">
+      <div class="pmcq-label">(iv)</div>
+      <div class="pmcq-options" id="q1iv-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>widely praised</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>misunderstood</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>successful</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>ill-fated</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q2-box">
+      <div class="pmcq-label">Q2 · Word Hunt · 1 mark</div>
+      <div class="pmcq-q">Find a word or phrase in ¶2 which has a similar meaning to 'modern'.</div>
+      <div style="margin:10px 0">
+        <span style="color:var(--text-3);font-size:20px">________</span>
+      </div>
+      <button class="reveal-btn" onclick="toggleRev('q2-ans')">Show Answer</button>
+      <div class="ans-reveal" id="q2-ans"><div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div><p><strong>cutting-edge</strong> (line 7) — modern, most advanced.</p></div>
+    </div>
+    <div class="practice-mcq" id="q3-box">
+      <div class="pmcq-label">Q3 · 1 mark</div>
+      <div class="pmcq-q">Who designed M+?</div>
+      <div style="margin:10px 0"><span style="color:var(--text-3);font-size:20px">________</span></div>
+      <button class="reveal-btn" onclick="toggleRev('q3-ans')">Show Answer</button>
+      <div class="ans-reveal" id="q3-ans"><div class="ans-banner"><span class="tick">✅</span><div><div class="at">Answer</div></div></div><p><strong>Herzog &amp; de Meuron</strong> (Swiss firm, ¶2).</p></div>
+    </div>
+    <div class="practice-mcq" id="q4-box">
+      <div class="pmcq-label">Q4 · 2 marks</div>
+      <div class="pmcq-q">According to ¶4, what was the reason for the West Kowloon Cultural District?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">A HKTA survey found overseas visitors were dissatisfied with the lack of cultural attractions in the city / Hong Kong // a desire for increased tourism revenue (¶4).</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 10: Q5-Q7 (Proofreading + Backlash) ============ -->
+<section class="slide" data-title="Q5–Q7 · Proofreading" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q5–Q7</div>
+<div class="slide-h3">Paragraphs 4–6: Proofreading &amp; Vocabulary</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraphs 4–6</h4>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>First proposed officially in then-Chief Executive Tung Chee-hwa's 1998 policy address, it came about as the result of a Hong Kong Tourist Association survey conducted two years earlier which found that overseas visitors were dissatisfied with the lack of cultural attractions in the city. None too surprisingly, this caused critics to feel that the project was motivated more by a desire for increased tourism revenue than by any real interest in nurturing and developing the local arts scene.</div>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Nevertheless, the original idea of a single venue on a 5.5-hectare site rapidly ballooned into a much more ambitious 40-hectare arts hub, and in April 2001, an international competition was launched to find a suitable design for the development. Legendary British architect Lord Norman Foster—the man behind the HSBC Main Building, Chek Lap Kok Airport and the Millennium Bridge in London, among countless other iconic structures—won out with a flamboyant plan that included a gigantic, 30-storey-high canopy.</div>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>The design immediately received significant backlash, much of it centred on the extravagant cost of construction brought about by the canopy. Additionally, with all the venues and facilities in the district to be linked under this one roof—the largest on the planet—it was decided that a single developer would be given control over the project. This caused further public outcry, as people felt it would give the developer too much power, likely resulting in a primarily residential and commercial development rather than a genuinely cultural one.</div>
+  </div>
+  <div class="split-right">
+    <div class="card accent" style="margin-bottom:10px">
+      <h4>Q5 · Proofreading · 5 marks</h4>
+      <p style="font-size:16px">Below is a summary of ¶5–6. In <strong>four</strong> lines there is ONE mistake. Underline and correct it. One line has no mistake — put ✓.</p>
+    </div>
+    <div class="tb-wrap"><table>
+      <tr><th></th><th>Summary</th><th style="width:120px">Correction</th></tr>
+      <tr class="q1-hidden-row" id="q5-row-i"><td>(i)</td><td>The project started out as a single venue, but it quickly <span class="cloze" data-answer="increased / ballooned">decreased</span> in</td><td><button class="q1-tap-btn" onclick="revealQ1Row('q5-row-i')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="q5-row-ii"><td>(ii)</td><td>scale. Architects from all around the <span class="cloze" data-answer="world">district</span> competed for the honour of</td><td><button class="q1-tap-btn" onclick="revealQ1Row('q5-row-ii')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="q5-row-iii"><td>(iii)</td><td>designing the development. The winning entry featured a huge canopy, <span class="q1-no-mistake" style="color:var(--fcc-green-dark);font-weight:800">✓ no mistake</span></td><td><button class="q1-tap-btn" onclick="revealQ1Row('q5-row-iii')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="q5-row-iv"><td>(iv)</td><td>which would have <span class="cloze" data-answer="broken / beaten / set">failed</span> the record for the world's biggest roof. This</td><td><button class="q1-tap-btn" onclick="revealQ1Row('q5-row-iv')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="q5-row-v"><td>(v)</td><td>design turned out to be highly <span class="cloze" data-answer="unpopular">popular</span> with the people of Hong Kong.</td><td><button class="q1-tap-btn" onclick="revealQ1Row('q5-row-v')">Tap to reveal</button></td></tr>
+    </table></div>
+    <div style="margin-top:8px;margin-bottom:10px">
+    <button class="reveal-btn" onclick="toggleRev('q5-expl')" style="font-size:15px">Show Explanations</button>
+    <div class="ans-reveal" id="q5-expl"><strong>(i) decreased → increased / ballooned</strong> — ¶5 'rapidly ballooned into a much more ambitious 40-hectare arts hub'<br><strong>(ii) district → world</strong> — ¶5 'an international competition was launched'<br><strong>(iii) ✓ no mistake</strong> — Winning entry featured a huge canopy is correct<br><strong>(iv) failed → broken / beaten / set</strong> — 'the largest on the planet'<br><strong>(v) popular → unpopular</strong> — ¶6 'The design immediately received significant backlash'<br><br><span class="method-badge">🔑 Proofreading 五步法：定位原文 → 逐词对照 → 识别语义差异 → 替换同词性词语 → 代入验证</span></div>
+    </div>
+
+    <div class="practice-mcq" id="q6-box">
+      <div class="pmcq-label">Q6 · 3 marks</div>
+      <div class="pmcq-q">What was the 'backlash' (line 20)? Write ONE word from ¶6 in each blank:</div>
+      <div class="card" style="margin-bottom:10px;padding:12px 14px">
+        <p style="font-size:15px">(i) People complained that the construction would <strong>____</strong> too much.</p>
+        <p style="font-size:15px">(ii) People complained about the <strong>____</strong> given to the developer.</p>
+        <p style="font-size:15px">(iii) People didn't believe it would be a primarily <strong>____</strong> development.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleRev('q6-ans')">Show Answers</button>
+      <div class="ans-reveal" id="q6-ans"><p>(i) <strong>cost</strong> (extravagant cost) &nbsp; (ii) <strong>power / control</strong> (too much power) &nbsp; (iii) <strong>cultural / genuinely cultural</strong></p></div>
+    </div>
+    <div class="practice-mcq" id="q7-box">
+      <div class="pmcq-label">Q7 · 2 marks</div>
+      <div class="pmcq-q">Why was the decision made to give the project to a single developer?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type your answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">Because all venues/facilities were to be linked under one roof (the largest on the planet), so a single developer was needed for control (¶6).</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 11: Q8-Q10 (Drawing Board, TFNG, In fact) ============ -->
+<section class="slide" data-title="Q8–Q10 · Drawing Board & TFNG" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q8–Q10</div>
+<div class="slide-h3">Paragraphs 7–8: Idioms &amp; TFNG</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraphs 7–8</h4>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>Thus, in 2006, the much-criticised canopy design was scrapped, and two years later, the West Kowloon Cultural District Authority was established to manage the development of the arts hub, on a budget of HK$21.6 billion. In other words, ten years after it was first proposed, the project was back at the drawing board, with no construction whatsoever having taken place in the interim.</div>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>In fact, it was not until 2012 that the authority finally broke ground on the first venue in the district: the West Kowloon Bamboo Theatre, a temporary structure which played host to a series of Cantonese Opera performances and cinema screenings before being unceremoniously demolished. Hong Kong's culture vultures then had to wait another seven years before the first permanent venue, the Xiqu Centre, was finally completed.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q8-box">
+      <div class="pmcq-label">Q8 · Figurative Language · 1 mark</div>
+      <div class="pmcq-q">What does the writer mean by 'back at the drawing board' (lines 28–29)? The project...</div>
+      <div class="pmcq-options" id="q8-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>would not be completed.</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>needed new management.</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>needed a total redesign.</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>would begin construction.</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q9-box">
+      <div class="pmcq-label">Q9 · TFNG · 3 marks</div>
+      <div class="pmcq-q">According to ¶7–8, decide True (T), False (F) or Not Given (NG):</div>
+      <div class="card" style="margin-bottom:8px;padding:12px 14px">
+        <p style="font-size:15px;margin-bottom:8px"><strong>(i)</strong> The canopy design was not used in the end.</p>
+        <div class="tfng-group" data-answer="T" data-explain="¶7: 'the much-criticised canopy design was scrapped in 2006' — scrapped = not used.">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+        <p style="font-size:15px;margin-bottom:8px"><strong>(ii)</strong> The budget of HK$21.6 billion was bigger than expected.</p>
+        <div class="tfng-group" data-answer="NG" data-explain="¶7 states the budget but does NOT compare it to expectations. Not Given.">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+        <p style="font-size:15px;margin-bottom:8px"><strong>(iii)</strong> The Xiqu Centre was completed in 2017.</p>
+        <div class="tfng-group" data-answer="F" data-explain="¶8: 'the first permanent venue, the Xiqu Centre, was finally completed' — 2019 (seven years after 2012 Bamboo Theatre).">
+          <span class="tfng-btn" onclick="checkTFNG(this,'T')"><b>T</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'F')"><b>F</b></span>
+          <span class="tfng-btn" onclick="checkTFNG(this,'NG')"><b>NG</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q10-box">
+      <div class="pmcq-label">Q10 · Connective Function · 1 mark</div>
+      <div class="pmcq-q">What is the purpose of the phrase 'In fact' (line 30)?</div>
+      <div class="pmcq-options" id="q10-opts">
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>to provide an additional detail</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>to correct an error</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>to show cause and effect</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>to move on to another topic</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 12: Q11-Q14 (Redeemed, Eyebrows, It, Budget) ============ -->
+<section class="slide" data-title="Q11–Q14 · Figurative Language" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q11–Q14</div>
+<div class="slide-h3">Paragraph 9: Figurative Language &amp; Reference</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraph 9</h4>
+    <div class="passage-excerpt"><div class="para-num">¶9</div>While the arts hub now seems to have redeemed itself somewhat with the opening of M+, questions certainly remain about the viability of the project. 'My main concern is with the cost,' said Professor Lolo Wong. 'Even the original budget, of 20+ billion Hong Kong dollars, raised a lot of eyebrows in the city—and deservedly so. Now, estimates for the total cost of construction have hit HK$70 billion, and considering how much still remains to be done, who can say for sure what the actual outlay will be for the taxpayers in the end? As much as I love art, we have to be realistic in our expectations of what ordinary people are willing to spend on it.'</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q11-box">
+      <div class="pmcq-label">Q11 · Figurative Language · 1 mark</div>
+      <div class="pmcq-q">What does the writer mean when he says the arts hub has 'redeemed itself somewhat' (line 35)?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">that its reputation has improved (a little) — the opening of M+ helped restore confidence after years of cost overruns and delays.</div></div>
+    </div>
+    <div class="practice-mcq" id="q12-box">
+      <div class="pmcq-label">Q12 · Figurative Language · 1 mark</div>
+      <div class="pmcq-q">What does 'raised a lot of eyebrows' (line 37) suggest about people's reaction?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">many of them were surprised by it and unhappy because they thought it was too big (or similar). 'Raise eyebrows' = cause surprise/disapproval.</div></div>
+    </div>
+    <div class="practice-mcq" id="q13-box">
+      <div class="pmcq-label">Q13 · Pronoun Reference · 1 mark</div>
+      <div class="pmcq-q">What does 'it' (line 41) refer to?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">art (or 'spending on art'). '...what ordinary people are willing to spend on it.'</div></div>
+    </div>
+    <div class="practice-mcq" id="q14-box">
+      <div class="pmcq-label">Q14 · 1 mark</div>
+      <div class="pmcq-q">Complete: The project is expected to go over budget by at least ____.</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">HK$50 billion (original ~HK$20B → now HK$70B estimated total → over by at least HK$50B).</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 13: Q15-Q18 (Reasons, Runway, Comparison, Desert) ============ -->
+<section class="slide" data-title="Q15–Q18 · Inference & Comparison" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q15–Q18</div>
+<div class="slide-h3">Paragraphs 10–11: Inference &amp; Expert Views</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraphs 10–11</h4>
+    <div class="passage-excerpt"><div class="para-num">¶10</div>Professor Wong also expressed concerns about visitor numbers at the various venues within the arts hub. 'It was made explicit right at the start that this development was aimed primarily at overseas tourists. Well, for reasons that should be obvious to all of us, we have recently seen a significant decrease in those numbers, and it seems highly unlikely to me that local visitors will be able to make up for this shortfall.'</div>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>Art historian Dr Ephraim Kwan was among those who take a more optimistic view. 'Yes, a project of this scale will inevitably be costly, but by way of comparison, the third runway at Chek Lap Kok is budgeted to cost HK$141.5 billion. I'm sure I'm not the only one who feels that this simple fact makes the West Kowloon Cultural District a relative bargain, especially considering that it's likely to expand the local arts scene—something I consider to be of great value to Hong Kong. There are those who claim that our city is a "cultural desert", and that people here are completely uninterested in art and culture. While this is rather an offensive exaggeration, it is certainly the case that many ordinary Hongkongers don't have much exposure to art. Clearly, this new arts hub will rectify that situation.'</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q15-box">
+      <div class="pmcq-label">Q15 · Inference · 1 mark</div>
+      <div class="pmcq-q">What might be one 'reason that should be obvious to all of us' (line 44)?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">people have been unable to travel during the Covid pandemic // the protests in Hong Kong (or similar). The article was written in 2021–22.</div></div>
+    </div>
+    <div class="practice-mcq" id="q16-box">
+      <div class="pmcq-label">Q16 · 1 mark</div>
+      <div class="pmcq-q">Complete using ONE word: The third runway at HKIA is expected to cost ____ as much as the WKCD.</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="One word..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">twice (HK$141.5B ÷ ~HK$70B ≈ 2x). 'Relative bargain' comparison.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 14: Q17 Comparison Table ============ -->
+<section class="slide" data-title="Q17 · Lolo Wong vs Kwan" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q17</div>
+<div class="slide-h3">Comparison Table: Lolo Wong vs Ephraim Kwan (¶9–12)</div>
+<div class="tb-wrap"><table>
+  <tr><th></th><th>Lolo Wong</th><th>Evidence</th><th>Ephraim Kwan</th><th>Evidence</th></tr>
+  <tr>
+    <td>Prediction 1</td>
+    <td>The cost will be too <strong>(i)____</strong></td>
+    <td>There is still a lot of construction to be done</td>
+    <td>It will expand the local arts scene</td>
+    <td>People will get more <strong>(ii)____</strong></td>
+  </tr>
+  <tr>
+    <td>Prediction 2</td>
+    <td>It will not attract enough visitors</td>
+    <td>Tourist numbers <strong>(iii)____</strong> in recent years</td>
+    <td>It will establish HK as an <strong>international art centre (example)</strong></td>
+    <td>Many <strong>(iv)____</strong> will be exhibited in the city</td>
+  </tr>
+</table></div>
+<div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+  <button class="reveal-btn" onclick="toggleRev('q17-ans')">Show Answers</button>
+</div>
+<div class="ans-reveal" id="q17-ans">
+  <p><strong>(i)</strong> high — 'total cost has hit HK$70B'</p>
+  <p><strong>(ii)</strong> exposure to art — 'don't have much exposure to art' (¶11)</p>
+  <p><strong>(iii)</strong> decreased — 'significant decrease in those numbers' (¶10)</p>
+  <p><strong>(iv)</strong> important works of art — 'the most important works of art... exhibited' (¶12)</p>
+</div>
+</section>
+
+<!-- ============ SLIDE 15: Q18 MC (Paragraphs 11) ============ -->
+<section class="slide" data-title="Q18 · MC" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q18</div>
+<div class="slide-h3">Paragraph 11: Figurative Language — 'Cultural Desert'</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraph 11</h4>
+    <div class="passage-excerpt"><div class="para-num">¶11</div>Art historian Dr Ephraim Kwan was among those who take a more optimistic view. 'Yes, a project of this scale will inevitably be costly, but by way of comparison, the third runway at Chek Lap Kok is budgeted to cost HK$141.5 billion. I'm sure I'm not the only one who feels that this simple fact makes the West Kowloon Cultural District a relative bargain, especially considering that it's likely to expand the local arts scene—something I consider to be of great value to Hong Kong. There are those who claim that our city is a "cultural desert", and that people here are completely uninterested in art and culture. While this is rather an offensive exaggeration, it is certainly the case that many ordinary Hongkongers don't have much exposure to art. Clearly, this new arts hub will rectify that situation.'</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q18-box">
+      <div class="pmcq-label">Q18 · MC · 1 mark</div>
+      <div class="pmcq-q">Dr Kwan thinks it is ____ to call Hong Kong a 'cultural desert' (line 51).</div>
+      <div class="pmcq-options" id="q18-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>accurate</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>understandable</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>irresponsible</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">D</span>insulting</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 16: Q19-Q20 (Facility, Cultural Map) ============ -->
+<section class="slide" data-title="Q19–Q20 · Reference & Figurative" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q19–Q20</div>
+<div class="slide-h3">Paragraphs 12–13: Reference &amp; Figurative Language</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraphs 12–13</h4>
+    <div class="passage-excerpt"><div class="para-num">¶12</div>Additionally, Dr Kwan has high hopes that, once completed and operational, the West Kowloon Cultural District will help establish Hong Kong as an international arts centre. 'The most important works of art in the world tend to be exhibited in the most important museums in the world. If Hong Kong can lay claim to such a facility—or better yet, more than one—then there's no question that it'll make international headlines, and, as a result, put us firmly on the cultural map. Once that happens, all the time, money and effort spent on this project will undoubtedly have been worth it.'</div>
+    <div class="passage-excerpt"><div class="para-num">¶13</div>Regardless of how we feel about the history of the West Kowloon Cultural District, and about how the development was handled, Hong Kong now has an arts hub which at the very least has the potential to rank among the very best in the world. We should all wish for its success, and hope that it manages to attract both local and overseas visitors for decades—if not centuries—to come.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q19-box">
+      <div class="pmcq-label">Q19 · 1 mark</div>
+      <div class="pmcq-q">What does 'such a facility' (line 57) refer to?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">(one of) the most important museums in the world — ¶12 'the most important works of art ... exhibited in the most important museums'.</div></div>
+    </div>
+    <div class="practice-mcq" id="q20-box">
+      <div class="pmcq-label">Q20 · Figurative Language · 1 mark</div>
+      <div class="pmcq-q">What does 'put us firmly on the cultural map' (line 58) mean?</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="Type answer..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">famous / known for culture / cultural events(.) — Hong Kong will become internationally recognized as a destination for arts and culture.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 17: Q21 Chronological Ordering ============ -->
+<section class="slide" data-title="Q21 · Chronological Order" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q21</div>
+<div class="slide-h3">Chronological Ordering — 6 marks</div>
+<div class="card accent" style="margin-bottom:12px">
+  <p>Number the events from the text in chronological order. The earliest (1) has been done for you.</p>
+</div>
+<div class="split-view" style="max-height:620px">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="flex:1;overflow-y:auto">
+    <h4>📖 Text 1: Key Paragraphs</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>The twelfth of November 2021 saw the public opening of Hong Kong's spanking new visual art museum, M+, the most high-profile by far of the facilities slated to be included in the harbourfront West Kowloon Cultural District development.</div>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>First proposed officially in then-Chief Executive Tung Chee-hwa's 1998 policy address, it came about as the result of a Hong Kong Tourist Association survey conducted two years earlier which found that overseas visitors were dissatisfied with the lack of cultural attractions in the city. None too surprisingly, this caused critics to feel that the project was motivated more by a desire for increased tourism revenue than by any real interest in nurturing and developing the local arts scene.</div>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Nevertheless, the original idea of a single venue on a 5.5-hectare site rapidly ballooned into a much more ambitious 40-hectare arts hub, and in April 2001, an international competition was launched to find a suitable design for the development. Legendary British architect Lord Norman Foster—the man behind the HSBC Main Building, Chek Lap Kok Airport and the Millennium Bridge in London, among countless other iconic structures—won out with a flamboyant plan that included a gigantic, 30-storey-high canopy.</div>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>Thus, in 2006, the much-criticised canopy design was scrapped, and two years later, the West Kowloon Cultural District Authority was established to manage the development of the arts hub, on a budget of HK$21.6 billion. In other words, ten years after it was first proposed, the project was back at the drawing board, with no construction whatsoever having taken place in the interim.</div>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>In fact, it was not until 2012 that the authority finally broke ground on the first venue in the district: the West Kowloon Bamboo Theatre, a temporary structure which played host to a series of Cantonese Opera performances and cinema screenings before being unceremoniously demolished. Hong Kong's culture vultures then had to wait another seven years before the first permanent venue, the Xiqu Centre, was finally completed.</div>
+  </div>
+  <div class="split-right" style="flex:1.2;overflow-y:auto">
+    <h4>✏️ Order the Events</h4>
+    <div class="tb-wrap"><table>
+  <tr><th>Event</th><th>Order</th><th style="width:100px">Show Answer</th></tr>
+  <tr><td>M+ opens to the public.</td>
+    <td><span class="order-placeholder" id="ph-q21a" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21a" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">7 (2021)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21a')">Show</button></td></tr>
+  <tr><td>Tung Chee-hwa proposes building a cultural district.</td>
+    <td><span class="order-placeholder" id="ph-q21b" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21b" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">2 (1998)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21b')">Show</button></td></tr>
+  <tr><td>The WKCDA is established.</td>
+    <td><span class="order-placeholder" id="ph-q21c" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21c" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">5 (2008)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21c')">Show</button></td></tr>
+  <tr><td>The Hong Kong Tourist Association conducts a survey.</td><td><strong>1</strong> (given)</td><td></td></tr>
+  <tr><td>The Xiqu Centre is completed.</td>
+    <td><span class="order-placeholder" id="ph-q21d" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21d" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">6 (2019)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21d')">Show</button></td></tr>
+  <tr><td>The canopy design is scrapped.</td>
+    <td><span class="order-placeholder" id="ph-q21e" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21e" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">4 (2006)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21e')">Show</button></td></tr>
+  <tr><td>A design competition is launched.</td>
+    <td><span class="order-placeholder" id="ph-q21f" style="color:var(--text-3)">____</span><span class="order-answer" id="ans-q21f" style="display:none;color:var(--fcc-green-dark);font-weight:800;margin-left:6px">3 (2001)</span></td>
+    <td><button class="reveal-btn" style="font-size:14px;padding:4px 10px" onclick="revealOrder('q21f')">Show</button></td></tr>
+</table></div>
+    </div>
+  </div>
+<div style="margin-top:12px">
+  <span class="method-badge">🔗 Strategy: Article order ≠ time order! Extract years/relative time words, not paragraph positions.</span>
+</div>
+</section>
+
+<!-- ============ SLIDE 18: Q22-Q23 (Tone, Purpose) ============ -->
+<section class="slide" data-title="Q22–Q23 · Tone & Purpose" data-section="practice" data-part="Part A" data-hard-group="text1">
+<div class="sec-label">Section 2B · Q22–Q23</div>
+<div class="slide-h3">Paragraph 13: Overall Tone &amp; Writer's Purpose</div>
+<div class="split-view">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)">
+    <h4>📖 Text 1: Paragraph 13</h4>
+    <div class="passage-excerpt"><div class="para-num">¶13</div>Regardless of how we feel about the history of the West Kowloon Cultural District, and about how the development was handled, Hong Kong now has an arts hub which at the very least has the potential to rank among the very best in the world. We should all wish for its success, and hope that it manages to attract both local and overseas visitors for decades—if not centuries—to come.</div>
+  </div>
+  <div class="split-right">
+    <div class="practice-mcq" id="q22-box">
+      <div class="pmcq-label">Q22 · 1 mark</div>
+      <div class="pmcq-q">The text ends on ____ note.</div>
+      <div class="pmcq-options" id="q22-opts">
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">A</span>a cautionary</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>a realistic</span>
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">C</span>an optimistic</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>a critical</span>
+      </div>
+    </div>
+    <div class="practice-mcq" id="q23-box">
+      <div class="pmcq-label">Q23 · Writer's Purpose · 1 mark</div>
+      <div class="pmcq-q">What is the purpose of the writer? He is writing ____ the readers about the WKCD.</div>
+      <div class="pmcq-options" id="q23-opts">
+        <span class="pmcq-opt" data-correct="true" onclick="checkMCAuto(this)"><span class="pl">A</span>to inform</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">B</span>to advise</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">C</span>to caution</span>
+        <span class="pmcq-opt" data-correct="false" onclick="checkMCAuto(this)"><span class="pl">D</span>to question</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 19: SKILL — PROOFREADING ============ -->
+<section class="slide" data-title="Skills: Proofreading" data-section="close-reading" data-part="Part A">
+<div class="sec-label">Section 3A · Proofreading</div>
+<div class="slide-h2">Proofreading — 改错题</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p><strong>Key insight:</strong> Proofreading tests <em>content accuracy</em>, not grammar. You compare a summary against the original text to find words that <strong>change the original meaning</strong>.</p>
+</div>
+<div class="slide-h4" style="margin-top:12px;margin-bottom:10px">六步法 Six-Step Framework</div>
+<div class="card" style="margin-bottom:12px">
+  <p><strong>Step 1:</strong> Read the summary, underline keywords to locate the right paragraph in the text.</p>
+  <p><strong>Step 2:</strong> Re-read each line, focus on content words (nouns, adjectives, verbs).</p>
+  <p><strong>Step 3:</strong> Find the original text — read the sentence closely.</p>
+  <p><strong>Step 4:</strong> Word-by-word comparison: antonyms, factual confusion, wrong actions, wrong modifiers.</p>
+  <p><strong>Step 5:</strong> Write the correct replacement word (same part of speech).</p>
+  <p><strong>Step 6:</strong> Substitute back into the summary to verify the meaning matches the original.</p>
+</div>
+<div class="method-badge" style="margin-top:8px">⚠ 每行最多一个错误；无误则填 ✓</div>
+</section>
+
+<!-- ============ SLIDE 20: SKILL — CHRONOLOGICAL ORDERING ============ -->
+<section class="slide" data-title="Skills: Chronological Ordering" data-section="close-reading" data-part="Part A">
+<div class="sec-label">Section 3B · Chronological Ordering</div>
+<div class="slide-h2">Chronological Ordering — 时序排列</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p><strong>Key insight:</strong> Events are rarely presented in chronological order. Authors often start with the present, then flash back. You must <strong>reconstruct the real timeline</strong> using time markers.</p>
+</div>
+<div class="slide-h4" style="margin-top:12px;margin-bottom:10px">五步法 Five-Step Framework</div>
+<div class="card" style="margin-bottom:12px">
+  <p><strong>Step 1:</strong> Read all events to understand what they refer to.</p>
+  <p><strong>Step 2:</strong> Locate each event in the text by its keywords.</p>
+  <p><strong>Step 3:</strong> Extract time information: explicit years, relative time words (before/after/later/eventually), and causal logic.</p>
+  <p><strong>Step 4:</strong> Build a timeline on scratch paper using the given anchor as reference.</p>
+  <p><strong>Step 5:</strong> Number from earliest to latest.</p>
+</div>
+<div class="method-badge">⚠ 文章叙述顺序 ≠ 时间先后顺序！</div>
+</section>
+
+<!-- ============ SLIDE 21: SKILL — FIGURATIVE LANGUAGE ============ -->
+<section class="slide" data-title="Skills: Figurative Language" data-section="close-reading" data-part="Part A">
+<div class="sec-label">Section 3C · Figurative Language</div>
+<div class="slide-h2">Figurative Language — 比喻与习语</div>
+<div class="card accent" style="margin-bottom:14px">
+  <p><strong>Key insight:</strong> The writer uses idioms, metaphors, and implied expressions rather than literal language. Don't translate word-for-word — ask: <em>in this context, what does the author mean?</em></p>
+</div>
+<div class="slide-h4" style="margin-top:12px;margin-bottom:10px">四步法 Four-Step Framework</div>
+<div class="card" style="margin-bottom:12px">
+  <p><strong>Step 1:</strong> Identify the non-literal expression — does it sound odd if read literally?</p>
+  <p><strong>Step 2:</strong> Read the surrounding context — what situation is being described?</p>
+  <p><strong>Step 3:</strong> Replace with plain language — say what it means in simple words.</p>
+  <p><strong>Step 4:</strong> Verify — substitute your explanation back into the sentence and check it makes sense.</p>
+</div>
+<div class="card" style="margin-bottom:8px">
+  <p><strong>Examples from this passage:</strong></p>
+  <p>• 'back at the drawing board' (¶7) → needed a total redesign</p>
+  <p>• 'redeemed itself somewhat' (¶9) → reputation improved a little</p>
+  <p>• 'raised a lot of eyebrows' (¶9) → surprised and unhappy</p>
+  <p>• 'put us firmly on the cultural map' (¶12) → become a recognized arts destination</p>
+</div>
+</section>
+
+<!-- ============ SLIDE 22: PART B2 DIVIDER + FOCUS PRACTICE ============ -->
+<section class="slide" data-title="Focus Practice" data-section="divider" data-part="Part B2">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%">
+  <div class="class-badge" style="font-size:20px;padding:14px 36px;margin-bottom:24px">Focus Practice</div>
+  <div class="slide-h1" style="text-align:center">Section 4</div>
+  <div class="slide-h3" style="text-align:center;color:var(--text-2);margin-top:12px">Proofreading · Chronological Ordering · Figurative Language</div>
+  <p style="text-align:center;font-size:20px;margin-top:20px;color:var(--text-2);max-width:600px">Apply the three skills you learned to new texts about the four-day working week, the history of the weekend, and work-life balance.</p>
+</div>
+</section>
+
+<!-- ============ SLIDE 23: Focus Practice Text 1 ============ -->
+<section class="slide" data-title="Focus: Text 1" data-section="practice" data-part="Part B2">
+<div class="sec-label">Focus Practice · Text 1</div>
+<div class="slide-h4" style="margin-bottom:8px">Four-day working week a 'success' at Booster</div>
+<div class="split-view" style="max-height:600px">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="flex:1;font-size:18px">
+    <p style="font-size:16px;margin-bottom:8px;font-weight:700">Text 1: Four-day working week at Booster</p>
+    <div class="passage-excerpt" style="font-size:22px"><div class="para-num">¶1</div>Two months ago, the Manchester-based fintech start-up Booster became the latest in a rapidly lengthening line of companies to announce the implementation of a four-day working week for employees. In a recent exclusive interview, CEO Jacqueline Dawsey described the scheme as 'an unequivocal success'.</div>
+    <div class="passage-excerpt" style="font-size:22px"><div class="para-num">¶2</div>'If anything, it has exceeded our expectations,' she explained. 'We went into this hoping not to see a drop in productivity, but our early analysis in fact shows an increase, by a not insignificant 12%. Add to that the reduction we've experienced in our overhead costs, especially in our electricity bills, and it should really become clear to more employers that a four-day working week is not only feasible, but even financially advantageous.'</div>
+    <div class="passage-excerpt" style="font-size:22px"><div class="para-num">¶3</div>Dawsey stressed, however, that the decision was primarily motivated by concerns over the employees' well-being rather than the company's bottom line.</div>
+    <div class="passage-excerpt" style="font-size:22px"><div class="para-num">¶4</div>Booster has extended the weekend to also include Fridays. Unlike some, however, it is not requiring employees to compensate for this by working longer days. 'The whole point of this policy is to give staff sufficient time to recharge… This is why we have also extended our weekend email ban to weekday evenings.'</div>
+  </div>
+  <div class="split-right" style="flex:0.9">
+    <div class="practice-mcq" id="fpq2-box">
+      <div class="pmcq-label">Q2 · 2 marks</div>
+      <div class="pmcq-q">Find TWO words in ¶2 with similar meanings to 'decrease'.</div>
+      <div class="card" style="padding:12px;margin-bottom:8px">
+        <p style="font-size:16px">(i) <span style="color:var(--text-3)">______</span> &nbsp;&nbsp; (ii) <span style="color:var(--text-3)">______</span></p>
+      </div>
+      <button class="reveal-btn" onclick="toggleRev('fpq2-ans')">Show</button>
+      <div class="ans-reveal" id="fpq2-ans"><p>(i) <strong>drop</strong> &nbsp; (ii) <strong>reduction</strong></p></div>
+    </div>
+    <div class="practice-mcq" id="fpq4-box">
+      <div class="pmcq-label">Q4 · 1 mark</div>
+      <div class="pmcq-q">Suggest one word to replace 'bottom line' (line 10).</div>
+      <div class="sa-input-wrap"><textarea class="sa-input" placeholder="One word..."></textarea><button class="sa-submit" onclick="submitShortAnswer(this)">Submit</button></div>
+      <div class="sa-result"><div class="sa-label">Your answer:</div><div class="sa-your-ans"></div><div class="sa-correct-ans">profit(s) / finances — 'bottom line' = company's profit/financial interests.</div></div>
+    </div>
+    <div class="card accent" style="margin-top:8px">
+      <p style="font-size:15px"><strong>Q6 · Proofreading · 4 marks</strong> — Below is a summary of ¶3–4. Find and correct mistakes in 3 lines; one line has no mistake (✓).</p>
+    </div>
+    <div class="tb-wrap"><table>
+      <tr><th></th><th>Summary</th><th style="width:140px">Correction</th></tr>
+      <tr class="q1-hidden-row" id="fpq6-row-i"><td>(i)</td><td>Booster introduced the scheme to improve their employees' <span class="cloze" data-answer="well-being">performance</span>.</td><td><button class="q1-tap-btn" onclick="revealQ1Row('fpq6-row-i')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="fpq6-row-ii"><td>(ii)</td><td>and it has had the desired result. Going forward, they also expect to <span class="cloze" data-answer="lose">retain</span> fewer employees.</td><td><button class="q1-tap-btn" onclick="revealQ1Row('fpq6-row-ii')">Tap to reveal</button></td></tr>
+      <tr><td>e.g.</td><td>Fridays have been added to the <span style="color:var(--fcc-green-dark);font-weight:700">weekend</span> for the staff,</td><td style="color:var(--text-3);font-size:16px"><span style="color:var(--fcc-green-dark);font-weight:800">workweek → weekend</span></td></tr>
+      <tr class="q1-hidden-row" id="fpq6-row-iv"><td>(iii)</td><td>but they still work the same number of hours on the other days. In addition, <span class="q1-no-mistake" style="color:var(--fcc-green-dark);font-weight:800">✓ no mistake</span></td><td><button class="q1-tap-btn" onclick="revealQ1Row('fpq6-row-iv')">Tap to reveal</button></td></tr>
+      <tr class="q1-hidden-row" id="fpq6-row-v"><td>(iv)</td><td>employees are not required to <span class="cloze" data-answer="answer // send">ban</span> emails after work on weekday evenings.</td><td><button class="q1-tap-btn" onclick="revealQ1Row('fpq6-row-v')">Tap to reveal</button></td></tr>
+    </table></div>
+    <div style="margin-top:10px">
+    <button class="reveal-btn" onclick="toggleRev('fpq6-expl')" style="font-size:15px">Show Explanations</button>
+    <div class="ans-reveal" id="fpq6-expl"><strong>(i) performance → well-being</strong> — ¶3: 'motivated by concerns over well-being rather than the company's bottom line'<br><strong>(ii) retain → lose</strong> — ¶2: staff productivity increased 12%; they expect to lose fewer employees (retain more), not the opposite<br><strong>e.g. workweek → weekend</strong> — ¶4: 'Booster has extended the weekend to also include Fridays' (the workweek got shorter, not the weekend)<br><strong>(iii) ✓ no mistake</strong> — ¶4: 'not requiring employees to compensate by working longer days'<br><strong>(iv) ban → answer // send</strong> — ¶4: company extended email ban to weekday evenings; staff are allowed to send/answer, not required to ban<br><br><span class="method-badge">🔑 Proofreading 策略：定位原文 → 逐词对照 → 替换同词性词语，无误行填 ✓</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 24: Focus Practice Text 2 ============ -->
+<section class="slide" data-title="Focus: Text 2" data-section="practice" data-part="Part B2">
+<div class="sec-label">Focus Practice · Text 2</div>
+<div class="slide-h4" style="margin-bottom:8px">The History of the Weekend</div>
+<div class="split-view" style="max-height:620px">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="flex:1;overflow-y:auto">
+    <h4>📖 Text 2: A Brief History of the Weekend</h4>
+    <div class="passage-excerpt"><div class="para-num">¶1</div>The concept of a two-day weekend is surprisingly recent. Before the 20th century, most workers laboured six days a week, often from dawn until dusk. The idea of a regular day of rest was largely a religious one, with Sunday being observed as the Sabbath in Christian countries.</div>
+    <div class="passage-excerpt"><div class="para-num">¶2</div>The push for a shorter working week began during the Industrial Revolution, when factory owners started to realise that overworked employees were less productive. In the late 19th century, some progressive British factory owners began to offer their workers a half-day on Saturday, in addition to the traditional Sunday rest.</div>
+    <div class="passage-excerpt"><div class="para-num">¶3</div>It was not until the 20th century that the full two-day weekend began to take hold. In 1926, Henry Ford famously decided to close his car factories on both Saturday and Sunday, a move that was initially met with scepticism. To everyone's surprise, productivity actually rose.</div>
+    <div class="passage-excerpt"><div class="para-num">¶4</div>The Great Depression of the 1930s, however, temporarily halted the progress of the five-day working week. With millions out of work, the two-day weekend was seen by some as a luxury the country could not afford. Nevertheless, by the 1950s, the five-day week had become the standard across most industries.</div>
+    <div class="passage-excerpt"><div class="para-num">¶5</div>Fast forward to the present day, and the idea of a four-day working week is gaining traction at a rate that has surprised even its most ardent supporters. In countries like Iceland, New Zealand and Japan, pilot programmes have been launched to test the viability of a shorter working week, and the results have been encouraging.</div>
+    <div class="passage-excerpt"><div class="para-num">¶6</div>In conclusion, the evolution of the working week has been marked by a series of incremental changes, each driven by a combination of economic necessity, social progress, and a growing understanding of what makes workers happy and productive. Some have described this trend as one that has progressed by leaps and bounds in recent years.</div>
+    <div class="passage-excerpt"><div class="para-num">¶7</div>While some remain sceptical about the feasibility of a four-day week, the evidence from trial programmes suggests that it may well become the norm for future generations. As with the two-day weekend before it, what once seemed impossible can quickly become taken for granted.</div>
+    <div class="passage-excerpt"><div class="para-num">¶8</div>The historical trajectory is clear: from six-day labour to Sunday rest, from half-day Saturday to the full weekend, and now to the prospect of a three-day break. The pace of change has accelerated dramatically, growing by leaps and bounds as technology reshapes the way we work.</div>
+  </div>
+  <div class="split-right" style="flex:1;overflow-y:auto">
+    <h4>✏️ Questions</h4>
+    <div class="practice-mcq" id="fpq12-box" style="padding:14px;margin-bottom:12px">
+      <div class="pmcq-label">Q12 · 1 mark</div>
+      <div class="pmcq-q" style="font-size:17px">Find a word/phrase in ¶8 that could be replaced by 'exponentially'.</div>
+      <button class="reveal-btn" onclick="toggleRev('fpq12-ans')">Show</button>
+      <div class="ans-reveal" id="fpq12-ans"><p><strong>by leaps and bounds</strong></p></div>
+    </div>
+    <div class="practice-mcq" id="fpq13-box" style="padding:14px">
+      <div class="pmcq-label">Q13 · Chronological Ordering · 4 marks</div>
+      <div class="card" style="padding:12px;margin-bottom:8px">
+        <p style="font-size:14px;font-weight:600;margin-bottom:10px">Drag each order number into the matching event. The example is placed for you.</p>
+        <div class="word-pool" id="fpq13-pool">
+          <div class="draggable" draggable="true" data-word="2" id="fpq13-d2">2</div>
+          <div class="draggable" draggable="true" data-word="3" id="fpq13-d3">3</div>
+          <div class="draggable" draggable="true" data-word="4" id="fpq13-d4">4</div>
+          <div class="draggable" draggable="true" data-word="5" id="fpq13-d5">5</div>
+        </div>
+        <div class="drop-zone" data-accept="3" id="fpq13-dz-i"><div class="dz-label">(i) The Great Depression hits the USA.</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="4" id="fpq13-dz-ii"><div class="dz-label">(ii) The five-day working week becomes the norm.</div><div class="drop-content"></div></div>
+        <div class="drop-zone" data-accept="5" id="fpq13-dz-iii"><div class="dz-label">(iii) People start predicting a four-day working week.</div><div class="drop-content"></div></div>
+        <div class="drop-zone"><div class="dz-label">(e.g.) British factory owners make Saturday a half day.</div><div class="drop-content"><div class="draggable" style="cursor:default;background:var(--surface-1);border-color:var(--text-3);font-weight:800" draggable="false">1</div></div></div>
+        <div class="drop-zone" data-accept="2" id="fpq13-dz-iv"><div class="dz-label">(iv) The two-day weekend is introduced.</div><div class="drop-content"></div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="reveal-btn" onclick="checkFpq13Drag()">Check</button>
+        <button class="reveal-btn" onclick="resetFpq13Drag()" style="background:var(--text-3)">Reset</button>
+        <button class="reveal-btn" onclick="toggleRev('fpq13-ans')" style="font-size:14px">Show Answers</button>
+      </div>
+      <div class="ans-reveal" id="fpq13-ans"><p>Events in order: (i) Great Depression → (ii) five-day norm → (iii) four-day predictions → (e.g.) half-day Sat → (iv) two-day weekend.</p></div>
+      <div class="ans-reveal" id="fpq13-result" style="margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 25: Focus Practice Text 3 ============ -->
+<section class="slide" data-title="Focus: Text 3" data-section="practice" data-part="Part B2">
+<div class="sec-label">Focus Practice · Text 3</div>
+<div class="slide-h4" style="margin-bottom:8px">Work-Life Balance at MMM</div>
+<div class="split-view" style="max-height:520px">
+  <div class="split-left" oncontextmenu="handleHighlight(event, this)" style="flex:1.2;overflow-y:auto">
+    <h4>📖 Key Findings from the Job Satisfaction Survey</h4>
+    <div class="card" style="padding:14px 18px;margin-bottom:12px">
+      <p style="font-size:18px;margin-bottom:8px">A recent survey of employees at MMM Consulting revealed a mixed picture of workplace satisfaction:</p>
+      <ul style="font-size:17px;line-height:2;padding-left:20px;margin-bottom:6px">
+        <li><strong>83%</strong> find their work fulfilling</li>
+        <li><strong>90%</strong> are proud of working for MMM</li>
+        <li><strong>72%</strong> are unhappy with their work-life balance</li>
+      </ul>
+      <p style="font-size:17px">The results suggest that while employees value the work itself and take pride in the company, the long hours and demanding schedule are taking a toll on their personal lives.</p>
+    </div>
+    <div class="card" style="padding:14px 18px">
+      <h4>💡 Proposed Solutions</h4>
+      <ul style="font-size:17px;line-height:2;padding-left:20px">
+        <li>Permanent remote work option (at least 1 day/week)</li>
+        <li>Flexible working hours (abolish mandatory 9–5)</li>
+        <li>Improved mental health support and wellness programmes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="split-right" style="flex:0.8;overflow-y:auto">
+    <h4>💬 Discussion</h4>
+    <div class="card accent" style="padding:16px 18px">
+      <p style="font-size:17px;margin-bottom:10px">Would these changes solve the work-life balance problem?</p>
+      <p style="font-size:17px;margin-bottom:8px"><strong>Consider:</strong></p>
+      <ul style="font-size:16px;line-height:1.8;padding-left:18px">
+        <li>Are the proposed changes realistic for a consulting firm?</li>
+        <li>What other measures could improve work-life balance?</li>
+        <li>How does this compare to the four-day week at Booster?</li>
+      </ul>
+    </div>
+    <button class="reveal-btn" onclick="toggleRev('text3-ans')" style="margin-top:12px">👩‍🏫 Teaching Guide</button>
+    <div class="ans-reveal" id="text3-ans">
+      <p>引导学生讨论工作与生活平衡的挑战和解决方案。可对比 Text 1 Booster 的四天工作制，比较不同公司的策略差异。关键术语：work-life balance, job satisfaction, remote work, flexible hours, employee well-being.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ SLIDE 26: SUMMARY & SELF-ASSESSMENT ============ -->
+<section class="slide" data-title="总结 & 自我评估" data-section="exit-test" data-part="Part B2">
+<div class="sec-label">Summary</div>
+<div class="slide-h2" style="margin-bottom:16px">知识清单 Check Your Learning</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>📝 Exam Awareness</h4>
+  <p>Understand DSE Part A HK local social/cultural articles: structure, Skimming for prediction, contrast signals.</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>📖 Reading Skills</h4>
+  <p>Scanning · Contrast Signals · Timeline Extraction</p>
+</div>
+<div class="card" style="margin-bottom:14px">
+  <h4>🎯 Question Types &amp; Strategies</h4>
+  <p><strong>Proofreading</strong> — word-by-word summary-vs-original comparison</p>
+  <p><strong>Chronological Ordering</strong> — time marker identification, distinguish narrative order from real order</p>
+  <p><strong>Figurative Language</strong> — context-based inference for idioms and metaphors</p>
+</div>
+<div class="card">
+  <h4>📚 Topic Vocabulary</h4>
+  <p>WKCD-related vocabulary: controversy, backlash, viability, extravagant, redeem, etc.</p>
+</div>
+</section>
+
+<!-- ============ SLIDE 27: DONE ============ -->
+<section class="slide" data-title="Well Done!" data-section="done" data-part="">
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%">
+  <div style="font-size:72px;margin-bottom:24px">🎉</div>
+  <h2 class="slide-h2">Well Done!</h2>
+  <p style="font-size:20px;color:var(--text-2);max-width:600px;line-height:1.8;margin-bottom:28px">
+    You completed Lesson 04 — West Kowloon Cultural District!
+  </p>
+  <div class="score-badge" style="font-size:18px;padding:10px 24px;margin-bottom:20px">
+    <span class="sb-correct" id="finalScore">0</span><span class="sb-divider">/</span><span class="sb-total" id="finalTotal">0</span>
+  </div>
+  <button class="reveal-btn" onclick="launchConfetti()" style="font-size:22px;padding:12px 32px">🎊 Celebrate!</button>
+</div>
+</section>
+
+</div><!-- /main-area -->
+</div><!-- /deck -->
+
+<!-- Hard Mode Templates -->
+<div id="hard-template-text1" style="display:none">
+  <h4>📖 Text 1: Full Passage — West Kowloon Cultural District</h4>
+  <div class="passage-excerpt"><div class="para-num">§1</div>The twelfth of November 2021 saw the public opening of Hong Kong's spanking new visual art museum, M+, the most high-profile by far of the facilities slated to be included in the harbourfront West Kowloon Cultural District development.</div>
+  <div class="passage-excerpt"><div class="para-num">§2</div>Widely praised for its expansive collections and cutting-edge architecture—courtesy of Swiss firm Herzog &amp; de Meuron—the museum regularly drew daily crowds of more than 10,000 eager art lovers in its first seven weeks of being open. Then, rather characteristically for the ill-fated arts hub, the fifth wave of the Covid pandemic struck and forced the museum to shut its doors for more than three months.</div>
+  <div class="passage-excerpt"><div class="para-num">§3</div>This setback was only the latest in a long line of mishaps and controversies that have plagued the West Kowloon Cultural District project since even before its inception.</div>
+  <div class="passage-excerpt"><div class="para-num">§4</div>First proposed officially in then-Chief Executive Tung Chee-hwa's 1998 policy address, it came about as the result of a Hong Kong Tourist Association survey conducted two years earlier which found that overseas visitors were dissatisfied with the lack of cultural attractions in the city. None too surprisingly, this caused critics to feel that the project was motivated more by a desire for increased tourism revenue than by any real interest in nurturing and developing the local arts scene.</div>
+  <div class="passage-excerpt"><div class="para-num">§5</div>Nevertheless, the original idea of a single venue on a 5.5-hectare site rapidly ballooned into a much more ambitious 40-hectare arts hub, and in April 2001, an international competition was launched to find a suitable design for the development. Legendary British architect Lord Norman Foster—the man behind the HSBC Main Building, Chek Lap Kok Airport and the Millennium Bridge in London, among countless other iconic structures—won out with a flamboyant plan that included a gigantic, 30-storey-high canopy.</div>
+  <div class="passage-excerpt"><div class="para-num">§6</div>The design immediately received significant backlash, much of it centred on the extravagant cost of construction brought about by the canopy. Additionally, with all the venues and facilities in the district to be linked under this one roof—the largest on the planet—it was decided that a single developer would be given control over the project. This caused further public outcry, as people felt it would give the developer too much power, likely resulting in a primarily residential and commercial development rather than a genuinely cultural one.</div>
+  <div class="passage-excerpt"><div class="para-num">§7</div>Thus, in 2006, the much-criticised canopy design was scrapped, and two years later, the West Kowloon Cultural District Authority was established to manage the development of the arts hub, on a budget of HK$21.6 billion. In other words, ten years after it was first proposed, the project was back at the drawing board, with no construction whatsoever having taken place in the interim.</div>
+  <div class="passage-excerpt"><div class="para-num">§8</div>In fact, it was not until 2012 that the authority finally broke ground on the first venue in the district: the West Kowloon Bamboo Theatre, a temporary structure which played host to a series of Cantonese Opera performances and cinema screenings before being unceremoniously demolished. Hong Kong's culture vultures then had to wait another seven years before the first permanent venue, the Xiqu Centre, was finally completed.</div>
+  <div class="passage-excerpt"><div class="para-num">§9</div>While the arts hub now seems to have redeemed itself somewhat with the opening of M+, questions certainly remain about the viability of the project. 'My main concern is with the cost,' said Professor Lolo Wong. 'Even the original budget, of 20+ billion Hong Kong dollars, raised a lot of eyebrows in the city—and deservedly so. Now, estimates for the total cost of construction have hit HK$70 billion, and considering how much still remains to be done, who can say for sure what the actual outlay will be for the taxpayers in the end? As much as I love art, we have to be realistic in our expectations of what ordinary people are willing to spend on it.'</div>
+  <div class="passage-excerpt"><div class="para-num">§10</div>Professor Wong also expressed concerns about visitor numbers at the various venues within the arts hub. 'It was made explicit right at the start that this development was aimed primarily at overseas tourists. Well, for reasons that should be obvious to all of us, we have recently seen a significant decrease in those numbers, and it seems highly unlikely to me that local visitors will be able to make up for this shortfall.'</div>
+  <div class="passage-excerpt"><div class="para-num">§11</div>Art historian Dr Ephraim Kwan was among those who take a more optimistic view. 'Yes, a project of this scale will inevitably be costly, but by way of comparison, the third runway at Chek Lap Kok is budgeted to cost HK$141.5 billion. I'm sure I'm not the only one who feels that this simple fact makes the West Kowloon Cultural District a relative bargain, especially considering that it's likely to expand the local arts scene—something I consider to be of great value to Hong Kong. There are those who claim that our city is a "cultural desert", and that people here are completely uninterested in art and culture. While this is rather an offensive exaggeration, it is certainly the case that many ordinary Hongkongers don't have much exposure to art. Clearly, this new arts hub will rectify that situation.'</div>
+  <div class="passage-excerpt"><div class="para-num">§12</div>Additionally, Dr Kwan has high hopes that, once completed and operational, the West Kowloon Cultural District will help establish Hong Kong as an international arts centre. 'The most important works of art in the world tend to be exhibited in the most important museums in the world. If Hong Kong can lay claim to such a facility—or better yet, more than one—then there's no question that it'll make international headlines, and, as a result, put us firmly on the cultural map. Once that happens, all the time, money and effort spent on this project will undoubtedly have been worth it.'</div>
+  <div class="passage-excerpt"><div class="para-num">§13</div>Regardless of how we feel about the history of the West Kowloon Cultural District, and about how the development was handled, Hong Kong now has an arts hub which at the very least has the potential to rank among the very best in the world. We should all wish for its success, and hope that it manages to attract both local and overseas visitors for decades—if not centuries—to come.</div>
+</div>
+
+<script>
+// ============================================================
+// DSE Reading Courseware MAX — Interactions V8
+// ============================================================
+
+// === Audio (Web Audio API, V8) ===
+var audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playRewardSound() {
+  try {
+    var ctx = getAudioCtx();
+    var now = ctx.currentTime;
+    [523.25, 659.25, 783.99].forEach(function(freq, i) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.3, now + i * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.12);
+      osc.stop(now + i * 0.12 + 0.3);
+    });
+  } catch(e) {}
+}
+function playWrongSound() {
+  try {
+    var ctx = getAudioCtx();
+    var now = ctx.currentTime;
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.3);
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  } catch(e) {}
+}
+
+// === Score Tracker ===
+var scoreState = { correct: 0, wrong: 0, total: 0, streak: 0, maxStreak: 0 };
+function recordAnswer(isCorrect) {
+  scoreState.total++;
+  if (isCorrect) {
+    scoreState.correct++;
+    scoreState.streak++;
+    if (scoreState.streak > scoreState.maxStreak) scoreState.maxStreak = scoreState.streak;
+    playRewardSound();
+  } else {
+    scoreState.wrong++;
+    scoreState.streak = 0;
+    playWrongSound();
+  }
+  updateScoreDisplay();
+  if (isCorrect) showToast('Correct! +1', 'success');
+  else showToast('Not quite. Keep going!', 'error');
+  if (scoreState.streak >= 3) showToast('🔥 ' + scoreState.streak + ' streak!', 'info');
+}
+function updateScoreDisplay() {
+  var badge = document.querySelector('.score-badge');
+  if (badge) {
+    badge.querySelector('.sb-correct').textContent = scoreState.correct;
+    badge.querySelector('.sb-total').textContent = scoreState.total;
+    badge.classList.remove('pulse');
+    void badge.offsetWidth;
+    badge.classList.add('pulse');
+  }
+  var ringFg = document.querySelector('.ring-fg');
+  var ringText = document.querySelector('.ring-text');
+  if (ringFg && scoreState.total > 0) {
+    var pct = scoreState.correct / scoreState.total;
+    var circumference = 2 * Math.PI * 14;
+    ringFg.style.strokeDasharray = circumference;
+    ringFg.style.strokeDashoffset = circumference * (1 - pct);
+    ringText.textContent = Math.round(pct * 100) + '%';
+  }
+  var sdVal = document.querySelector('.sd-val');
+  if (sdVal) sdVal.textContent = scoreState.correct + '/' + scoreState.total;
+  var streakBadge = document.querySelector('.streak-badge .streak-count');
+  if (streakBadge) streakBadge.textContent = scoreState.streak;
+  var streakContainer = document.querySelector('.streak-badge');
+  if (streakContainer) streakContainer.style.display = scoreState.streak >= 2 ? 'inline-flex' : 'none';
+
+  // Update final score
+  var fs = document.getElementById('finalScore');
+  var ft = document.getElementById('finalTotal');
+  if (fs) fs.textContent = scoreState.correct;
+  if (ft) ft.textContent = scoreState.total;
+}
+
+// === Toast ===
+function showToast(msg, type) {
+  var toast = document.createElement('div');
+  toast.className = 'toast ' + (type || 'info');
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(function() { if (toast.parentNode) toast.remove(); }, 3200);
+}
+
+// === Timer ===
+var timerDuration = 300, timerRemaining = 300, timerRunning = false, timerInterval = null, timerDone = false;
+var durations = [60, 120, 180, 300, 600], durIdx = 3;
+function updateTimerDisplay() {
+  var min = Math.floor(timerRemaining / 60), sec = timerRemaining % 60;
+  requestAnimationFrame(function() {
+    var minEl = document.getElementById('timerMin');
+    var secEl = document.getElementById('timerSec');
+    if (minEl) minEl.value = min;
+    if (secEl) secEl.value = sec < 10 ? '0' + sec : sec;
+  });
+}
+function readTimerFromInputs() {
+  var m = parseInt(document.getElementById('timerMin').value) || 0;
+  var s = parseInt(document.getElementById('timerSec').value) || 0;
+  if (m < 0) m = 0; if (s < 0) s = 0; if (s > 59) s = 59; return m*60 + s;
+}
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+    document.getElementById('timerWrap').classList.remove('running');
+    document.getElementById('timerPlayBtn').classList.remove('running');
+    document.getElementById('timerPlayBtn').textContent = '\u25b6';
+  } else {
+    if (timerDone) resetTimer();
+    if (timerRemaining <= 0) {
+      var v = readTimerFromInputs();
+      if (v > 0) { timerDuration = v; timerRemaining = v; }
+      else { timerDuration = 60; timerRemaining = 60; }
+      updateTimerDisplay();
+    }
+    timerInterval = setInterval(function() {
+      timerRemaining--; updateTimerDisplay();
+      if (timerRemaining <= 0) {
+        clearInterval(timerInterval); timerInterval = null; timerRunning = false; timerDone = true;
+        document.getElementById('timerWrap').classList.remove('running');
+        document.getElementById('timerWrap').classList.add('done');
+        document.getElementById('timerPlayBtn').classList.remove('running');
+        document.getElementById('timerPlayBtn').classList.add('done');
+        document.getElementById('timerPlayBtn').textContent = '\u25b6';
+        showToast('⏱ Time is up!', 'error');
+      }
+    }, 1000);
+    timerRunning = true; timerDone = false;
+    document.getElementById('timerWrap').classList.remove('done');
+    document.getElementById('timerWrap').classList.add('running');
+    document.getElementById('timerPlayBtn').classList.remove('done');
+    document.getElementById('timerPlayBtn').classList.add('running');
+    document.getElementById('timerPlayBtn').textContent = '\u23f8';
+  }
+}
+function resetTimer() {
+  clearInterval(timerInterval); timerInterval = null;
+  timerRunning = false; timerDone = false;
+  timerRemaining = timerDuration;
+  updateTimerDisplay();
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent = '\u25b6';
+}
+function cycleDuration() {
+  durIdx = (durIdx + 1) % durations.length;
+  timerDuration = durations[durIdx]; timerRemaining = timerDuration; timerDone = false;
+  updateTimerDisplay();
+  clearInterval(timerInterval); timerInterval = null; timerRunning = false;
+  document.getElementById('timerWrap').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').classList.remove('running','done');
+  document.getElementById('timerPlayBtn').textContent = '\u25b6';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var minEl = document.getElementById('timerMin');
+  var secEl = document.getElementById('timerSec');
+  function syncFromInputs() {
+    if (!timerRunning && !timerDone) {
+      var v = readTimerFromInputs();
+      if (v > 0) { timerDuration = v; timerRemaining = v; }
+    }
+  }
+  if (minEl) minEl.addEventListener('change', syncFromInputs);
+  if (secEl) secEl.addEventListener('change', syncFromInputs);
+});
+
+// === Zoom ===
+var ZOOM_MIN = 0.8, ZOOM_MAX = 1.6, ZOOM_STEP = 0.1;
+var zoomLevel = (function() {
+  var saved = parseFloat(localStorage.getItem('xdf-zoom-level'));
+  return (!isNaN(saved) && saved >= ZOOM_MIN && saved <= ZOOM_MAX) ? saved : 1;
+})();
+function applyZoom() {
+  zoomLevel = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoomLevel)) * 100) / 100;
+  document.documentElement.style.setProperty('--zoom-scale', zoomLevel);
+  var label = document.getElementById('zoomLevelLabel');
+  if (label) label.textContent = Math.round(zoomLevel * 100) + '%';
+  var outBtn = document.getElementById('zoomOutBtn'), inBtn = document.getElementById('zoomInBtn');
+  if (outBtn) outBtn.disabled = zoomLevel <= ZOOM_MIN + 1e-6;
+  if (inBtn) inBtn.disabled = zoomLevel >= ZOOM_MAX - 1e-6;
+  try { localStorage.setItem('xdf-zoom-level', String(zoomLevel)); } catch(e) {}
+}
+function zoomIn() { zoomLevel += ZOOM_STEP; applyZoom(); }
+function zoomOut() { zoomLevel -= ZOOM_STEP; applyZoom(); }
+function resetZoom() { zoomLevel = 1; applyZoom(); }
+applyZoom();
+
+// === Dark Mode ===
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  var isDark = document.body.classList.contains('dark');
+  try { localStorage.setItem('xdf-dark-mode', isDark ? '1' : '0'); } catch(e) {}
+  var btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = isDark ? '\u2600' : '\u263D';
+  showToast(isDark ? 'Dark mode on' : 'Light mode on', 'info');
+}
+function initDarkMode() {
+  try {
+    var saved = localStorage.getItem('xdf-dark-mode');
+    if (saved === '1') {
+      document.body.classList.add('dark');
+      var btn = document.querySelector('.theme-toggle');
+      if (btn) btn.textContent = '\u2600';
+    }
+  } catch(e) {}
+}
+initDarkMode();
+
+// === Sidebar ===
+function toggleSidebar() {
+  var sidebar = document.querySelector('.sidebar');
+  if (sidebar) sidebar.classList.toggle('collapsed');
+  try { localStorage.setItem('xdf-sidebar-collapsed', document.querySelector('.sidebar').classList.contains('collapsed') ? '1' : '0'); } catch(e) {}
+}
+function initSidebar() {
+  try {
+    var saved = localStorage.getItem('xdf-sidebar-collapsed');
+    if (saved === '1') {
+      var sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.classList.add('collapsed');
+    }
+  } catch(e) {}
+}
+function buildSidebarNav() {
+  var nav = document.querySelector('.sidebar-nav');
+  if (!nav) return;
+  nav.innerHTML = '';
+  var slides = document.querySelectorAll('.slide');
+  var currentPart = '';
+  slides.forEach(function(slide, i) {
+    var title = slide.dataset.title || 'Slide ' + (i+1);
+    var sectionType = slide.dataset.section || '';
+    var icon = '\u25CB';
+    if (sectionType === 'cover') icon = '\uD83C\uDFE0';
+    else if (sectionType === 'entry-test') icon = '\uD83D\uDEAA';
+    else if (sectionType === 'practice') icon = '\u270F\uFE0F';
+    else if (sectionType === 'close-reading') icon = '\uD83D\uDCD6';
+    else if (sectionType === 'exit-test') icon = '\uD83D\uDEAA';
+    else if (sectionType === 'divider') icon = '\uD83D\uDFE2';
+    else if (sectionType === 'done') icon = '\uD83C\uDF89';
+    var part = slide.dataset.part || '';
+    if (part && part !== currentPart) {
+      currentPart = part;
+      var secLabel = document.createElement('div');
+      secLabel.className = 'sidebar-section-label';
+      secLabel.textContent = part;
+      nav.appendChild(secLabel);
+    }
+    var item = document.createElement('div');
+    item.className = 'sidebar-item' + (i === current ? ' active' : '');
+    item.dataset.slideIndex = i;
+    item.innerHTML = '<span class="si-icon">' + icon + '</span><span class="si-label">' + title + '</span>';
+    item.onclick = function() { goTo(i); };
+    nav.appendChild(item);
+  });
+}
+
+// === Navigation ===
+var current = 0;
+function initDots() {
+  var slides = document.querySelectorAll('.slide');
+  var dots = document.getElementById('progressDots');
+  if (!dots) return;
+  dots.innerHTML = '';
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot';
+    d.dataset.pn = 'Slide ' + (i+1);
+    d.onclick = function() { goTo(i); };
+    dots.appendChild(d);
+  });
+}
+function updateUI() {
+  var slides = document.querySelectorAll('.slide');
+  slides.forEach(function(s, i) { s.classList.toggle('is-active', i === current); });
+  var dots = document.getElementById('progressDots');
+  if (dots) {
+    var dotEls = dots.querySelectorAll('.dot');
+    dotEls.forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+      d.classList.toggle('passed', i < current);
+    });
+  }
+  var pct = slides.length > 1 ? Math.round((current / (slides.length-1)) * 100) : 0;
+  var bar = document.getElementById('progressBar');
+  if (bar) bar.style.width = pct + '%';
+  var topTitle = document.getElementById('topbarTitle');
+  if (topTitle) topTitle.textContent = slides[current].dataset.title || '';
+  var pcCur = document.getElementById('pcCur');
+  var pcTotal = document.getElementById('pcTotal');
+  if (pcCur) pcCur.textContent = (current + 1);
+  if (pcTotal) pcTotal.textContent = ' / ' + slides.length;
+  if (current === slides.length - 1) launchConfetti();
+  applyHardMode();
+  restoreScrollPosition();
+  reapplyAllHighlights();
+  document.querySelectorAll('.sidebar-item').forEach(function(item) {
+    var idx = parseInt(item.dataset.slideIndex);
+    item.classList.toggle('active', idx === current);
+  });
+  var activeItem = document.querySelector('.sidebar-item.active');
+  if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function goTo(i) {
+  var slides = document.querySelectorAll('.slide');
+  if (i < 0 || i >= slides.length || i === current) return;
+  saveScrollPosition();
+  current = i;
+  updateUI();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  if (e.key === 'd' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') toggleDarkMode();
+  if (e.key === 's' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') toggleSidebar();
+});
+function editPageCounter() {
+  var curEl = document.getElementById('pcCur');
+  var total = document.querySelectorAll('.slide').length;
+  var input = document.createElement('input');
+  input.type = 'number'; input.className = 'pc-cur-input';
+  input.min = 1; input.max = total; input.value = current + 1;
+  curEl.replaceWith(input); input.focus(); input.select();
+  function finish() {
+    var val = parseInt(input.value);
+    var span = document.createElement('span');
+    span.className = 'pc-cur'; span.id = 'pcCur'; span.onclick = editPageCounter;
+    if (!isNaN(val) && val >= 1 && val <= total && val !== current + 1) { span.textContent = val; input.replaceWith(span); goTo(val - 1); }
+    else { span.textContent = current + 1; input.replaceWith(span); }
+  }
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); finish(); }
+    if (e.key === 'Escape') { e.preventDefault(); var s = document.createElement('span'); s.className = 'pc-cur'; s.id = 'pcCur'; s.onclick = editPageCounter; s.textContent = current + 1; input.replaceWith(s); }
+  });
+  input.addEventListener('blur', finish);
+}
+
+// === MC check (auto) ===
+function checkMCAuto(el) {
+  if (el.classList.contains('answered')) return;
+  var container = el.closest('.practice-mcq');
+  if (!container || container.classList.contains('answered')) return;
+  var isCorrect = el.getAttribute('data-correct') === 'true';
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  el.classList.add('answered');
+  recordAnswer(isCorrect);
+  if (isCorrect) {
+    container.classList.add('answered');
+    container.classList.add('correct-revealed');
+    var allOpts = container.querySelectorAll('.pmcq-opt');
+    allOpts.forEach(function(o) { o.classList.add('answered'); });
+    var banner = document.createElement('div');
+    banner.className = 'mc-banner mc-correct';
+    banner.innerHTML = '<span class="tick">\u2705</span><div><div class="at">Correct!</div></div>';
+    container.insertAdjacentElement('afterend', banner);
+  } else {
+    var banner = document.createElement('div');
+    banner.className = 'mc-banner mc-wrong';
+    banner.innerHTML = '<span class="tick">\u274c</span><div><div class="at">Not quite</div><div class="asub">' + (el.getAttribute('data-explain') || 'Try again!') + '</div></div>';
+    container.insertAdjacentElement('afterend', banner);
+  }
+}
+
+// === TFNG ===
+function checkTFNG(btn, correctVal) {
+  var group = btn.parentElement;
+  if (group.classList.contains('answered')) return;
+  var chosen = btn.textContent.trim();
+  var isCorrect = chosen === correctVal;
+  group.classList.add('answered');
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  recordAnswer(isCorrect);
+  if (!isCorrect) {
+    var btns = group.querySelectorAll('.tfng-btn');
+    btns.forEach(function(b) { if (b.textContent.trim() === correctVal) b.classList.add('correct'); });
+  }
+  var ans = group.getAttribute('data-explain') || '';
+  var banner = document.createElement('div');
+  banner.className = 'mc-banner ' + (isCorrect ? 'mc-correct' : 'mc-wrong');
+  banner.innerHTML = '<span class="tick">' + (isCorrect ? '\u2705' : '\u274c') + '</span><div><div class="at">' + (isCorrect ? 'Correct!' : 'The answer is ' + correctVal) + '</div><div class="asub">' + ans + '</div></div>';
+  group.insertAdjacentElement('afterend', banner);
+}
+
+// === Toggle Reveal ===
+function toggleRev(id) { var el = document.getElementById(id); if (el) el.classList.toggle('show'); }
+
+// === Chronological Ordering Inline Reveal (Slide 13) ===
+function revealOrder(id) {
+  var phEl = document.getElementById('ph-' + id);
+  var ansEl = document.getElementById('ans-' + id);
+  if (!ansEl || ansEl.style.display === 'inline') return;
+  if (phEl) phEl.style.display = 'none';
+  ansEl.style.display = 'inline';
+  var btn = ansEl.parentElement.nextElementSibling.querySelector('.reveal-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '\u2713'; btn.style.background = 'var(--fcc-green-dark)'; }
+}
+
+// === Proofreading Hidden Row (Two-step reveal from Unit 1) ===
+function revealCloze(el) { if (el.classList.contains('revealed')) return; el.textContent = el.getAttribute('data-answer'); el.classList.add('revealed'); }
+function revealQ1Row(rowId) {
+  var row = document.getElementById(rowId);
+  if (!row) return;
+  row.classList.add('revealed');
+  var clozes = row.querySelectorAll('.cloze');
+  for (var i = 0; i < clozes.length; i++) {
+    clozes[i].onclick = function() { revealCloze(this); };
+  }
+  var btn = row.querySelector('.q1-tap-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Revealed ✓'; }
+}
+
+// === Drag-Drop (Q13 Focus Practice) ===
+(function() {
+  var draggedEl = null;
+  function initFpq13Drag() {
+    var pool = document.getElementById('fpq13-pool');
+    if (!pool) return;
+    var zones = document.querySelectorAll('#fpq13-box .drop-zone');
+    var draggables = document.querySelectorAll('#fpq13-pool .draggable');
+
+    draggables.forEach(function(d) {
+      d.addEventListener('dragstart', function(e) {
+        draggedEl = d;
+        e.dataTransfer.effectAllowed = 'move';
+        d.classList.add('dragging');
+      });
+      d.addEventListener('dragend', function() {
+        d.classList.remove('dragging');
+        draggedEl = null;
+        zones.forEach(function(z) { z.classList.remove('drag-over'); });
+      });
+      d.addEventListener('touchstart', function(e) {
+        draggedEl = d;
+        d.classList.add('dragging');
+      }, {passive: true});
+      d.addEventListener('touchend', function(e) {
+        if (!draggedEl) return;
+        var touch = e.changedTouches[0];
+        var target = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (target) {
+          var zone = target.closest('.drop-zone');
+          if (zone) { placeInZone(draggedEl, zone); }
+        }
+        d.classList.remove('dragging');
+        draggedEl = null;
+      }, {passive: true});
+    });
+
+    zones.forEach(function(z) {
+      if (!z.hasAttribute('data-accept')) return; // skip e.g. zone
+      z.addEventListener('dragover', function(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; z.classList.add('drag-over'); });
+      z.addEventListener('dragleave', function() { z.classList.remove('drag-over'); });
+      z.addEventListener('drop', function(e) {
+        e.preventDefault();
+        z.classList.remove('drag-over');
+        if (draggedEl) { placeInZone(draggedEl, z); }
+      });
+    });
+
+    pool.addEventListener('dragover', function(e) { e.preventDefault(); });
+    pool.addEventListener('drop', function(e) {
+      e.preventDefault();
+      if (draggedEl) { pool.appendChild(draggedEl); draggedEl.classList.remove('correct-placed','wrong-placed'); sortPool(); }
+    });
+  }
+
+  function sortPool() {
+    var pool = document.getElementById('fpq13-pool');
+    if (!pool) return;
+    var items = Array.from(pool.querySelectorAll('.draggable'));
+    items.sort(function(a, b) { return (parseInt(a.dataset.word) || 0) - (parseInt(b.dataset.word) || 0); });
+    items.forEach(function(it) { pool.appendChild(it); });
+  }
+
+  function placeInZone(el, zone) {
+    var content = zone.querySelector('.drop-content');
+    var existing = content.querySelector('.draggable');
+    if (existing) { var p = document.getElementById('fpq13-pool'); p.appendChild(existing); existing.classList.remove('correct-placed','wrong-placed'); sortPool(); }
+    content.appendChild(el);
+    el.classList.remove('correct-placed','wrong-placed');
+  }
+
+  window.checkFpq13Drag = function() {
+    var zones = document.querySelectorAll('#fpq13-box .drop-zone[data-accept]');
+    var correct = 0, total = 4;
+    zones.forEach(function(z) {
+      var accept = z.dataset.accept;
+      var placed = z.querySelector('.draggable');
+      if (placed) {
+        var word = placed.dataset.word;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if (word === accept) { placed.classList.add('correct-placed'); correct++; }
+        else { placed.classList.add('wrong-placed'); }
+      }
+    });
+    var result = document.getElementById('fpq13-result');
+    if (result) {
+      result.classList.add('show');
+      if (correct === total) {
+        result.style.border = '2px solid var(--fcc-green-dark)';
+        result.innerHTML = '✅ All correct! ' + correct + '/' + total + '<br><span class="method-badge">🔑 (e.g.) half-day Sat → (i) two-day weekend → (ii) Great Depression → (iii) five-day norm → (iv) four-day predictions</span>';
+        playRewardSound();
+      } else {
+        result.style.border = '2px solid var(--brand-red)';
+        result.innerHTML = '❌ ' + correct + '/' + total + ' correct. Wrong items highlighted in red. Try again!';
+        playWrongSound();
+      }
+    }
+  };
+
+  window.resetFpq13Drag = function() {
+    var pool = document.getElementById('fpq13-pool');
+    var draggables = document.querySelectorAll('#fpq13-box .draggable[data-word]');
+    var result = document.getElementById('fpq13-result');
+    draggables.forEach(function(d) {
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
+    sortPool();
+    if (result) { result.classList.remove('show'); result.innerHTML = ''; }
+  };
+
+  // Init after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFpq13Drag);
+  } else {
+    initFpq13Drag();
+  }
+})();
+
+// === Drag-Drop (Vocab C - Matching) ===
+(function(){
+  var draggedEl = null, edgeRAF = null, lastClientY = 0;
+  function sortPoolC() {
+    var pool = document.getElementById('vocab-c-pool');
+    if (!pool) return;
+    var items = Array.from(pool.querySelectorAll('.draggable'));
+    items.sort(function(a,b){return a.dataset.word.localeCompare(b.dataset.word);});
+    items.forEach(function(it){pool.appendChild(it);});
+  }
+  function placeInZoneC(el, zone) {
+    var content = zone.querySelector('.drop-content');
+    var existing = content.querySelector('.draggable');
+    if (existing) { var p = document.getElementById('vocab-c-pool'); p.appendChild(existing); existing.classList.remove('correct-placed','wrong-placed'); sortPoolC(); }
+    content.appendChild(el);
+    el.classList.remove('correct-placed','wrong-placed');
+    zone.classList.remove('correct','wrong');
+  }
+  function findScrollableAncestor(el) {
+    while (el && el !== document.body) { var s = window.getComputedStyle(el); if (s.overflowY === 'auto' || s.overflowY === 'scroll') { if (el.scrollHeight > el.clientHeight) return el; } el = el.parentElement; }
+    return null;
+  }
+  function runEdgeScroll() {
+    if (edgeRAF) return;
+    edgeRAF = requestAnimationFrame(function loop() {
+      if (!draggedEl) { edgeRAF = null; return; }
+      var sc = findScrollableAncestor(draggedEl);
+      if (sc && lastClientY > 0) {
+        var r = sc.getBoundingClientRect();
+        if (lastClientY < r.top + 60) sc.scrollTop -= 5;
+        else if (lastClientY > r.bottom - 60) sc.scrollTop += 5;
+      }
+      edgeRAF = requestAnimationFrame(loop);
+    });
+  }
+  function stopEdgeScroll() { if (edgeRAF) { cancelAnimationFrame(edgeRAF); edgeRAF = null; } }
+  function initVocabC() {
+    var pool = document.getElementById('vocab-c-pool');
+    if (!pool) return;
+    var zones = document.querySelectorAll('#vocab-c-box .drop-zone');
+    var draggables = document.querySelectorAll('#vocab-c-pool .draggable');
+    draggables.forEach(function(d) {
+      d.addEventListener('dragstart', function(e) { draggedEl = d; lastClientY = e.clientY; e.dataTransfer.effectAllowed = 'move'; d.classList.add('dragging'); });
+      d.addEventListener('drag', function(e) { if (draggedEl) { lastClientY = e.clientY; runEdgeScroll(); } });
+      d.addEventListener('dragend', function() { d.classList.remove('dragging'); draggedEl = null; stopEdgeScroll(); zones.forEach(function(z){z.classList.remove('drag-over');}); });
+      d.addEventListener('touchstart', function(e) { draggedEl = d; d.classList.add('dragging'); }, {passive:true});
+      d.addEventListener('touchmove', function(e) { if(draggedEl){var t=e.changedTouches[0];lastClientY=t.clientY;var sc=findScrollableAncestor(draggedEl);if(sc){var r=sc.getBoundingClientRect();if(t.clientY<r.top+60)sc.scrollTop-=5;else if(t.clientY>r.bottom-60)sc.scrollTop+=5;}} }, {passive:true});
+      d.addEventListener('touchend', function(e) { if(!draggedEl) return; var t=e.changedTouches[0], tg=document.elementFromPoint(t.clientX,t.clientY); if(tg){var z=tg.closest('.drop-zone');if(z)placeInZoneC(draggedEl,z);} d.classList.remove('dragging'); draggedEl=null; stopEdgeScroll(); }, {passive:true});
+    });
+    zones.forEach(function(z) {
+      z.addEventListener('dragover', function(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; lastClientY = e.clientY; z.classList.add('drag-over'); runEdgeScroll(); });
+      z.addEventListener('dragleave', function() { z.classList.remove('drag-over'); });
+      z.addEventListener('drop', function(e) { e.preventDefault(); z.classList.remove('drag-over'); if(draggedEl)placeInZoneC(draggedEl,z); });
+    });
+    pool.addEventListener('dragover', function(e) { e.preventDefault(); lastClientY = e.clientY; runEdgeScroll(); });
+    pool.addEventListener('drop', function(e) { e.preventDefault(); if(draggedEl){pool.appendChild(draggedEl);draggedEl.classList.remove('correct-placed','wrong-placed');sortPoolC();} });
+    document.addEventListener('dragend', stopEdgeScroll);
+  }
+  window.checkVocabC = function() {
+    var zones = document.querySelectorAll('#vocab-c-box .drop-zone[data-accept]');
+    var correct = 0, total = 8, unfilled = 0;
+    zones.forEach(function(z) {
+      var accept = z.dataset.accept;
+      var placed = z.querySelector('.draggable');
+      z.classList.remove('correct','wrong');
+      if (placed) {
+        var word = placed.dataset.word;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if (word === accept) { placed.classList.add('correct-placed'); z.classList.add('correct'); correct++; }
+        else { placed.classList.add('wrong-placed'); z.classList.add('wrong'); }
+      } else {
+        z.classList.add('wrong'); unfilled++;
+      }
+    });
+    var result = document.getElementById('vocab-c-result');
+    if (result) {
+      result.classList.add('show');
+      if (correct === total) { result.style.border = '2px solid var(--fcc-green-dark)'; result.innerHTML = '✅ All correct! ' + correct + '/' + total; playRewardSound(); showToast('Vocab matching complete! All 8 correct.','success'); }
+      else { result.style.border = '2px solid var(--brand-red)'; result.innerHTML = '❌ ' + correct + '/' + total + ' correct' + (unfilled>0 ? ', ' + unfilled + ' unfilled' : '') + '. Try again!'; playWrongSound(); }
+    }
+  };
+  window.resetVocabC = function() {
+    var pool = document.getElementById('vocab-c-pool');
+    document.querySelectorAll('#vocab-c-box .draggable[data-word]').forEach(function(d){d.classList.remove('correct-placed','wrong-placed');pool.appendChild(d);});
+    document.querySelectorAll('#vocab-c-box .drop-zone').forEach(function(z){z.classList.remove('correct','wrong');});
+    var result = document.getElementById('vocab-c-result');
+    if(result){result.classList.remove('show');result.innerHTML='';}
+    sortPoolC();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVocabC);
+  else initVocabC();
+})();
+
+// === Drag-Drop (Vocab D - Fill in sentences) ===
+(function(){
+  var draggedEl = null;
+  function sortPoolD() {
+    var pool = document.getElementById('vocab-d-pool');
+    if (!pool) return;
+    var items = Array.from(pool.querySelectorAll('.draggable'));
+    items.sort(function(a,b){return a.dataset.word.localeCompare(b.dataset.word);});
+    items.forEach(function(it){pool.appendChild(it);});
+  }
+  function placeInZoneD(el, zone) {
+    var existing = zone.querySelector('.draggable');
+    if (existing) { var p = document.getElementById('vocab-d-pool'); p.appendChild(existing); existing.classList.remove('correct-placed','wrong-placed'); sortPoolD(); }
+    zone.innerHTML = '';
+    zone.appendChild(el);
+    el.classList.remove('correct-placed','wrong-placed');
+  }
+  function initVocabD() {
+    var pool = document.getElementById('vocab-d-pool');
+    if (!pool) return;
+    var zones = document.querySelectorAll('#vocab-d-box .drop-zone-inline');
+    var draggables = document.querySelectorAll('#vocab-d-pool .draggable');
+    draggables.forEach(function(d) {
+      d.addEventListener('dragstart', function(e) { draggedEl = d; e.dataTransfer.effectAllowed = 'move'; d.classList.add('dragging'); });
+      d.addEventListener('dragend', function() { d.classList.remove('dragging'); draggedEl = null; zones.forEach(function(z){z.classList.remove('drag-over');}); });
+      d.addEventListener('touchstart', function(e) { draggedEl = d; d.classList.add('dragging'); }, {passive:true});
+      d.addEventListener('touchend', function(e) { if(!draggedEl) return; var t=e.changedTouches[0], tg=document.elementFromPoint(t.clientX,t.clientY); if(tg){var z=tg.closest('.drop-zone-inline');if(z)placeInZoneD(draggedEl,z);} d.classList.remove('dragging'); draggedEl=null; }, {passive:true});
+    });
+    zones.forEach(function(z) {
+      z.addEventListener('dragover', function(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; z.classList.add('drag-over'); });
+      z.addEventListener('dragleave', function() { z.classList.remove('drag-over'); });
+      z.addEventListener('drop', function(e) { e.preventDefault(); z.classList.remove('drag-over'); if(draggedEl)placeInZoneD(draggedEl,z); });
+    });
+    pool.addEventListener('dragover', function(e) { e.preventDefault(); });
+    pool.addEventListener('drop', function(e) { e.preventDefault(); if(draggedEl){pool.appendChild(draggedEl);draggedEl.classList.remove('correct-placed','wrong-placed');sortPoolD();} });
+  }
+  window.checkVocabD = function() {
+    var zones = document.querySelectorAll('#vocab-d-box .drop-zone-inline[data-accept]');
+    var correct = 0, total = 8;
+    zones.forEach(function(z) {
+      var accept = z.dataset.accept;
+      var placed = z.querySelector('.draggable');
+      if (placed) {
+        var word = placed.dataset.word;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if (word === accept) { placed.classList.add('correct-placed'); correct++; }
+        else { placed.classList.add('wrong-placed'); }
+      }
+    });
+    var result = document.getElementById('vocab-d-result');
+    if (result) {
+      result.classList.add('show');
+      if (correct === total) { result.style.border = '2px solid var(--fcc-green-dark)'; result.innerHTML = '✅ All correct! ' + correct + '/' + total; playRewardSound(); }
+      else { result.style.border = '2px solid var(--brand-red)'; result.innerHTML = '❌ ' + correct + '/' + total + ' correct. Wrong items highlighted. Try again!'; playWrongSound(); }
+    }
+  };
+  window.resetVocabD = function() {
+    var pool = document.getElementById('vocab-d-pool');
+    document.querySelectorAll('#vocab-d-box .draggable[data-word]').forEach(function(d){d.classList.remove('correct-placed','wrong-placed');pool.appendChild(d);});
+    document.querySelectorAll('#vocab-d-box .drop-zone-inline').forEach(function(z){z.innerHTML=z.getAttribute('data-orig')||'______';});
+    var result = document.getElementById('vocab-d-result');
+    if(result){result.classList.remove('show');result.innerHTML='';}
+    sortPoolD();
+  };
+  // Save original zone text for reset
+  document.querySelectorAll('#vocab-d-box .drop-zone-inline').forEach(function(z){z.setAttribute('data-orig',z.innerHTML);});
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initVocabD);
+  else initVocabD();
+})();
+
+// === Short Answer ===
+function submitShortAnswer(btn) {
+  var wrap = btn.closest('.sa-input-wrap');
+  var input = wrap.querySelector('.sa-input');
+  var userAns = input.value.trim();
+  if (!userAns) {
+    input.style.borderColor = 'var(--brand-red)';
+    input.setAttribute('placeholder', 'Please type your answer first...');
+    setTimeout(function() { input.style.borderColor = ''; input.setAttribute('placeholder', 'Type your answer...'); }, 1500);
+    return;
+  }
+  input.disabled = true;
+  btn.disabled = true;
+  btn.textContent = 'Submitted';
+  var result = wrap.nextElementSibling;
+  if (result && result.classList.contains('sa-result')) {
+    result.classList.add('show');
+    result.querySelector('.sa-your-ans').textContent = userAns;
+  }
+}
+
+// === Highlight ===
+function passageHash(text) { var h=0; for(var i=0;i<text.length;i++){h=((h<<5)-h)+text.charCodeAt(i);h|=0;} return 'hl_'+Math.abs(h); }
+function getHighlights(passageEl) { var key=passageHash(passageEl.textContent); try{return JSON.parse(localStorage.getItem(key)||'[]');}catch(e){return [];} }
+function saveHighlights(passageEl,arr) { var key=passageHash(passageEl.textContent); try{localStorage.setItem(key,JSON.stringify(arr));}catch(e){} }
+function escapeRegex(s) { return s.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&'); }
+function applyHighlights(passageEl) {
+  var list=getHighlights(passageEl); if(!list.length) return;
+  list.forEach(function(txt){
+    if(!txt||!txt.trim()) return;
+    function walkAndReplace(node) {
+      if(node.nodeType===3) {
+        var val=node.nodeValue;
+        if(val.indexOf(txt)>=0) {
+          var span=document.createElement('span'); span.className='user-highlight';
+          var idx=val.indexOf(txt); span.textContent=txt;
+          var before=document.createTextNode(val.substring(0,idx));
+          var after=document.createTextNode(val.substring(idx+txt.length));
+          var parent=node.parentNode;
+          parent.insertBefore(before,node); parent.insertBefore(span,node); parent.insertBefore(after,node);
+          parent.removeChild(node);
+        }
+      } else if(node.nodeType===1&&node.nodeName!=='SCRIPT'&&!node.classList.contains('user-highlight')) {
+        Array.from(node.childNodes).forEach(walkAndReplace);
+      }
+    }
+    walkAndReplace(passageEl);
+  });
+}
+function handleHighlight(e,el) {
+  e.preventDefault();
+  var sel=window.getSelection();
+  if(!sel||sel.isCollapsed) return;
+  var range=sel.getRangeAt(0);
+  if(!el.contains(range.commonAncestorContainer)&&!el.contains(range.startContainer)) return;
+  var startNode=range.startContainer;
+  var parent=startNode.nodeType===3?startNode.parentNode:startNode;
+  var existingHl=parent.closest&&parent.closest('.user-highlight');
+  // Find the correct passage container for localStorage hashing (match reapplyAllHighlights)
+  var commonEl = range.commonAncestorContainer;
+  if (commonEl.nodeType === 3) commonEl = commonEl.parentNode;
+  var hlContainer = commonEl.closest ? (commonEl.closest('.passage-excerpt,.split-right') || el) : el;
+  if(existingHl) {
+    var hlText=existingHl.textContent;
+    var text=document.createTextNode(hlText);
+    existingHl.parentNode.replaceChild(text,existingHl);
+    var list=getHighlights(hlContainer);
+    var idx=list.indexOf(hlText);
+    if(idx>=0) list.splice(idx,1);
+    saveHighlights(hlContainer,list);
+  } else {
+    try {
+      var span=document.createElement('span'); span.className='user-highlight';
+      var fragment=range.extractContents();
+      var hlText=fragment.textContent;
+      span.appendChild(fragment); range.insertNode(span);
+      if(hlText&&hlText.trim()) {
+        var list=getHighlights(hlContainer);
+        if(list.indexOf(hlText)<0) list.push(hlText);
+        saveHighlights(hlContainer,list);
+      }
+    } catch(err){}
+  }
+  sel.removeAllRanges();
+}
+// === Split-right highlight support (V8 spec 14.2) ===
+document.addEventListener('contextmenu',function(e){
+  var splitRight=e.target.closest('.split-right');
+  if(splitRight) handleHighlight(e,splitRight);
+});
+function reapplyAllHighlights() {
+  document.querySelectorAll('.passage-excerpt,.split-right').forEach(applyHighlights);
+}
+function clearAllHighlights() {
+  document.querySelectorAll('.user-highlight').forEach(function(span){
+    var text=document.createTextNode(span.textContent);
+    span.parentNode.replaceChild(text,span);
+  });
+  for(var i=0;i<localStorage.length;i++){var key=localStorage.key(i);if(key&&key.startsWith('hl_'))localStorage.removeItem(key);}
+  showToast('Highlights cleared','info');
+}
+
+// === Confetti ===
+function launchConfetti() {
+  var wrap=document.createElement('div'); wrap.className='confetti-wrap'; document.body.appendChild(wrap);
+  var colors=['#0B8235','#4CAF50','#C85D0A','#1A6DAF','#C0392B','#FFD54F','#dbb8ff','#99c9ff','#acd157'];
+  for(var i=0;i<80;i++){
+    var p=document.createElement('div'); p.className='c-piece';
+    p.style.left=Math.random()*100+'%';
+    p.style.width=(6+Math.random()*10)+'px'; p.style.height=p.style.width;
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration=(2+Math.random()*3)+'s';
+    p.style.animationDelay=(Math.random()*2)+'s';
+    wrap.appendChild(p);
+  }
+  setTimeout(function(){wrap.remove();},6000);
+}
+
+// === Hard Mode (Easy/Hard toggle, V8 spec §17) ===
+var hardMode = false, hardModeOriginals = {}, scrollPositions = {};
+function saveScrollPosition() {
+  var slide = document.querySelectorAll('.slide')[current];
+  if (!slide) return;
+  var grp = slide.dataset.hardGroup;
+  if (grp) {
+    var sl = slide.querySelector('.split-left');
+    if (sl) scrollPositions[grp] = sl.scrollTop;
+  }
+}
+function restoreScrollPosition() {
+  var slide = document.querySelectorAll('.slide')[current];
+  if (!slide) return;
+  var grp = slide.dataset.hardGroup;
+  if (grp && scrollPositions[grp] !== undefined) {
+    var sl = slide.querySelector('.split-left');
+    if (sl) { requestAnimationFrame(function(){ sl.scrollTop = scrollPositions[grp]; }); }
+  }
+}
+function toggleHardMode() {
+  hardMode = !hardMode;
+  var btn = document.getElementById('hardmodeBtn');
+  if (btn) {
+    btn.textContent = hardMode ? '🔓 Hard' : '🔒 Easy';
+    btn.classList.toggle('active', hardMode);
+  }
+  scrollPositions = {};
+  applyHardMode();
+  reapplyAllHighlights();
+  showToast(hardMode ? 'Hard Mode: full passage shown' : 'Easy Mode: original view', 'info');
+}
+function applyHardMode() {
+  if (typeof hardMode === 'undefined') return;
+  document.querySelectorAll('.slide[data-hard-group]').forEach(function(slide) {
+    var grp = slide.dataset.hardGroup;
+    if (!grp) return;
+    var splitLeft = slide.querySelector('.split-left');
+    if (!splitLeft) return;
+    var tid = slide.dataset.title || 'slide';
+    if (hardMode) {
+      if (!hardModeOriginals[tid]) hardModeOriginals[tid] = splitLeft.innerHTML;
+      var tmpl = document.getElementById('hard-template-' + grp);
+      if (tmpl) splitLeft.innerHTML = tmpl.innerHTML;
+    } else {
+      if (hardModeOriginals[tid]) { splitLeft.innerHTML = hardModeOriginals[tid]; delete hardModeOriginals[tid]; }
+    }
+  });
+  reapplyAllHighlights();
+}
+
+// === Touch Swipe ===
+(function(){
+  var touchStartX=0,touchStartY=0;
+  document.addEventListener('touchstart',function(e){
+    touchStartX=e.changedTouches[0].screenX; touchStartY=e.changedTouches[0].screenY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(touchStartX===0&&touchStartY===0) return;
+    var dx=e.changedTouches[0].screenX-touchStartX;
+    var dy=e.changedTouches[0].screenY-touchStartY;
+    touchStartX=0;touchStartY=0;
+    if(Math.abs(dx)<50) return;
+    if(Math.abs(dy)>Math.abs(dx)*1.5) return;
+    if(dx<0) goTo(current+1); else goTo(current-1);
+  },{passive:true});
+})();
+
+// === Initialize ===
+initDots(); updateUI(); initSidebar();
+document.addEventListener('DOMContentLoaded',function(){
+  buildSidebarNav();
+  reapplyAllHighlights();
+});
+</script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/courseware-progress.js"></script>
+<script>window.__ZX__={kind:'reading',unit:'reading-u4',weakKey:'attitude',mode:'score',selCorrect:'.score-badge .sb-correct',selTotal:'.score-badge .sb-total'};</script>
+</body>
+</html>

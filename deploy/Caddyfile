@@ -1,0 +1,27 @@
+# 智学平台 · Caddy 反向代理配置（自动 HTTPS / Let's Encrypt）
+# 用法：把下面 dse.yourdomain.com 换成你的域名，Caddy 会自动申请并续期证书。
+# 仅靠本机回环通信：Node 后端只监听 127.0.0.1:3000，外部流量由 Caddy 转发。
+
+dse.yourdomain.com {
+    # 反向代理到本地 Node 后端
+    reverse_proxy 127.0.0.1:3000
+
+    # 基础安全头
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        -Server
+    }
+
+    # 上传体积上限（课件/图片），按需调整
+    request_body {
+        max_size 50MB
+    }
+
+    # 日志（可选）
+    log {
+        output stdout
+        level INFO
+    }
+}
