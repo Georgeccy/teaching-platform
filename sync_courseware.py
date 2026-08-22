@@ -86,10 +86,28 @@ def inject_progress(html, prefix, kind, storage_num, wk):
         html = html[:idx] + block + html[idx:]
     return html
 
+# ---------- 学宝 HUD 注入（与进度桥同一深度前缀，落盘到 </body> 之前） ----------
+def pet_inject_block(prefix):
+    return '<script src="%sassets/courseware-pet.js"></script>\n' % prefix
+
+def inject_pet(html, prefix):
+    """把学宝 HUD 脚本注入到 </body> 之前（若已注入则跳过，幂等）。"""
+    if "courseware-pet.js" in html:
+        return html
+    block = pet_inject_block(prefix)
+    idx = html.rfind("</body>")
+    if idx == -1:
+        idx = len(html)
+        html = html + block
+    else:
+        html = html[:idx] + block + html[idx:]
+    return html
+
 def strip_injection(html):
     """去掉我们注入的进度上报脚本块（兼容 ../ 与 ../../ 两种深度），用于判断源文件是否真变化。"""
     html = re.sub(r'<script src="(\.\./)*assets/app\.js"></script>\s*', '', html)
     html = re.sub(r'<script src="(\.\./)*assets/courseware-progress\.js"></script>\s*', '', html)
+    html = re.sub(r'<script src="(\.\./)*assets/courseware-pet\.js"></script>\s*', '', html)
     html = re.sub(r'<script>window\.__ZX__=\{.*?\};\s*</script>\s*', '', html, flags=re.S)
     return html
 
@@ -332,6 +350,7 @@ def copy_scanned(scanned):
                 with open(entry_abs, "r", encoding="utf-8", errors="ignore") as fh:
                     html = fh.read()
                 html = inject_progress(html, prefix, kind, sn, wk)
+                html = inject_pet(html, prefix)
                 with open(entry_abs, "w", encoding="utf-8") as fh:
                     fh.write(html)
                 after = os.path.getsize(entry_abs)
@@ -354,6 +373,7 @@ def copy_scanned(scanned):
                 with open(dst, "r", encoding="utf-8", errors="ignore") as fh:
                     html = fh.read()
                 html = inject_progress(html, prefix, kind, sn, wk)
+                html = inject_pet(html, prefix)
                 with open(dst, "w", encoding="utf-8") as fh:
                     fh.write(html)
                 after = os.path.getsize(dst)
