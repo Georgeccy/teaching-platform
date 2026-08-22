@@ -253,6 +253,16 @@ async function handleApi(req, res, pathname) {
     return sendJSON(res, 200, { progress: updated });
   }
 
+  // 学宝积分：答对 +分 / 答错 −分（趣味货币）
+  if (pathname === '/api/pet' && req.method === 'POST') {
+    const u = authUser(req);
+    if (!u) return sendJSON(res, 401, { error: '未登录' });
+    const b = await readBody(req);
+    const delta = Number(b.delta) || 0;
+    const petScore = store.adjustPetScore(u.id, delta);
+    return sendJSON(res, 200, { petScore });
+  }
+
   // 教师查看单个学生明细
   if (pathname.startsWith('/api/teacher/student/') && req.method === 'GET') {
     const u = authUser(req);

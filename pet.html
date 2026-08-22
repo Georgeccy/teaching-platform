@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>学宝积分 · 惩罚与奖励</title>
+<style>
+  :root{
+    --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A;
+    --teal:#2EC4B6; --purple:#A66BFF; --shadow:#2E2A3B; --line:#2E2A3B;
+    --bg:#F4ECD8; --ink:#2E2A3B; --card:#FFF5E1;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:"Noto Sans SC","PingFang SC",sans-serif;
+    background:var(--bg); color:var(--ink); padding:28px 16px 60px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:24px;letter-spacing:1px;margin:0 0 4px}
+  .sub{color:#7a7060;font-size:13px;margin:0 0 18px}
+  .authbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:18px;
+    background:var(--card);border:3px solid var(--line);box-shadow:4px 4px 0 var(--shadow);padding:10px 12px}
+  .authbar input{border:3px solid var(--line);background:#fff;padding:7px 9px;font-size:13px;font-family:inherit}
+  .authbar button, .btn{border:3px solid var(--line);background:var(--yellow);color:var(--ink);
+    font-family:inherit;font-weight:700;padding:8px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);
+    transition:transform .05s}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+  .btn.blue{background:var(--blue);color:#fff}
+  .btn.pink{background:var(--pink);color:#fff}
+  .btn.green{background:var(--green);color:#fff}
+
+  .pet-card{background:var(--card);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);
+    padding:26px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden}
+  .pet-avatar{width:120px;height:120px;margin:0 auto 6px;display:block;transition:transform .12s}
+  .pet-avatar.bounce{animation:bounce .5s}
+  .pet-avatar.shake{animation:shake .5s}
+  @keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-18px)}60%{transform:translateY(0)}80%{transform:translateY(-8px)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px) rotate(-4deg)}40%{transform:translateX(10px) rotate(4deg)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+  .score{font-family:"Press Start 2P",monospace;font-size:46px;line-height:1;color:var(--ink);margin:6px 0}
+  .score.up{color:var(--green)} .score.down{color:var(--pink)}
+  .score-label{font-size:13px;color:#7a7060;letter-spacing:2px}
+  .mood{margin-top:10px;font-size:13px;color:var(--blue);min-height:18px}
+  .controls{display:flex;gap:14px;justify-content:center;margin:6px 0 10px}
+  .controls .btn{font-size:16px;min-width:150px}
+  .lines{display:flex;justify-content:center;gap:24px;font-size:12px;color:#7a7060;margin-bottom:6px}
+  .lines b{color:var(--ink)}
+
+  .lb{background:var(--card);border:4px solid var(--line);box-shadow:6px 6px 0 var(--shadow);padding:18px;margin-top:18px}
+  .lb h2{margin:0 0 10px;font-size:16px}
+  .lb-tabs{display:flex;gap:8px;margin-bottom:12px}
+  .lb-tabs .btn{font-size:13px;padding:6px 12px;background:#fff}
+  .lb-tabs .btn.on{background:var(--purple);color:#fff}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:2px solid #e7dcc2}
+  th{font-size:12px;color:#7a7060;letter-spacing:1px}
+  tr.me{background:#fff3c8}
+  .rank{font-family:"Press Start 2P",monospace;font-size:12px;width:34px}
+  .pet-dot{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--teal);margin-left:6px;vertical-align:middle}
+  .empty{color:#9a8f7c;font-size:13px;padding:14px;text-align:center}
+
+  .sing-overlay{position:fixed;inset:0;background:rgba(46,42,59,.78);display:none;align-items:center;justify-content:center;z-index:50}
+  .sing-overlay.show{display:flex}
+  .sing-card{background:var(--card);border:5px solid var(--line);box-shadow:8px 8px 0 var(--shadow);
+    padding:30px 34px;text-align:center;max-width:420px;animation:pop .3s}
+  @keyframes pop{0%{transform:scale(.7)}100%{transform:scale(1)}}
+  .sing-emoji{font-size:64px;margin-bottom:8px}
+  .sing-title{font-size:22px;font-weight:800;margin-bottom:8px}
+  .sing-text{font-size:15px;color:#5a5040;margin-bottom:18px;line-height:1.6}
+  .note{font-size:11px;color:#9a8f7c;margin-top:24px;text-align:center;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐣 学宝积分 · 惩罚与奖励</h1>
+  <p class="sub">答对给学宝加分、答错扣分；学宝正分爆表老师要唱歌，负分见底学生要唱歌 🎤</p>
+
+  <div class="authbar" id="authbar">
+    <span id="authState">未登录</span>
+    <span id="authForm" style="display:none;gap:6px;align-items:center">
+      <input id="uname" placeholder="用户名" />
+      <input id="pwd" type="password" placeholder="密码" />
+      <button class="btn" id="loginBtn">登录</button>
+    </span>
+    <button class="btn" id="logoutBtn" style="display:none">退出</button>
+  </div>
+
+  <div class="pet-card">
+    <svg class="pet-avatar" id="pet" viewBox="0 0 40 40" width="120" height="120" aria-hidden="true">
+      <rect x="6" y="10" width="28" height="24" rx="3" fill="#FFC83D" stroke="#2E2A3B" stroke-width="2"/>
+      <rect x="6" y="10" width="28" height="9" rx="3" fill="#FFE39A"/>
+      <rect x="11" y="18" width="6" height="7" rx="1" fill="#2E2A3B"/>
+      <rect x="23" y="18" width="6" height="7" rx="1" fill="#2E2A3B"/>
+      <rect x="13" y="28" width="14" height="3" rx="1.5" fill="#2E2A3B"/>
+      <rect x="3" y="16" width="4" height="10" rx="2" fill="#FFC83D" stroke="#2E2A3B" stroke-width="2"/>
+      <rect x="33" y="16" width="4" height="10" rx="2" fill="#FFC83D" stroke="#2E2A3B" stroke-width="2"/>
+    </svg>
+    <div class="score" id="score">0</div>
+    <div class="score-label">学 宝 积 分</div>
+    <div class="mood" id="mood">学宝在等你做题～</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn green" id="btnCorrect">✅ 答对 +10</button>
+    <button class="btn pink" id="btnWrong">❌ 答错 −5</button>
+  </div>
+  <div class="lines">
+    <span>老师唱歌线 <b>+10</b></span>
+    <span>学生唱歌线 <b>−10</b></span>
+  </div>
+
+  <div class="lb">
+    <h2>🏆 班级排行榜</h2>
+    <div class="lb-tabs">
+      <button class="btn on" data-mode="acc" id="tabAcc">准确率榜</button>
+      <button class="btn" data-mode="pet" id="tabPet">学宝积分榜</button>
+    </div>
+    <table>
+      <thead><tr><th class="rank">#</th><th>姓名</th><th>准确率</th><th>学宝积分</th></tr></thead>
+      <tbody id="lbBody"><tr><td colspan="4" class="empty">加载中…</td></tr></tbody>
+    </table>
+  </div>
+
+  <p class="note">
+    当前声音为浏览器自带语音（机器人声），已用学宝的“活人感”台词包装。<br/>
+    后续可替换为你的原声录音或语音克隆，即可得到“我的声音”。<br/>
+    积分已真实写入后端 db.json，并联动上方班级排行榜。
+  </p>
+</div>
+
+<div class="sing-overlay" id="singOverlay">
+  <div class="sing-card">
+    <div class="sing-emoji" id="singEmoji">🎤</div>
+    <div class="sing-title" id="singTitle"></div>
+    <div class="sing-text" id="singText"></div>
+    <button class="btn blue" id="singClose">收到，开始唱 🎶</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var TOKEN_KEY='zhixue-token', USER_KEY='zhixue-user';
+  var TEACHER_LINE=10, STUDENT_LINE=-10;
+  var state={score:0, armedTeacher:false, armedStudent:false, me:null};
+
+  function getToken(){return localStorage.getItem(TOKEN_KEY)||'';}
+  function api(path, opts){
+    opts=opts||{};
+    var headers={'Content-Type':'application/json'};
+    var t=getToken(); if(t) headers['Authorization']='Bearer '+t;
+    return fetch(path,{method:opts.method||'GET',headers:headers,
+      body:opts.body?JSON.stringify(opts.body):undefined}).then(function(r){
+        if(!r.ok) return r.json().then(function(e){throw e;});
+        return r.json();
+      });
+  }
+
+  // ---- 语音（Web Speech，机器人声 + 学宝台词） ----
+  var voices=[];
+  function loadVoices(){ if(window.speechSynthesis){ voices=speechSynthesis.getVoices()||[]; } }
+  if(window.speechSynthesis){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+  function pickVoice(){
+    var zh=voices.filter(function(v){return /zh|cmn/i.test(v.lang||'');});
+    return zh[0]||voices[0]||null;
+  }
+  function speak(text){
+    if(!('speechSynthesis' in window)) return;
+    try{
+      var u=new SpeechSynthesisUtterance(text);
+      var v=pickVoice(); if(v) u.voice=v;
+      u.lang=v?v.lang:'zh-CN'; u.rate=1.06; u.pitch=1.18; u.volume=1;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  var LINES={
+    gain:['答对啦！学宝加十分，耶！','漂亮，这题拿下了～','稳！继续冲！','加十分，学宝能量满格！'],
+    lose:['哎呀答错了，学宝扣五分…','这题有点难，下次一定行！','扣五分别灰心，学宝陪你！','小失误，学宝相信你！'],
+    teacher:['满分达成！老师该唱歌啦，准备好耳朵 🎤','学宝积分爆表，老师献唱时间到！'],
+    student:['分被扣光啦，该你唱一首啦 🎤','学宝不开心了，学生来一首歌安慰一下～']
+  };
+  function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+  // ---- DOM ----
+  var $score=document.getElementById('score'),
+      $mood=document.getElementById('mood'),
+      $pet=document.getElementById('pet');
+
+  function renderScore(){
+    $score.textContent=state.score;
+    if(state.score>=TEACHER_LINE) $mood.textContent='学宝超开心，老师准备开嗓！';
+    else if(state.score<=STUDENT_LINE) $mood.textContent='学宝委屈了，学生快安慰～';
+    else if(state.score>0) $mood.textContent='学宝状态不错，继续加油！';
+    else if(state.score<0) $mood.textContent='学宝有点低落…再答对就回暖';
+    else $mood.textContent='学宝在等你做题～';
+  }
+  function animate(kind){
+    $pet.classList.remove('bounce','shake');
+    void $pet.offsetWidth;
+    $pet.classList.add(kind==='gain'?'bounce':'shake');
+    $score.classList.remove('up','down'); void $score.offsetWidth;
+    $score.classList.add(kind==='gain'?'up':'down');
+  }
+
+  function checkThreshold(){
+    if(state.score>=TEACHER_LINE && !state.armedTeacher){
+      state.armedTeacher=true; state.armedStudent=false; showSing('teacher');
+    } else if(state.score<=STUDENT_LINE && !state.armedStudent){
+      state.armedStudent=true; state.armedTeacher=false; showSing('student');
+    } else if(state.score>STUDENT_LINE && state.score<TEACHER_LINE){
+      state.armedTeacher=false; state.armedStudent=false;
+    }
+  }
+
+  function applyDelta(delta, kind){
+    api('/api/pet',{method:'POST',body:{delta:delta}}).then(function(d){
+      state.score=(typeof d.petScore==='number')?d.petScore:state.score+delta;
+      renderScore(); animate(kind); speak(pick(kind==='gain'?LINES.gain:LINES.lose));
+      checkThreshold(); loadLeaderboard();
+    }).catch(function(e){
+      // 离线/未登录：本地演示，不写后端
+      state.score+=delta; renderScore(); animate(kind);
+      speak(pick(kind==='gain'?LINES.gain:LINES.lose));
+      checkThreshold();
+    });
+  }
+
+  function showSing(who){
+    document.getElementById('singEmoji').textContent= who==='teacher'?'🎤':'🎶';
+    document.getElementById('singTitle').textContent= who==='teacher'?'老师唱歌时间到！':'学生来一首歌～';
+    document.getElementById('singText').textContent= pick(who==='teacher'?LINES.teacher:LINES.student);
+    speak(pick(who==='teacher'?LINES.teacher:LINES.student));
+    document.getElementById('singOverlay').classList.add('show');
+  }
+  document.getElementById('singClose').onclick=function(){
+    document.getElementById('singOverlay').classList.remove('show');
+  };
+
+  document.getElementById('btnCorrect').onclick=function(){ applyDelta(10,'gain'); };
+  document.getElementById('btnWrong').onclick=function(){ applyDelta(-5,'lose'); };
+
+  // ---- 登录 ----
+  function refreshAuth(){
+    var t=getToken(), u=null;
+    try{ u=JSON.parse(localStorage.getItem(USER_KEY)||'null'); }catch(e){}
+    state.me=u;
+    if(t&&u){
+      document.getElementById('authState').textContent='已登录：'+u.name;
+      document.getElementById('authForm').style.display='none';
+      document.getElementById('logoutBtn').style.display='inline-block';
+    }else{
+      document.getElementById('authState').textContent='未登录（演示可用，但积分不会保存）';
+      document.getElementById('authForm').style.display='inline-flex';
+      document.getElementById('logoutBtn').style.display='none';
+    }
+  }
+  document.getElementById('loginBtn').onclick=function(){
+    var un=document.getElementById('uname').value, pw=document.getElementById('pwd').value;
+    if(!un||!pw){alert('请输入用户名和密码');return;}
+    api('/api/login',{method:'POST',body:{username:un,password:pw}}).then(function(d){
+      localStorage.setItem(TOKEN_KEY,d.token); localStorage.setItem(USER_KEY,JSON.stringify(d.user));
+      refreshAuth(); init();
+    }).catch(function(e){ alert((e&&e.error)||'登录失败'); });
+  };
+  document.getElementById('logoutBtn').onclick=function(){
+    localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); refreshAuth();
+  };
+
+  // ---- 排行榜 ----
+  var lbMode='acc';
+  function loadLeaderboard(){
+    api('/api/leaderboard').then(function(d){
+      var rows=(d.ranking||[]).slice();
+      if(lbMode==='pet') rows.sort(function(a,b){return (b.petScore||0)-(a.petScore||0)|| a.name.localeCompare(b.name);});
+      else rows.sort(function(a,b){return (b.accuracy||0)-(a.accuracy||0)|| (b.petScore||0)-(a.petScore||0);});
+      var html=rows.map(function(r,i){
+        var me=(state.me&&r.id===state.me.id)?' class="me"':'';
+        return '<tr'+me+'><td class="rank">'+(i+1)+'</td><td>'+r.name+
+          '</td><td>'+(r.accuracy||0)+'%</td><td>'+(r.petScore||0)+'</td></tr>';
+      }).join('');
+      document.getElementById('lbBody').innerHTML=html||'<tr><td colspan="4" class="empty">暂无数据</td></tr>';
+    }).catch(function(){ /* 离线：忽略 */ });
+  }
+  document.getElementById('tabAcc').onclick=function(){ lbMode='acc'; this.classList.add('on'); document.getElementById('tabPet').classList.remove('on'); loadLeaderboard(); };
+  document.getElementById('tabPet').onclick=function(){ lbMode='pet'; this.classList.add('on'); document.getElementById('tabAcc').classList.remove('on'); loadLeaderboard(); };
+
+  // ---- 初始化 ----
+  function init(){
+    api('/api/progress').then(function(d){
+      if(d&&d.progress) state.score=d.progress.petScore||0;
+      renderScore();
+    }).catch(function(){ renderScore(); });
+    loadLeaderboard();
+  }
+  refreshAuth(); init();
+})();
+</script>
+</body>
+</html>

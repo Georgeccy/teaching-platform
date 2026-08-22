@@ -57,6 +57,7 @@ function emptyProgress(name, userId) {
     userId,
     name,
     weakPoints: weak,
+    petScore: 0, // 学宝积分（趣味货币，与学术进度分离）
     stats: { correct: 0, total: 0, streak: 0, maxStreak: 0, completedUnits: [] },
     history: [],
     questionTimings: [],
@@ -400,6 +401,7 @@ function getClassRanking() {
         streak: p.stats.streak,
         maxStreak: p.stats.maxStreak,
         completed: p.stats.completedUnits.length,
+        petScore: typeof p.petScore === 'number' ? p.petScore : 0,
       };
     })
     .sort((a, b) => b.accuracy - a.accuracy || b.completed - a.completed || a.name.localeCompare(b.name));
@@ -413,6 +415,19 @@ function resetProgress(userId) {
   db.progress[userId] = emptyProgress(u.name, userId);
   save();
   return db.progress[userId];
+}
+
+// 学宝积分：答对 +分、答错 −分（趣味货币，与学术进度分离）
+function adjustPetScore(userId, delta) {
+  const db = load();
+  const p = db.progress[userId];
+  if (!p) return null;
+  if (typeof p.petScore !== 'number') p.petScore = 0;
+  const d = Number(delta) || 0;
+  p.petScore = Math.max(-999, Math.min(9999, p.petScore + d));
+  p.updatedAt = Date.now();
+  save();
+  return p.petScore;
 }
 
 function isRecent(dateStr) {
@@ -438,4 +453,5 @@ module.exports = {
   getTeacherOverview,
   getClassRanking,
   resetProgress,
+  adjustPetScore,
 };

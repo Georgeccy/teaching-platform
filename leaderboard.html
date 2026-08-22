@@ -67,18 +67,27 @@
         const rank = i + 1;
         const me = r.id === meId;
         const medal = MEDAL[rank] || ('#' + rank);
+        const pet = (r.petScore || 0);
+        const right = mode === 'pet'
+          ? `<div class="pixel" style="font-size:18px;color:var(--teal)">${pet}</div><div style="font-size:11px;color:var(--muted)">学宝积分</div>`
+          : `<div class="pixel" style="font-size:18px;color:var(--blue)">${r.accuracy}%</div><div style="font-size:11px;color:var(--muted)">正确率</div>`;
         return `<div style="display:flex;align-items:center;gap:14px;padding:13px 14px;border:3px solid ${me ? 'var(--pink)' : 'var(--line)'};background:${me ? 'var(--card)' : 'transparent'};box-shadow:${me ? '4px 4px 0 var(--shadow)' : 'none'};margin-bottom:10px;">
           <div class="pixel" style="font-size:18px;width:42px;text-align:center;color:${rank<=3?'var(--orange)':'var(--text)'}">${medal}</div>
           <div style="flex:1;min-width:0">
             <div style="font-weight:700">${esc(r.name)}${me ? ' <span style="color:var(--pink);font-size:12px">（你）</span>' : ''}</div>
-            <div style="font-size:12px;color:var(--muted)">完成 ${r.completed} 单元 · 最高连胜 ${r.maxStreak} 天</div>
+            <div style="font-size:12px;color:var(--muted)">完成 ${r.completed} 单元 · 最高连胜 ${r.maxStreak} 天${mode==='pet' ? ' · 学宝积分 ' + pet : ''}</div>
           </div>
-          <div style="text-align:right">
-            <div class="pixel" style="font-size:18px;color:var(--blue)">${r.accuracy}%</div>
-            <div style="font-size:11px;color:var(--muted)">正确率</div>
-          </div>
+          <div style="text-align:right">${right}</div>
         </div>`;
       }).join('');
+    }
+
+    let mode = 'acc';
+    function render(ranking, meId) {
+      const arr = ranking.slice();
+      if (mode === 'pet') arr.sort((a, b) => (b.petScore || 0) - (a.petScore || 0) || a.name.localeCompare(b.name));
+      else arr.sort((a, b) => (b.accuracy || 0) - (a.accuracy || 0) || (b.petScore || 0) - (a.petScore || 0));
+      document.getElementById('rankList').innerHTML = rows(arr, meId);
     }
 
     (async function () {
@@ -101,7 +110,17 @@
               <p>共 ${ranking.length} 名同学参与排名。${meRank ? '你目前排在第 <b style="color:var(--pink)">' + meRank + '</b> 名。' : '完成练习后即可上榜！'}</p>
             </div>
           </div>
-          <div class="panel">${rows(ranking, meId)}</div>`;
+          <div style="display:flex;gap:8px;margin:4px 0 14px">
+            <button class="btn" id="tabAcc" style="border-color:var(--line)">📊 准确率榜</button>
+            <button class="btn" id="tabPet" style="border-color:var(--line)">🐣 学宝积分榜</button>
+          </div>
+          <div class="panel" id="rankList"></div>`;
+        render(ranking, meId);
+        const a = document.getElementById('tabAcc'), p = document.getElementById('tabPet');
+        function paint(){ a.style.background = mode==='acc' ? 'var(--blue)' : '#fff'; a.style.color = mode==='acc' ? '#fff' : 'var(--text)'; p.style.background = mode==='pet' ? 'var(--teal)' : '#fff'; p.style.color = mode==='pet' ? '#fff' : 'var(--text)'; }
+        a.onclick = () => { mode='acc'; paint(); render(ranking, meId); };
+        p.onclick = () => { mode='pet'; paint(); render(ranking, meId); };
+        paint();
       } catch (e) {
         document.getElementById('content').innerHTML = '<div class="alert warn">加载失败：' + esc(e.message) + '</div>';
       }
