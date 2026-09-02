@@ -151,7 +151,7 @@
       "_id": "prep|4|预备班_Unit4_网页课件_v1"
     },
     "101": {
-      "title": "2018 DSE Paper 1 阅读卷",
+      "title": "2015 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
@@ -161,27 +161,27 @@
       "file": "courseware/reading/unit101/index.html",
       "classType": "pastmock",
       "className": "真题 & 模拟题",
-      "unitNo": 2018,
+      "unitNo": 2015,
       "isFolder": true,
-      "_id": "pastmock|2018|2018DSE-Paper1_v1"
+      "_id": "pastmock|2015|2015DSE-Paper1_v1"
     },
     "102": {
-      "title": "2021 DSE Paper 1 阅读卷",
+      "title": "2017 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
       "color": "yellow",
       "progress": 0,
-      "version": 6,
+      "version": 3,
       "file": "courseware/reading/unit102/index.html",
       "classType": "pastmock",
       "className": "真题 & 模拟题",
-      "unitNo": 2021,
+      "unitNo": 2017,
       "isFolder": true,
-      "_id": "pastmock|2021|2021DSE-Paper1_v6"
+      "_id": "pastmock|2017|2017DSE-Paper1_v3"
     },
     "103": {
-      "title": "2022 DSE Paper 1 阅读卷",
+      "title": "2018 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
@@ -191,24 +191,24 @@
       "file": "courseware/reading/unit103/index.html",
       "classType": "pastmock",
       "className": "真题 & 模拟题",
-      "unitNo": 2022,
+      "unitNo": 2018,
       "isFolder": true,
-      "_id": "pastmock|2022|2022DSE-Paper1_v2"
+      "_id": "pastmock|2018|2018DSE-Paper1_v2"
     },
     "104": {
-      "title": "2023 DSE Paper 1 阅读卷",
+      "title": "2021 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
       "color": "yellow",
       "progress": 0,
-      "version": 4,
+      "version": 7,
       "file": "courseware/reading/unit104/index.html",
       "classType": "pastmock",
       "className": "真题 & 模拟题",
-      "unitNo": 2023,
+      "unitNo": 2021,
       "isFolder": true,
-      "_id": "pastmock|2023|2023DSE-Paper1_v4"
+      "_id": "pastmock|2021|2021DSE-Paper1_v7"
     },
     "205": {
       "title": "Preparatory Class Unit 5 &middot; Reading &amp; Writing Web Courseware",
@@ -241,30 +241,60 @@
       "_id": "acc_main|2|加速班_module2_网页课件_v1"
     },
     "105": {
+      "title": "2022 DSE Paper 1 阅读卷",
+      "desc": "DSE Paper 1 单元，配套完整交互课件。",
+      "sub": "真题 & 模拟题 · Paper 1",
+      "tag": "真题 & 模拟题",
+      "color": "yellow",
+      "progress": 0,
+      "version": 3,
+      "file": "courseware/reading/unit105/index.html",
+      "isFolder": true,
+      "classType": "pastmock",
+      "className": "真题 & 模拟题",
+      "unitNo": 2022,
+      "_id": "pastmock|2022|2022DSE-Paper1_v3"
+    },
+    "106": {
+      "title": "2023 DSE Paper 1 阅读卷",
+      "desc": "DSE Paper 1 单元，配套完整交互课件。",
+      "sub": "真题 & 模拟题 · Paper 1",
+      "tag": "真题 & 模拟题",
+      "color": "yellow",
+      "progress": 0,
+      "_id": "pastmock|2023|2023DSE-Paper1_v5",
+      "version": 5,
+      "file": "courseware/reading/unit106/index.html",
+      "isFolder": true,
+      "classType": "pastmock",
+      "className": "真题 & 模拟题",
+      "unitNo": 2023
+    },
+    "107": {
       "title": "2024 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
       "color": "yellow",
       "progress": 0,
-      "version": 4,
-      "file": "courseware/reading/unit105/index.html",
+      "_id": "pastmock|2024|2024DSE-Paper1_v5",
+      "version": 5,
+      "file": "courseware/reading/unit107/index.html",
       "isFolder": true,
       "classType": "pastmock",
       "className": "真题 & 模拟题",
-      "unitNo": 2024,
-      "_id": "pastmock|2024|2024DSE-Paper1_v4"
+      "unitNo": 2024
     },
-    "106": {
+    "108": {
       "title": "2025 DSE Paper 1 阅读卷",
       "desc": "DSE Paper 1 单元，配套完整交互课件。",
       "sub": "真题 & 模拟题 · Paper 1",
       "tag": "真题 & 模拟题",
       "color": "yellow",
       "progress": 0,
-      "_id": "pastmock|2025|2025DSE-Paper1_v2",
-      "version": 2,
-      "file": "courseware/reading/unit106/index.html",
+      "_id": "pastmock|2025|2025DSE-Paper1_v3",
+      "version": 3,
+      "file": "courseware/reading/unit108/index.html",
       "isFolder": true,
       "classType": "pastmock",
       "className": "真题 & 模拟题",

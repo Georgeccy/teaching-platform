@@ -1,0 +1,601 @@
+/* 智学平台 · 家长会呈现界面
+ * 左侧：学生名册（pixel retro 风格，沿用平台视觉令牌）
+ * 右侧：文档展示区（仿 PDF 报告样式：白纸 + 蓝色左竖条章节头 + 表格 + 灰色提示框）
+ */
+
+/* ---------- 文档专用变量（在 .doc-paper 内生效） ---------- */
+.doc-paper {
+  --doc-bg: #FFFFFF;
+  --doc-text: #2E2A3B;
+  --doc-muted: #6B6478;
+  --doc-line: #E5E5E5;
+  --doc-accent: #1E5BB8;          /* XDF 蓝：PDF 章节头的左竖条 */
+  --doc-accent-soft: #EAF2FF;     /* 表格高亮行底色 */
+  --doc-table-head: #F5F5F7;
+  --doc-callout-bg: #F7F7FA;
+  --doc-callout-border: #E2E5EA;
+}
+
+/* ---------- 整体布局 ---------- */
+.parent-app { display: flex; min-height: 100vh; }
+
+.parent-sidebar {
+  width: 280px; flex-shrink: 0;
+  background: var(--card);
+  border-right: 3px solid var(--line);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh;
+}
+.parent-sidebar .logo {
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px; line-height: 1.7;
+  border: 3px solid var(--line);
+  background: var(--yellow);
+  color: #2E2A3B;
+  padding: 10px 12px;
+  box-shadow: 4px 4px 0 var(--shadow);
+  margin: 20px 16px 18px;
+}
+.parent-sidebar .head {
+  padding: 0 18px 14px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 3px solid var(--line);
+  margin: 0 0 10px;
+}
+.parent-sidebar .head h2 { font-size: 15px; }
+.parent-sidebar .head .pixel { font-size: 8px; color: var(--muted); }
+
+.student-list { flex: 1; overflow-y: auto; padding: 8px 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.student-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 12px;
+  border: 3px solid var(--line);
+  background: var(--bg);
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text);
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.student-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.student-card .av {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--blue);
+  border: 3px solid var(--line);
+  color: #fff; font-family: "Press Start 2P", monospace; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.student-card .meta { flex: 1; min-width: 0; }
+.student-card .name { font-weight: 700; font-size: 15px; line-height: 1.3; }
+.student-card .date { font-size: 11px; color: var(--muted); font-family: "Press Start 2P"; margin-top: 4px; }
+.student-card.active { background: var(--pink); color: #fff; }
+.student-card.active .date { color: #fff; opacity: .9; }
+.student-card.active .av { background: #fff; color: var(--pink); }
+.student-card .kind-badge {
+  flex-shrink: 0; align-self: center;
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  padding: 4px 5px; border: 2px solid var(--line); background: var(--card);
+  color: var(--muted);
+}
+.student-card .kind-badge.kind-pdf { background: var(--purple, #A66BFF); color: #fff; }
+.student-card .kind-badge.kind-md { background: var(--blue); color: #fff; }
+.student-card.active .kind-badge { color: #fff; border-color: currentColor; }
+.student-card .x {
+  width: 24px; height: 24px; flex-shrink: 0;
+  display: none; align-items: center; justify-content: center;
+  border: 2px solid currentColor; font-size: 14px; line-height: 1;
+  cursor: pointer; background: transparent;
+}
+.student-card .x:hover { background: rgba(0,0,0,.15); }
+body.role-teacher .student-card .x { display: flex; }
+
+.student-empty {
+  margin: 16px 12px; padding: 24px 14px;
+  border: 3px dashed var(--line);
+  text-align: center; color: var(--muted); font-size: 13px;
+}
+
+/* ---------- 多选模式（批量删除） ---------- */
+.multi-toggle {
+  margin: 8px 16px 0; font-family: "Press Start 2P", monospace; font-size: 9px;
+  background: var(--card); color: var(--text); border: 3px solid var(--line);
+  padding: 9px 12px; cursor: pointer; box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform .12s; text-align: left;
+}
+.multi-toggle:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--shadow); }
+body:not(.role-teacher) .multi-toggle { display: none; }
+body.multi .multi-toggle { background: var(--pink); color: #fff; }
+
+.student-card .cb {
+  display: none; width: 20px; height: 20px; flex-shrink: 0;
+  border: 2px solid var(--line); background: var(--card);
+  align-items: center; justify-content: center; cursor: pointer;
+}
+.student-card .cb::after { content: "✓"; font-size: 13px; line-height: 1; color: #fff; display: none; }
+.student-card.sel .cb { background: var(--green); border-color: var(--line); }
+.student-card.sel .cb::after { display: block; }
+.student-card.sel { background: var(--pink); color: #fff; }
+.student-card.sel .date { color: #fff; opacity: .9; }
+.parent-app.multi .student-card .cb { display: flex; }
+.parent-app.multi .student-card { cursor: pointer; }
+.parent-app.multi .student-card .x { display: none; }
+
+.batch-bar {
+  display: none; flex-direction: column; gap: 8px;
+  margin: 10px 16px 0; padding: 10px 12px;
+  border: 3px solid var(--line); background: var(--card); box-shadow: 3px 3px 0 var(--shadow);
+}
+.batch-bar .bb-count { font-size: 12px; color: var(--muted); }
+.batch-bar .bb-count b { color: var(--pink); font-family: "Press Start 2P", monospace; font-size: 11px; }
+.batch-bar .bb-actions { display: flex; gap: 6px; }
+.batch-bar .bb-btn {
+  flex: 1; font-family: "Press Start 2P", monospace; font-size: 8px;
+  border: 2px solid var(--line); background: var(--bg); color: var(--text);
+  padding: 8px 6px; cursor: pointer; transition: transform .1s;
+}
+.batch-bar .bb-btn:hover { transform: translate(-1px,-1px); }
+.batch-bar .bb-btn:disabled { opacity: .5; cursor: not-allowed; }
+.batch-bar .bb-btn.danger { background: var(--pink); color: #fff; }
+
+.upload-btn {
+  margin: 12px 16px 18px;
+  font-family: "Press Start 2P", monospace; font-size: 10px;
+  background: var(--green); color: #2E2A3B;
+  border: 3px solid var(--line); padding: 12px 14px;
+  box-shadow: 4px 4px 0 var(--shadow);
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .12s;
+}
+.upload-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow); }
+.upload-btn:disabled { background: var(--muted); color: #fff; cursor: not-allowed; opacity: .7; }
+body:not(.role-teacher) .upload-btn { display: none; }
+.upload-hint { margin: -10px 16px 14px; font-size: 11px; color: var(--muted); line-height: 1.5; }
+body:not(.role-teacher) .upload-hint { display: none; }
+
+.parent-sidebar-foot {
+  border-top: 3px solid var(--line);
+  padding: 12px 16px; display: flex; gap: 8px; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--muted);
+}
+.parent-sidebar-foot .role-tag {
+  font-family: "Press Start 2P", monospace; font-size: 8px;
+  border: 2px solid var(--line); padding: 4px 6px; background: var(--card);
+}
+.parent-sidebar-foot a { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--line); }
+
+/* ---------- 主区域 ---------- */
+.parent-main { flex: 1; min-width: 0; padding: 24px 32px 56px; }
+
+.parent-topbar {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.parent-topbar .crumb { font-size: 12px; color: var(--muted); font-family: "Press Start 2P"; }
+.parent-topbar .crumb b { color: var(--text); }
+.parent-topbar .spacer { flex: 1; }
+.icon-btn {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border: 3px solid var(--line); background: var(--card);
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s;
+}
+.icon-btn:hover { transform: translate(-2px, -2px); }
+
+.doc-shell { display: flex; justify-content: center; }
+.doc-paper {
+  width: 100%; max-width: 880px;
+  background: var(--doc-bg);
+  border: 3px solid var(--line);
+  box-shadow: 8px 8px 0 var(--shadow);
+  padding: 44px 56px 56px;
+  color: var(--doc-text);
+  font-family: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 15px; line-height: 1.78;
+  word-wrap: break-word; overflow-wrap: anywhere;
+}
+body.dark .doc-paper { box-shadow: 8px 8px 0 #000; }
+
+.doc-empty {
+  margin: 40px auto; max-width: 600px;
+  border: 3px dashed var(--line); background: var(--card);
+  padding: 50px 24px; text-align: center; color: var(--muted);
+}
+.doc-empty .pixel { font-size: 11px; margin-bottom: 14px; }
+.doc-empty p { font-size: 14px; }
+
+.doc-loading { text-align: center; color: var(--muted); padding: 60px 0; font-size: 14px; }
+.doc-error { color: var(--pink); text-align: center; padding: 40px 0; font-weight: 700; }
+
+/* ---------- 文档内文：标题 ---------- */
+.doc-paper h1.doc-h1 {
+  font-size: 24px; font-weight: 700; color: var(--doc-text);
+  letter-spacing: .5px; margin: 0 0 8px; line-height: 1.4;
+}
+.doc-paper .doc-meta {
+  font-size: 13px; color: var(--doc-muted); margin: 0 0 16px;
+  display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center;
+}
+.doc-paper .doc-meta .sep { color: #C0BFC8; margin: 0 2px; }
+.doc-paper hr.doc-hr {
+  border: 0; border-top: 1px solid var(--doc-line); margin: 12px 0 22px;
+}
+
+/* ## 章节头（一、二、…）：蓝色左竖条 */
+.doc-paper h2.doc-h2 {
+  position: relative;
+  font-size: 19px; font-weight: 700; color: var(--doc-text);
+  margin: 28px 0 14px; padding: 4px 0 4px 16px; line-height: 1.45;
+}
+.doc-paper h2.doc-h2::before {
+  content: ""; position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 5px; background: var(--doc-accent);
+}
+/* 非序号章节头（附录等）也用同款蓝条 */
+.doc-paper h2.doc-h2.no-ord::before { background: var(--doc-accent); }
+
+/* ### 子标题：纯加粗，无蓝条 */
+.doc-paper h3.doc-h3 {
+  font-size: 16px; font-weight: 700; color: var(--doc-text);
+  margin: 18px 0 8px; line-height: 1.5;
+}
+.doc-paper h4.doc-h4 {
+  font-size: 15px; font-weight: 700; color: var(--doc-text);
+  margin: 14px 0 6px;
+}
+
+/* ---------- 段落与强调 ---------- */
+.doc-paper p { margin: 0 0 12px; }
+.doc-paper strong { font-weight: 700; color: var(--doc-text); }
+.doc-paper em { font-style: normal; /* 中文斜体感弱，统一用常规体，仅颜色提一下 */ color: var(--doc-muted); }
+.doc-paper code {
+  font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13px;
+  background: #F2F2F5; padding: 1px 6px; border: 1px solid var(--doc-callout-border);
+}
+.doc-paper a { color: var(--doc-accent); text-decoration: underline; text-underline-offset: 2px; }
+.doc-paper img { max-width: 100%; border: 1px solid var(--doc-line); }
+
+/* ---------- 列表 ---------- */
+.doc-paper ul, .doc-paper ol { margin: 0 0 14px; padding-left: 22px; }
+.doc-paper li { margin: 0 0 6px; }
+.doc-paper li::marker { color: var(--doc-muted); }
+.doc-paper li > p { margin: 0; }
+
+/* ---------- 表格 ---------- */
+.doc-paper .doc-table-wrap { margin: 0 0 16px; overflow-x: auto; }
+.doc-paper table.doc-table {
+  width: 100%; border-collapse: collapse; font-size: 14px;
+  border: 1px solid var(--doc-line);
+}
+.doc-paper table.doc-table th,
+.doc-paper table.doc-table td {
+  border: 1px solid var(--doc-line);
+  padding: 9px 12px; vertical-align: top; text-align: left;
+}
+.doc-paper table.doc-table thead th {
+  background: var(--doc-table-head); color: var(--doc-muted);
+  font-weight: 600; font-size: 13px; text-align: center; white-space: nowrap;
+}
+.doc-paper table.doc-table tbody tr.hl { background: var(--doc-accent-soft); }
+.doc-paper table.doc-table tbody tr.hl td { font-weight: 700; }
+.doc-paper table.doc-table tbody td.center { text-align: center; }
+
+/* ---------- 引用块（提示框） ---------- */
+.doc-paper blockquote.doc-quote {
+  margin: 0 0 16px; padding: 12px 16px;
+  background: var(--doc-callout-bg);
+  border-left: 4px solid var(--doc-accent);
+  color: var(--doc-text); font-size: 14px; line-height: 1.7;
+}
+.doc-paper blockquote.doc-quote p { margin: 0 0 4px; }
+.doc-paper blockquote.doc-quote p:last-child { margin-bottom: 0; }
+.doc-paper blockquote.doc-quote strong { color: var(--doc-text); }
+
+/* ---------- 代码块（含语言标签） ---------- */
+.doc-paper .doc-code {
+  background: #1F1B2E; color: #F4ECD8; margin: 0 0 14px;
+  font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13px;
+  line-height: 1.55; overflow: hidden;
+}
+.doc-paper .doc-code-lang {
+  background: #2E2A3B; color: #B9B2C9; font-family: "Press Start 2P", monospace;
+  font-size: 8px; padding: 6px 12px; letter-spacing: 1px; text-transform: uppercase;
+}
+.doc-paper .doc-code pre { margin: 0; padding: 14px 16px; overflow-x: auto; }
+.doc-paper .doc-code code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
+
+/* ---------- 列表（含嵌套与任务清单） ---------- */
+.doc-paper ul.doc-list, .doc-paper ol.doc-list { margin: 0 0 14px; padding-left: 22px; }
+.doc-paper li > ul, .doc-paper li > ol { margin: 6px 0 2px; }
+.doc-paper li.doc-task { list-style: none; margin-left: -2px; }
+.doc-paper li.doc-task label { display: flex; align-items: flex-start; gap: 8px; cursor: default; }
+.doc-paper li.doc-task input[type=checkbox] { margin-top: 4px; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--doc-accent); }
+.doc-paper li.doc-task span { flex: 1; }
+
+/* ---------- 表格列对齐 ---------- */
+.doc-paper table.doc-table th.left, .doc-paper table.doc-table td.left { text-align: left; }
+.doc-paper table.doc-table th.right, .doc-paper table.doc-table td.right { text-align: right; }
+.doc-paper table.doc-table th.center, .doc-paper table.doc-table td.center { text-align: center; }
+
+/* ---------- 提示框（admonition） ---------- */
+.doc-paper .doc-callout {
+  margin: 0 0 16px; padding: 12px 16px; border-left: 4px solid var(--doc-line);
+  background: var(--doc-callout-bg);
+}
+.doc-paper .doc-callout .co-head {
+  font-family: "Press Start 2P", monospace; font-size: 9px; letter-spacing: 1px;
+  margin-bottom: 8px; color: var(--doc-text);
+}
+.doc-paper .doc-callout .co-body p { margin: 0 0 4px; }
+.doc-paper .doc-callout .co-body p:last-child { margin-bottom: 0; }
+.doc-paper .callout-info { border-left-color: #1E5BB8; background: #EAF2FF; }
+.doc-paper .callout-info .co-head { color: #1E5BB8; }
+.doc-paper .callout-tip { border-left-color: #2E9E5B; background: #E8F6EE; }
+.doc-paper .callout-tip .co-head { color: #2E9E5B; }
+.doc-paper .callout-warn { border-left-color: #E0A100; background: #FFF6E0; }
+.doc-paper .callout-warn .co-head { color: #B98300; }
+.doc-paper .callout-important { border-left-color: #8A5BD6; background: #F3ECFD; }
+.doc-paper .callout-important .co-head { color: #8A5BD6; }
+.doc-paper .callout-danger { border-left-color: #D6453D; background: #FCEDED; }
+.doc-paper .callout-danger .co-head { color: #D6453D; }
+
+/* ---------- 文档工具条（标题 + 操作） ---------- */
+.doc-toolbar {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 auto 16px; max-width: 880px; padding: 0 4px;
+}
+.doc-toolbar .info { flex: 1; min-width: 0; }
+.doc-toolbar .info .t { font-size: 18px; font-weight: 700; }
+.doc-toolbar .info .d { font-size: 12px; color: var(--muted); margin-top: 2px; font-family: "Press Start 2P"; }
+.doc-toolbar .actions { display: flex; gap: 8px; }
+body:not(.role-teacher) .doc-toolbar .actions { display: none; }
+
+/* ---------- PDF 预览（浏览器原生渲染，不解析文本） ---------- */
+.doc-pdf {
+  width: 100%; max-width: 880px;
+  background: var(--card);
+  border: 3px solid var(--line);
+  box-shadow: 8px 8px 0 var(--shadow);
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+body.dark .doc-pdf { box-shadow: 8px 8px 0 #000; }
+.doc-pdf .doc-pdf-bar {
+  font-size: 13px; color: var(--muted);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  border-bottom: 2px dashed var(--line); padding-bottom: 10px;
+}
+.doc-pdf .doc-pdf-bar a { color: var(--blue); text-decoration: none; font-weight: 700; border-bottom: 2px solid var(--line); }
+.doc-pdf .doc-pdf-bar a:hover { text-decoration: none; color: var(--pink); }
+.doc-pdf .doc-pdf-frame {
+  width: 100%; height: 78vh; min-height: 520px;
+  border: 2px solid var(--line); background: #fff;
+}
+
+/* ---------- 上传弹窗 ---------- */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(46,42,59,.55);
+  display: none; align-items: center; justify-content: center; z-index: 100;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: var(--card); border: 3px solid var(--line);
+  box-shadow: 8px 8px 0 var(--shadow);
+  width: 520px; max-width: calc(100vw - 32px);
+  padding: 24px 26px 22px;
+}
+.modal h3 { font-size: 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.modal h3 .pixel { font-size: 9px; color: var(--muted); }
+.modal .row { margin-bottom: 14px; }
+.modal label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+.modal input[type="text"] {
+  width: 100%; border: 3px solid var(--line); background: var(--bg);
+  padding: 10px 12px; font-family: inherit; font-size: 14px; color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow);
+  outline: none;
+}
+.modal input[type="text"]:focus { border-color: var(--blue); }
+.modal .file-drop {
+  border: 3px dashed var(--line); background: var(--bg);
+  padding: 24px 14px; text-align: center; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.modal .file-drop:hover, .modal .file-drop.over { background: var(--yellow); border-color: var(--blue); }
+.modal .file-drop .icon { font-size: 30px; margin-bottom: 6px; }
+.modal .file-drop .hint { font-size: 12px; color: var(--muted); }
+.modal .file-info {
+  display: none; align-items: center; gap: 10px;
+  border: 3px solid var(--line); background: var(--card);
+  padding: 10px 12px; font-size: 13px;
+}
+.modal .file-info.show { display: flex; }
+.modal .file-info .badge {
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  padding: 4px 6px; border: 2px solid var(--line); color: #fff; flex-shrink: 0;
+}
+.modal .file-info .badge.kind-pdf { background: var(--purple, #A66BFF); }
+.modal .file-info .badge.kind-md { background: var(--blue); }
+.modal .file-info .name { flex: 1; word-break: break-all; }
+.modal .file-info .size { color: var(--muted); font-family: "Press Start 2P"; font-size: 9px; }
+.modal .file-info .clear {
+  width: 24px; height: 24px; border: 2px solid var(--line); background: transparent;
+  cursor: pointer; font-size: 14px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+.modal .actions .btn-cancel,
+.modal .actions .btn-upload {
+  font-family: "Press Start 2P"; font-size: 10px;
+  border: 3px solid var(--line); padding: 10px 14px;
+  box-shadow: 3px 3px 0 var(--shadow); cursor: pointer;
+  transition: transform .12s;
+}
+.modal .actions .btn-cancel { background: var(--card); color: var(--text); }
+.modal .actions .btn-upload { background: var(--blue); color: #fff; }
+.modal .actions .btn-cancel:hover, .modal .actions .btn-upload:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--shadow); }
+.modal .actions .btn-upload:disabled { background: var(--muted); cursor: not-allowed; opacity: .7; transform: none; box-shadow: 3px 3px 0 var(--shadow); }
+.modal .err { color: var(--pink); font-size: 13px; margin-top: 8px; display: none; }
+.modal .err.show { display: block; }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 920px) {
+  .parent-sidebar { width: 220px; }
+  .parent-main { padding: 18px; }
+  .doc-paper { padding: 28px 22px 36px; }
+}
+@media (max-width: 720px) {
+  .parent-app { flex-direction: column; }
+  .parent-sidebar { width: 100%; height: auto; position: static; border-right: 0; border-bottom: 3px solid var(--line); }
+  .student-list { max-height: 220px; }
+  .parent-main { padding: 14px; }
+  .doc-paper { padding: 22px 16px 28px; }
+}
+
+/* ---------- 批量上传队列 ---------- */
+.file-queue { display: none; flex-direction: column; gap: 8px; margin: 6px 0 0; }
+.file-queue-item {
+  border: 3px solid var(--line); background: var(--card);
+  padding: 8px 10px; font-size: 12px;
+  display: grid; grid-template-columns: auto 1fr auto auto auto; align-items: center; gap: 8px;
+}
+.file-queue-item .badge {
+  font-family: "Press Start 2P", monospace; font-size: 7px; padding: 4px 6px;
+  border: 2px solid var(--line); color: #fff; flex-shrink: 0;
+}
+.file-queue-item .badge.kind-pdf { background: var(--purple, #A66BFF); }
+.file-queue-item .badge.kind-md { background: var(--blue); }
+.file-queue-item .name { word-break: break-all; min-width: 0; }
+.file-queue-item .size { color: var(--muted); font-family: "Press Start 2P"; font-size: 8px; white-space: nowrap; }
+.file-queue-item .status { color: var(--muted); white-space: nowrap; }
+.file-queue-item.st-done .status { color: var(--green); }
+.file-queue-item.st-error .status { color: var(--pink); }
+.file-queue-item .remove {
+  width: 22px; height: 22px; border: 2px solid var(--line); background: transparent;
+  cursor: pointer; font-size: 13px; line-height: 1; display: flex; align-items: center; justify-content: center;
+}
+.file-queue-item .remove:hover { background: rgba(0,0,0,.12); }
+.file-queue-item .fq-progress {
+  grid-column: 1 / -1; height: 10px; border: 2px solid var(--line); background: var(--bg); overflow: hidden;
+}
+.file-queue-item .fq-bar { height: 100%; width: 0; background: var(--blue); transition: width .15s linear; }
+.file-queue-item .fq-bar.done { background: var(--green); }
+.file-queue-item .fq-bar.err { background: var(--pink); }
+.file-queue-item .fq-err { grid-column: 1 / -1; color: var(--pink); font-size: 11px; }
+.file-queue-clear {
+  display: none; margin: 8px 0 0; align-self: flex-start;
+  font-family: "Press Start 2P", monospace; font-size: 8px;
+  background: var(--card); color: var(--muted);
+  border: 2px solid var(--line); padding: 6px 8px; cursor: pointer;
+}
+.file-queue-clear:hover { color: var(--pink); border-color: var(--pink); }
+
+/* ---------- 全屏阅读模式（Markdown / PDF 通用，类似 PDF viewer 全屏阅读） ---------- */
+.doc-reader {
+  position: fixed; inset: 0; z-index: 300; display: none;
+  flex-direction: column; background: #15131E;   /* 深色阅读底，白纸 / PDF 页面悬浮其上 */
+}
+.doc-reader.show { display: flex; }
+.doc-reader-bar {
+  height: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; background: var(--card); border-bottom: 3px solid var(--line);
+}
+.doc-reader-title {
+  display: flex; align-items: baseline; gap: 10px; min-width: 0; overflow: hidden;
+}
+.doc-reader-title #readerTitle {
+  font-weight: 700; font-size: 14px; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.doc-reader-date {
+  font-family: "Press Start 2P", monospace; font-size: 8px; color: var(--muted);
+  flex-shrink: 0;
+}
+.doc-reader-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.doc-reader-actions .reader-newtab {
+  font-size: 12px; color: var(--blue); text-decoration: none; border-bottom: 2px solid var(--line);
+}
+.doc-reader-actions .reader-newtab:hover { color: var(--pink); }
+.doc-reader-actions button {
+  width: 38px; height: 34px; flex-shrink: 0;
+  border: 3px solid var(--line); background: var(--card);
+  box-shadow: 3px 3px 0 var(--shadow); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .12s, background .12s;
+}
+.doc-reader-actions button:hover { background: var(--yellow); transform: translate(-2px, -2px); }
+
+/* 阅读区缩放控件（统一放大 Markdown / PDF 内容） */
+.doc-reader-actions .reader-zoom {
+  display: flex; align-items: stretch; flex-shrink: 0;
+  border: 3px solid var(--line); background: var(--card);
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+.doc-reader-actions .reader-zoom button {
+  width: 34px; height: 34px; border: 0; box-shadow: none; background: transparent;
+  font-size: 17px; padding: 0; transform: none;
+}
+.doc-reader-actions .reader-zoom button:hover { background: var(--yellow); transform: none; }
+.doc-reader-actions .reader-zoom .reader-zoom-label {
+  min-width: 48px; display: flex; align-items: center; justify-content: center;
+  font-family: "Press Start 2P", monospace; font-size: 9px; color: var(--text);
+  border-left: 2px solid var(--line); border-right: 2px solid var(--line);
+}
+@media (max-width: 720px) {
+  .doc-reader-actions .reader-zoom .reader-zoom-label { min-width: 40px; font-size: 8px; }
+}
+
+/* 阅读区：可滚动，居中阅读列，平滑滚动 */
+.doc-reader-body {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.doc-reader-body::-webkit-scrollbar { width: 12px; }
+.doc-reader-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); }
+.doc-reader-body::-webkit-scrollbar-track { background: transparent; }
+
+/* Markdown 阅读面板：复用 .doc-paper 的排版令牌与内部样式，仅调整版心与留白 */
+.doc-reader .doc-reader-paper {
+  width: 100%; max-width: 840px; margin: 0 auto;
+  border: 0; box-shadow: none;
+  padding: 52px 56px 88px;
+  font-size: 16px; line-height: 1.9;     /* 阅读舒适度：略大于常规预览 */
+}
+.doc-reader-frame {
+  width: 100%; height: 100%; border: 0; background: #fff; display: block;
+}
+
+/* Markdown 全屏铺满：默认占满可视区域，无多余边距/留白，自适应宽高 */
+.doc-reader.fill .doc-reader-paper {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: clamp(16px, 2.4vw, 44px);
+  border: 0; box-shadow: none; border-radius: 0;
+  min-height: 100%;
+  font-size: 16px; line-height: 1.85;
+}
+/* 铺满模式下图片与代码块充分利用全屏宽度 */
+.doc-reader.fill .doc-reader-paper img { max-width: 100%; }
+.doc-reader.fill .doc-reader-paper .doc-code pre { max-width: 100%; }
+/* 铺满按钮高亮态（表示当前处于铺满） */
+.doc-reader.fill .doc-reader-actions .reader-fill { background: var(--yellow); }
+
+/* 入场微动效（提升沉浸感，尊重 reduced-motion） */
+@keyframes readerPaperIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.doc-reader.show .doc-reader-paper,
+.doc-reader.show .doc-reader-frame { animation: readerPaperIn .22s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .doc-reader.show .doc-reader-paper,
+  .doc-reader.show .doc-reader-frame { animation: none; }
+}
+
+/* 响应式：缩小屏阅读列留白，保证小屏清晰可读 */
+@media (max-width: 920px) {
+  .doc-reader .doc-reader-paper { padding: 36px 30px 64px; }
+}
+@media (max-width: 720px) {
+  .doc-reader .doc-reader-paper { padding: 24px 16px 48px; font-size: 15px; line-height: 1.8; }
+  .doc-reader-date { display: none; }
+}

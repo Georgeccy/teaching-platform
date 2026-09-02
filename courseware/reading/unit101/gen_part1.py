@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Generate index.html for 2018 DSE Paper 1 Reading courseware (v1).
-Design system: copied from 2024DSE-Paper1_v4 (fCC x Khan style).
-New features: pixel-brick rate covers (2-click shatter) + Show Data button.
-Part 1: helpers, passages, Part A slides.
+"""Generate index.html for 2015 DSE Paper 1 Reading courseware (v1).
+Design system: copied from 2017DSE-Paper1_v2 (fCC x Khan style).
+Features: pixel-brick rate covers (2-click shatter) + Show Data toggle button.
+Part 1: helpers, passages (Text 1 / Text 2 / Text 5) + Part A slides (Q1-31).
+Source: 2015_DSE_English_Paper1_完整整理.md
+Scope: Part A + Part B2 only (Part B1 Q32-55 NOT included per user request).
 """
-import html as _h
 
 def esc(s):
-    return _h.escape(s, quote=True)
+    """Escape for double-quoted HTML attribute values.
+    & < > and " must be escaped; the single quote ' is legal inside
+    double-quoted attributes and is kept verbatim."""
+    return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
 def tier(p):
     return "&#10003;" if p >= 70 else ("&#9888;" if p >= 40 else "&#128293;")
@@ -51,11 +55,33 @@ def sa(qid, label, chips, q, ans):
             f'<div class="ans-banner"><span class="tick">&#10003;</span><div><div class="at">Answer</div></div></div>'
             f'{ans}</div></div>')
 
+def _subtag(sub):
+    """Normalize a sub-question tag so it renders as exactly one pair of
+    parentheses: 'i' -> '(i)', '(i)' -> '(i)', '((i))' -> '(i)', '(i))' -> '(i)'."""
+    s = str(sub).strip()
+    while s.startswith('('):
+        s = s[1:]
+    while s.endswith(')') and s:
+        s = s[:-1]
+    return '(' + s + ')'
+
+def sub_sa(qid_sub, sub, stem, ans_html, pct=None):
+    """Sub-question block: full stem + per-sub rate chip shown beside the stem,
+    plus an independent answer reveal."""
+    rate = chip(pct) if pct is not None else ""
+    return ('<div style="margin:14px 0;padding:10px 14px;border-left:3px solid var(--fcc-purple);'
+            'border-radius:0 10px 10px 0;background:rgba(var(--accent-rgb),.03)">'
+            '<p style="font-size:20px;margin:0 0 10px"><strong>' + _subtag(sub) + '</strong> ' + stem + rate + '</p>'
+            '<button class="reveal-btn" onclick="toggleRev(\'' + qid_sub + '-ans\')">Show Answer</button>'
+            '<div class="ans-reveal" id="' + qid_sub + '-ans">'
+            '<div class="ans-banner"><span class="tick">&#10003;</span><div><div class="at">Answer</div></div></div>'
+            + ans_html + '</div></div>')
+
 def tfng_item(sub, stmt, ans, expl, pct):
     b = ""
     for v in ("T", "F", "NG"):
         b += f'<span class="tfng-btn" onclick="checkTFNG(this,\'{v}\')"><b>{v}</b></span>'
-    return (f'<p style="font-size:20px;margin-bottom:8px"><strong>({sub})</strong> {stmt} {chip(pct)}</p>'
+    return (f'<p style="font-size:20px;margin-bottom:8px"><strong>{_subtag(sub)}</strong> {stmt} {chip(pct)}</p>'
             f'<div class="tfng-group" data-answer="{ans}" data-explain="{esc(expl)}">{b}</div>')
 
 def tfng_slide(qid, label, intro, items):
@@ -90,80 +116,55 @@ def slide(title, section, part, body, hard_group=None):
     return (f'<section class="slide" data-title="{title}" data-section="{section}" '
             f'data-part="{part}"{hg}>{body}</section>\n\n')
 
-def split(left_title, paras, right):
-    return (f'<div class="split-view"><div class="split-left" oncontextmenu="handleHighlight(event, this)">'
+def split(left_title, paras, right, cls=''):
+    return (f'<div class="split-view {cls}"><div class="split-left" oncontextmenu="handleHighlight(event, this)">'
             f'<h4>{left_title}</h4>{paras}</div><div class="split-right">{right}</div></div>')
 
 # ---------- passages ----------
 T1 = {
-"ad1t": "Are you looking for an experienced and patient piano teacher? I am an experienced pianist with professional training in piano performance and music theory. Have been teaching piano for over 25 years. Love teaching students from kindergarteners to those who have retired. Able to speak English / Mandarin / Cantonese / Korean. If interested, please call 2121 3456 for a complimentary lesson.",
-"ad2t": "<strong>Advanced level guitar tuition in your home</strong> — I am a performing musician with over 15 years' experience in tutoring. Past students attended top music academies, have successful recording contracts, or work as musicians. I teach lessons for learners at intermediate level or higher.",
-"ad3t": "<strong>I can coach you for all levels of drum exams from beginner to expert</strong> — New teacher qualified in UK. Conveniently located in Wan Chai. Build confidence and develop awareness of the drummer's role in a band. Call 2134 5678 to get a 30-minute trial lesson for $150.",
+1: "Ten years ago, Oxford University graduate Daniel Tudor moved to Seoul, preferring the warmth of Korean society to &quot;cold&quot; Britain. The 31-year-old has since authored two books on his adopted home and has several other volumes in the pipeline. He speaks to <strong>Charmaine Chan</strong> about his latest title, <em>A Geek in Korea</em>, due out in June 2014.",
+2: "When I joined <em>The Economist</em> [2010&ndash;2013] I thought, &quot;Eventually I&#39;d like to write a book about Korea because nobody else is really doing it.&quot;",
+3: "Korea is a bit off the radar for most people in Western countries. In the 1980s Japan was the big story and people pay attention to China now because of its huge population and market. Korea has fallen in between these two countries.",
+4: "A lot of Koreans say <em>jeong</em> &mdash; the warmth between people and mutual sacrifice &mdash; is uniquely Korean, as is <em>han</em>. It&#39;s nonsense, but Korea has words to describe these things, which shows they are important. <em>Han</em> is a burden, oppression or an injustice you can&#39;t correct. Its cause never goes away but you can temporarily forget about it by pursuing all-out, manic fun. This is where <em>heung</em> comes in. <em>Heung</em> is pure joy. The word isn&#39;t as famous as <em>han</em>, but I think that it should be. Even traditional Korean funerals used to feature extreme alcohol consumption, raucous singing, and the like.",
+5: "Often when Westerners think of East Asians, the stereotypes of stoicism and self-control &mdash; the so-called &quot;inscrutable oriental&quot; &mdash; come to mind. But Koreans in fact tend to be very expressive and open with their feelings. Somehow, sadness and happiness both seem to be magnified in Korea.",
+6: "It&#39;s still about South Korea, but it&#39;s aimed at a younger audience. Consider it a gateway for those who like K-pop or TV shows from Korea, but don&#39;t know anything about the country.",
+7: "Generally K-pop is for teenagers. I&#39;m not saying it&#39;s wrong. It&#39;s a good business. But I like music played by people who mean what they&#39;re writing. Some people think all Korean music is K-pop, but there&#39;s really good music in Korea that&#39;s not superficial or played on the radio or on TV and doesn&#39;t go outside of Korea. One of my favourite bands is 3rd Line Butterfly: these guys are not rich and famous; they&#39;re ordinary guys you can be friends with. I am friends with them. There&#39;s an interview with [<em>Gangnam Style</em> singer] Psy [in <em>Geek</em>]. He&#39;s funny and cheeky, in a Robbie Williams kind of way, and making fun of Gangnam [an affluent district of Seoul], which is superficial and flashy.",
+8: "I don&#39;t like the drama stuff. They&#39;re trying to play with your emotions with Cinderella stories: beautiful girl from poor family marries rich guy. Korea&#39;s probably not the best country in which to be a woman. If you&#39;re a young woman in Korea, what&#39;s the best way to become wealthy or to achieve status? Sadly, it&#39;s to marry somebody.",
+9: "You find these mothers in Gangnam and they&#39;re scary. When I taught English I&#39;d meet kids who, materially, led awesome lives and they&#39;d show up in these big Mercedes with bags as big as they were. But if they didn&#39;t get an A grade in something, their parents would get mad and the next time you saw them they&#39;d be crying. Wealthy families are obsessed with education. It&#39;s a status thing: preserve your status and show the rest of the world that you&#39;re preserving your status and your kids are doing well.",
+10: "This <em>jeong</em> stuff &mdash; that&#39;s the thing that keeps me in Korea. Korea made me a better friend to my friends. England&#39;s a cold society and, growing up, I suppose I always wanted this feeling of being connected to people. I thought English people were a bit too cynical and cold. Korea is a place where you say, &quot;I like you. I love you. This is great.&quot; I really like that.",
 }
 
 T2 = {
-1: "'I won't be able to focus if you turn my music off,' a gazillion teenagers have whined at their parents. Is it possible that they're right?<br><br>Many people listen to music while they're carrying out a task, whether they're studying for an exam, driving a vehicle or even reading a book. Many of these people argue that background music helps them focus.",
-2: "When you think about it, that doesn't make much sense. Why would having two things to concentrate on make you more focused, not less? Some people even go so far as to say that not having music on is more distracting.",
-3: "Why would music help us concentrate? One argument is to do with attention. For all its amazing abilities, the brain hasn't really evolved to take in abstract information or spend prolonged periods thinking about one thing. We seem to have two attention systems: a conscious one that enables us to direct our focus towards things we know we want to concentrate on and an unconscious one that shifts attention towards anything our senses pick up that might be significant. The unconscious one is simpler, more fundamental, and linked to emotional processing rather than higher reasoning. It also operates faster. So when you hear a noise when you're alone at home, you're paying attention to it long before you consciously notice it and start to work out what it might have been. You can't help it.",
-4: "The trouble is, while our conscious attention is focused on the task in hand, the unconscious attention system doesn't shut down; it's still very much online, scanning for anything important in your peripheral senses. And if what we're doing is unpleasant or dull &ndash; so you're already having to force your attention to stay fixed on it &ndash; the unconscious attention system is even more potent. This means that a distraction doesn't need to be as stimulating to divert your attention to something else.",
-5: "Have you ever been working on a very important task in the library only to be driven slowly mad by someone constantly whispering, sniffing, or tapping their pen? Something quite innocuous suddenly becomes much more infuriating when you're trying to work on a task your brain doesn't necessarily enjoy.",
-6: "Music is a very useful tool in such situations. It provides non-invasive noise and pleasurable feelings to effectively neutralise the unconscious attention system's ability to distract us. However, it's not just a matter of providing any old background noise to keep distractions at bay.",
-7: "It seems clear that the type of noise, or music, is important. This may seem obvious: someone listening to classical music while they work wouldn't seem at all unusual, but if they were listening to heavy metal it would be thought very strange indeed.",
-8: "While the nature and style of the music can cause specific responses in the brain (funky music compels you to dance, sad music makes you melancholic, motivational music makes you want to exercise), some studies suggest that it really is down to personal preference. Music you like increases focus, while music you don't impedes it. Given the extreme variation in musical preferences from person to person, exposing a classroom to a single type of music would obviously end up with mixed results.",
-9: "Music also has a big impact on mood &ndash; truly bleak music could sap your enthusiasm for your task. Something else to look out for is music with catchy lyrics. Musical pieces without words might be better working companions, as human speech and vocalisation is something our brains pay particular attention to.",
-10: "Some people argue that one of the best music genres for concentration is the video game soundtrack. This makes sense, when you consider the purpose of video game music: to help create an immersive environment and to facilitate but not distract from a task that requires constant attention and focus.",
-11: "Limitations in the technology used for early game consoles meant the music also tended to be fairly simplistic in its melodies &ndash; think Tetris or Mario. In a somewhat Darwinian way, the music in video games has been refined over decades to be pleasant and entertaining, but not distracting. The composers have (probably unintentionally) been manipulating the attention systems in the brains of players for years now.",
-12: "There are signs that, as technology progresses, this type of theme music is being abandoned, with game producers opting for anything from big orchestral pieces to hip-hop. The challenge will be to maintain the delicate balance of stimulation without distraction. To achieve this, game composers will need to stay focused, which is ironic.",
-13: "So after knowing all this, how do you stop yourself getting distracted by noises around you? Perhaps it won't be a bad idea to keep your headphones and your favourite music close to hand.",
-"comments": "<strong>Comments:</strong><br><br><strong>Laura</strong> 20 Aug 2017 17:56<br>I find it impossible to work with any music playing at all. I like music too much not to pay attention to it, whatever its quality and whatever I'm doing.<br><br><strong>Sandy</strong> 20 Aug 2017 15:11<br>Are you kidding? Am I alone in wanting peace and quiet... no sounds apart from the rain or wind.<br><br><strong>John</strong> 19 Aug 2017 22:34<br>All my life no one could understand how I was able to study and get good grades by listening to heavy metal music. I can't study without my brain being blasted by my tunes. Thank you for the article. I don't feel weird anymore.<br><br><strong>Leo</strong> 19 Aug 2017 20:06<br>Who knows? I can usually focus on my homework with music playing but I can't revise like that.",
-}
-
-T3 = {
-1: "Bees are known for their role in producing honey and pollinating flowers to produce fruit. They can however become a threat to people when they build their hives near or inside homes. Bees are considered less dangerous than other stinging insects like wasps. In Hong Kong, honey bees and carpenter bees seldom sting unless they are provoked. However, there are aggressive species such as the Africanised honey bees that will sting humans. Fortunately they haven't been spotted in Hong Kong yet.",
-2: "Insect stings should not be confused with insect bites.",
-3: "An insect uses its sting as a form of defence when it perceives a threat either to itself or its colony. It stings by injecting poison into or under the skin. The effect is immediate and results in a sharp, burning sensation.",
-4: "While some insects sting as a form of defence, some bite to draw blood. To give such insects time to feed, insect bites have evolved so that the pain is not as sharp as a sting and is usually felt only minutes later.",
-5: "The most common insects that sting are wasps (including hornets) and bees. Wasps are the most aggressive and may sting with little provocation.",
-6: "Bees are much less likely to sting, most commonly stinging when they are stood or sat on. The key sign of a bee sting is that the bee leaves its stinger lodged inside the skin and a venomous sac will continue to pump poison for more than a minute. In contrast, the only sign of a wasp sting is likely to be a small puncture hole in the skin.",
-7: "If one is stung by a wasp or bee, the area around the sting will quickly redden and swell. The swelling will reduce after a few hours, but it may remain itchy for more than a day.",
-8: "Some people are much more sensitive to insect stings than others, and young children tend to be particularly sensitive. There are practical steps that can be taken.",
-9: "If stung by a bee, the pain will be reduced significantly if the stinger is removed promptly. This should be done carefully using sharp fingernails, tweezers or a knife &ndash; take great care not to squeeze the sting sac as this will inject more poison into the wound.",
-10: "To clean the wound, wash it with soap and water and then reduce swelling by bathing in cold water or by covering it with a cold compress such as ice in a cloth (but never hold ice directly on the skin).",
-11: "To relieve itching, apply an anti-histamine cream for bites and stings or take an oral anti-histamine tablet (a hay fever tablet).",
-12: "Calamine lotion can also be applied to cool the wound and ease the itch. If the itching is severe, consult your pharmacist about steroid creams.",
-13: "Bee stings have the potential for an allergic reaction, resulting in anaphylactic shock, a serious medical condition that requires immediate medical assistance and can even cause death.",
-14: "However, the people at risk are the three percent of the population who are allergic to the poison in stings. An allergy to insect stings can develop in a person at any time, even if they have not reacted to a previous sting.",
-15: "Call an ambulance immediately if someone has a severe reaction to an insect sting.",
-}
-
-T4 = {
-1: "On the rooftops of Hong Kong amongst the high-rise apartments, a local product designer, Michael Leung, has created his own space and is bringing nature back into the city, one beehive at a time.",
-2: "Michael Leung is the founder and creative director of HK Honey, an organisation that links local beekeepers with city dwellers by providing locally produced honey products. But the organisation's ultimate goal is to help sustain bee populations, which have been declining, while raising awareness by keeping a vital relationship between people and bees alive.",
-3: "According to the HK Honey website, Leung is Hong Kong's first urban beekeeper, although beekeeping has been around in the outlying areas of Hong Kong for some time. In fact, Leung was trained by Mr. Yip, who has had a bee-farming operation in Shatin since the 1980's.",
-4: "After they met in early 2010, an enthusiastic Leung had HK Honey up and running by that summer. Now it's uniting Hong Kong urban beekeepers from all walks of life. It links a network of local bee farms and offers workshops, organises tours on urban beekeeping and makes honey products. Its online shop also offers handmade products such as the usual candles and bottled honey, but honey cakes made from local ingredients are only available during their workshops.",
-5: "Of course, it's interesting to know that there are slight differences between the western and Chinese ways of beekeeping, not to mention behavioural variances between Chinese and western bees.",
-6: "There is a wide range of bee species kept by beekeepers in China, unlike in the west where commercial beekeepers usually rely on a single species. In contrast to the west, the Chinese approach to beekeeping uses no protective clothing &ndash; no gloves and no head nets. 'This gives us a closer connection to the bees. When we work with them, we make sure we move very slowly and try not to disturb them too much.' Leung says.",
-7: "Hong Kong is an incredibly dense high-rise city. Leung wasn't 100% sure if bees could sustain themselves in Hong Kong's urban environment. Surprisingly and fortunately they did sustain themselves in the city, and continue to amaze him with each new location that he sets up a beehive in. The honey in Hong Kong is an eclectic mix of wild and seasonal flowers. But when we taste it, we also taste all the hard work that has gone into producing it. The honey is priceless and a real treat to harvest and eat.",
-8: "Leung is a driven individual and is also channelling his energies into similar projects. He has established HK Farm, collaborating with communities and organisations within the city to grow food on the rooftops of Hong Kong.",
+1: "Daniel Tudor is one of the most influential foreign correspondents in South Korea &mdash; and one of the least known. As the reporter for the <em>Economist</em>, which doesn&#39;t use bylines, most of his work is published anonymously. But Mr. Tudor&#39;s profile is about to take a sharp rise with the publication of his new book, &quot;Korea: The Impossible Country&quot;.",
+2: "It&#39;s the first English-language book to cover the whole waterfront of South Korean society &mdash; historical, cultural, economic, social, political &mdash; since one by another influential British expat, Michael Breen, with &quot;The Koreans,&quot; which was originally published in 1998 and revised in 2004. [Mr. Breen provided a recommendation on Mr. Tudor&#39;s book jacket.] &quot;Korea: The Impossible Country&quot; is also likely to get added to the list of must-read books for anyone from outside of South Korea who wants to do business or live in the country.",
+3: "That&#39;s a small canon, unfortunately. In addition to Mr. Breen&#39;s book, the other indispensables are &quot;Diamond Dilemma&quot; by Tariq Hussain, &quot;Korean Dynasty&quot; by Donald Kirk, Tom Coyner&#39;s guide to doing business in Korea and Robert Koehler&#39;s <em>Seoul Selection</em> guidebooks for places and sightseeing. Indeed, the list of must-read books about North Korea is far longer.",
+4: "Mr. Tudor pushes into new social and economic territory with his book, including the rising role of immigrants, multicultural families and even gay people in South Korea. He lays out some of the contradictory behavior one finds in South Korea, such as the unending desire for new and trendy gadgets and fashion and yet the tunnel-like view of what constitutes a successful life. At the end, he asks the question that nearly every visitor has after spending some time in South Korea: why aren&#39;t people happier with what they&#39;ve done?",
 }
 
 T5 = {
-1: "The story begins in central China, in an apple-growing region called Maoxian County, near Chengdu. In the mid-1990s, the bees that regularly showed up there every spring suddenly didn't. Apple farmers, obviously, need bees. Bees dust their way through blossoms, moving from flower to flower, pollinating, which helps produce apples in September. The farmers had to do something, and do it quickly. So they decided to replace bees with humans. They pollinated by hand.",
-2: "In 1997, Maoxian apple growers, using brushes made from chopsticks and chicken feathers, went from blossom to blossom &ndash; just as bees do, to spread pollen. Hired hands worked full shifts, moving up the hillsides as each orchard hit blossom-time. News stories were written about this, with the obvious conservation moral: see, biologists said, this is what happens when we don't take care of the little creatures like the pollinators. When they disappear, the work they did for free suddenly becomes expensive. That was the moral of this story &ndash; until some economists took a second look.",
-3: "The economists arranged interviews in Maoxian County with the local farmers &ndash; first early in the 2000s, and again in 2011. What they learned was a shocker. First, the apple farmers reported that apple production was not hurt by the absence of bees. In fact, the apple harvest was 30 to 40 percent greater when humans did the pollinating. Human pollinators were better at getting to every blossom, performed cross-pollination more efficiently, and could work in windy, rainy weather.",
-4: "Bees, you should know, are less dependable. They don't like working when it's wet, they sleep a lot and they don't like the cold. The economists seemed to turn the moral of this story on its head. They argued that destroying and replacing the free gifts of nature could be an economic benefit.",
-5: "Woah! Well, you can imagine what the biologists must have thought. The economists said there are some critters we humans don't really need to have around to lead a good life. So let's not get hung up on biological diversity, because we can live fairly well &ndash; maybe even be better off &ndash; in a less diverse, biologically shrunken world.",
-6: "Even though people outperformed bees in apple orchards, that should not argue for their elimination. On the contrary, the conservationists said, the Maoxian case study illustrated the danger of allowing the logic of the market to drive conservation policy. Those missing bees weren't valuable in Maoxian County, but that doesn't mean they don't have value. These decisions are much more complex.",
+1: "It happens every semester. A student triumphantly points out that Jean-Jacques Rousseau is undermining himself when he claims &quot;the man who reflects is a depraved animal,&quot; or that Ralph Waldo Emerson&#39;s call for self-reliance is in effect a call for reliance on Emerson himself. Trying not to sound too weary, I ask the student to imagine that the authors had already considered these issues.",
+2: "Instead of trying to find mistakes in the texts, I suggest we take the point of view that our authors created these apparent &quot;contradictions&quot; in order to get readers like us to ponder more interesting questions. How do we think about inequality and learning, for example, or how can we stand on our own feet while being open to inspiration from the world around us? Yes, there&#39;s a certain satisfaction in being critical of our authors, but isn&#39;t it more interesting to put ourselves in a frame of mind to find inspiration in them?",
+3: "Our best college students are very good at being critical. In fact being smart, for many, means being critical. Having strong critical skills shows that you will not be easily fooled. It is a sign of sophistication, especially when coupled with an acknowledgment of one&#39;s own &quot;privilege&quot;.",
+4: "The combination of resistance to influence and deflection of responsibility by confessing to one&#39;s advantages is a sure sign of one&#39;s ability to negotiate the politics of learning on campus. But this ability will not take you very far beyond the university. Taking things apart, or taking people down, can provide the satisfactions of cynicism. But this is thin gruel.",
+5: "The skill at unmasking error, or simple intellectual one-upmanship, is not totally without value, but we should be wary of creating a class of self-satisfied debunkers &mdash; or, to use a currently fashionable word on campus, people who like to &quot;trouble&quot; ideas. In overdeveloping the capacity to show how texts, institutions or people fail to accomplish what they set out to do, we may be depriving students of the chance to learn as much as possible from what they study.",
+6: "In campus cultures where being smart means being a critical unmasker, students may become too good at showing how things can&#39;t possibly make sense. They may close themselves off from their potential to find or create meaning and direction from the books, music and experiments they encounter in the classroom.",
+7: "Once outside the university, these students may try to score points by displaying the critical prowess for which they were rewarded in school, but those points often come at their own expense. As debunkers, they contribute to a cultural climate that has little tolerance for finding or making meaning &mdash; a culture whose intellectuals and cultural commentators get &quot;liked&quot; by showing that somebody else just can&#39;t be believed. But this cynicism is no achievement.",
+8: "Liberal education in America has long been characterized by the intertwining of two traditions: of critical inquiry in pursuit of truth and exuberant performance in pursuit of excellence. In the last half-century, though, emphasis on inquiry has become dominant, and it has often been reduced to the ability to expose error and undermine belief. The inquirer has taken the guise of the sophisticated (often ironic) spectator, rather than the messy participant in continuing experiments or even the reverent beholder of great cultural achievements.",
+9: "Of course critical reflection is fundamental to teaching and scholarship, but fetishizing disbelief as a sign of intelligence has contributed to depleting our cultural resources. Creative work, in whatever field, depends upon commitment, the energy of participation and the ability to become absorbed in works of literature, art and science. That type of absorption is becoming an endangered species of cultural life, as our nonstop, increasingly fractured technological existence wears down our receptive capacities.",
+10: "In my film and philosophy class, for example, I have to insist that students put their devices away while watching movies that don&#39;t immediately engage their senses with explosions, sex or gag lines. At first they see this as some old guy&#39;s failure to grasp their skill at multitasking, but eventually most relearn how to give themselves to an emotional and intellectual experience, one that is deeply engaging partly because it does not pander to their most superficial habits of attention. I usually watch the movies with them (though I&#39;ve seen them more than a dozen times), and together we share an experience that becomes the subject of reflection, interpretation and analysis. We even forget our phones and tablets when we encounter these unexpected sources of inspiration.",
+11: "Liberal learning depends on absorption in compelling work. It is a way to open ourselves to the various forms of life in which we might actively participate. When we learn to read or look or listen intensively, we are, at least temporarily, overcoming our own blindness by trying to understand an experience from another&#39;s point of view. We are not just developing techniques of problem solving; we are learning to activate potential, and often to instigate new possibilities.",
+12: "Yes, hard-nosed critical thinking is a useful tool, but it also may become a defense against the risky insight that absorption can offer. As students and as teachers we sometimes crave that protection; without it we risk changing who we are. We risk seeing a different way of living not as something alien, but as a possibility we might be able to explore, and even embrace.",
+13: "Liberal education must not limit itself to critical thinking and problem solving; it must also foster openness, participation and opportunity. It should be designed to take us beyond the campus to a life of ongoing, pragmatic learning that finds inspiration in unexpected sources, and increases our capacity to understand and contribute to the world &mdash; and reshape it, and ourselves, in the process.",
 }
 
-T6 = {
-1: "Willie Robson drives his lorry up to his beehives on the heather moor at Hangwell Law in the north of England. Beekeepers have brought their hives onto these starkly beautiful moors for at least a millennium, and some still do. Heather honey, with its unique gel-like texture and room-filling fragrance, is one of the most prized in the world. In the pot, it glows fox-red, often beaded with little silver bubbles.",
-2: "Willie takes off his hairy tweed cap and kits up in his bee-suit. Honey bees left alone do not sting: stinging might harm the intruder but it also kills the bee. The barbed lancets dig into the skin, pump poison into human flesh, and then cannot withdraw. Instead, the sting rips the centre from the bee's abdomen so the insect straggles towards death, its insides ripped out, pink and pulsing. But bees will die to protect the hive, just as they will fly ceaselessly to collect nectar and pollen so the hive's colony can live.",
-3: "The armour of the apiarist is a bee-suit. Willie has a sort of khaki-green nylon flying suit, which zips across the body and then across the neck to close up the net-fronted hood. The legs are tucked into wellies and the arms into gloves, elastically at the wrists. In his suit, he walks around like a spaceman. Boots and gloves restrict some movement, but he goes slow-mo for another reason. 'You go with a quiet tread, or all hell breaks loose,' he says. 'It's a matter of weighing up the form. If trouble starts, you bail out.'",
-4: "After finding a piece of hessian sacking among the bric-a-brac on the back of the lorry, Willie lights the cloth with a match and puts it in a smoker formed like a pair of miniature bellows. The smoke can help lull the bees. They think there is an emergency, eat their fill of honey as if ready for flight and become less aggressive, perhaps because less able to bend and sting. Willie takes the top off the first hive. Pffcccc, pffcccc, pffcccc, goes the smoke. After a short pause, he heaves off the top box. Immediately, its weight reveals the exact extent of the haul. Honey is half as heavy again as water and a full box tells on your muscles. Beekeeping, in some aspects, is like fishing: some years you get next-to-nothing, in others you crop gold. This year everything worked, both skill and luck came together, and it is boom time; the weather was good over the year. Willie and his family have kept bees here for over fifty years, and he is now reaping the rewards of knowing his turf and keeping bees that are well adapted to their environment. This trip to Hangwell Law comes after a run of collecting a bumper harvest of heather honeycomb in ten days. It does not happen every year, or even often. Some years he gets nothing at all. But today he gets 2,500 pounds of honey. Such is the drama of harvest.",
-5: "The bees, in the meantime, go purposefully berserk. Zinging, small, aggressive atoms, gold in the late afternoon sun, attack again and again from different angles, trying to find a way into the bee-suit. Their persistence is unrelenting. Bees in the wild can burrow into the fur of an attacking bear, to sting the animal where it will hurt them hopping mad. In the same way, they seek the vulnerable chink in the beekeeper's second skin. A hole in the finger-tip of a glove, a stray stitch on the seam, will not go unpunished. You feel like a character within a video game, surrounded by flying attackers. The bee-suit is slightly claustrophobic, limiting your vision but not the sounds, nor the sudden sight of bees flying onto the net visor, inches from your eyes. Willie says the bees can get to people mentally. 'They get you on the shake,' he says. 'They undermine your confidence and go dab, dab, dab.' When a bee stings, a banana-like odour spreads in the air, attracting others to sting the same spot, like sharks drawn to blood pulsing through water.",
-6: "Some beekeepers lose bees by carelessly crushing them under boxes as they work under the pressure of time and the bee-blitz. Willie knows that bees matter more than honey. He brushes insects off each box with gentle sweeps of bracken and the triumph he feels at the haul is as much about the bees as anything else. Man makes use of bees but only by respecting their nature.",
-}
+COMMENTS = ("<strong>Tom</strong> (6/5/2014): Are you serious? $60,000 taken out in student loans for tuition, "
+            "room and board and no prospect for a job. Better to stick to any STEM program in college "
+            "(science, technology, engineering, math). You can get the type of education discussed in the "
+            "article, and even more, from your local library, with maybe $1.50 in late fines when you are "
+            "finished, if you really want to explore what it means to be human. PUH-LEEZE. Clearly this "
+            "article was written for the American higher education &quot;rip-off machine&quot;.<br><br>"
+            "<strong>Laura</strong> (6/5/2014): It takes months or years to design and build a structure, "
+            "and most are incapable of doing this; however, it takes hours and less skill to wreck it.")
 
 def P(d, keys):
     return "".join(para(k, d[k]) for k in keys)
@@ -173,12 +174,12 @@ slides = []
 # ================= 1. COVER =================
 cover = '''<div class="s1-card-wrapper">
     <div class="xdf-header-bar">
-      <div class="xdf-logo-text">DSE READING <span>// 2018 真题</span></div>
+      <div class="xdf-logo-text">DSE READING <span>// 2015 真题</span></div>
       <div class="xdf-sub-text">Paper 1 · Reading</div>
     </div>
     <div style="padding:28px 32px">
-      <div class="slide-h1" style="text-align:center;margin-bottom:6px">2018 HKDSE 英语 Paper 1</div>
-      <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Music · Bees · Sweetness and Light</div>
+      <div class="slide-h1" style="text-align:center;margin-bottom:6px">2015 HKDSE 英语 Paper 1</div>
+      <div class="slide-h2" style="text-align:center;color:var(--fcc-purple-dark);margin-bottom:24px">Warm-hearted Koreans · Young Minds in Critical Condition</div>
       <div style="display:flex;justify-content:center;margin-bottom:24px">
         <div class="teacher-badge">
           <div class="tb-avatar">成</div>
@@ -187,17 +188,17 @@ cover = '''<div class="s1-card-wrapper">
         </div>
       </div>
       <div style="display:flex;justify-content:center;margin-bottom:20px">
-        <div class="class-badge">真题精讲 · 2018 阅读卷 · 全 71 题</div>
+        <div class="class-badge">真题精讲 · 2015 阅读卷 · Part A + Part B2</div>
       </div>
       <div class="s1-meta-grid">
-        <div class="s1-meta-card"><div class="sm-label">Part A 必做</div><div class="sm-value">Q1–Q22</div><div class="sm-sub">音乐教师广告 · 音乐与专注力</div></div>
-        <div class="s1-meta-card"><div class="sm-label">Part B1 较易</div><div class="sm-value">Q23–Q45</div><div class="sm-sub">蜜蜂螫伤指南 · 香港城市养蜂人</div></div>
-        <div class="s1-meta-card"><div class="sm-label">Part B2 困难</div><div class="sm-value">Q46–Q71</div><div class="sm-sub">人工授粉 · 甜蜜与光明</div></div>
+        <div class="s1-meta-card"><div class="sm-label">Part A 必做</div><div class="sm-value">Q1–Q31</div><div class="sm-sub">Text 1 采访 + Text 2 书评</div></div>
+        <div class="s1-meta-card"><div class="sm-label">Part B1 较易</div><div class="sm-value">Q32–Q55</div><div class="sm-sub">本课件不涉及（跳过）</div></div>
+        <div class="s1-meta-card"><div class="sm-label">Part B2 困难</div><div class="sm-value">Q56–Q77</div><div class="sm-sub">Young Minds in Critical Condition</div></div>
       </div>
       <div class="timeline-row">
-        <div class="tl-seg c1"><div class="seg-ph">Part A</div><div class="seg-name">Text 1–2</div><div class="sm-sub">音乐 + Q1–22</div></div>
-        <div class="tl-seg c2"><div class="seg-ph">Part B1</div><div class="seg-name">Text 3–4</div><div class="sm-sub">蜜蜂指南 + Q23–45</div></div>
-        <div class="tl-seg c3"><div class="seg-ph">Part B2</div><div class="seg-name">Text 5–6</div><div class="sm-sub">授粉·采蜜 + Q46–71</div></div>
+        <div class="tl-seg c1"><div class="seg-ph">Part A</div><div class="seg-name">Text 1+2</div><div class="sm-sub">韩国采访 + Q1–31</div></div>
+        <div class="tl-seg c2"><div class="seg-ph">Part B1</div><div class="seg-name">跳过</div><div class="sm-sub">Q32–55 不涉及</div></div>
+        <div class="tl-seg c3"><div class="seg-ph">Part B2</div><div class="seg-name">Text 5</div><div class="sm-sub">批判性思维 + Q56–77</div></div>
         <div class="tl-seg c4"><div class="seg-ph">收尾</div><div class="seg-name">Done</div><div class="sm-sub">数据榜 + 复盘</div></div>
       </div>
     </div>
@@ -207,356 +208,368 @@ slides.append(slide("封面", "cover", "开场", cover))
 
 # ================= 2. Part A Entry Test =================
 a_entry_cards = [
-    ("complimentary", "免费的；赠送的"),
-    ("tuition", "教学；授课"),
-    ("intermediate", "中级的"),
-    ("qualified", "持有资格的；合格的"),
-    ("trial (lesson)", "试堂；试用"),
-    ("whine", "抱怨；发牢骚"),
-    ("peripheral", "外围的；周边的"),
-    ("innocuous", "无害的"),
-    ("neutralise", "抵消；中和"),
-    ("melancholic", "忧郁的"),
+    ("expatriate", "旅居国外者"),
+    ("correspondent", "（驻外）记者"),
+    ("byline", "（作者）署名"),
+    ("in the pipeline", "在筹备中；即将推出"),
+    ("off the radar", "不受关注的；鲜为人知的"),
+    ("superficial", "肤浅的"),
+    ("flashy", "浮华的"),
+    ("raucous", "喧闹刺耳的"),
+    ("stoicism", "坚忍；淡泊"),
+    ("cynical", "愤世嫉俗的"),
 ]
 body = ('<div class="sec-label">Part A · Entry Test · 入门测</div>'
         '<div class="slide-h3" style="margin-bottom:6px">核心词汇 Words — tap to flip (英→中)</div>'
-        '<div style="font-size:16px;color:var(--text-2);margin-bottom:16px">Text 1–2 Music · 10 words · 每题 1 分</div>'
+        '<div style="font-size:16px;color:var(--text-2);margin-bottom:16px">Text 1–2 Korea · 10 words · 每题 1 分</div>'
         + flip_grid(a_entry_cards))
 slides.append(slide("Part A Entry Test", "entry-test", "Part A", body))
 
-# ================= 3. Q1–Q3 · Text 1 =================
-left = ('<h4>Text 1: Music Teachers — Classified Ads</h4>'
-        '<div class="passage-excerpt"><div class="para-num">Ad 1</div>' + T1["ad1t"] + '</div>\n'
-        '<div class="passage-excerpt"><div class="para-num">Ad 2</div>' + T1["ad2t"] + '</div>\n'
-        '<div class="passage-excerpt"><div class="para-num">Ad 3</div>' + T1["ad3t"] + '</div>\n')
+# ================= 3. Q1–Q5 · Text 1 ¶1–3 =================
+left = '<h4>Text 1: In from the cold among warm-hearted Koreans（¶1–3）</h4>' + P(T1, [1, 2, 3])
 
-q1 = ('<div class="practice-mcq" id="q1-box"><div class="pmcq-label">Q1 · Find similar words · 3 marks '
-      + chip([("(i)", 65), ("(ii)", 65), ("(iii)", 88)]) + '</div>'
-      '<div class="pmcq-q">From the ads, find ONE word that has a similar meaning to each of the following. '
-      '点击空格核对答案。</div>'
-      '<table class="quiz-table"><tr><th>Word</th><th>From</th><th>Similar word in the text</th></tr>'
-      '<tr><td><strong>(i)</strong> \'free\'</td><td>Classified Ad 1</td><td>' + cloze("complimentary") + '</td></tr>'
-      '<tr><td><strong>(ii)</strong> \'schools\'</td><td>Classified Ad 2</td><td>' + cloze("academies") + '</td></tr>'
-      '<tr><td><strong>(iii)</strong> \'teach\'</td><td>Classified Ad 3</td><td>' + cloze("coach") + '</td></tr></table>'
-      '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 同义替换是 DSE 高频考点：'
-      'free→complimentary · schools→academies · teach→coach。定位时先锁广告，再扫读找近义词。</span></div></div>')
+q1 = sa("q1", "Q1 · Short answer · 1 mark", chip(52),
+        "Who is <strong>Charmaine Chan</strong>?",
+        '<p><strong>writer of this article // journalist // reporter // interviewer // the person who asks '
+        'the questions</strong></p>'
+        '<p>&#182;1 &quot;He speaks to <em>Charmaine Chan</em>&quot; — 采访者提问，Tudor 回答。'
+        '&#10007; 只答 <em>writer</em> 不得分：Tudor 才是书的作者，Chan 是采访记者。</p>')
 
-q2 = mcq("q2i", "Q2(i) · MC · 1 mark", chip(77),
-         "Which ad <strong>states the monthly fees</strong>?",
-         [("A", "Ad 1", False, "Ad 1 只提供免费试课电话，没有学费。"),
-          ("B", "Ad 2", False, "Ad 2 完全没提收费。"),
-          ("C", "Ad 3", False, "Ad 3 只有 trial lesson $150（一次试堂费），不是 monthly fees。"),
-          ("D", "X (None of the ads)", True, "")],
-         "🔑 三则广告都没有写 monthly fees → 选 X。trial lesson fee ≠ monthly fees。")
-q2b = mcq("q2ii", "Q2(ii) · MC · 1 mark", chip(70),
-          "Which ad <strong>mentions the teacher's personality</strong>?",
-          [("A", "Ad 1", True, ""),
-           ("B", "Ad 2", False, "Ad 2 讲经验和学生成就，没讲性格。"),
-           ("C", "Ad 3", False, "Ad 3 讲建立自信和角色认知，是教学方法。"),
-           ("D", "X (None of the ads)", False, "Ad 1 明确说 patient。")])
-q2c = mcq("q2iii", "Q2(iii) · MC · 1 mark", chip(55),
-          "Which ad <strong>indicates that the teacher will travel to the student</strong>?",
-          [("A", "Ad 1", False, "Ad 1 是学生去上免费试课。"),
-           ("B", "Ad 2", True, ""),
-           ("C", "Ad 3", False, "Ad 3 说 conveniently located in Wan Chai — 是教师固定地点。"),
-           ("D", "X (None of the ads)", False, "Ad 2 标题就是 in your home。")],
-          "🔑 'Advanced level guitar tuition <strong>in your home</strong>' → 上门教授。陷阱：Ad 3 的 located in Wan Chai 是反例。")
+q2 = sa("q2", "Q2 · Short answer · 1 mark", chip(9),
+        "How many more books is Daniel planning to write?",
+        '<p><strong>several // some more (books)</strong></p>'
+        '<p>&#182;1 &quot;has several other volumes <em>in the pipeline</em>&quot; — 全卷第二大坑（9%）：'
+        '多数考生被「two books」带跑答 2 或 1，但 <em>has authored</em> 是已完成，'
+        '<em>several other volumes in the pipeline</em> 才是「计划中」。注意时态与 referent。</p>')
 
-q3 = mcq("q3i", "Q3(i) · MC · 1 mark", chip(92),
-         "Match the comment: <strong>I have the most teaching experience.</strong>",
-         [("A", "Ad 1", True, ""),
-          ("B", "Ad 2", False, "Ad 2 是 15 年经验，少于 Ad 1 的 25 年。"),
-          ("C", "Ad 3", False, "Ad 3 是新到任教师。"),
-          ("D", "Does not match any ad", False, "over 25 years = 最多经验。")])
-q3b = mcq("q3ii", "Q3(ii) · MC · 1 mark", chip(75),
-          "Match the comment: <strong>I teach different kinds of musical instruments.</strong>",
-          [("A", "Ad 1", False, "Ad 1 只教钢琴。"),
-           ("B", "Ad 2", False, "Ad 2 只教吉他。"),
-           ("C", "Ad 3", False, "Ad 3 只教爵士鼓。"),
-           ("D", "Does not match any ad", True, "")],
-          "🔑 三则广告各只教一种乐器 → 不匹配任何广告。")
-q3c = mcq("q3iii", "Q3(iii) · MC · 1 mark", chip(75),
-          "Match the comment: <strong>I don't teach beginners.</strong>",
-          [("A", "Ad 1", False, "Ad 1 从幼儿园小朋友教到退休人士。"),
-           ("B", "Ad 2", True, ""),
-           ("C", "Ad 3", False, "Ad 3 从 beginner 到 expert 都教。"),
-           ("D", "Does not match any ad", False, "Ad 2: intermediate level or higher。")])
+q3 = ('<div class="practice-mcq" id="q3-box"><div class="pmcq-label">Q3 · Ordering · 1 mark ' + chip(64) + '</div>'
+      '<div class="pmcq-q">Order the following events in Daniel&#39;s life. Number the events (1&ndash;4). '
+      'The first has been done for you.</div>'
+      '<div class="card" style="padding:14px 18px;font-size:20px;line-height:2.1">'
+      'Started working for <em>The Economist</em> &rarr; '
+      + cloze("3") + '<br>'
+      'Wrote his first book about Korea &rarr; ' + cloze("4") + '<br>'
+      'Became an English teacher &rarr; ' + cloze("2") + '<br>'
+      'Studied at Oxford University &rarr; <strong>1</strong>（已给）</div>'
+      '<div class="method-wrap" style="display:none"><span class="method-badge">&#128273; 时间线锚点：'
+      'Oxford 毕业（最早已给 1）&rarr; 刚到首尔教英文（Ten years ago）&rarr; 2010&ndash;2013 加入 '
+      'Economist &rarr; 写第一本书（The Impossible Country, 2012）&rarr; 新书 A Geek in Korea（2014）。'
+      '排序题先抓年份再排序。</span></div></div>')
 
-right = q1 + q2 + q2b + q2c + q3 + q3b + q3c
-body = ('<div class="sec-label">Part A · Text 1 · Q1–Q3</div>'
-        '<div class="slide-h3">Music Teachers — Classified Ads</div>'
-        + split("Text 1: Three classified ads", left, right))
-slides.append(slide("Q1–Q3 · Text 1", "practice", "Part A", body, "text1"))
+q4 = sa("q4", "Q4 · Reference · 1 mark", chip(41),
+        "Who does <strong>&quot;they&quot;</strong> refer to in line 9?",
+        '<p><strong>(other) westerners (in Korea) // the west / westerners // people (living) in western / '
+        'other countries // (other) journalists // (other) writers</strong></p>'
+        '<p>&#182;1 &quot;You started, <em>like so many other Westerners in Korea</em>, teaching English.&quot; '
+        '— they 回指 other Westerners in Korea。&#10007; (most) people (in general)、&#10007; Koreans。</p>')
 
-# ================= 4. Q4–Q6 · Text 2 ¶1–4 =================
-left = '<h4>Text 2: Can music really help you concentrate? (¶1–4)</h4>' + P(T2, [1, 2, 3, 4])
+q5 = mcq("q5", "Q5 · MC · 1 mark", chip(75),
+         "What does Daniel mean by <strong>&quot;off the radar&quot;</strong> (line 10)?",
+         [("A", "famous", False, "与文意相反。"),
+          ("B", "disliked", False, "原文没说被讨厌。"),
+          ("C", "exciting", False, "无此含义。"),
+          ("D", "unknown", True, "")],
+         "&#128273; &#182;3 &quot;Korea is a bit <em>off the radar</em> for most people in Western "
+         "countries&quot; — 不在大众视野内 = unknown。下句 Japan was the big story / China 受关注 "
+         "反向印证 Korea 被忽视。")
 
-q4 = sa("q4", "Q4 · MC (choose TWO) · 2 marks", chip(85),
-        "According to paragraph 1, people listen to music while carrying out a task. "
-        "Which <strong>TWO</strong> activities below are <strong>NOT</strong> mentioned?",
-        '<p>A. reading a book &nbsp; B. driving a vehicle &nbsp; C. moving boxes / doing exercise &nbsp; '
-        'D. studying for an exam &nbsp; E. playing the guitar</p>'
-        '<p><strong>Answer: C and E</strong></p>'
-        '<p>&#182;1 只提到 studying for an exam · driving a vehicle · reading a book — C（搬箱子/运动）'
-        '和 E（弹吉他）未提及。</p>')
+right = q1 + q2 + q3 + q4 + q5
+body = ('<div class="sec-label">Part A · Text 1 · Q1–Q5</div>'
+        '<div class="slide-h3">In from the Cold — 采访开头与时间线</div>'
+        + split("Text 1 (¶1–3)", left, right))
+slides.append(slide("Q1–Q5 · Text 1 ¶1–3", "practice", "Part A", body, "text1"))
 
-q5 = sa("q5", "Q5 · Reference · 1 mark", chip(61),
-        "What does <strong>'that'</strong> (line 5) refer to?",
-        '<p><strong>(the idea that) (background) music helps people focus</strong></p>'
-        '<p>&#182;2 首句 "When you think about it, <em>that</em> doesn\'t make much sense" — '
-        'that 回指 &#182;1 结尾 "background music helps them focus" 这一想法。</p>')
+# ================= 4. Q6–Q10 · Text 1 ¶3–5 =================
+left = '<h4>Text 1: jeong / han / heung（¶3–5）</h4>' + P(T1, [3, 4, 5])
 
-q6 = ('<div class="practice-mcq" id="q6-box"><div class="pmcq-label">Q6 · Summary cloze · 7 marks '
-      + chip([("(i)", 34), ("(ii)", 41), ("(iii)", 42), ("(iv)", 19), ("(v)", 31), ("(vi)", 24), ("(vii)", 8)])
-      + '</div>'
-      '<div class="pmcq-q">Complete the summary of paragraphs 3–4. Use <strong>ONE word</strong> for each blank.</div>'
-      '<div class="card" style="padding:14px 18px;font-size:20px;line-height:2">'
-      'The brain has not evolved to take in abstract information or think about one thing for long periods, '
-      'so such tasks are (i) ' + cloze("difficult / hard / challenging / problematic") + ' for it. We have two attention '
-      'systems. The conscious one operates at a (ii) ' + cloze("slower / lower") + ' speed than the unconscious one, which '
-      'shifts our attention to anything (iii) ' + cloze("significant / important / vital / crucial") + ' that our senses '
-      'pick up. The unconscious system is linked to (iv) ' + cloze("emotions / senses") + ' rather than higher reasoning. '
-      'While we are working, it is (v) ' + cloze("still / always / also") + ' scanning our surroundings. If the task is '
-      'unpleasant or dull, a distraction does not need to be very (vi) ' + cloze("stimulating / interesting") + ' to '
-      'divert our attention, because the unconscious attention system is even (vii) '
-      + cloze("stronger / greater") + ' then.</div>'
-      '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 摘要填空三大坑：① 判断词性 '
-      '（此处全为形容词）② 只填一个词 ③ 不重复摘要已有的信息。(vii) 是全卷最难题之一（8%）。</span></div></div>')
+q6 = sa("q6", "Q6 · Short answer · 1 mark", chip(45),
+        "Which country does the writer suggest is currently the <strong>&quot;big story&quot;</strong> (line 10)?",
+        '<p><strong>China</strong></p>'
+        '<p>&#182;3 &quot;people pay attention to <em>China</em> now because of its huge population and '
+        'market&quot; — 注意时态对比：1980s Japan &rarr; now China &rarr; Korea 被夹在中间被忽视。</p>')
 
-right = q4 + q5 + q6
-body = ('<div class="sec-label">Part A · Text 2 · Q4–Q6</div>'
-        '<div class="slide-h3">Can music help you concentrate? — Attention Systems</div>'
-        + split("Text 2 (¶1–4)", left, right))
-slides.append(slide("Q4–Q6 · Text 2 ¶1–4", "practice", "Part A", body, "text2"))
+q7 = sa("q7", "Q7 · Short answer · 1 mark", chip(57),
+        "Why is <em>jeong</em> referred to as <strong>&quot;the invisible hug&quot;</strong> (line 13)?",
+        '<p><strong>it is the warmth between people and mutual sacrifice</strong></p>'
+        '<p>&#182;4 <em>jeong</em> = the warmth between people and mutual sacrifice — 拥抱是「温暖」的意象，'
+        '「无形」是因为它是人与人之间的情感联结，不是肢体动作。</p>')
 
-# ================= 5. Q7–Q10 · ¶3–5 =================
-left = '<h4>Text 2: Can music really help you concentrate? (¶3–5)</h4>' + P(T2, [3, 4, 5])
+q8 = sa("q8", "Q8 · Short answer · 1 mark", chip(25),
+        "What does Daniel think is <strong>&quot;nonsense&quot;</strong> (line 15)?",
+        '<p><strong>jeong / han are uniquely Korean / exclusive concepts to Korea</strong></p>'
+        '<p>&#182;4 &quot;A lot of Koreans say jeong... is <em>uniquely Korean</em>... <em>It&#39;s nonsense'
+        '</em>&quot; — nonsense 指的是「只有韩国才有」这个说法。&#10007; 照抄 Korea has words to describe '
+        'these things（那是 Daniel 认可的部分，不是 nonsense 的内容）。仅 25% 对。</p>')
 
-q7 = mcq("q7", "Q7 · MC · 1 mark", chip(56),
-         "What does <strong>'You can't help it'</strong> (line 14) mean?",
-         [("A", "You cannot stop the noise.", False, "重点不是噪音能否停止，而是你无法不去注意它。"),
-          ("B", "You have to focus on the noise.", True, ""),
-          ("C", "You will feel scared when you hear the noise.", False, "与害怕无关。"),
-          ("D", "You will definitely hear noises when home alone.", False, "不是关于一定会听到声音。")],
-         "🔑 can't help doing = 忍不住做某事。上句说 you're paying attention to it long before you consciously notice it → 你不得不注意它。")
+q9 = sa("q9", "Q9 · Short answer · 1 mark", chip(22),
+        "Why did Koreans drink a lot and sing raucously at traditional funerals?",
+        '<p><strong>to overcome / forget their sadness / sorrow / burden / oppression</strong></p>'
+        '<p>&#182;4 <em>han</em>（can&#39;t correct 的负担）&rarr; pursue all-out, manic fun 暂时忘却 &rarr; '
+        'funerals 上的 extreme alcohol consumption and raucous singing 就是为了忘掉悲伤。</p>')
 
-q8 = sa("q8", "Q8 · Find a word/phrase · 1 mark", chip(41),
-        "Find a word or phrase that the writer uses in paragraph 4 to draw readers' attention to the fact "
-        "that the unconscious attention system can cause us problems.",
-        '<p><strong>(the) trouble (is)</strong></p>'
-        '<p>&#182;4 开头 "The trouble is, ..." — 语篇标记词（discourse marker），提示下文讲问题所在。'
-        '常见错误答案 potent 是具体细节词，不是作者用来引起读者注意的手段。</p>')
+q10i = sub_sa("q10i", "i",
+              "Name one <strong>difference</strong> between Koreans and Westerners, as seen by Daniel.",
+              '<p><strong>Sadness and happiness both seem to be magnified in Korea // Koreans are / tend to be '
+              'more emotional / show more feelings</strong></p>'
+              '<p>&#182;5 &quot;sadness and happiness both seem to be <em>magnified</em> in Korea&quot; — '
+              '&#10007; show a lot of stoicism / self-control（那是西方人的刻板印象，不是差异）。</p>', 17)
+q10ii = sub_sa("q10ii", "ii",
+               "Name one <strong>similarity</strong> between Koreans and Westerners, as seen by Daniel.",
+               '<p><strong>Koreans are very expressive and open with their feelings</strong></p>'
+               '<p>&#182;5 &quot;But Koreans in fact tend to be <em>very expressive and open</em> with their '
+               'feelings&quot; — 与「inscrutable oriental」刻板印象相反，这一点上与西方人有情感表达的共通。</p>', 48)
 
-q9 = sa("q9", "Q9 · Reference · 1 mark", chip(32),
-        "What does <strong>'it'</strong> (line 17) refer to?",
-        '<p><strong>(the) unpleasant / dull task // (the) task in hand // what we are doing</strong></p>'
-        '<p>&#182;4 "if what we\'re doing is unpleasant or dull &ndash; so you\'re already having to force your attention '
-        'to stay fixed on <em>it</em>" — it = 那件枯燥的任务（单数特指）。典型错误：写成复数 doing tasks。</p>')
+right = q6 + q7 + q8 + q9 + '<div class="practice-mcq" id="q10-box"><div class="pmcq-label">Q10 · Short answer · 2 marks</div><div class="pmcq-q">According to paragraph 5, name one difference and one similarity between Koreans and Westerners, as seen by Daniel.</div>' + q10i + q10ii + '</div>'
+body = ('<div class="sec-label">Part A · Text 1 · Q6–Q10</div>'
+        '<div class="slide-h3">Jeong · Han · Heung — 韩式情感三词</div>'
+        + split("Text 1 (¶3–5)", left, right))
+slides.append(slide("Q6–Q10 · Text 1 ¶3–5", "practice", "Part A", body, "text1"))
 
-q10 = sa("q10", "Q10 · Find a word · 1 mark", chip(62),
-         "Find a word in paragraph 5 which has a similar meaning to <strong>'harmless'</strong>.",
-         '<p><strong>innocuous</strong></p>'
-         '<p>&#182;5 "Something quite <em>innocuous</em> suddenly becomes much more infuriating..."</p>')
+# ================= 5. Q11–Q14 · Text 1 ¶6–7 =================
+left = '<h4>Text 1: K-pop 与 3rd Line Butterfly（¶6–7）</h4>' + P(T1, [6, 7])
 
-right = q7 + q8 + q9 + q10
-body = ('<div class="sec-label">Part A · Text 2 · Q7–Q10</div>'
-        '<div class="slide-h3">Distracted! — Library Madness</div>'
-        + split("Text 2 (¶3–5)", left, right))
-slides.append(slide("Q7–Q10 · ¶3–5", "practice", "Part A", body, "text2"))
+q11 = sa("q11", "Q11 · Short answer · 1 mark", chip(53),
+         "Why doesn&#39;t Daniel like K-pop?",
+         '<p><strong>its superficial // it&#39;s not meaningful</strong></p>'
+         '<p>&#182;7 &quot;there&#39;s really good music in Korea that&#39;s not <em>superficial</em>&quot; '
+         '— 反向推理：Daniel 嫌 K-pop 肤浅。&#10007; it&#39;s for teenagers（那是客观描述，不是不喜欢的理由）。</p>')
 
-# ================= 6. Q11–Q14 · ¶5–8 =================
-left = '<h4>Text 2: Can music really help you concentrate? (¶5–8)</h4>' + P(T2, [5, 6, 7, 8])
+q12 = sa("q12", "Q12 · Short answer · 1 mark", chip(82),
+         "Who or what does the word <strong>&quot;them&quot;</strong> (line 31) refer to?",
+         '<p><strong>(members of) 3rd Line Butterfly</strong></p>'
+         '<p>&#182;7 &quot;these guys are not rich and famous; they&#39;re ordinary guys you can be friends '
+         'with. I am friends with <em>them</em>&quot; — them 回指 3rd Line Butterfly（乐队成员）。'
+         '&#10007; a band / Korean music / culture。</p>')
 
-q11 = sa("q11", "Q11 · Short answer · 1 mark", chip(75),
-         "Give <strong>ONE</strong> example of a distraction mentioned in paragraph 5.",
-         '<p><strong>sniffing // whispering // tapping a pen</strong></p>'
-         '<p>&#182;5 "someone constantly <em>whispering, sniffing, or tapping their pen</em>" — 任写一个即可。</p>')
+q13 = sa("q13", "Q13 · Short answer · 1 mark", chip(11),
+         "What opinion do both Daniel and Psy share?",
+         '<p><strong>Gangnam is superficial / flashy</strong></p>'
+         '<p>&#182;7 Psy &quot;making fun of Gangnam... which is <em>superficial and flashy</em>&quot; — '
+         'Daniel 借 Psy 的玩笑点出同一看法。全卷 Part A 最难之一（11%）：要从「笑着调侃」里读出共同观点。</p>')
 
-q12 = mcq("q12", "Q12 · MC · 1 mark", chip(47),
-          "According to paragraph 6, the main benefit of listening to music when working on an important task in a library is to...",
-          [("A", "stop the non-invasive noises.", False, "音乐本身就是 non-invasive noise，不是去停止它。"),
-           ("B", "create enjoyment for the listener.", False, "pleasurable feelings 是手段，不是 main benefit。"),
-           ("C", "neutralise the pleasurable feelings.", False, "是利用愉悦感去抵消，不是抵消愉悦感。"),
-           ("D", "cancel the effect of the unconscious system.", True, "")],
-          "🔑 &#182;6 \"neutralise the unconscious attention system's ability to distract us\" — 抵消无意识系统的干扰能力。")
-
-q13 = mcq("q13", "Q13 · MC · 1 mark", chip(69),
-          "When the writer says <strong>'it really is down to personal preference'</strong> (line 32), he/she means...",
-          [("A", "people prefer to dance to funky music.", False, "例子细节，非本义。"),
-           ("B", "people study while listening to catchy lyrics.", False, "与歌词无关。"),
-           ("C", "people focus better listening to music they enjoy.", True, ""),
-           ("D", "people make better choices when listening to music.", False, "无此意。")],
-          "🔑 be down to = 取决于。下句 \"Music you like increases focus\" 直接解释了它。")
-
-q14 = sa("q14", "Q14 · Find a word · 1 mark", chip(71),
-         "Find a word in paragraph 8 which can be replaced by <strong>'reduces'</strong>.",
-         '<p><strong>impedes</strong></p>'
-         '<p>&#182;8 "Music you like increases focus, while music you don\'t <em>impedes</em> it." — '
-         'increases 与 impedes 形成对比。</p>')
+q14 = tfng_slide("q14", "Q14 · T / F / NG · 3 marks",
+                 "Based on the information given in paragraph 7, decide if the following statements are True, False or Not Given.",
+                 [("(i)", "Daniel is a friend of Psy.", "NG",
+                   "¶7 只说他采访了 Psy（There's an interview with Psy），没说两人是朋友 — Not Given。", 72),
+                  ("(ii)", "3rd Line Butterfly is a K-pop group.", "F",
+                   "¶7 \"all Korean music is <em>K-pop</em>, but there's really good music... not "
+                   "superficial\" + 3rd Line Butterfly 是 Daniel 喜欢的非 K-pop 乐队 — 与「是 K-pop 组合」相反。", 68),
+                  ("(iii)", "Daniel thinks some good Korean music isn&#39;t well known internationally.", "T",
+                   "¶7 \"doesn't go <em>outside of Korea</em>\" — 好音乐没走出韩国 = 国际上不知名。", 82)])
 
 right = q11 + q12 + q13 + q14
-body = ('<div class="sec-label">Part A · Text 2 · Q11–Q14</div>'
-        '<div class="slide-h3">Music as a Tool — Type of Music</div>'
-        + split("Text 2 (¶5–8)", left, right))
-slides.append(slide("Q11–Q14 · ¶5–8", "practice", "Part A", body, "text2"))
+body = ('<div class="sec-label">Part A · Text 1 · Q11–Q14</div>'
+        '<div class="slide-h3">K-pop、Psy 与真正的韩国音乐</div>'
+        + split("Text 1 (¶6–7)", left, right))
+slides.append(slide("Q11–Q14 · Text 1 ¶6–7", "practice", "Part A", body, "text1"))
 
-# ================= 7. Q15–Q18 · ¶8–12 =================
-left = '<h4>Text 2: Can music really help you concentrate? (¶8–12)</h4>' + P(T2, [8, 9, 10, 11, 12])
+# ================= 6. Q15–Q17 · Text 1 ¶8 =================
+left = '<h4>Text 1: Korean soaps 与 Cinderella stories（¶8）</h4>' + P(T1, [8])
 
-q15 = sa("q15", "Q15 · Short answer · 2 marks", chip(57),
-         "Explain why playing only one type of music in a classroom would <strong>'end up with mixed results'</strong> (line 34).",
-         '<p><strong>there is (extreme) variation in musical preferences // music is really down to personal '
-         'preference so students may react differently // students will respond to the music in different ways</strong></p>'
-         '<p>&#182;8 结尾 "Given the extreme variation in musical preferences from person to person, exposing a '
-         'classroom to a single type of music would obviously end up with mixed results." — 因果就在上一句。</p>')
+q15 = sa("q15", "Q15 · Short answer · 1 mark", chip(83),
+         "What are <strong>&quot;soaps&quot;</strong> (line 34)?",
+         '<p><strong>(Korean) drama(s) // (romantic) TV series / programme // soap opera(s)</strong></p>'
+         '<p>&#182;8 &quot;How about Korean <em>soaps</em>?&quot; &rarr; &quot;I don&#39;t like the '
+         '<em>drama</em> stuff&quot; — soap (opera) = 肥皂剧 = 韩剧。&#10007; Korean soaps（同义反复）、'
+         '&#10007; Cinderella stories（那是剧情内容，不是 soaps 的指代）。</p>')
 
-q16 = sa("q16", "Q16 · Reference · 1 mark", chip(9),
-         "<strong>'Working companions'</strong> (line 36) refers to ______.",
-         '<p><strong>musical pieces without words we listen to while working / doing a task</strong></p>'
-         '<p>&#182;9 "Musical pieces without words might be better <em>working companions</em>" — working companions = '
-         '前文的 musical pieces without words（隐喻：无词音乐是更好的工作伙伴）。仅 9% 正确：隐喻题不能照抄字面。</p>')
+q16 = sa("q16", "Q16 · Short answer · 1 mark", chip(62),
+         "Why does Daniel think &quot;Korea&#39;s probably not the best country in which to be a woman&quot; (lines 36-37)?",
+         '<p><strong>the best way to become wealthy / achieve status / to become successful is to marry</strong></p>'
+         '<p>&#182;8 &quot;If you&#39;re a young woman in Korea, what&#39;s the best way to become wealthy or '
+         'to achieve status? Sadly, it&#39;s to <em>marry</em> somebody.&quot; — 女性实现阶层跃升只能靠婚姻。</p>')
 
-q17 = ('<div class="practice-mcq" id="q17-box"><div class="pmcq-label">Q17 · Timeline cloze · 6 marks '
-       + chip([("(i)", 53), ("(ii)", 41), ("(iii)", 40), ("(iv)", 31), ("(v)", 47), ("(vi)", 60)]) + '</div>'
-       '<div class="pmcq-q">Complete the timeline of video game music (paragraphs 11–12). Use <strong>ONE word</strong> '
-       'from the text for each blank.</div>'
-       '<table class="quiz-table"><tr><th>Stage</th><th>Timeline</th></tr>'
-       '<tr><td>Early video games</td><td>technological ' + cloze("limitations") + '</td></tr>'
-       '<tr><td></td><td>somewhat ' + cloze("simplistic") + ' music</td></tr>'
-       '<tr><td>Next 10–20 years</td><td>music refined to be ' + cloze("entertaining / pleasant") + '</td></tr>'
-       '<tr><td></td><td>without being ' + cloze("distracting") + ' for the players</td></tr>'
-       '<tr><td>Latest development</td><td>advances in ' + cloze("technology") + '</td></tr>'
-       '<tr><td></td><td>keeping the ' + cloze("balance / stimulation") + ' right</td></tr></table>'
-       '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 &#182;11 "Limitations in the '
-       'technology... simplistic in its melodies" · "refined over decades to be pleasant and entertaining, but not '
-       'distracting" · &#182;12 "as technology progresses... the delicate balance of stimulation without '
-       'distraction"。</span></div></div>')
+q17 = ('<div class="practice-mcq" id="q17-box"><div class="pmcq-label">Q17 · Summary cloze · 5 marks</div>'
+       '<div class="pmcq-q">Complete the summary of paragraph 8 by writing ONE word to fill in each blank. '
+       'Click each blank to check.</div>'
+       '<div class="card" style="padding:14px 18px;font-size:20px;line-height:2">Daniel doesn&#39;t like '
+       'Korean (i) ' + cloze("drama(s) // soaps") + chip(90)
+       + ' because he thinks the stories are too emotional. The stories are often the same, with a (ii) '
+       + cloze("wealthy // rich") + chip(91)
+       + ' man meeting a (iii) ' + cloze("beautiful // young") + chip(88)
+       + ' lady who comes from a (iv) ' + cloze("poor") + chip(78)
+       + ' background and in the end they (v) ' + cloze("marry") + chip(44) + '.</div>'
+       '<div class="method-wrap" style="display:none"><span class="method-badge">&#128273; 摘要填空 = 回原文'
+       '&quot;beautiful girl from <em>poor</em> family marries <em>rich</em> guy&quot; 换词性/换角色复述。'
+       '(ii) &#10007; affluent（原文没有这个词，考试要求从原文取词）。(v) marry 最抽象（44%）：'
+       'in the end they marry = 女孩嫁入豪门。</span></div></div>')
 
-q18 = sa("q18", "Q18 · Short answer · 2 marks", chip(4),
-         "Describe the <strong>irony</strong> in paragraph 12.",
-         '<p><strong>game producers / composers have to stay focused to produce music which doesn\'t distract '
-         'game players / helps players focus on the game</strong></p>'
-         '<p>&#182;12 结尾 "To achieve this, game composers will need to stay focused, which is ironic." — '
-         '讽刺点：写让人不分心的音乐的作曲家自己必须高度专注。全卷最难题（4%）：需要整段理解 + 发现错位。</p>')
+right = q15 + q16 + q17
+body = ('<div class="sec-label">Part A · Text 1 · Q15–Q17</div>'
+        '<div class="slide-h3">Cinderella Stories — 韩剧批判</div>'
+        + split("Text 1 (¶8)", left, right))
+slides.append(slide("Q15–Q17 · Text 1 ¶8", "practice", "Part A", body, "text1"))
 
-right = q15 + q16 + q17 + q18
-body = ('<div class="sec-label">Part A · Text 2 · Q15–Q18</div>'
-        '<div class="slide-h3">Video Game Soundtracks — The Irony</div>'
-        + split("Text 2 (¶8–12)", left, right))
-slides.append(slide("Q15–Q18 · ¶8–12", "practice", "Part A", body, "text2"))
+# ================= 7. Q18–Q21 · Text 1 ¶9–10 =================
+left = '<h4>Text 1: Gangnam mothers 与 jeong（¶9–10）</h4>' + P(T1, [9, 10])
 
-# ================= 8. Q19–Q22 · ¶10–13 + comments =================
-left = ('<h4>Text 2: Can music really help you concentrate? (¶10–13 + Comments)</h4>'
-        + P(T2, [10, 11, 12, 13])
-        + '<div class="passage-excerpt"><div class="para-num">&#9998;</div>' + T2["comments"] + '</div>\n')
+q18 = sa("q18", "Q18 · Short answer · 1 mark", chip(64),
+         "Why does Daniel think that Gangnam mothers are <strong>&quot;scary&quot;</strong> in line 40?",
+         '<p><strong>they make children cry // they get mad at bad results // make them work hard // '
+         'obsessed with education</strong></p>'
+         '<p>&#182;9 &quot;if they didn&#39;t get an A grade... their parents would <em>get mad</em> and '
+         'the next time you saw them they&#39;d be <em>crying</em>&quot; — 成绩不好就发怒，孩子被逼哭。</p>')
 
-q19 = mcq("q19", "Q19 · MC · 1 mark", chip(58),
-          "Which type of music is considered to be extremely useful in helping people concentrate?",
-          [("A", "sad music", False, "&#182;9 说 bleak music 会消磨热情。"),
-           ("B", "video game music", True, ""),
-           ("C", "heavy metal music", False, "只是 John 的个人偏好。"),
-           ("D", "motivational music", False, "只是例子细节。")],
-          "🔑 &#182;10 \"one of the best music genres for concentration is the video game soundtrack\"。")
+q19 = sa("q19", "Q19 · Short answer · 1 mark", chip(21),
+         "What does Daniel mean by <strong>&quot;materially&quot;</strong> in line 41?",
+         '<p><strong>(they have many) things / possessions / goods / money / wealth</strong></p>'
+         '<p>&#182;9 &quot;kids who, materially, led awesome lives... big Mercedes with bags as big as they '
+         'were&quot; — materially = 物质上（豪车、名包）。仅 21% 对：要答出「物质/财产」的释义而非照抄。</p>')
 
-q20 = mcq("q20", "Q20 · MC · 1 mark", chip(80),
-          "Which of the following is the <strong>best title</strong> for Text 2?",
-          [("A", "Why is music important?", False, "文章不止讲音乐的重要性。"),
-           ("B", "How does your brain function?", False, "大脑只是切入点。"),
-           ("C", "Why does your brain like music?", False, "文章不是讲大脑为何喜欢音乐。"),
-           ("D", "Can music really help you concentrate?", True, "")],
-          "🔑 标题题：首段设问 \"Is it possible that they're right?\" + 全文围绕音乐与专注 → D。")
+q20 = sa("q20", "Q20 · Short answer · 1 mark", chip(74),
+         "Why are wealthy Koreans obsessed with education?",
+         '<p><strong>(they want) to keep / preserve their status / position in society // to show (the world) '
+         'their children are doing well</strong></p>'
+         '<p>&#182;9 &quot;It&#39;s a <em>status thing</em>: preserve your status and show the rest of the '
+         'world...&quot; — 教育是维护社会地位、向外展示的工具。</p>')
 
-q21 = mcq("q21", "Q21 · MC · 1 mark", chip(46),
-          "Which of the following best describes the <strong>intention</strong> of the writer of Text 2?",
-          [("A", "To defend his point of view.", False, "作者不是在为自己辩护。"),
-           ("B", "To present some new research.", False, "文中研究只是论据，非主要意图。"),
-           ("C", "To explain a puzzling observation.", True, ""),
-           ("D", "To persuade readers to change their habits.", False, "结尾只是温和建议，非说服改变习惯。")],
-          "🔑 写作意图题：首段提出 puzzle（青少年说听音乐才能专注，对吗？）→ 全文解释这一现象 → C。")
+q21 = sa("q21", "Q21 · Short answer · 1 mark", chip(60),
+         "According to paragraph 10, how has Daniel changed since he arrived in Korea?",
+         '<p><strong>he is a better friend // more connected to people // more warm / friendly // less cynical</strong></p>'
+         '<p>&#182;10 &quot;Korea made me a <em>better friend</em> to my friends&quot; — 从冷峻愤世的英国人变得'
+         '更温暖、与人相连。</p>')
 
-q22a = mcq("q22i", "Q22(i) · MC · 1 mark", chip(65),
-           "According to the comments, what is <strong>Laura's</strong> attitude to 'Music helps me study'?",
-           [("A", "Agrees", False, "Laura 说 impossible to work with any music。"),
-            ("B", "Disagrees", True, ""),
-            ("C", "Neither agrees nor disagrees", False, "她明确反对。")])
-q22b = mcq("q22ii", "Q22(ii) · MC · 1 mark", chip(67),
-           "What is <strong>Sandy's</strong> attitude?",
-           [("A", "Agrees", False, "Sandy 只想要 peace and quiet。"),
-            ("B", "Disagrees", True, ""),
-            ("C", "Neither agrees nor disagrees", False, "Are you kidding? 明确反对。")])
-q22c = mcq("q22iii", "Q22(iii) · MC · 1 mark", chip(89),
-           "What is <strong>John's</strong> attitude?",
-           [("A", "Agrees", True, ""),
-            ("B", "Disagrees", False, "I can't study without my tunes。"),
-            ("C", "Neither agrees nor disagrees", False, "")])
-q22d = mcq("q22iv", "Q22(iv) · MC · 1 mark", chip(69),
-           "What is <strong>Leo's</strong> attitude?",
-           [("A", "Agrees", False, "Leo 说复习时不行。"),
-            ("B", "Disagrees", False, "做作业时可以。"),
-            ("C", "Neither agrees nor disagrees", True, "")],
-           "🔑 Who knows? I can usually focus on my homework with music playing but I can't revise like that — 两边都占。")
+right = q18 + q19 + q20 + q21
+body = ('<div class="sec-label">Part A · Text 1 · Q18–Q21</div>'
+        '<div class="slide-h3">Gangnam Mothers — 教育焦虑与身份</div>'
+        + split("Text 1 (¶9–10)", left, right))
+slides.append(slide("Q18–Q21 · Text 1 ¶9–10", "practice", "Part A", body, "text1"))
 
-right = q19 + q20 + q21 + q22a + q22b + q22c + q22d
-body = ('<div class="sec-label">Part A · Text 2 · Q19–Q22</div>'
-        '<div class="slide-h3">Title · Intention · Readers\' Comments</div>'
-        + split("Text 2 (¶10–13 + Comments)", left, right))
-slides.append(slide("Q19–Q22 · Title & Comments", "practice", "Part A", body, "text2"))
+# ================= 8. Q22–Q24 · Text 1 ¶10 + title =================
+left = '<h4>Text 1: 标题解读（¶10 + title）</h4>' + P(T1, [10]) + \
+       '<div class="passage-excerpt"><div class="para-num">TITLE</div>In from the cold among ' \
+       'warm-hearted Koreans</div>'
 
-# ================= 9. Part A Close Reading =================
+q22 = sa("q22", "Q22 · Short answer · 1 mark", chip(47),
+         "Overall, what does Daniel feel is <strong>most attractive</strong> about Korea?",
+         '<p><strong>jeong // the warmth between people // the people are warm</strong></p>'
+         '<p>&#182;10 &quot;This <em>jeong</em> stuff &mdash; that&#39;s the thing that <em>keeps me in '
+         'Korea</em>&quot; — 最吸引他的是 jeong（人与人之间的温暖）。</p>')
+
+q23 = sa("q23", "Q23 · Short answer · 1 mark", chip(58),
+         "What does <strong>&quot;In from the cold&quot;</strong> in the title suggest about Britain?",
+         '<p><strong>(Cold) refers to the cold culture / society (in Britain) // British are cold and cynical</strong></p>'
+         '<p>&#182;10 &quot;England&#39;s a <em>cold</em> society... English people were a bit too '
+         '<em>cynical and cold</em>&quot; — 标题的 cold 一语双关：从英国的「冷漠文化」走进韩国的「温暖」。</p>')
+
+q24 = sa("q24", "Q24 · Short answer · 1 mark", chip(19),
+         "Who or what does <strong>&quot;Geek&quot;</strong> in the title of Daniel&#39;s book refer to?",
+         '<p><strong>Daniel (Tudor) // the writer himself</strong></p>'
+         '<p>&#182;1 书名 <em>A Geek in Korea</em> — Geek 指的是作者 Daniel Tudor 本人'
+         '（Oxford 毕业沉迷韩国文化的书呆子式研究者）。仅 19% 对。</p>')
+
+right = q22 + q23 + q24
+body = ('<div class="sec-label">Part A · Text 1 · Q22–Q24</div>'
+        '<div class="slide-h3">In from the Cold — 标题双关收尾</div>'
+        + split("Text 1 (¶10 + Title)", left, right))
+slides.append(slide("Q22–Q24 · Text 1 收尾", "practice", "Part A", body, "text1"))
+
+# ================= 9. Q25–Q28 · Text 2 ¶1–3 =================
+left = '<h4>Text 2: Tudor&#39;s Book Covers Implausible, Impossible Korea（¶1–3）</h4>' + P(T2, [1, 2, 3])
+
+q25 = sa("q25", "Q25 · Short answer · 1 mark", chip(28),
+         "What is the irony in paragraph 1?",
+         '<p><strong>Daniel (Tudor) is one of the most / is a very influential foreign correspondents (in '
+         'South Korea) but also one of the least known</strong></p>'
+         '<p>&#182;1 &quot;one of the most <em>influential</em>... and one of the <em>least known</em>&quot; '
+         '— 反讽：影响力最大却最没名气（Economist 不署名 → 匿名发表）。仅 28% 对：要把「最有影响力」与'
+         '「最不为人知」的对比都写出来。</p>')
+
+q26 = sa("q26", "Q26 · Short answer · 1 mark", chip(63),
+         "Other than Daniel, which writer mentioned in Text 2 has definitely lived in Korea?",
+         '<p><strong>(Mr) Michael // Breen</strong></p>'
+         '<p>&#182;2 &quot;another influential British <em>expat</em>, Michael Breen&quot; — expat（旅居'
+         '海外者）= 一定在韩国生活过。其他被提到的作者（Hussain / Kirk / Coyner / Koehler）文中没说是 expat。</p>')
+
+q27 = sa("q27", "Q27 · Short answer · 1 mark", chip(4),
+         "What is the meaning of a <strong>&quot;canon&quot;</strong> (line 11)?",
+         '<p><strong>(a list of) must-read books / indispensable / important books // books that should be read</strong></p>'
+         '<p>&#182;3 &quot;That&#39;s a small <em>canon</em>&quot; — 全卷最难（4%）！三条上下文线索：'
+         '① that 回指上段「must-read books 清单」；② <em>the other indispensables</em> 引出书单；'
+         '③ 段尾 <em>the list of must-read books</em> 再现。macro-focus（跨段上下文）比 micro-focus 更重要。</p>')
+
+q28 = sa("q28", "Q28 · Short answer · 1 mark", chip(7),
+         "What does Evan Ramstad&#39;s comment about North Korea in lines 13-14 imply?",
+         '<p><strong>(there is a) greater interest in reading about North Korea (than South Korea) // '
+         'North Korea is more interesting / popular / attractive (than South Korea) // there are more '
+         '(must-read) books published about North Korea (than South Korea)</strong></p>'
+         '<p>&#182;3 &quot;the list of must-read books about North Korea is <em>far longer</em>&quot; — '
+         '推理：书单更长 = 关于朝鲜的书更受关注/更多。仅 7% 对：照抄原句不得分，要说出 implication。</p>')
+
+right = q25 + q26 + q27 + q28
+body = ('<div class="sec-label">Part A · Text 2 · Q25–Q28</div>'
+        '<div class="slide-h3">The Impossible Country — 书评推断</div>'
+        + split("Text 2 (¶1–3)", left, right))
+slides.append(slide("Q25–Q28 · Text 2 ¶1–3", "practice", "Part A", body, "text2"))
+
+# ================= 10. Q29–Q31 · Text 2 ¶4 =================
+left = '<h4>Text 2: 书评收尾（¶4）</h4>' + P(T2, [4])
+
+q29 = sa("q29", "Q29 · Short answer · 1 mark", chip(31),
+         "How does the content of Daniel Tudor&#39;s book differ from Michael Breen&#39;s?",
+         '<p><strong>(Daniel&#39;s book pushes into) new social and economic territory // (including the) '
+         'rising role of immigrants, multicultural families / (and even) gay people (in Korea)</strong></p>'
+         '<p>&#182;4 &quot;pushes into <em>new social and economic territory</em>... the rising role of '
+         '<em>immigrants, multicultural families and even gay people</em>&quot; — Breen 没覆盖的新领域。</p>')
+
+q30i = sub_sa("q30i", "i",
+              "State the contradiction: the desire for gadgets and fashion.",
+              '<p><strong>unending desire for (new and trendy) gadgets and fashion</strong></p>'
+              '<p>&#182;4 &quot;the <em>unending desire</em> for new and trendy gadgets and fashion&quot; — '
+              '一面是追逐新潮。</p>', 43)
+q30ii = sub_sa("q30ii", "ii",
+               "State the contradiction: the view of a successful life.",
+               '<p><strong>the tunnel-like / narrow-minded / unchanging view of what constitutes a successful life</strong></p>'
+               '<p>&#182;4 &quot;yet the <em>tunnel-like view</em> of what constitutes a successful life&quot; — '
+               '另一面却是视野狭窄、对「成功人生」的定义一成不变。2 marks 各占 1 分。</p>', 34)
+
+q31i = sub_sa("q31i", "i",
+              "What does the question suggest about Koreans&#39; achievements?",
+              '<p><strong>Koreans have achieved a great deal // although they have many achievements / are successful</strong></p>'
+              '<p>&#182;4 &quot;why aren&#39;t people happier with <em>what they&#39;ve done</em>&quot; — '
+              '暗示韩国人成就已经很多。</p>', 33)
+q31ii = sub_sa("q31ii", "ii",
+               "What does the question suggest about how Koreans feel?",
+               '<p><strong>but they aren&#39;t content with their success / achievements // they are not happy / '
+               'satisfied // they are too hard on themselves</strong></p>'
+               '<p>&#182;4 &quot;why aren&#39;t people <em>happier</em>&quot; — 对成就不满足、对自己太苛刻。'
+               '2 marks 各占 1 分。</p>', 22)
+
+right = q29 + \
+        '<div class="practice-mcq" id="q30-box"><div class="pmcq-label">Q30 · Short answer · 2 marks</div><div class="pmcq-q">What is the contradiction between how Koreans see success and their love of trendy gadgets and fashion?</div>' + q30i + q30ii + '</div>' + \
+        '<div class="practice-mcq" id="q31-box"><div class="pmcq-label">Q31 · Short answer · 2 marks</div><div class="pmcq-q">What does the question Daniel poses at the end of his book suggest about his view of Koreans and their achievements?</div>' + q31i + q31ii + '</div>'
+body = ('<div class="sec-label">Part A · Text 2 · Q29–Q31</div>'
+        '<div class="slide-h3">Contradictions — 新潮与狭窄的成功观</div>'
+        + split("Text 2 (¶4)", left, right))
+slides.append(slide("Q29–Q31 · Text 2 ¶4", "practice", "Part A", body, "text2"))
+
+# ================= 11. Part A Close Reading =================
 cr = ('<div class="sec-label">Part A · Close Reading</div>'
       '<div class="slide-h2">信号词 Signal Words — 逐个点击揭示</div>'
       '<div class="card" style="padding:20px 24px;margin-top:12px;font-family:\'Times New Roman\',Times,serif;font-size:22px;line-height:1.9">'
-      '<p>&#182;2 (Text 2): Some people even ' + sig("go so far as to say", "甚至说") + ' that not having music on is more distracting.</p>'
-      '<p style="margin-top:14px">&#182;3: You\'re paying attention to it long before you consciously notice it... '
-      + sig("You can't help it", "你根本控制不了") + '.</p>'
-      '<p style="margin-top:14px">&#182;4: ' + sig("The trouble is", "问题在于") + ', while our conscious attention is '
-      'focused on the task in hand, the unconscious attention system doesn\'t shut down... the unconscious attention '
-      'system is even ' + sig("potent", "强大的") + '.</p>'
-      '<p style="margin-top:14px">&#182;5: Something quite ' + sig("innocuous", "无害的") + ' suddenly becomes much more '
-      + sig("infuriating", "令人发怒的") + '...</p>'
-      '<p style="margin-top:14px">&#182;6: Music... provides non-invasive noise and pleasurable feelings to effectively '
-      + sig("neutralise", "抵消") + ' the unconscious attention system\'s ability to distract us... to keep '
-      + sig("distractions at bay", "挡住干扰") + '.</p>'
-      '<p style="margin-top:14px">&#182;8: some studies suggest that ' + sig("it really is down to personal preference", "其实取决于个人喜好") + '. Music you like increases focus, while music you don\'t '
-      + sig("impedes", "妨碍") + ' it.</p>'
-      '<p style="margin-top:14px">&#182;9: Musical pieces without words might be better '
-      + sig("working companions", "工作伙伴（隐喻：无词音乐）") + '.</p>'
-      '<p style="margin-top:14px">&#182;12: game composers will need to stay focused, which is '
-      + sig("ironic", "讽刺的") + '.</p></div>')
+      '<p>&#182;1: ...has several other volumes ' + sig("in the pipeline", "在筹备中（Q2 的关键）") + '.</p>'
+      '<p style="margin-top:14px">&#182;3: Korea is a bit ' + sig("off the radar", "不在大众视野内")
+      + ' for most people... Japan was ' + sig("the big story", "大热门") + '. Korea has '
+      + sig("fallen in between", "夹在中间被忽视") + '.</p>'
+      '<p style="margin-top:14px">&#182;4: <em>jeong</em> &mdash; the warmth between people and '
+      + sig("mutual sacrifice", "相互牺牲") + '... ' + sig("manic fun", "疯狂的玩乐")
+      + '... ' + sig("raucous singing", "喧闹的歌声") + '.</p>'
+      '<p style="margin-top:14px">&#182;5: the stereotypes of ' + sig("stoicism and self-control", "坚忍与自制（刻板印象）")
+      + '... the so-called ' + sig("inscrutable oriental", "高深莫测的东方人") + '... both seem to be '
+      + sig("magnified", "被放大") + '.</p>'
+      '<p style="margin-top:14px">&#182;7: music that&#39;s not ' + sig("superficial", "肤浅的")
+      + '... Psy is ' + sig("cheeky", "俏皮的") + ', making fun of Gangnam, which is '
+      + sig("flashy", "浮华的") + '.</p>'
+      '<p style="margin-top:14px">&#182;8: ' + sig("Cinderella stories", "灰姑娘式剧情")
+      + ': beautiful girl from poor family marries rich guy.</p>'
+      '<p style="margin-top:14px">&#182;9: It&#39;s a ' + sig("status thing", "身份地位的事")
+      + ': ' + sig("preserve your status", "保住你的地位") + '.</p>'
+      '<p style="margin-top:14px">&#182;10: I thought English people were a bit too '
+      + sig("cynical and cold", "愤世嫉俗而冷漠") + '.</p>'
+      '<p style="margin-top:14px">Text 2 &#182;1: one of the most influential... and one of the '
+      + sig("least known", "最不为人知") + '... published ' + sig("anonymously", "匿名地") + '.</p>'
+      '<p style="margin-top:14px">Text 2 &#182;3: That&#39;s a small ' + sig("canon", "必读书单（Q27 全卷最难）")
+      + '... the other ' + sig("indispensables", "必读之作") + '.</p>'
+      '<p style="margin-top:14px">Text 2 &#182;4: the ' + sig("tunnel-like view", "隧道式狭窄视野")
+      + ' of what constitutes a successful life.</p></div>')
 slides.append(slide("Part A · Close Reading", "close-reading", "Part A", cr))
-
-# ================= 10. Part A Exit Test =================
-a_exit_cards = [
-    ("carry out (a task)", "执行；进行（一项任务）"),
-    ("take in (information)", "吸收（信息）"),
-    ("keep...at bay", "遏制；挡住"),
-    ("be down to (preference)", "取决于（偏好）"),
-    ("end up with (mixed results)", "落得（好坏参半的结果）"),
-    ("sap your enthusiasm", "消磨热情"),
-    ("look out for", "留意；提防"),
-    ("go so far as to", "甚至做出……"),
-    ("pay attention to", "注意；关注"),
-    ("close to hand", "触手可及；在手边"),
-]
-body = ('<div class="sec-label">Part A · Exit Test · 出门测</div>'
-        '<div class="slide-h3" style="margin-bottom:6px">动词短语 Verbs &amp; Phrases — tap to flip (英→中)</div>'
-        '<div style="font-size:16px;color:var(--text-2);margin-bottom:16px">Text 1–2 Music · 10 items · 每题 1 分</div>'
-        + flip_grid(a_exit_cards))
-slides.append(slide("Part A Exit Test", "exit-test", "Part A", body))
-
-# ================= 11. Part A Recap =================
-recap = ('<div class="sec-label">Part A · Recap</div>'
-         '<div class="slide-h2" style="margin-bottom:16px">Part A 复盘 — What did we learn?</div>'
-         '<div class="card" style="margin-bottom:14px"><h4>&#128221; Exam Awareness</h4>'
-         '<p>Text 1 = <strong>classified ads（分类广告）</strong>；Text 2 = <strong>科普评论文章</strong>（设问开头 + 网友评论）。'
-         '文体题看标题 + 开头句式 + 是否有评论区。</p></div>'
-         '<div class="card" style="margin-bottom:14px"><h4>&#127919; 难点提醒</h4>'
-         '<p>指代题向上找名词（Q5/Q9/Q16）；隐喻题不能照抄字面（working companions）；'
-         '反讽题找错位（Q18 游戏作曲家必须专注）；摘要填空先判词性（Q6/Q17）。</p></div>'
-         '<div class="card" style="margin-bottom:14px"><h4>&#128202; 2018 隐形数据 — 击碎砖块看看 Part A 最难题</h4>'
-         '<p>Q18 辨识反讽 ' + chip(4) + ' · Q16 隐喻 working companions ' + chip(9) + ' · '
-         'Q6(vii) 摘要 stronger ' + chip(8) + ' · Q6(iv) emotions ' + chip(19) + ' · '
-         'Q9 指代 the dull task ' + chip(32) + ' — 高层理解（隐喻/反讽/语篇标记）是最大失分点。</p></div>'
-         '<div class="card" style="margin-bottom:14px"><h4>&#128273; 金句</h4>'
-         '<p>摘要填空三查：词性 · 单词数 · 不重复；照抄原文 ≠ 理解。</p></div>')
-slides.append(slide("Part A · Recap", "exit-test", "Part A", recap))

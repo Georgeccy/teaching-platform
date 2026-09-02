@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 排行榜</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="assets/shell.css" />
   <link rel="stylesheet" href="assets/polish.css" />
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="app">
@@ -50,6 +49,7 @@
   </div>
 
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script>
     function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
     const MEDAL = { 1: '🥇', 2: '🥈', 3: '🥉' };
@@ -75,7 +75,7 @@
           <div class="pixel" style="font-size:18px;width:42px;text-align:center;color:${rank<=3?'var(--orange)':'var(--text)'}">${medal}</div>
           <div style="flex:1;min-width:0">
             <div style="font-weight:700">${esc(r.name)}${me ? ' <span style="color:var(--pink);font-size:12px">（你）</span>' : ''}</div>
-            <div style="font-size:12px;color:var(--muted)">完成 ${r.completed} 单元 · 最高连胜 ${r.maxStreak} 天${mode==='pet' ? ' · 学宝积分 ' + pet : ''}</div>
+            <div style="font-size:12px;color:var(--muted)">完成 ${r.completed} 单元 · 最高连胜 ${r.maxStreak} 天${xuebaoOn && mode==='pet' ? ' · 学宝积分 ' + pet : ''}</div>
           </div>
           <div style="text-align:right">${right}</div>
         </div>`;
@@ -83,6 +83,7 @@
     }
 
     let mode = 'acc';
+    const xuebaoOn = !!(window.ZhiXue && window.ZhiXue.features && window.ZhiXue.features.xuebao === true);
     function render(ranking, meId) {
       const arr = ranking.slice();
       if (mode === 'pet') arr.sort((a, b) => (b.petScore || 0) - (a.petScore || 0) || a.name.localeCompare(b.name));
@@ -112,14 +113,14 @@
           </div>
           <div style="display:flex;gap:8px;margin:4px 0 14px">
             <button class="btn" id="tabAcc" style="border-color:var(--line)">📊 准确率榜</button>
-            <button class="btn" id="tabPet" style="border-color:var(--line)">🐣 学宝积分榜</button>
+            ${xuebaoOn ? '<button class="btn" id="tabPet" style="border-color:var(--line)">🐣 学宝积分榜</button>' : ''}
           </div>
           <div class="panel" id="rankList"></div>`;
         render(ranking, meId);
         const a = document.getElementById('tabAcc'), p = document.getElementById('tabPet');
         function paint(){ a.style.background = mode==='acc' ? 'var(--blue)' : '#fff'; a.style.color = mode==='acc' ? '#fff' : 'var(--text)'; p.style.background = mode==='pet' ? 'var(--teal)' : '#fff'; p.style.color = mode==='pet' ? '#fff' : 'var(--text)'; }
         a.onclick = () => { mode='acc'; paint(); render(ranking, meId); };
-        p.onclick = () => { mode='pet'; paint(); render(ranking, meId); };
+        if (p) p.onclick = () => { mode='pet'; paint(); render(ranking, meId); };
         paint();
       } catch (e) {
         document.getElementById('content').innerHTML = '<div class="alert warn">加载失败：' + esc(e.message) + '</div>';

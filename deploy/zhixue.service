@@ -15,18 +15,41 @@ Type=simple
 # 改成你服务器上项目实际绝对路径
 WorkingDirectory=/opt/zhixue-platform
 ExecStart=/usr/bin/node /opt/zhixue-platform/server/index.js
-# 生产环境关闭 Live Reload（避免向浏览器注入 SSE 客户端）
+
+# ---- 运行模式 ----
+# NODE_ENV=production：禁用演示密码登录、禁止改成常见弱密码、不再打印默认账号
+Environment=NODE_ENV=production
+# 生产环境关闭 Live Reload（避免向浏览器注入 SSE 客户端 + 监听文件变化）
 Environment=LIVERELOAD=0
 # 关键：后端只监听 127.0.0.1，外部由 Caddy 反代
 Environment=HOST=127.0.0.1
 Environment=PORT=3000
+
 Restart=always
 RestartSec=3
-# 用非 root 用户运行更安全（请先创建：sudo useradd -r -s /usr/sbin/nologin zhixue）
+
+# ---- 降权运行 ----
+# 用非 root 用户运行（请先创建：sudo useradd -r -s /usr/sbin/nologin zhixue）
 User=zhixue
 Group=zhixue
-# 文件描述符 / 进程数上限
+
+# ---- systemd 沙箱（在已降权的基础上进一步收窄破坏面）----
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full          # /usr /boot /etc 变只读；/opt 仍可写（课件同步需要）
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+# 内存上限：1GB 小机器上防止异常流量拖垮整机（超限由 systemd 重启，而不是 OOM 随机杀进程）
+MemoryMax=768M
+
+# 文件描述符上限
 LimitNOFILE=65535
+
+# ---- 日志 ----
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zhixue
 
 [Install]
 WantedBy=multi-user.target

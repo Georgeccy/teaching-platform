@@ -138,6 +138,16 @@
 
 <script>
 (function(){
+  // 学宝特性开关：默认隐藏。读取 app.js 持久化的 localStorage 标记。
+  var FEAT = (function(){ try { return JSON.parse(localStorage.getItem('zhixue-features')||'{}'); } catch(e){ return {}; } })();
+  if (!FEAT.xuebao) {
+    var wrap = document.querySelector('.wrap');
+    if (wrap) wrap.innerHTML = '<div style="text-align:center;padding:70px 0;color:#7a7060">'
+      + '<div style="font-size:46px;margin-bottom:10px">🐣</div>'
+      + '<h1 style="margin:0 0 6px">学宝暂未开放</h1>'
+      + '<p class="sub">该功能已暂时隐藏。</p></div>';
+    return;
+  }
   var TOKEN_KEY='zhixue-token', USER_KEY='zhixue-user';
   var TEACHER_LINE=10, STUDENT_LINE=-10;
   var state={score:0, armedTeacher:false, armedStudent:false, me:null};

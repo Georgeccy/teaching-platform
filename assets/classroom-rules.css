@@ -1,0 +1,260 @@
+/* 智学平台 · 课堂规则（全站悬浮入口 + 弹窗）
+ * 沿用 shell.css 的像素复古设计令牌：硬阴影 / 零圆角 / 3px 描边
+ * 颜色全部走 var(--x, 兜底)，因此在深色模式下自动适配。
+ * 悬浮按钮固定在左下角——右下角已被「回到顶部」(.zx-totop) 与桌面宠物占用。
+ */
+.cr-fab {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: "Noto Sans SC", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #2E2A3B;
+  background: var(--yellow, #FFC83D);
+  border: 3px solid var(--line, #2E2A3B);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--shadow, #2E2A3B);
+  padding: 11px 16px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.cr-fab:hover  { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow, #2E2A3B); }
+.cr-fab:active { transform: translate(2px, 2px);   box-shadow: 2px 2px 0 var(--shadow, #2E2A3B); }
+.cr-fab:focus-visible { outline: 3px dashed var(--line, #2E2A3B); outline-offset: 3px; }
+.cr-fab .cr-ico { font-size: 16px; line-height: 1; }
+
+/* 遮罩层 */
+.cr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.cr-overlay.open { opacity: 1; pointer-events: auto; }
+
+/* 弹窗本体 */
+.cr-modal {
+  width: min(92vw, 560px);
+  max-height: min(84vh, 720px);
+  display: flex;
+  flex-direction: column;
+  background: var(--card, #fff);
+  border: 3px solid var(--line, #2E2A3B);
+  box-shadow: 10px 10px 0 var(--shadow, #2E2A3B);
+  transform: translateY(16px) scale(0.96);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.cr-overlay.open .cr-modal { transform: translateY(0) scale(1); }
+
+.cr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 3px solid var(--line, #2E2A3B);
+  background: var(--yellow, #FFC83D);
+  flex: none;
+}
+.cr-head h2 {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: #2E2A3B;
+}
+.cr-close {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  color: #2E2A3B;
+  background: var(--card, #fff);
+  border: 3px solid var(--line, #2E2A3B);
+  box-shadow: 3px 3px 0 var(--shadow, #2E2A3B);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.cr-close:hover  { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--shadow, #2E2A3B); }
+.cr-close:active { transform: translate(2px, 2px);   box-shadow: 1px 1px 0 var(--shadow, #2E2A3B); }
+.cr-close:focus-visible { outline: 3px dashed var(--line, #2E2A3B); outline-offset: 3px; }
+
+.cr-body {
+  padding: 20px 20px 4px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+/* ---------- 查看态 ---------- */
+.cr-list { list-style: none; }
+.cr-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 13px 10px;
+}
+.cr-list li + li { border-top: 2px dashed var(--line, #2E2A3B); }
+.cr-no {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  color: var(--yellow, #FFC83D);
+  background: var(--line, #2E2A3B);
+}
+.cr-list p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  font-weight: 600;
+  color: var(--text, #2E2A3B);
+  padding-top: 2px;
+  text-align: left;
+  word-break: break-word;
+}
+
+/* ---------- 编辑态 ---------- */
+.cr-rows { display: flex; flex-direction: column; gap: 10px; }
+.cr-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  border: 3px solid transparent;
+  background: var(--bg, #F4ECD8);
+}
+.cr-row.bad { border-color: var(--pink, #FF5D8F); }
+.cr-row-main { flex: 1 1 auto; min-width: 0; }
+.cr-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text, #2E2A3B);
+  background: var(--card, #fff);
+  border: 3px solid var(--line, #2E2A3B);
+  border-radius: 0;
+  padding: 9px 11px;
+  outline: none;
+}
+.cr-input:focus { box-shadow: 3px 3px 0 var(--yellow, #FFC83D); }
+.cr-row-err {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pink, #FF5D8F);
+  min-height: 0;
+}
+.cr-row-err:empty { display: none; }
+.cr-row-btns { flex: none; display: flex; flex-direction: column; gap: 5px; }
+.cr-mini {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text, #2E2A3B);
+  background: var(--card, #fff);
+  border: 2px solid var(--line, #2E2A3B);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.cr-mini:hover:not(:disabled) { transform: translate(-1px, -1px); }
+.cr-mini:disabled { opacity: 0.32; cursor: not-allowed; }
+.cr-mini.del:hover:not(:disabled) { background: var(--pink, #FF5D8F); color: #fff; }
+
+/* ---------- 底部操作区 ---------- */
+.cr-foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 14px 20px 18px;
+  border-top: 3px solid var(--line, #2E2A3B);
+}
+.cr-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: #fff;
+  background: var(--blue, #4D7CFE);
+  border: 3px solid var(--line, #2E2A3B);
+  box-shadow: 3px 3px 0 var(--shadow, #2E2A3B);
+  padding: 10px 13px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.cr-btn:hover  { transform: translate(-1px, -1px); }
+.cr-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow, #2E2A3B); }
+.cr-btn:focus-visible { outline: 3px dashed var(--line, #2E2A3B); outline-offset: 3px; }
+.cr-btn.green  { background: var(--green, #4FC46A); color: #2E2A3B; }
+.cr-btn.ghost  { background: var(--card, #fff); color: var(--text, #2E2A3B); }
+.cr-btn.pink   { background: var(--pink, #FF5D8F); }
+.cr-btn[disabled] { opacity: 0.45; cursor: not-allowed; transform: none; }
+.cr-spacer { flex: 1 1 auto; }
+.cr-tip {
+  font-size: 12px;
+  color: var(--muted, #6B6478);
+  line-height: 1.5;
+}
+.cr-empty {
+  padding: 26px 10px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted, #6B6478);
+}
+
+body.cr-locked { overflow: hidden; }
+
+/* ---------- 移动端适配 ---------- */
+@media (max-width: 760px) {
+  .cr-fab { left: 12px; bottom: 12px; padding: 9px 13px; font-size: 13px; }
+  .cr-overlay { padding: 12px; }
+  .cr-modal { width: 100%; max-height: 88vh; }
+  .cr-head { padding: 13px 14px; }
+  .cr-head h2 { font-size: 16px; letter-spacing: 0.1em; }
+  .cr-body { padding: 14px 14px 4px; }
+  .cr-list li { gap: 10px; padding: 11px 6px; }
+  .cr-list p { font-size: 15px; }
+  .cr-no { width: 28px; height: 28px; font-size: 12px; }
+  .cr-foot { padding: 12px 14px 14px; }
+  .cr-btn { font-size: 9px; padding: 9px 11px; }
+}
+@media (max-width: 420px) {
+  .cr-fab .cr-ico { font-size: 15px; }
+  .cr-fab { padding: 9px 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cr-fab, .cr-close, .cr-mini, .cr-btn, .cr-overlay, .cr-modal { transition: none; }
+}

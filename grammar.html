@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · Grammar 单元库</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg: #F4ECD8;
@@ -48,7 +46,14 @@
       padding: 24px 16px;
       display: flex; flex-direction: column;
       position: sticky; top: 0; height: 100vh;
+      /* 侧栏项超过一屏时内部滚动，避免底部工具按钮被裁掉 */
+      overflow-y: auto; overscroll-behavior: contain;
+      scrollbar-width: thin; scrollbar-color: var(--line) transparent;
     }
+    .sidebar::-webkit-scrollbar { width: 8px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--bg); }
+    .sidebar .nav { flex-shrink: 0; }
     .main { flex: 1; min-width: 0; padding: 24px 32px 48px; }
 
     /* logo */

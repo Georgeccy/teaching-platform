@@ -414,8 +414,10 @@ function initDragDrop(scope) {
     z.addEventListener('dragleave', function(e) { z.classList.remove('drag-over'); });
     z.addEventListener('drop', function(e) {
       e.preventDefault(); z.classList.remove('drag-over');
-      var word = e.dataTransfer.getData('text/plain');
-      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
+      // FIX: use .dragging class to find the actual dragged element,
+      // NOT data-word lookup — multiple slides share data-word values (A–E),
+      // so the global querySelector returned the wrong slide's element.
+      var dragged = document.querySelector('.draggable.dragging');
       if (dragged) { var content = z.querySelector('.drop-content'); if (content) content.appendChild(dragged); dragged.classList.remove('correct-placed', 'wrong-placed'); }
     });
   });
@@ -424,8 +426,8 @@ function initDragDrop(scope) {
     p.addEventListener('dragleave', function(e) { p.classList.remove('drag-over'); });
     p.addEventListener('drop', function(e) {
       e.preventDefault(); p.classList.remove('drag-over');
-      var word = e.dataTransfer.getData('text/plain');
-      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
+      // FIX: same as zone handler — use .dragging class, not data-word lookup
+      var dragged = document.querySelector('.draggable.dragging');
       if (dragged) { p.appendChild(dragged); dragged.classList.remove('correct-placed', 'wrong-placed'); if (typeof sortDraggablesInPool === 'function') sortDraggablesInPool(p); }
     });
   });
@@ -607,37 +609,6 @@ function checkTFNG(btn, correctVal) {
   group.insertAdjacentElement('afterend', banner);
 }
 
-// === Match-row option check (Q20 views matching — per-row Agree/Disagree/Neither) ===
-// 契约：一行 = <div class="match-row match-quiz" data-answer="Agree|Disagree|Neither">
-//   内含 <span class="match-opts"> 三个 <span class="match-opt" data-val="…" onclick="checkMatchOpt(this)">
-//   + <span class="match-note">解析（默认隐藏，作答后显示）
-// 判断：所选 data-val === 行 data-answer → correct，否则 wrong 并高亮正确项；随后显示解析。
-function checkMatchOpt(el) {
-  var row = el.closest('.match-quiz');
-  if (!row || row.classList.contains('answered')) return;
-  var correct = row.getAttribute('data-answer');
-  var chosen = el.getAttribute('data-val');
-  var isCorrect = chosen === correct;
-  row.classList.add('answered');
-  row.querySelectorAll('.match-opt').forEach(function(o) {
-    o.classList.add('answered');
-    if (o.getAttribute('data-val') === correct) o.classList.add('correct');
-  });
-  el.classList.add(isCorrect ? 'correct' : 'wrong');
-  recordAnswer(isCorrect);
-  var note = row.querySelector('.match-note');
-  if (note) note.classList.add('show');
-  // persist
-  var st = loadDeckState();
-  var si = slideIndexOf(el);
-  if (si >= 0) {
-    var rows = document.querySelectorAll('.slide')[si].querySelectorAll('.match-quiz');
-    for (var ri = 0; ri < rows.length; ri++) {
-      if (rows[ri] === row) { (st.mq = st.mq || {})[si + ':' + ri] = chosen; saveDeckState(); break; }
-    }
-  }
-}
-
 function revealCloze(el) {
   if (el.classList.contains('revealed')) return;
   el.textContent = el.getAttribute('data-answer');
@@ -653,89 +624,6 @@ function revealCloze(el) {
   }
 }
 
-// === Q63 views matching drag-drop check (scoped) ===
-// 契约：可拖拽人物 .draggable[data-word]（word=人名）；
-//   放置区 .drop-zone[data-accept=正确人名] 内 .drop-content 放学生拖入的人物，
-//   区上 data-explain 存该题解析；#q63-pool 为人物池（含多余干扰项 Borchers）。
-// 检查：每区取 drop-content 内第一个 .draggable，data-word===data-accept → correct，
-//   否则 wrong；随后显示解析、汇总正确/错误数量。干扰项留池不计分。
-window.checkQ63 = function() {
-  var zones = document.querySelectorAll('#q63-zones .drop-zone');
-  var correct = 0, answered = 0;
-  zones.forEach(function(z) {
-    var accept = z.getAttribute('data-accept');
-    var placed = z.querySelector('.drop-content .draggable');
-    var note = z.querySelector('.q63-note');
-    z.classList.remove('q63-correct', 'q63-wrong');
-    if (placed) {
-      answered++;
-      var ok = placed.getAttribute('data-word') === accept;
-      placed.classList.toggle('correct-placed', ok);
-      placed.classList.toggle('wrong-placed', !ok);
-      z.classList.add(ok ? 'q63-correct' : 'q63-wrong');
-      if (ok) correct++;
-      // 显示正确答案 + 解析
-      if (note) {
-        var ansTxt = note.getAttribute('data-ans') || accept;
-        note.innerHTML = (ok ? '✅ ' : '❌ 正确答案：<b>' + ansTxt + '</b> · ') + (note.getAttribute('data-explain') || '');
-        note.classList.add('show');
-      }
-    } else if (note) {
-      // 未作答：提示正确答案但不计入
-      var ansTxt2 = note.getAttribute('data-ans') || accept;
-      note.innerHTML = '⬜ 未作答 · 正确答案：<b>' + ansTxt2 + '</b> · ' + (note.getAttribute('data-explain') || '');
-      note.classList.add('show');
-    }
-  });
-  var res = document.getElementById('q63-result');
-  if (res) {
-    res.style.display = 'block';
-    var total = zones.length;
-    res.innerHTML = '<div class="card accent" style="text-align:center"><h4>提交结果：✅ ' + correct + ' 正确 / ❌ ' + (answered - correct) + ' 错误 / ⬜ ' + (total - answered) + ' 未作答</h4>' + (correct === total ? '<p style="color:var(--fcc-green-dark);font-size:18px;margin-top:8px">🎉 全部正确！</p>' : '') + '</div>';
-  }
-};
-window.resetQ63 = function() {
-  var pool = document.getElementById('q63-pool');
-  if (pool) {
-    document.querySelectorAll('#q63-zones .draggable').forEach(function(d) {
-      d.classList.remove('correct-placed', 'wrong-placed');
-      pool.appendChild(d);
-    });
-  }
-  document.querySelectorAll('#q63-zones .drop-zone').forEach(function(z) {
-    z.classList.remove('q63-correct', 'q63-wrong');
-    var note = z.querySelector('.q63-note');
-    if (note) note.classList.remove('show');
-  });
-  var res = document.getElementById('q63-result');
-  if (res) res.style.display = 'none';
-};
-
-// === Toggle cloze (Q59 — 点按挖空在 显示答案/隐藏 之间切换) ===
-// 与 revealCloze（单向揭示）不同：再次点击已揭示的挖空会收起回空白。
-// data-answer 存答案；空白占位存于 data-blank（首次点击时捕获）。
-function toggleCloze(el) {
-  if (!el.getAttribute('data-blank')) el.setAttribute('data-blank', el.textContent);
-  var st = loadDeckState();
-  var si = slideIndexOf(el);
-  var idx = -1;
-  if (si >= 0) {
-    var clozes = document.querySelectorAll('.slide')[si].querySelectorAll('.cloze');
-    for (var i = 0; i < clozes.length; i++) { if (clozes[i] === el) { idx = i; break; } }
-  }
-  if (el.classList.contains('revealed')) {
-    // 切换为隐藏
-    el.textContent = el.getAttribute('data-blank');
-    el.classList.remove('revealed');
-    if (si >= 0 && idx >= 0) { delete st.cloze[si + ':' + idx]; saveDeckState(); }
-  } else {
-    // 切换为显示
-    el.textContent = el.getAttribute('data-answer');
-    el.classList.add('revealed');
-    if (si >= 0 && idx >= 0) { st.cloze[si + ':' + idx] = 1; saveDeckState(); }
-  }
-}
-
 // === Proofreading row reveal (模板 11 — 两步揭示) ===
 // Step 1: 点击 "Tap to reveal" → 行内错词变为虚线 cloze（高亮可疑位置）
 // Step 2: 点击该词 → revealCloze 显示正确答案
@@ -744,12 +632,15 @@ function revealQ1Row(rowId) {
   var row = document.getElementById(rowId);
   if (!row) return;
   row.classList.add('revealed');
-  var clozes = row.querySelectorAll('.cloze');
-  for (var i = 0; i < clozes.length; i++) {
-    clozes[i].onclick = function() { revealCloze(this); };
+  var words = row.querySelectorAll('.q64-wrong');
+  for (var i = 0; i < words.length; i++) {
+    words[i].onclick = function() { revealQ64Word(this); };
   }
   var btn = row.querySelector('.q1-tap-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Revealed ✓'; }
+  row.querySelectorAll('.rate-cover').forEach(function(c) {
+    if (typeof shatterCover === 'function' && !c.classList.contains('shattered')) shatterCover(c, false);
+  });
 }
 
 // === Chronological order reveal (模板 10 — 逐行揭示时序答案) ===
@@ -899,15 +790,7 @@ function clearAllHighlights() {
 function sortDraggablesInPool(pool) {
   if (!pool) return;
   var items = Array.from(pool.querySelectorAll('.draggable'));
-  // 优先按 data-order（如 Q63 的选项字母 A/C/D/E/F/G），回退到 data-word 字母序，
-  // 确保拖回选项池后始终保持原始/指定顺序。
-  items.sort(function(a, b) {
-    var ao = a.dataset.order, bo = b.dataset.order;
-    if (ao != null && bo != null) return String(ao).localeCompare(String(bo), undefined, { numeric: true });
-    if (ao != null) return -1;
-    if (bo != null) return 1;
-    return (a.dataset.word || '').localeCompare(b.dataset.word || '');
-  });
+  items.sort(function(a, b) { return (a.dataset.word || '').localeCompare(b.dataset.word || ''); });
   items.forEach(function(it) { pool.appendChild(it); });
 }
 
@@ -1099,7 +982,7 @@ document.addEventListener('keydown', function(e) {
 
 
 // === Answer State Persistence (v3 — Safari 刷新不丢答题记录) ===
-var DECK_KEY = 'xdf-dse2025-p1-state';
+var DECK_KEY = 'xdf-dse2023-p1-v5-state';
 var deckState = null;
 function loadDeckState() {
   if (deckState) return deckState;
@@ -1141,26 +1024,6 @@ function restoreDeckState() {
       if (st.cloze[si + ':' + ci]) {
         c.textContent = c.getAttribute('data-answer');
         c.classList.add('revealed');
-        // Q21: 若该行解析是 .match-note，随答案一并显示
-        var _row = c.closest ? c.closest('.match-row') : null;
-        var _note = _row ? _row.querySelector('.match-note') : null;
-        if (_note) _note.classList.add('show');
-      }
-    });
-    // 1b. Match-quiz rows (Q20 views matching)
-    var mrows = slide.querySelectorAll('.match-quiz');
-    mrows.forEach(function(row, ri) {
-      var saved = (st.mq || {})[si + ':' + ri];
-      if (saved) {
-        var correct = row.getAttribute('data-answer');
-        row.classList.add('answered');
-        row.querySelectorAll('.match-opt').forEach(function(o) {
-          o.classList.add('answered');
-          if (o.getAttribute('data-val') === correct) o.classList.add('correct');
-          if (o.getAttribute('data-val') === saved && saved !== correct) o.classList.add('wrong');
-        });
-        var note = row.querySelector('.match-note');
-        if (note) note.classList.add('show');
       }
     });
     // 2. Flip cards
@@ -1450,3 +1313,303 @@ function resetProgress() {
 }
 
 
+
+// === legacy deck-specific functions (from 2023DSE-Paper1_v1.html) ===
+// === Q20 Timeline Drag (independent) ===
+(function(){
+  function check(){
+    var zones = document.querySelectorAll('#q20-pool ~ div .drop-zone');
+    var correct = 0, total = 3;
+    zones.forEach(function(z){
+      var accept = z.dataset.accept;
+      var placed = z.querySelector('.draggable');
+      if(placed){
+        var cat = placed.dataset.cat;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if(cat === accept){placed.classList.add('correct-placed');correct++;}
+        else{placed.classList.add('wrong-placed');}
+      }
+    });
+    var result = document.getElementById('q20-result');
+    if(result){
+      result.style.display='block';
+      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong>'+(correct===total?' 🎉 All correct!':'')+'</div>';
+    }
+    if(correct===total)showToast('\u2705 Q20 correct!','success');
+    else showToast('Q20: '+correct+'/3 correct','error');
+  }
+  function reset(){
+    var pool=document.getElementById('q20-pool');
+    if(pool){
+      // scoped to Q20's own slide only — previously the unscoped selector
+      // '.drop-zone .draggable' pulled items out of Q22/Q68 zones too
+      document.querySelectorAll('#q20-pool .draggable, #q20-pool ~ div .drop-zone .draggable').forEach(function(d){
+        d.classList.remove('correct-placed','wrong-placed');
+        pool.appendChild(d);
+      });
+    }
+    var result=document.getElementById('q20-result');
+    if(result)result.style.display='none';
+  }
+  window.checkQ20=check;window.resetQ20=reset;
+})();
+// === Q22 Character Match Drag (independent) ===
+(function(){
+  function check(){
+    var zones=document.querySelectorAll('#q22-pool ~ div .drop-zone, #q22-pool ~ p .drop-zone');
+    var correct=0,total=3;
+    zones.forEach(function(z){
+      var accept=z.dataset.accept;
+      var placed=z.querySelector('.draggable');
+      if(placed){
+        var cat=placed.dataset.cat;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if(cat===accept){placed.classList.add('correct-placed');correct++;}
+        else{placed.classList.add('wrong-placed');}
+      }
+    });
+    var result=document.getElementById('q22-result');
+    if(result){
+      result.style.display='block';
+      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong></div>';
+    }
+    if(correct===total)showToast('\u2705 Q22 correct!','success');
+    else showToast('Q22: '+correct+'/3 correct','error');
+  }
+  function reset(){
+    var pool=document.getElementById('q22-pool');
+    if(pool){
+      document.querySelectorAll('#q22-pool .draggable, #q22-pool ~ div .drop-zone .draggable, #q22-pool ~ p .drop-zone .draggable').forEach(function(d){
+        d.classList.remove('correct-placed','wrong-placed');
+        pool.appendChild(d);
+      });
+    }
+    var result=document.getElementById('q22-result');
+    if(result)result.style.display='none';
+  }
+  window.checkQ22=check;window.resetQ22=reset;
+})();
+// === Q68 Heading Match Drag (independent) ===
+(function(){
+  function check(){
+    var zones=document.querySelectorAll('#q68-pool ~ div .drop-zone');
+    var correct=0,total=5;
+    zones.forEach(function(z){
+      var accept=z.dataset.accept;
+      var placed=z.querySelector('.draggable');
+      if(placed){
+        var cat=placed.dataset.cat;
+        placed.classList.remove('correct-placed','wrong-placed');
+        if(cat===accept){placed.classList.add('correct-placed');correct++;}
+        else{placed.classList.add('wrong-placed');}
+      }
+    });
+    var result=document.getElementById('q68-result');
+    if(result){
+      result.style.display='block';
+      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong>'+(correct===total?' 🎉 All correct!':'')+'</div>';
+    }
+    if(correct===total)showToast('\u2705 Q68 correct!','success');
+    else showToast('Q68: '+correct+'/5 correct','error');
+  }
+  function reset(){
+    var pool=document.getElementById('q68-pool');
+    if(pool){
+      document.querySelectorAll('#q68-pool .draggable, #q68-pool ~ div .drop-zone .draggable').forEach(function(d){
+        d.classList.remove('correct-placed','wrong-placed');
+        pool.appendChild(d);
+      });
+      if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool);
+    }
+    var result=document.getElementById('q68-result');
+    if(result)result.style.display='none';
+  }
+  window.checkQ68=check;window.resetQ68=reset;
+})();
+
+// === Unified topbar "⋯ more" menu (2026-09-02, ref 2015DSE-Paper1_v1) ===
+function closeTBMore() {
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (m) m.classList.remove('open');
+  if (btn) btn.classList.remove('active');
+}
+function toggleTBMore(e) {
+  if (e) e.stopPropagation();
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (!m || !btn) return;
+  var opening = !m.classList.contains('open');
+  m.classList.toggle('open');
+  btn.classList.toggle('active', opening);
+}
+(function initTBMore() {
+  var m = document.getElementById('tbExtra');
+  if (!m) return;
+  document.addEventListener('click', function(ev) {
+    var mm = document.getElementById('tbExtra');
+    var btn = document.getElementById('tbMoreBtn');
+    if (!mm || !mm.classList.contains('open')) return;
+    if (mm.contains(ev.target) || (btn && btn.contains(ev.target))) return;
+    closeTBMore();
+  });
+  document.addEventListener('keydown', function(ev) {
+    if (ev.key === 'Escape') {
+      var mm = document.getElementById('tbExtra');
+      if (mm && mm.classList.contains('open')) closeTBMore();
+    }
+  });
+  m.addEventListener('click', function(ev) {
+    var btn = ev.target.closest('button');
+    if (!btn) return;
+    if (btn.id === 'paletteBtn') {
+      setTimeout(function() {
+        var mm = document.getElementById('tbExtra');
+        if (mm) mm.classList.remove('open');
+        var mb = document.getElementById('tbMoreBtn');
+        if (mb) mb.classList.remove('active');
+      }, 0);
+      return;
+    }
+    setTimeout(closeTBMore, 180);
+  }, true);
+})();
+
+// === 📝 Notes panel (per-page localStorage, unified 2026-09-02, ref 2015DSE-Paper1_v1) ===
+var NOTE_KEY = 'xdf-dse2023-p1-note_';
+function curSlideIdx() {
+  if (typeof current === 'number') return current;
+  if (typeof window.current !== 'undefined') return window.current;
+  var act = document.querySelector('.slide.is-active');
+  if (!act) return 0;
+  var slides = document.querySelectorAll('.slide');
+  for (var i = 0; i < slides.length; i++) if (slides[i] === act) return i;
+  return 0;
+}
+function loadNote() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  ta.value = localStorage.getItem(NOTE_KEY + curSlideIdx()) || '';
+  var pg = document.getElementById('npPage');
+  if (pg) {
+    var slides = document.querySelectorAll('.slide');
+    var ci = curSlideIdx();
+    pg.textContent = '第 ' + (ci + 1) + ' 页' + (slides[ci] && slides[ci].dataset.title ? ' · ' + slides[ci].dataset.title : '');
+  }
+}
+function openNotes() {
+  loadNote();
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.add('open');
+  if (ov) ov.classList.add('open');
+  var ta = document.getElementById('npTa');
+  if (ta) setTimeout(function() { ta.focus(); }, 250);
+}
+function closeNotes() {
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+}
+(function initNotes() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  var t = null;
+  ta.addEventListener('input', function() {
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(NOTE_KEY + curSlideIdx(), ta.value); } catch (e) {}
+    }, 300);
+  });
+  document.addEventListener('click', function(ev) {
+    var pn = document.getElementById('notesPanel');
+    if (!pn || !pn.classList.contains('open')) return;
+    if (pn.contains(ev.target)) return;
+    if (ev.target.closest && ev.target.closest('#notesBtn')) return;
+    closeNotes();
+  });
+})();
+
+// === 🧱 Brick covers + Show Data (ported from 2015DSE-Paper1_v1, unified 2026-09-02) ===
+function hitCover(el) {
+  if (el.classList.contains('shattered')) return;
+  if (el.classList.contains('cracked')) {
+    shatterCover(el, false);
+  } else {
+    el.classList.add('cracked');
+    if (el.animate) el.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(.92)' }, { transform: 'scale(1)' }],
+      { duration: 160, easing: 'ease-out' }
+    );
+  }
+}
+function shatterCover(el, silent) {
+  if (el.classList.contains('shattered')) return;
+  el.classList.remove('cracked');
+  el.classList.add('shattered');
+  if (!silent && typeof spawnFragments === 'function') spawnFragments(el);
+  var si = (typeof slideIndexOf === 'function') ? slideIndexOf(el) : -1;
+  if (si >= 0) {
+    var st = loadDeckState();
+    st.cov = st.cov || {};
+    var covers = document.querySelectorAll('.slide')[si].querySelectorAll('.rate-cover');
+    for (var i = 0; i < covers.length; i++) if (covers[i] === el) { st.cov[si + ':' + i] = 1; break; }
+    saveDeckState();
+  }
+}
+function spawnFragments(el) {
+  var rect = el.getBoundingClientRect();
+  var n = 12;
+  for (var i = 0; i < n; i++) {
+    var f = document.createElement('span');
+    f.className = 'rate-fragment';
+    f.style.left = (rect.left + Math.random() * rect.width) + 'px';
+    f.style.top = (rect.top + Math.random() * rect.height) + 'px';
+    document.body.appendChild(f);
+    setTimeout((function(node) { return function() { node.remove(); }; })(f), 900);
+  }
+}
+function showAllData() {
+  var btn = document.getElementById('showDataBtn') || document.getElementById('hintToggleBtn');
+  var standing = document.querySelectorAll('.rate-cover:not(.shattered)');
+  if (standing.length > 0) {
+    standing.forEach(function(el) { shatterCover(el, true); });
+    if (btn && btn.animate) btn.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+      { duration: 220, easing: 'ease-out' });
+    if (btn) { btn.textContent = '\uD83E\uDDF1 Restore Covers'; btn.classList.add('active'); }
+    if (typeof showToast === 'function') showToast('\uD83D\uDCCA All ' + standing.length + ' covers removed — data revealed!', 'success');
+  } else {
+    document.querySelectorAll('.rate-cover').forEach(function(el) {
+      el.classList.remove('shattered', 'cracked');
+      el.classList.add('rebuild');
+      setTimeout((function(node) { return function() { node.classList.remove('rebuild'); }; })(el), 450);
+    });
+    var st = loadDeckState();
+    st.cov = {};
+    saveDeckState();
+    if (btn && btn.animate) btn.animate(
+      [{ transform: 'rotate(0)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }],
+      { duration: 220, easing: 'ease-out' });
+    if (btn) { btn.textContent = '\uD83D\uDCCA Show Data'; btn.classList.remove('active'); }
+    if (typeof showToast === 'function') showToast('\uD83E\uDDF1 All brick covers restored!', 'info');
+  }
+}
+(function restoreCoversInit() {
+  var st = loadDeckState();
+  if (!st.cov) return;
+  document.querySelectorAll('.slide').forEach(function(slide, si) {
+    slide.querySelectorAll('.rate-cover').forEach(function(cv, ci) {
+      if (st.cov[si + ':' + ci]) cv.classList.add('shattered');
+    });
+  });
+})();
+
+// === Proofreading reveal (unified 2026-09-02, ref 2015DSE-Paper1_v1)
+// 错词用 .q64-wrong，与 .cloze 状态系统解耦（位置索引回放会改写题干）。 ===
+function revealQ64Word(el) {
+  if (el.classList.contains('corrected')) return;
+  el.classList.add('corrected');
+  el.textContent = el.getAttribute('data-correct');
+}

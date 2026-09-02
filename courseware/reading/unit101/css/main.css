@@ -123,7 +123,7 @@ body.dark .tfng-btn{background:var(--dark-surface-2);border-color:var(--dark-car
 body.dark .tfng-btn:hover{border-color:var(--fcc-purple)}
 body.dark .cloze{color:var(--text-3);border-bottom-color:var(--fcc-purple)}
 body.dark .cloze:hover{background:rgba(var(--accent-rgb),.1);color:var(--fcc-purple)}
-body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.15);border-bottom-color:var(--fcc-green)}
+body.dark .cloze.revealed{color:#111;background:#FFE600;border-bottom-color:#111}
 body.dark .sa-input{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
 body.dark .sa-input:focus{border-color:var(--fcc-purple);background:var(--dark-surface)}
 body.dark .draggable{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
@@ -137,9 +137,9 @@ body.dark .sa-result{background:var(--dark-surface);border-color:var(--fcc-green
 body.dark .reveal-btn{background:var(--fcc-purple-dark)}
 body.dark .timeline-row .tl-seg{background:var(--dark-surface);border-right-color:var(--dark-card-bd)}
 body.dark .timeline-row .tl-seg .seg-name{color:var(--dark-text)}
-body.dark .user-highlight{background:rgba(var(--accent-light-rgb),.25)}
-body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
-body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+body.dark .user-highlight{background:#FFE600;color:#111}
+body.dark .sigword.revealed-pos{color:#111;background:#FFE600}
+body.dark .sigword.revealed-neg{color:#111;background:#FFE600}
 body.dark .sec-label{color:var(--fcc-purple)}
 body.dark .sec-label::before{background:var(--fcc-purple)}
 body.dark .slide-h1,.slide-h2,.slide-h3{color:var(--dark-text)}
@@ -725,7 +725,7 @@ body.dark .split-left h4{color:var(--fcc-purple)}
 body.dark .passage-excerpt{border-left-color:var(--fcc-purple)}
 .passage-excerpt .para-num{font-size:11px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-family:'Hack',monospace}
 body.dark .passage-excerpt .para-num{color:var(--fcc-purple)}
-.passage-excerpt .user-highlight{background:rgba(var(--accent-light-rgb),.2);padding:2px 4px;border-radius:2px}
+.passage-excerpt .user-highlight{background:#FFE600;color:#111;padding:2px 4px;border-radius:2px}
 
 /* === MCQ === */
 .practice-mcq{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:14px;padding:20px 24px;box-shadow:var(--card-sh);margin-bottom:16px;transition:all .3s}
@@ -791,8 +791,8 @@ body.dark .tfng-btn.wrong{border-color:#ff6b6b;color:#ff6b6b}
 .cloze:hover{background:rgba(var(--accent-rgb),.06);color:var(--fcc-purple-dark)}
 body.dark .cloze{border-bottom-color:var(--fcc-purple)}
 body.dark .cloze:hover{background:rgba(var(--accent-light-rgb),.06);color:var(--fcc-purple)}
-.cloze.revealed{color:var(--fcc-green-dark);border-bottom-style:solid;background:rgba(0,71,27,.06);font-weight:800}
-body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.12);border-bottom-color:var(--fcc-green)}
+.cloze.revealed{color:#111;border-bottom-style:solid;background:#FFE600;font-weight:800}
+body.dark .cloze.revealed{color:#111;background:#FFE600;border-bottom-color:#111}
 
 /* === Short Answer === */
 .sa-input-wrap{margin-top:12px;display:flex;gap:10px;align-items:flex-start}
@@ -852,10 +852,10 @@ body.dark .dz-label{color:var(--fcc-purple)}
 /* === Sigword === */
 .sigword{cursor:default;transition:all .3s;padding:1px 3px;border-radius:3px}
 .sigword.pending{color:inherit;background:transparent}
-.sigword.revealed-pos{color:var(--fcc-green-dark);font-weight:700;background:rgba(172,209,87,.15)}
-body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
-.sigword.revealed-neg{color:var(--brand-red);font-weight:700;background:#FFEBEE}
-body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+.sigword.revealed-pos{color:#111;font-weight:700;background:#FFE600}
+body.dark .sigword.revealed-pos{color:#111;background:#FFE600}
+.sigword.revealed-neg{color:#111;font-weight:700;background:#FFE600}
+body.dark .sigword.revealed-neg{color:#111;background:#FFE600}
 
 /* === Confetti === */
 .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
@@ -1192,7 +1192,7 @@ body.dark .tfng-btn{background:var(--dark-surface-2);border-color:var(--dark-car
 body.dark .tfng-btn:hover{border-color:var(--fcc-purple)}
 body.dark .cloze{color:var(--text-3);border-bottom-color:var(--fcc-purple)}
 body.dark .cloze:hover{background:rgba(90,1,167,.1);color:var(--fcc-purple)}
-body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.15);border-bottom-color:var(--fcc-green)}
+body.dark .cloze.revealed{color:#111;background:#FFE600;border-bottom-color:#111}
 body.dark .sa-input{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
 body.dark .sa-input:focus{border-color:var(--fcc-purple);background:var(--dark-surface)}
 body.dark .draggable{background:var(--dark-surface-2);border-color:var(--dark-card-bd);color:var(--dark-text)}
@@ -1206,9 +1206,9 @@ body.dark .sa-result{background:var(--dark-surface);border-color:var(--fcc-green
 body.dark .reveal-btn{background:var(--fcc-purple-dark)}
 body.dark .timeline-row .tl-seg{background:var(--dark-surface);border-right-color:var(--dark-card-bd)}
 body.dark .timeline-row .tl-seg .seg-name{color:var(--dark-text)}
-body.dark .user-highlight{background:rgba(219,184,255,.25)}
-body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
-body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+body.dark .user-highlight{background:#FFE600;color:#111}
+body.dark .sigword.revealed-pos{color:#111;background:#FFE600}
+body.dark .sigword.revealed-neg{color:#111;background:#FFE600}
 body.dark .sec-label{color:var(--fcc-purple)}
 body.dark .sec-label::before{background:var(--fcc-purple)}
 body.dark .slide-h1,.slide-h2,.slide-h3{color:var(--dark-text)}
@@ -1697,7 +1697,7 @@ body.dark .split-left h4{color:var(--fcc-purple)}
 body.dark .passage-excerpt{border-left-color:var(--fcc-purple)}
 .passage-excerpt .para-num{font-size:11px;font-weight:800;color:var(--fcc-purple-dark);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-family:'Hack',monospace}
 body.dark .passage-excerpt .para-num{color:var(--fcc-purple)}
-.passage-excerpt .user-highlight{background:rgba(219,184,255,.2);padding:2px 4px;border-radius:2px}
+.passage-excerpt .user-highlight{background:#FFE600;color:#111;padding:2px 4px;border-radius:2px}
 
 /* === MCQ === */
 .practice-mcq{background:var(--surface-0);border:2px solid var(--card-bd);border-radius:14px;padding:20px 24px;box-shadow:var(--card-sh);margin-bottom:16px;transition:all .3s}
@@ -1763,8 +1763,8 @@ body.dark .tfng-btn.wrong{border-color:#ff6b6b;color:#ff6b6b}
 .cloze:hover{background:rgba(90,1,167,.06);color:var(--fcc-purple-dark)}
 body.dark .cloze{border-bottom-color:var(--fcc-purple)}
 body.dark .cloze:hover{background:rgba(219,184,255,.06);color:var(--fcc-purple)}
-.cloze.revealed{color:var(--fcc-green-dark);border-bottom-style:solid;background:rgba(0,71,27,.06);font-weight:800}
-body.dark .cloze.revealed{color:var(--fcc-green);background:rgba(0,71,27,.12);border-bottom-color:var(--fcc-green)}
+.cloze.revealed{color:#111;border-bottom-style:solid;background:#FFE600;font-weight:800}
+body.dark .cloze.revealed{color:#111;background:#FFE600;border-bottom-color:#111}
 
 /* === Short Answer === */
 .sa-input-wrap{margin-top:12px;display:flex;gap:10px;align-items:flex-start}
@@ -1824,10 +1824,10 @@ body.dark .dz-label{color:var(--fcc-purple)}
 /* === Sigword === */
 .sigword{cursor:default;transition:all .3s;padding:1px 3px;border-radius:3px}
 .sigword.pending{color:inherit;background:transparent}
-.sigword.revealed-pos{color:var(--fcc-green-dark);font-weight:700;background:rgba(172,209,87,.15)}
-body.dark .sigword.revealed-pos{color:var(--fcc-green);background:rgba(0,71,27,.15)}
-.sigword.revealed-neg{color:var(--brand-red);font-weight:700;background:#FFEBEE}
-body.dark .sigword.revealed-neg{color:#ff6b6b;background:rgba(192,57,43,.12)}
+.sigword.revealed-pos{color:#111;font-weight:700;background:#FFE600}
+body.dark .sigword.revealed-pos{color:#111;background:#FFE600}
+.sigword.revealed-neg{color:#111;font-weight:700;background:#FFE600}
+body.dark .sigword.revealed-neg{color:#111;background:#FFE600}
 
 /* === Confetti === */
 .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;overflow:hidden}
@@ -2146,3 +2146,248 @@ body.dark .rate-cover{
     linear-gradient(180deg,#8a4a28,#6d3a1e);
 }
 body.dark .rate-fragment{background:linear-gradient(180deg,#8a4a28,#6d3a1e);}
+/* Cover restore (toggle 2nd click): bricks scale back in */
+.rate-cover.rebuild{animation:coverRebuild .42s cubic-bezier(.2,.7,.35,1.25);}
+@keyframes coverRebuild{
+  0%{opacity:0;transform:scale(.55) rotate(6deg)}
+  100%{opacity:1;transform:scale(1) rotate(0)}
+}
+
+/* ================= Multi-select tick question (Tick all that apply, e.g. Q58 2017) ================= */
+.pmcq-opt.picked{border-color:var(--fcc-purple-dark);background:rgba(var(--accent-rgb),.10);font-weight:600}
+.pmcq-opt.picked .pl{background:var(--fcc-purple-dark);color:#fff}
+.pmcq-opt.tick-right{border-color:var(--fcc-green-dark);background:#C8E6C9}
+.pmcq-opt.tick-right .pl{background:var(--fcc-green-dark);color:#fff}
+.pmcq-opt.tick-wrong{border-color:#C62828;background:#FFCDD2}
+.pmcq-opt.tick-wrong .pl{background:#C62828;color:#fff}
+.pmcq-opt.tick-missed{border:2px dashed #EF6C00;background:#FFF3E0}
+.pmcq-opt.tick-missed .pl{background:#EF6C00;color:#fff}
+.pmcq-opt .tick-mark{margin-left:auto;font-weight:800;font-size:16px;flex-shrink:0;white-space:nowrap}
+.pmcq-opt.tick-right .tick-mark{color:var(--fcc-green-dark)}
+.pmcq-opt.tick-wrong .tick-mark{color:#C62828}
+.pmcq-opt.tick-missed .tick-mark{color:#EF6C00}
+.tick-group.judged .pmcq-opt{cursor:default}
+.tick-group.judged .pmcq-opt:hover{transform:none;border-color:inherit}
+body.dark .pmcq-opt.picked{border-color:var(--fcc-purple);background:rgba(var(--accent-light-rgb),.08)}
+body.dark .pmcq-opt.picked .pl{background:var(--fcc-purple);color:#fff}
+body.dark .pmcq-opt.tick-right{border-color:var(--fcc-green);background:rgba(0,71,27,.2)}
+body.dark .pmcq-opt.tick-right .pl{background:var(--fcc-green);color:#fff}
+body.dark .pmcq-opt.tick-wrong{border-color:#ff6b6b;background:rgba(192,57,43,.15)}
+body.dark .pmcq-opt.tick-wrong .pl{background:#C62828;color:#fff}
+body.dark .pmcq-opt.tick-missed{border-color:#ffb74d;background:rgba(230,81,0,.12)}
+body.dark .pmcq-opt.tick-missed .pl{background:#EF6C00;color:#fff}
+
+/* ================= Global text-highlight rule (v2): bright yellow ONLY =================
+   文本高亮唯一允许颜色：亮黄色 #FFE600（浅色/深色主题一致，配深色文字保证可读）。
+   交互判定反馈（对错状态色）不属于文本高亮，不在此列。 */
+.user-highlight{background:#FFE600;color:#111}
+::selection{background:#FFE600;color:#111}
+
+/* ================= Table layout hardening (2026-08-25): tables must fit the panel =================
+   Q52 等表格溢出修复：所有 quiz-table / match-grid 完整显示在可视区域内，
+   单元格内容可换行不被截断；tb-wrap 作为横向滚动兜底（窄屏时）。 */
+.tb-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.quiz-table,.match-grid{width:100%;max-width:100%}
+.quiz-table td,.quiz-table th,.match-grid td,.match-grid th{overflow-wrap:anywhere;word-break:break-word}
+.quiz-table .cloze,.match-grid .cloze{min-width:48px;word-break:break-all;overflow-wrap:anywhere}
+/* ================= Q49 对比表布局（v2）：题干完整 + 长答案可换行完整显示 =================
+   Q49 按 md 原文补全题干（has produced a generation which is / will lead them to 前缀 + 完整答案），
+   答案较长。此块为该 slide 专用：加宽右侧答题栏（split-q49），表格固定列宽，
+   长答案与未揭示下划线在列内自然换行，不溢出面板。 */
+.split-view.split-q49 .split-left{flex:0.8}
+.split-view.split-q49 .split-right{flex:1.4}
+#q49-box .quiz-table{table-layout:fixed;width:100%}
+#q49-box .quiz-table th:first-child,#q49-box .quiz-table td:first-child{width:24%}
+#q49-box .quiz-table th:nth-child(2),#q49-box .quiz-table th:nth-child(3){width:38%}
+#q49-box .quiz-table td,#q49-box .quiz-table th{overflow-wrap:anywhere;word-break:break-word}
+#q49-box .quiz-table .cloze{min-width:0;max-width:100%;word-break:break-all;overflow-wrap:anywhere;white-space:normal;font-size:17px;padding:4px 8px}
+#q49-box .rate-cover-wrap{display:block;width:fit-content;white-space:nowrap;margin:4px 0 0}
+.quiz-table .rate-cover-wrap,.match-grid .rate-cover-wrap{white-space:nowrap}
+
+/* ================= TOC drawer + Notes panel (2026-08-28 — 修复 topbar 目录/笔记按钮) ================= */
+.toc-overlay,.notes-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:498;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.toc-overlay.open,.notes-overlay.open{opacity:1;pointer-events:auto}
+.toc-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(320px,88vw);z-index:499;
+  background:var(--topbar-bg);border-left:1px solid var(--card-bd);
+  box-shadow:-12px 0 32px rgba(0,0,0,.14);
+  transform:translateX(105%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.toc-drawer.open{transform:translateX(0)}
+body.dark .toc-drawer{box-shadow:-12px 0 32px rgba(0,0,0,.5)}
+.toc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--card-bd);flex-shrink:0;
+}
+.toc-title{font-size:14px;font-weight:800;letter-spacing:.5px;color:var(--text-1)}
+.toc-close{
+  border:none;background:transparent;color:var(--text-3);font-size:16px;cursor:pointer;
+  width:28px;height:28px;border-radius:8px;transition:all .2s;
+}
+.toc-close:hover{background:rgba(0,0,0,.06);color:var(--text-1)}
+body.dark .toc-close:hover{background:rgba(255,255,255,.08)}
+.toc-list{flex:1;overflow-y:auto;padding:8px}
+.toc-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;
+  cursor:pointer;transition:background .15s;font-size:13.5px;color:var(--text-1);line-height:1.4;
+}
+.toc-item:hover{background:rgba(var(--accent-rgb),.08)}
+.toc-item.active{background:rgba(var(--accent-rgb),.14);font-weight:700}
+.toc-pn{
+  flex-shrink:0;width:26px;height:26px;border-radius:8px;background:rgba(var(--accent-rgb),.12);
+  color:var(--fcc-purple-dark);font-weight:800;font-size:12px;
+  display:flex;align-items:center;justify-content:center;font-family:'Hack',monospace;
+}
+.notes-panel{
+  position:fixed;top:0;right:0;bottom:0;width:min(340px,90vw);z-index:499;
+  background:var(--topbar-bg);border-left:1px solid var(--card-bd);
+  box-shadow:-12px 0 32px rgba(0,0,0,.14);
+  transform:translateX(105%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.notes-panel.open{transform:translateX(0)}
+body.dark .notes-panel{box-shadow:-12px 0 32px rgba(0,0,0,.5)}
+.notes-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--card-bd);flex-shrink:0;
+}
+.notes-title{font-size:13px;font-weight:800;color:var(--text-1)}
+.notes-close{
+  border:none;background:transparent;color:var(--text-3);font-size:16px;cursor:pointer;
+  width:28px;height:28px;border-radius:8px;transition:all .2s;
+}
+.notes-close:hover{background:rgba(0,0,0,.06);color:var(--text-1)}
+body.dark .notes-close:hover{background:rgba(255,255,255,.08)}
+.notes-ta{
+  flex:1;resize:none;border:none;outline:none;background:transparent;
+  padding:14px 16px;font-size:15px;line-height:1.8;color:var(--text-1);
+  font-family:inherit;
+}
+.notes-ta::placeholder{color:var(--text-3)}
+
+/* ================= Proofreading table（2023 v4 形式 — Q64）================= */
+.card.accent{border-left:4px solid var(--fcc-purple-dark)}
+body.dark .card.accent{border-left-color:var(--fcc-purple)}
+.q1-hidden-row .cloze{visibility:visible;display:inline;min-width:0;padding:0;border-bottom:none;cursor:default;color:inherit;font-weight:inherit;background:none}
+.q1-hidden-row .cloze:hover{background:none;color:inherit}
+.q1-hidden-row.revealed .cloze{display:inline-block;min-width:80px;padding:2px 6px;border-bottom:2px dashed var(--fcc-purple-dark);cursor:pointer;color:var(--text-3);font-weight:700;background:none}
+.q1-hidden-row.revealed .cloze:hover{background:rgba(var(--accent-rgb),.06);color:var(--fcc-purple-dark)}
+.q1-tap-btn{display:inline-block;padding:4px 14px;background:var(--fcc-purple-dark);color:#fff;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none}
+.q1-tap-btn:hover{filter:brightness(1.15)}
+.q1-tap-btn:disabled{opacity:.5;cursor:default}
+.q1-hidden-row .q1-no-mistake{visibility:hidden}
+.q1-hidden-row.revealed .q1-no-mistake{visibility:visible}
+.q1-no-mistake{color:var(--fcc-green-dark);font-weight:700}
+body.dark .q1-no-mistake{color:var(--fcc-green)}
+.acc-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:2px 8px;border-radius:10px;
+  font-size:11px;font-weight:700;font-family:'Hack',monospace;
+  letter-spacing:.5px;white-space:nowrap;
+  vertical-align:middle;line-height:1.4;
+}
+.acc-badge::before{content:'📊';font-size:10px}
+.acc-high{background:rgba(11,130,53,.12);color:#0B8235;border:1px solid rgba(11,130,53,.25)}
+.acc-mid{background:rgba(200,93,10,.12);color:#C85D0A;border:1px solid rgba(200,93,10,.25)}
+.acc-low{background:rgba(192,57,43,.12);color:#C0392B;border:1px solid rgba(192,57,43,.25)}
+body.dark .acc-high{background:rgba(11,130,53,.2);color:#6fcf7a}
+body.dark .acc-mid{background:rgba(200,93,10,.2);color:#f0a04b}
+body.dark .acc-low{background:rgba(192,57,43,.2);color:#ef8a7a}
+
+/* ================= Topbar "⋯ more" menu + responsive收纳 (2026-08-28 晚) ================= */
+.tb-more-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:28px;border-radius:14px;
+  border:1.5px solid var(--card-bd);background:transparent;color:var(--text-2);
+  font-size:17px;font-weight:800;cursor:pointer;flex-shrink:0;letter-spacing:1px;line-height:1;
+  transition:all .2s;
+}
+.tb-more-btn:hover{border-color:var(--fcc-purple);color:var(--fcc-purple-dark);background:rgba(var(--accent-rgb),.06)}
+.tb-more-btn.active{background:var(--fcc-purple-dark);color:#fff;border-color:var(--fcc-purple-dark)}
+.tb-extra{display:none}
+.tb-extra.open{
+  display:flex;position:fixed;top:calc(var(--topbar-h) + 6px);right:10px;
+  flex-direction:column;gap:5px;
+  background:var(--topbar-bg);border:1px solid var(--card-bd);border-radius:14px;
+  padding:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);z-index:420;min-width:200px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+body.dark .tb-extra.open{box-shadow:0 12px 32px rgba(0,0,0,.55)}
+.tb-extra.open .hint-toggle-btn,
+.tb-extra.open .hardmode-btn,
+.tb-extra.open .clear-hl-btn{
+  display:block;width:100%;text-align:left;padding:9px 12px;border-radius:9px;
+  font-size:13px;margin:0;box-sizing:border-box;white-space:nowrap;
+}
+.tb-extra.open .palette-wrap{display:block;width:100%}
+.tb-extra.open .palette-wrap #paletteBtn{display:block;width:100%}
+/* 不可压缩按钮：目录/笔记/⋯ 保持文字完整 */
+.topbar .toc-btn,.topbar .tb-more-btn,.topbar .hardmode-btn,.topbar .hint-toggle-btn{flex-shrink:0}
+/* 响应式收纳：<1300 隐藏 course-tag（腾出 ~165px） */
+@media (max-width:1299px){
+  .topbar .course-tag{display:none}
+}
+/* <1024：timer 紧凑（隐藏 Reset、缩窄输入框） */
+@media (max-width:1023px){
+  .topbar .timer-reset{display:none}
+  .topbar .t-min,.topbar .t-sec{width:32px;padding:2px 2px;font-size:13px}
+  .topbar .timer-wrap{gap:2px}
+}
+/* <768：沿用模板换行布局；隐藏 slide-title 与 streak，zoom 紧凑 */
+@media (max-width:767px){
+  .topbar .slide-title{display:none}
+  .topbar .streak-badge{display:none!important}
+  .topbar .zoom-controls{padding-left:0;border-left:none}
+}
+/* <430（小手机）：隐藏 zoom（次要），压缩 gap/内边距，保证一行放下 */
+@media (max-width:429px){
+  .topbar{gap:4px;padding:4px 6px}
+  .topbar .zoom-controls{display:none}
+  .topbar .t-min,.topbar .t-sec{width:28px;font-size:12px}
+  .topbar .toc-btn{padding:4px 8px;font-size:12px}
+}
+/* 修复模板 bug：768 断点的换行规则写成了 ".topbar .topbar"（永不匹配）。
+   在窄屏显式启用换行，topbar 高度自适应，任何内容放不下即换行而非溢出。 */
+@media (max-width:767px){
+  .topbar{flex-wrap:wrap;height:auto;min-height:34px;padding-top:4px;padding-bottom:4px;row-gap:4px}
+}
+
+/* ================= Q64 proofreading rows must be VISIBLE (2026-08-31) =================
+   修复：模板遗留的 tr.q1-hidden-row{display:none} 让改错行整行隐藏，用户只看得到 e.g. 行。
+   2023 v4 的实际行为是行始终可见——隐藏的只是正确词(cloze)与 ✓ no-mistake，Tap 后揭示。 */
+tr.q1-hidden-row{display:table-row}
+span.q1-hidden-row{display:inline}
+
+/* ================= Button hover: brighter but readable (2026-08-31) =================
+   修复：filter:brightness 会连带提亮白色文字，紫底变浅后白字对比骤降（用户报告的
+   「悬浮变白看不清」）。改为明确的亮紫背景 + 深色文字 —— 按钮明显变亮且文字清晰。 */
+.reveal-btn:hover{
+  background:var(--fcc-purple);color:#1a1d23;filter:none;
+  box-shadow:0 3px 10px rgba(var(--accent-rgb),.35);
+}
+body.dark .reveal-btn:hover{color:#1a1d23}
+.q1-tap-btn:hover{
+  background:var(--fcc-purple);color:#1a1d23;filter:none;
+  box-shadow:0 2px 8px rgba(var(--accent-rgb),.35);
+}
+/* Revealed ✓ 状态：高对比成功色，不再半透明灰白 */
+.q1-tap-btn:disabled{
+  opacity:1;background:var(--fcc-green-dark);color:#fff;cursor:default;filter:none;
+}
+body.dark .q1-tap-btn:disabled{background:var(--fcc-green);color:#111}
+
+/* ================= Q64 wrong-word spans (2026-09-01) =================
+   与 .cloze 状态系统解耦：restoreDeckState 按 "slideIdx:clozeIdx" 位置索引回放，
+   Q64 多次重构后旧索引错位会把题干错词直接改写成正确答案。
+   q64-wrong 不参与状态扫描/回放，题干始终显示原始错误用词。 */
+.q1-hidden-row .q64-wrong{display:inline;color:inherit;font-weight:inherit;background:none;cursor:default}
+.q1-hidden-row.revealed .q64-wrong{display:inline-block;min-width:80px;padding:2px 6px;border-bottom:2px dashed var(--fcc-purple-dark);cursor:pointer;color:var(--text-3);font-weight:700;background:none}
+.q1-hidden-row.revealed .q64-wrong:hover{background:rgba(var(--accent-rgb),.06);color:var(--fcc-purple-dark)}
+.q1-hidden-row .q64-wrong.corrected{background:#FFE600;color:#111;border-bottom:none;font-weight:800}
+body.dark .q1-hidden-row .q64-wrong.corrected{background:#FFE600;color:#111}

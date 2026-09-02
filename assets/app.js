@@ -56,7 +56,23 @@
 
   // ---- 基础存储 ----
   function setSession(t, u) { token = t; user = u; localStorage.setItem(TOKEN_KEY, t); localStorage.setItem(USER_KEY, JSON.stringify(u)); }
-  function clearSession() { token = null; user = null; progress = null; localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); }
+  // 登出：清本地 + 通知服务端失效会话。
+  // 之前只清 localStorage，服务端 token 在 30 天有效期内依然可用——
+  // 在公用电脑登录后「退出」，拿到 token 的人仍可继续访问。
+  // 这里用原生 fetch 而非 api()，避免 401 时 api() 回调 clearSession 造成递归。
+  function clearSession() {
+    const oldToken = token;
+    token = null; user = null; progress = null;
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    if (!oldToken) return;
+    try {
+      fetch('/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + oldToken },
+      }).catch(() => {});
+    } catch (e) { /* 服务端失效失败不影响本地登出 */ }
+  }
 
   // ---- API 客户端 ----
   async function api(path, opts) {
@@ -75,9 +91,11 @@
     return api('/api/login', { method: 'POST', body: { username: username, password: password } })
       .then((d) => { setSession(d.token, d.user); return d.user; });
   }
-  function register(username, password, name) {
-    return api('/api/register', { method: 'POST', body: { username: username, password: password, name: name } })
-      .then((d) => { setSession(d.token, d.user); return d.user; });
+  function register(username, password, name, inviteCode) {
+    return api('/api/register', {
+      method: 'POST',
+      body: { username: username, password: password, name: name, inviteCode: inviteCode || '' },
+    }).then((d) => { setSession(d.token, d.user); return d.user; });
   }
 
   // ---- 进度上报 ----
@@ -129,32 +147,42 @@
           </div>
           <form id="zx-form">
             <div class="zx-field" id="zx-name-field" style="display:none">
-              <label>昵称</label>
+              <label>姓名</label>
               <input type="text" id="zx-name" placeholder="例如：唐子涵" />
             </div>
             <div class="zx-field">
               <label>用户名</label>
-              <input type="text" id="zx-user" placeholder="用户名" autocomplete="username" />
+              <input type="text" id="zx-user" placeholder="3–20 位字母、数字或下划线" autocomplete="username" />
             </div>
             <div class="zx-field">
               <label>密码</label>
-              <input type="password" id="zx-pass" placeholder="密码" autocomplete="current-password" />
+              <input type="password" id="zx-pass" placeholder="至少 8 位，含字母和数字" autocomplete="current-password" />
+            </div>
+            <div class="zx-field" id="zx-invite-field" style="display:none">
+              <label>邀请码</label>
+              <input type="text" id="zx-invite" placeholder="向老师索取，例如 DSE-XXXXXX" autocomplete="off" />
             </div>
             <button type="submit" class="zx-submit" id="zx-submit">登 录</button>
             <div class="zx-err" id="zx-err"></div>
           </form>
-          <div class="zx-hint">
-            演示账号：教师 <code>teacher / teacher123</code><br/>
-            学生 <code>tangzihan / student123</code>
-          </div>
+          <div class="zx-hint" id="zx-hint"></div>
         </div>`;
       document.body.appendChild(overlay);
 
       const form = overlay.querySelector('#zx-form');
       const errEl = overlay.querySelector('#zx-err');
       const nameField = overlay.querySelector('#zx-name-field');
+      const inviteField = overlay.querySelector('#zx-invite-field');
       const submitBtn = overlay.querySelector('#zx-submit');
+      const hintEl = overlay.querySelector('#zx-hint');
       let mode = 'login';
+
+      // 演示账号只在本地开发时提示；公网部署时显示邀请码引导，
+      // 否则等于把可用账号密码写在登录框上。
+      const isLocal = ['localhost', '127.0.0.1', '::1'].indexOf(location.hostname) >= 0;
+      hintEl.innerHTML = isLocal
+        ? '演示账号：教师 <code>teacher / teacher123</code><br/>学生 <code>tangzihan / student123</code>'
+        : '还没有账号？点「注册」，需要向老师索取邀请码。';
 
       overlay.querySelectorAll('.zx-tabs button').forEach((b) => {
         b.addEventListener('click', () => {
@@ -162,6 +190,7 @@
           overlay.querySelectorAll('.zx-tabs button').forEach((x) => x.classList.remove('active'));
           b.classList.add('active');
           nameField.style.display = mode === 'register' ? 'block' : 'none';
+          inviteField.style.display = mode === 'register' ? 'block' : 'none';
           submitBtn.textContent = mode === 'register' ? '注 册' : '登 录';
           errEl.textContent = '';
         });
@@ -175,11 +204,13 @@
         const username = overlay.querySelector('#zx-user').value.trim();
         const password = overlay.querySelector('#zx-pass').value;
         const name = overlay.querySelector('#zx-name').value.trim();
+        const inviteCode = (overlay.querySelector('#zx-invite') || {}).value || '';
         if (!username || !password) { errEl.textContent = '请填写用户名和密码'; return; }
+        if (mode === 'register' && !inviteCode.trim()) { errEl.textContent = '请填写邀请码'; return; }
         submitBtn.disabled = true;
         try {
           const u = mode === 'register'
-            ? await register(username, password, name)
+            ? await register(username, password, name, inviteCode.trim())
             : await login(username, password);
           closeLogin();
           if (loginResolver) { loginResolver(u); loginResolver = null; }
@@ -234,15 +265,68 @@
   }
   function initAuthChip(el) { renderAuthChip(el || document.getElementById('authChip')); }
 
+  // ---- 特性开关（feature flags）----
+  // 单一来源：学宝（像素宠物 / 积分榜 / 课件 HUD）默认隐藏，置 true 即全站开启。
+  // 以下为各功能模块的独立开关：false = 暂时隐藏入口（导航栏 / 侧边栏 / 任意页面均不展示），true = 正常展示。
+  // 同步持久化到 localStorage，供不加载本脚本的独立页（pet.html）读取。
+  // 注意：本文件为唯一权威来源（不读取 localStorage 覆盖），要恢复某功能只需把对应值改为 true。
+  const FEATURES = {
+    xuebao: false,
+    coursewareStudio: false, // 课件生成工坊（工具模块）：暂时隐藏
+    mistakes: false,         // 错题本（学习功能）：暂时隐藏
+    homework: false,         // 作业（学习功能）：暂时隐藏
+    leaderboard: false,      // 排行榜（学习功能）：暂时隐藏
+    settings: true           // 设置（学习功能）：保持可见
+  };
+
+  // ---- 按特性开关隐藏功能入口（导航栏 / 侧边栏 / 任意页面）----
+  // 覆盖三种来源：① 带 data-feature="x" 的元素；② 指向被隐藏功能页的导航链接；
+  // ③ 因全部子项隐藏而变空的「分组分隔标题」。
+  function applyFeatureVisibility() {
+    if (typeof document === 'undefined' || !document.querySelectorAll) return;
+    var feats = (window.ZhiXue && window.ZhiXue.features) || FEATURES;
+    var HREF_FEATURE = {
+      'courseware-studio.html': 'coursewareStudio',
+      'mistakes.html': 'mistakes',
+      'homework.html': 'homework',
+      'leaderboard.html': 'leaderboard'
+    };
+    function hide(el) { if (el && el.style) el.style.display = 'none'; }
+    // ① data-feature 标记的元素（如工具区的「课件生成工坊」）
+    document.querySelectorAll('[data-feature]').forEach(function (el) {
+      var f = el.getAttribute('data-feature');
+      if (feats[f] === false) hide(el);
+    });
+    // ② 指向被隐藏功能页的导航链接（覆盖各 xuebao 页面自身侧边栏）
+    document.querySelectorAll('.sidebar .nav a, .nav a').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (h && HREF_FEATURE[h] && feats[HREF_FEATURE[h]] === false) hide(a);
+    });
+    // ③ 清理因隐藏而变空的「分组分隔标题」（如「工具」「学习」）
+    document.querySelectorAll('.nav-sep').forEach(function (sep) {
+      var sib = sep.nextElementSibling;
+      var anyVisible = false;
+      while (sib && !(sib.classList && sib.classList.contains('nav-sep'))) {
+        if (sib.tagName === 'A' && sib.style.display !== 'none') anyVisible = true;
+        sib = sib.nextElementSibling;
+      }
+      if (!anyVisible) hide(sep);
+    });
+  }
+  if (document.readyState !== 'loading') applyFeatureVisibility();
+  else document.addEventListener('DOMContentLoaded', applyFeatureVisibility);
+
   // ---- 暴露 API ----
   window.ZhiXue = {
     get user() { return user; },
     get token() { return token; },
     get progress() { return progress; },
+    features: FEATURES,
     setSession, clearSession, api, login, register,
     ensureLogin, openLogin, closeLogin,
     reportEvent, loadProgress,
     toast, renderAuthChip, initAuthChip,
-    injectStyles,
+    injectStyles, applyFeatureVisibility,
   };
+  try { localStorage.setItem('zhixue-features', JSON.stringify(FEATURES)); } catch (e) {}
 })();

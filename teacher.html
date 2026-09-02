@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 教师看板</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478;
@@ -91,7 +89,37 @@
     .tag-slow { font-size:9px; padding:2px 5px; border:2px solid var(--line); background:var(--pink); color:#fff; margin-left:6px; }
     footer { margin-top:40px; color:var(--muted); font-size:13px; text-align:center; }
     @media (max-width:860px){ .cols{grid-template-columns:1fr} .sidebar{display:none} .main{padding:18px} }
+
+    /* ---- 邀请码管理 ---- */
+    .invite-panel { border:3px solid var(--line); background:var(--card); box-shadow:6px 6px 0 var(--shadow); padding:20px; margin-bottom:28px; }
+    .ip-head { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+    .ip-head h2 { font-size:18px; }
+    .ip-sub { font-size:12px; color:var(--muted); }
+    .ip-form { display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:18px; padding-bottom:18px; border-bottom:2px dashed var(--line); }
+    .ip-form label { display:flex; flex-direction:column; gap:5px; font-size:12px; color:var(--muted); font-weight:600; }
+    .ip-form input { font-family:inherit; font-size:14px; color:var(--text); background:var(--bg); border:3px solid var(--line); border-radius:0; padding:8px 10px; outline:none; }
+    .ip-form input[type=number] { width:88px; }
+    .ip-form input[type=text] { width:170px; }
+    .ip-form input:focus { box-shadow:3px 3px 0 var(--yellow); }
+    .ip-form .btn { font-size:11px; }
+    .ip-list { display:flex; flex-direction:column; gap:8px; max-height:340px; overflow-y:auto; }
+    .ip-empty { font-size:13px; color:var(--muted); padding:14px 0; }
+    .ip-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 12px; background:var(--bg); border:2px solid var(--line); }
+    .ip-code { font-family:"Press Start 2P",monospace; font-size:12px; letter-spacing:1px; }
+    .ip-status { font-size:11px; font-weight:700; padding:3px 8px; border:2px solid var(--line); }
+    .ip-status.active  { background:var(--green); color:#2E2A3B; }
+    .ip-status.used    { background:var(--blue); color:#fff; }
+    .ip-status.expired { background:var(--muted); color:#fff; }
+    .ip-status.revoked { background:var(--pink); color:#fff; }
+    .ip-meta { font-size:12px; color:var(--muted); flex:1 1 auto; min-width:120px; }
+    .ip-act { font-family:inherit; font-size:11px; font-weight:700; color:var(--text); background:var(--card); border:2px solid var(--line); box-shadow:2px 2px 0 var(--shadow); padding:5px 9px; cursor:pointer; }
+    .ip-act:hover { transform:translate(-1px,-1px); }
+    .ip-act.del:hover { background:var(--pink); color:#fff; }
+    .ip-count { font-size:12px; color:var(--muted); margin-bottom:10px; }
+    .ip-count b { color:var(--text); }
+    @media (max-width:860px){ .ip-form input[type=text]{ width:100%; } }
   </style>
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="app">
@@ -101,6 +129,7 @@
         <a href="index.html"><span class="dot"></span>学生主页</a>
         <a href="teacher.html" class="active"><span class="dot"></span>数据看板</a>
         <a href="dashboard.html"><span class="dot"></span>学生视角</a>
+        <a href="parent-meeting.html"><span class="dot"></span>家长会</a>
       </nav>
       <div class="sidebar-foot">
         <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
@@ -124,11 +153,27 @@
 
       <div id="content"><div class="loading">正在加载班级数据…</div></div>
 
+      <!-- 邀请码管理：控制谁能注册。仅教师可见（非教师时由脚本隐藏） -->
+      <section class="invite-panel" id="invitePanel" style="display:none">
+        <div class="ip-head">
+          <h2>🎟 邀请码管理</h2>
+          <span class="ip-sub">学生注册时必须填写一枚有效邀请码，一码一用</span>
+        </div>
+        <div class="ip-form">
+          <label>数量 <input type="number" id="ipCount" value="10" min="1" max="100" /></label>
+          <label>有效期 <input type="number" id="ipDays" value="30" min="1" max="365" /> 天</label>
+          <label>备注 <input type="text" id="ipNote" placeholder="例如：加速班 264" maxlength="30" /></label>
+          <button class="btn" id="ipGen" type="button">生成邀请码</button>
+        </div>
+        <div class="ip-list" id="ipList"><div class="ip-empty">正在加载邀请码…</div></div>
+      </section>
+
       <footer>智学平台 · 混合架构 v0.5 · 教师数据看板（数据由 Node 后端聚合）</footer>
     </main>
   </div>
 
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script>
     const WEAK = { tfng:'T/F/NG 判断', pronoun:'代词指代', attitude:'态度词推断', wordform:'词形转换', conjunction:'连词语序', intransitive:'不及物陷阱' };
     const WEAK_COLOR = { tfng:'#FF5D8F', pronoun:'#4D7CFE', attitude:'#FFC83D', wordform:'#4FC46A', conjunction:'#2DD4BF', intransitive:'#9B6BF2' };
@@ -152,7 +197,7 @@
         return d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
       }
       function poll() {
-        fetch('/.watch_status.json', { cache: 'no-store' })
+        fetch('/api/sync-status', { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (s) {
             if (!s) { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; return; }
@@ -353,6 +398,127 @@
       }).join('');
       return `<svg class="trend" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="var(--line)" stroke-width="2"/>${bars}</svg>`;
     }
+  </script>
+
+  <!-- 邀请码管理：仅教师可见。与看板主体解耦，独立脚本，出问题不影响数据看板 -->
+  <script>
+  (function () {
+    'use strict';
+    var panel = document.getElementById('invitePanel');
+    var listEl = document.getElementById('ipList');
+    if (!panel || !listEl) return;
+
+    function api(path, opts) {
+      if (window.ZhiXue && window.ZhiXue.api) return window.ZhiXue.api(path, opts);
+      return Promise.reject(new Error('未登录'));
+    }
+    function toast(m, t) { if (window.ZhiXue && window.ZhiXue.toast) window.ZhiXue.toast(m, t || 'info'); }
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+    var LABEL = { active: '可用', used: '已使用', expired: '已过期', revoked: '已吊销' };
+    function fmtDate(ts) {
+      if (!ts) return '';
+      var d = new Date(ts);
+      return (d.getMonth() + 1) + '/' + d.getDate();
+    }
+
+    function render(codes) {
+      var active = codes.filter(function (c) { return c.status === 'active'; }).length;
+      if (!codes.length) {
+        listEl.innerHTML = '<div class="ip-empty">还没有邀请码，生成后发给学生即可注册。</div>';
+        return;
+      }
+      listEl.innerHTML =
+        '<div class="ip-count">共 ' + codes.length + ' 张，其中 <b>' + active + '</b> 张可用</div>' +
+        codes.map(function (c) {
+          var meta = [];
+          if (c.note) meta.push(esc(c.note));
+          meta.push('生成于 ' + fmtDate(c.createdAt));
+          if (c.status === 'used' && c.usedAt) meta.push('已于 ' + fmtDate(c.usedAt) + ' 使用');
+          else if (c.status === 'active') meta.push('有效期至 ' + fmtDate(c.expiresAt));
+          return '<div class="ip-row" data-code="' + esc(c.code) + '">' +
+            '<span class="ip-code">' + esc(c.code) + '</span>' +
+            '<span class="ip-status ' + c.status + '">' + (LABEL[c.status] || c.status) + '</span>' +
+            '<span class="ip-meta">' + meta.join(' · ') + '</span>' +
+            '<button class="ip-act" type="button" data-act="copy">复制</button>' +
+            '<button class="ip-act del" type="button" data-act="revoke">吊销</button>' +
+            '</div>';
+        }).join('');
+    }
+
+    function load() {
+      return api('/api/invite-codes')
+        .then(function (d) { render(d.codes || []); })
+        .catch(function (e) {
+          listEl.innerHTML = '<div class="ip-empty">加载失败：' + esc(e.message || '未知错误') + '</div>';
+        });
+    }
+
+    // 复制：优先用剪贴板 API，失败时退回临时 textarea（http 非安全上下文下会走这里）
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise(function (resolve, reject) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          var ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          ok ? resolve() : reject(new Error('复制失败'));
+        } catch (err) { reject(err); }
+      });
+    }
+
+    listEl.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-act]') : null;
+      if (!b) return;
+      var row = b.closest('.ip-row');
+      var code = row ? row.getAttribute('data-code') : '';
+      if (!code) return;
+      var act = b.getAttribute('data-act');
+      if (act === 'copy') {
+        copyText(code).then(function () { toast('已复制 ' + code, 'ok'); })
+                      .catch(function () { toast('复制失败，请手动选中', 'err'); });
+        return;
+      }
+      if (act === 'revoke') {
+        if (!window.confirm('吊销邀请码 ' + code + '？该码将立即失效，且无法恢复。')) return;
+        api('/api/invite-codes/' + encodeURIComponent(code), { method: 'DELETE' })
+          .then(function () { toast('已吊销 ' + code, 'ok'); return load(); })
+          .catch(function (err) { toast(err.message || '吊销失败', 'err'); });
+      }
+    });
+
+    var genBtn = document.getElementById('ipGen');
+    if (genBtn) {
+      genBtn.addEventListener('click', function () {
+        var count = parseInt(document.getElementById('ipCount').value, 10) || 10;
+        var days = parseInt(document.getElementById('ipDays').value, 10) || 30;
+        var note = (document.getElementById('ipNote').value || '').trim();
+        genBtn.disabled = true;
+        genBtn.textContent = '生成中';
+        api('/api/invite-codes', { method: 'POST', body: { count: count, days: days, note: note } })
+          .then(function (d) {
+            toast('已生成 ' + (d.codes || []).length + ' 张邀请码', 'ok');
+            return load();
+          })
+          .catch(function (e) { toast(e.message || '生成失败', 'err'); })
+          .then(function () { genBtn.disabled = false; genBtn.textContent = '生成邀请码'; });
+      });
+    }
+
+    // 仅教师可见；app.js 已同步恢复本地会话，故这里直接读即可
+    var u = window.ZhiXue && window.ZhiXue.user;
+    if (u && u.role === 'teacher') { panel.style.display = 'block'; load(); }
+  })();
   </script>
 </body>
 </html>

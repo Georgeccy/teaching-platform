@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 课间小游戏</title>
   <link rel="icon" type="image/png" href="assets/app-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg: #F4ECD8;
@@ -84,6 +82,7 @@
   </style>
   <link rel="stylesheet" href="assets/polish.css" />
   <link rel="stylesheet" href="assets/games.css" />
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="app">
@@ -122,16 +121,93 @@
         <span class="avatar">学</span>
       </div>
 
-      <div class="games-hero">
-        <div class="ico">🎮</div>
-        <div>
-          <h1>课间小游戏</h1>
-          <p>学累了？和学宝一起放松一下。俄罗斯方块练手速，贪吃蛇练反应——最高分都记在本地，下次接着刷纪录。</p>
+      <!-- ===================== 主菜单 / 启动器 ===================== -->
+      <section id="view-menu" class="view">
+        <div class="games-hero">
+          <div class="ico">🎮</div>
+          <div>
+            <h1>课间小游戏</h1>
+            <p>学累了？和学宝一起放松一下。两款游戏各自独立运行、互不干扰——俄罗斯方块练手速，贪吃蛇练反应，最高分都记在本地，下次接着刷纪录。</p>
+          </div>
         </div>
-      </div>
 
-      <div class="games-wrap">
-        <!-- 俄罗斯方块 -->
+        <div class="games-grid">
+          <button class="launch-card snake" id="launchSnake" type="button">
+            <div class="lc-ico">🐍</div>
+            <div class="lc-body">
+              <h3>贪吃蛇</h3>
+              <span class="tag">SNAKE</span>
+              <p>方向键转向、禁止反向、吃豆得分、撞墙或撞到自己即结束。可选难度与穿墙模式。</p>
+            </div>
+            <div class="lc-go">进入 ▶</div>
+          </button>
+
+          <button class="launch-card tetris" id="launchTetris" type="button">
+            <div class="lc-ico">🧱</div>
+            <div class="lc-body">
+              <h3>俄罗斯方块</h3>
+              <span class="tag">TETRIS</span>
+              <p>7-bag 随机、SRS 旋转踢墙、暂存与落点幽灵，标准计分与 B2B 连击。</p>
+            </div>
+            <div class="lc-go">进入 ▶</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================== 贪吃蛇（独立界面） ===================== -->
+      <section id="view-snake" class="view" style="display:none">
+        <div class="view-bar">
+          <button class="back-btn" id="snakeBack" type="button">← 返回</button>
+          <h2 class="view-title">贪吃蛇 <span class="tag">SNAKE</span></h2>
+          <div class="diff">
+            <span class="diff-label">难度</span>
+            <div class="seg" id="snakeDiff" role="group" aria-label="难度">
+              <button type="button" class="seg-btn" data-d="easy">简单</button>
+              <button type="button" class="seg-btn active" data-d="normal">普通</button>
+              <button type="button" class="seg-btn" data-d="hard">困难</button>
+              <button type="button" class="seg-btn" data-d="hell">地狱</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="game" id="snakeCard">
+          <div class="ghead">
+            <h3>贪吃蛇</h3>
+            <span class="tag">SNAKE</span>
+          </div>
+          <div class="hud">
+            <div class="stat">得分<b id="sScore">0</b></div>
+            <div class="stat">长度<b id="sLen">3</b></div>
+            <div class="stat">最高<b id="sHi">0</b></div>
+          </div>
+          <div class="play">
+            <div class="canvas-frame"><canvas id="sCanvas" class="game-cv" width="320" height="320"></canvas></div>
+          </div>
+          <div class="btn-row">
+            <button class="pxbtn green" id="sStart">开始</button>
+            <button class="pxbtn ghost" id="sPause">暂停</button>
+            <label class="opt"><input type="checkbox" id="sWrap" /> 穿墙</label>
+          </div>
+          <div class="dpad">
+            <button class="up" data-k="up">▲</button>
+            <button class="left" data-k="left">◀</button>
+            <button class="mid" data-k="mid">II</button>
+            <button class="right" data-k="right">▶</button>
+            <button class="down" data-k="down">▼</button>
+          </div>
+          <div class="controls-hint">
+            键盘：<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 转向（禁止反向） · <kbd>空格</kbd> 开始/重来 · <kbd>P</kbd> 暂停
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 俄罗斯方块（独立界面） ===================== -->
+      <section id="view-tetris" class="view" style="display:none">
+        <div class="view-bar">
+          <button class="back-btn" id="tetrisBack" type="button">← 返回</button>
+          <h2 class="view-title">俄罗斯方块 <span class="tag">TETRIS</span></h2>
+        </div>
+
         <div class="game" id="tetrisCard">
           <div class="ghead">
             <h3>俄罗斯方块</h3>
@@ -171,44 +247,14 @@
             键盘：<kbd>←</kbd><kbd>→</kbd> 移动 · <kbd>↑</kbd>/<kbd>X</kbd> 顺旋 · <kbd>Z</kbd> 逆旋 · <kbd>↓</kbd> 软降 · <kbd>空格</kbd> 硬降 · <kbd>C</kbd> 暂存 · <kbd>P</kbd> 暂停
           </div>
         </div>
-
-        <!-- 贪吃蛇 -->
-        <div class="game" id="snakeCard">
-          <div class="ghead">
-            <h3>贪吃蛇</h3>
-            <span class="tag">SNAKE</span>
-          </div>
-          <div class="hud">
-            <div class="stat">得分<b id="sScore">0</b></div>
-            <div class="stat">长度<b id="sLen">3</b></div>
-            <div class="stat">最高<b id="sHi">0</b></div>
-          </div>
-          <div class="play">
-            <div class="canvas-frame"><canvas id="sCanvas" class="game-cv" width="320" height="320"></canvas></div>
-          </div>
-          <div class="btn-row">
-            <button class="pxbtn green" id="sStart">开始</button>
-            <button class="pxbtn ghost" id="sPause">暂停</button>
-            <label class="opt"><input type="checkbox" id="sWrap" /> 穿墙</label>
-          </div>
-          <div class="dpad">
-            <button class="up" data-k="up">▲</button>
-            <button class="left" data-k="left">◀</button>
-            <button class="mid" data-k="mid">II</button>
-            <button class="right" data-k="right">▶</button>
-            <button class="down" data-k="down">▼</button>
-          </div>
-          <div class="controls-hint">
-            键盘：<kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 转向 · <kbd>空格</kbd> 开始/重来 · <kbd>P</kbd> 暂停
-          </div>
-        </div>
-      </div>
+      </section>
 
       <footer>智学平台 · 混合架构 v0.5 · 课间小游戏（纯前端 · 最高分存本机）</footer>
     </main>
   </div>
 
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script src="assets/polish.js"></script>
   <script src="assets/games.js"></script>
   <script>

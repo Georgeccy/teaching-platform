@@ -461,13 +461,6 @@ function resetDragDrop() {
 
 // === MC check (V7 — with score tracking) ===
 function checkMC(el, isCorrect, containerId, explanation) {
-  // When called as onclick="checkMC(this)" (the standard HTML pattern in this
-  // deck), only `el` is provided — containerId is undefined.  Delegate to
-  // checkMCAuto which auto-detects the container and correctness from
-  // data-correct / data-explain attributes on the element itself.
-  if (containerId === undefined) {
-    return checkMCAuto(el);
-  }
   var container = document.getElementById(containerId);
   if (!container) return;
   if (el.classList.contains('answered')) return;
@@ -517,18 +510,11 @@ function checkMCAuto(el) {
   el.classList.add(isCorrect ? 'correct' : 'wrong');
   el.classList.add('answered');
   recordAnswer(isCorrect);
-  // Remove any previous banner so wrong-answer retries don't stack banners
-  var prevBanner = container.nextElementSibling;
-  if (prevBanner && prevBanner.classList.contains('mc-banner')) prevBanner.remove();
   if (isCorrect) {
     container.classList.add('answered');
     container.classList.add('correct-revealed');
-    // Reveal the correct option's highlight if the user had clicked a wrong one first
     var allOpts = container.querySelectorAll('.pmcq-opt');
-    allOpts.forEach(function(o) {
-      o.classList.add('answered');
-      if (o.getAttribute('data-correct') === 'true' && o !== el) o.classList.add('correct-revealed');
-    });
+    allOpts.forEach(function(o) { o.classList.add('answered'); });
     var banner = document.createElement('div');
     banner.className = 'mc-banner mc-correct';
     banner.innerHTML = '<span class="tick">\u2705</span><div><div class="at">Correct!</div></div>';
@@ -537,11 +523,6 @@ function checkMCAuto(el) {
     var methodWrap = container.querySelector('.method-wrap');
     if (methodWrap && typeof hintsVisible !== 'undefined' && hintsVisible) methodWrap.style.display = 'block';
   } else {
-    // After a wrong answer, reveal the correct option so the student can learn
-    var correctOpt = container.querySelector('.pmcq-opt[data-correct="true"]');
-    if (correctOpt && !correctOpt.classList.contains('answered')) {
-      correctOpt.classList.add('correct-revealed');
-    }
     var banner = document.createElement('div');
     banner.className = 'mc-banner mc-wrong';
     banner.innerHTML = '<span class="tick">\u274c</span><div><div class="at">Not quite</div><div class="asub">' + (el.getAttribute('data-explain') || '') + '</div></div>';
@@ -556,6 +537,97 @@ function toggleRev(id) {
   var st = loadDeckState();
   if (el.classList.contains('show')) st.rev[id] = 1; else delete st.rev[id];
   saveDeckState();
+}
+
+// ================= Multi-select tick question (Tick all that apply) =================
+// Click an option to pick / unpick it; after ALL choices are made, press Check to
+// judge every option individually (right pick / wrong pick / missed).
+function toggleTick(el) {
+  var group = el.closest('.tick-group');
+  if (!group || group.classList.contains('judged')) return;
+  el.classList.toggle('picked');
+}
+
+function checkTicks(gid) {
+  var group = document.getElementById(gid + '-opts');
+  if (!group || group.classList.contains('judged')) return;
+  var opts = group.querySelectorAll('.pmcq-opt');
+  var picked = 0, needed = 0, rightItems = 0;
+  // Pass 1: collect stats without mutating, so we know whether the whole answer is correct
+  opts.forEach(function (o) {
+    var isC = o.getAttribute('data-correct') === 'true';
+    var isP = o.classList.contains('picked');
+    if (isP) picked++;
+    if (isC) needed++;
+    if (isP === isC) rightItems++;
+  });
+  var pickedNone = (picked === 0);
+  var allRight = (rightItems === opts.length);
+  // Pass 2: apply per-item marks.
+  // All-correct: ONLY the options the user actually picked light up green;
+  // unpicked options keep their original state (no colour change, no mark).
+  // Not-all-correct: keep the previous per-item behaviour (✓ right / ✗ wrong pick / ✗ missed).
+  opts.forEach(function (o) {
+    var isC = o.getAttribute('data-correct') === 'true';
+    var isP = o.classList.contains('picked');
+    o.classList.remove('tick-right', 'tick-wrong', 'tick-missed');
+    var old = o.querySelector('.tick-mark');
+    if (old) old.remove();
+    if (pickedNone) return; // nothing marked until the user actually answers
+    if (allRight) {
+      if (!isP) return; // unpicked option: leave original state
+      o.classList.add('tick-right');
+      var mark = document.createElement('span');
+      mark.className = 'tick-mark';
+      mark.textContent = '\u2713';
+      mark.title = '\u6b63\u786e\uff1a\u4f60\u52fe\u9009\u7684\u8fd9\u4e00\u9879\u662f\u6b63\u786e\u7b54\u6848';
+      o.appendChild(mark);
+      return;
+    }
+    var ok = (isP === isC);
+    o.classList.add(ok ? 'tick-right' : (isP ? 'tick-wrong' : 'tick-missed'));
+    var mark2 = document.createElement('span');
+    mark2.className = 'tick-mark';
+    if (ok) { mark2.textContent = '\u2713'; mark2.title = '\u6b63\u786e\uff1a\u8be5\u9879\u5904\u7406\u5f97\u5f53'; }
+    else if (isP) { mark2.textContent = '\u2717'; mark2.title = '\u4e0d\u5e94\u52fe\u9009'; }
+    else { mark2.textContent = '\u2717 \u6f0f\u9009'; mark2.title = '\u6b64\u5904\u5e94\u52fe\u9009\u800c\u672a\u52fe'; }
+    o.appendChild(mark2);
+  });
+  var res = document.getElementById(gid + '-result');
+  if (pickedNone) {
+    if (res) {
+      res.classList.add('show');
+      res.innerHTML = '<div class="ans-banner" style="border-color:#C62828"><span class="tick" style="color:#C62828">&#9888;</span>'
+        + '<div><div class="at">\u8bf7\u5148\u4f5c\u7b54</div><div class="asub">\u81f3\u5c11\u52fe\u9009\u4e00\u9879\u540e\u518d\u63d0\u4ea4\u5224\u5b9a\u3002</div></div></div>';
+    }
+    return;
+  }
+  group.classList.add('judged');
+  allRight = (rightItems === opts.length);
+  if (!group.dataset.recorded) { recordAnswer(allRight); group.dataset.recorded = '1'; }
+  if (res) {
+    res.classList.add('show');
+    res.innerHTML = (allRight
+      ? '<div class="ans-banner"><span class="tick">&#10003;</span><div><div class="at">All Correct!</div>'
+        + '<div class="asub">' + opts.length + ' \u5904\u9009\u62e9\u5168\u90e8\u5224\u65ad\u6b63\u786e\uff08\u5e94\u52fe ' + needed + ' \u9879\uff09\u3002</div></div></div>'
+      : '<div class="ans-banner" style="border-color:#C62828"><span class="tick" style="color:#C62828">&#10007;</span>'
+        + '<div><div class="at">Not quite</div><div class="asub">' + rightItems + '/' + opts.length
+        + ' \u5904\u5224\u65ad\u6b63\u786e \u2014 \u5e94\u52fe\u9009 ' + needed + ' \u9879\uff0c\u4f60\u52fe\u4e86 ' + picked
+        + ' \u9879\u3002\u9010\u9879\u5224\u5b9a\u5df2\u6807\u51fa\uff1a\u2713 \u6b63\u786e\uff0f\u2717 \u4e0d\u5e94\u52fe\uff0f\u2717 \u6f0f\u9009\u3002</div></div></div>');
+  }
+}
+
+function resetTicks(gid) {
+  var group = document.getElementById(gid + '-opts');
+  if (!group) return;
+  group.classList.remove('judged');
+  group.querySelectorAll('.pmcq-opt').forEach(function (o) {
+    o.classList.remove('picked', 'tick-right', 'tick-wrong', 'tick-missed');
+    var m = o.querySelector('.tick-mark');
+    if (m) m.remove();
+  });
+  var res = document.getElementById(gid + '-result');
+  if (res) { res.classList.remove('show'); res.innerHTML = ''; }
 }
 
 function flipCardPersist(card) {
@@ -850,6 +922,28 @@ function autoScrollToVisible(e, refEl) {
 document.addEventListener('dragend', stopEdgeAutoScroll);
 document.addEventListener('drop', stopEdgeAutoScroll);
 
+// === Document-level dragover fallback (Chrome auto-scroll fix) ===
+// In Chrome the zone/pool 'dragover' handlers only fire while the pointer is
+// directly over a .drop-zone / .word-pool, so edge auto-scroll stalls when the
+// pointer hovers gaps (table cells, padding, slide body) near the edge.
+// Tracking the active dragged element and listening at document level keeps
+// the rAF edge-scroll loop fed with fresh pointer coordinates everywhere.
+var __activeDragEl = null;
+document.addEventListener('dragstart', function(e) {
+  var t = (e.target && e.target.closest) ? e.target.closest('.draggable') : null;
+  __activeDragEl = t || null;
+}, true);
+document.addEventListener('dragend', function() { __activeDragEl = null; }, true);
+document.addEventListener('drop', function() { __activeDragEl = null; }, true);
+document.addEventListener('dragover', function(e) {
+  if (!__activeDragEl) return;
+  // Resolve the scroll container from the dragged chip itself; if it has been
+  // detached or has no scrollable ancestor, fall back to the element under
+  // the pointer so auto-scroll still works over arbitrary slide content.
+  var ref = (__activeDragEl.isConnected && findScrollableAncestor(__activeDragEl)) ? __activeDragEl : e.target;
+  autoScrollToVisible(e, ref);
+});
+
 // === Confetti ===
 function launchConfetti() {
   var wrap = document.createElement('div'); wrap.className = 'confetti-wrap'; document.body.appendChild(wrap);
@@ -990,13 +1084,113 @@ function toggleHints() {
 }
 document.addEventListener('keydown', function(e) {
   if ((e.key === 'h' || e.key === 'H') && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-    toggleHints();
+    showAllData();
   }
 });
 
+// === Pixel-brick correct-rate covers (2018 v1 feature) ===
+// 1st click -> cracks; 2nd click -> shatter & reveal the rate chip.
+function hitCover(el) {
+  if (el.classList.contains('shattered')) return;
+  if (el.classList.contains('cracked')) {
+    shatterCover(el, false);
+  } else {
+    el.classList.add('cracked');
+    // brief scale pop to sell the impact
+    el.animate && el.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(.92)' }, { transform: 'scale(1)' }],
+      { duration: 160, easing: 'ease-out' }
+    );
+  }
+}
+function shatterCover(el, silent) {
+  if (el.classList.contains('shattered')) return;
+  el.classList.remove('cracked');
+  el.classList.add('shattered');
+  if (!silent) spawnFragments(el);
+  // persist
+  var si = slideIndexOf(el);
+  if (si >= 0) {
+    var st = loadDeckState();
+    var covers = document.querySelectorAll('.slide')[si].querySelectorAll('.rate-cover');
+    for (var i = 0; i < covers.length; i++) if (covers[i] === el) { st.cov[si + ':' + i] = 1; break; }
+    saveDeckState();
+  }
+}
+function spawnFragments(el) {
+  var rect = el.getBoundingClientRect();
+  var n = 12;
+  for (var i = 0; i < n; i++) {
+    var f = document.createElement('span');
+    f.className = 'rate-fragment';
+    var fx = rect.left + Math.random() * rect.width;
+    var fy = rect.top + Math.random() * rect.height;
+    f.style.left = fx + 'px';
+    f.style.top = fy + 'px';
+    document.body.appendChild(f);
+    var dx = (Math.random() - 0.5) * 140;
+    var dy = 40 + Math.random() * 90;
+    var rot = (Math.random() - 0.5) * 540;
+    if (f.animate) {
+      f.animate(
+        [
+          { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg)', opacity: 0 }
+        ],
+        { duration: 550 + Math.random() * 250, easing: 'cubic-bezier(.2,.6,.35,1)' }
+      ).onfinish = (function (node) { return function () { node.remove(); }; })(f);
+    } else {
+      setTimeout(function (node) { return function () { node.remove(); }; }(f), 700);
+    }
+  }
+}
+// Show Data button (TOGGLE): 1st click shatters ALL covers & reveals rates;
+// 2nd click restores every cover to the initial full-brick state. Repeats.
+function showAllData() {
+  var btn = document.getElementById('hintToggleBtn');
+  var standing = document.querySelectorAll('.rate-cover:not(.shattered)');
+  if (standing.length > 0) {
+    // --- Reveal mode: shatter every remaining cover ---
+    standing.forEach(function (el) { shatterCover(el, true); });
+    if (btn && btn.animate) {
+      btn.animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+        { duration: 220, easing: 'ease-out' }
+      );
+    }
+    if (btn) {
+      btn.textContent = '\uD83E\uDDF1 Restore Covers';
+      btn.classList.add('active');
+    }
+    showToast('\uD83D\uDCCA All ' + standing.length + ' covers removed — data revealed!', 'success');
+  } else {
+    // --- Restore mode: rebuild every cover (reset cracked & shattered states) ---
+    document.querySelectorAll('.rate-cover').forEach(function (el) {
+      el.classList.remove('shattered', 'cracked');
+      el.classList.add('rebuild');
+      setTimeout((function (node) { return function () { node.classList.remove('rebuild'); }; })(el), 450);
+    });
+    // clear persisted cover states so a refresh keeps the bricks
+    var st = loadDeckState();
+    st.cov = {};
+    saveDeckState();
+    if (btn && btn.animate) {
+      btn.animate(
+        [{ transform: 'rotate(0)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }],
+        { duration: 220, easing: 'ease-out' }
+      );
+    }
+    if (btn) {
+      btn.textContent = '\uD83D\uDCCA Show Data';
+      btn.classList.remove('active');
+    }
+    showToast('\uD83E\uDDF1 All brick covers restored!', 'info');
+  }
+}
+
 
 // === Answer State Persistence (v3 — Safari 刷新不丢答题记录) ===
-var DECK_KEY = 'xdf-dse2021-p1-state';
+var DECK_KEY = 'xdf-dse2017-p1-v3-state';
 var deckState = null;
 function loadDeckState() {
   if (deckState) return deckState;
@@ -1010,6 +1204,7 @@ function loadDeckState() {
   deckState.sa = deckState.sa || {};            // wrapKey -> user text
   deckState.flip = deckState.flip || {};        // "slideIdx:cardIdx" -> 1
   deckState.att = deckState.att || {};          // "slideIdx:blankIdx" -> 1 (distractor ticked)
+  deckState.cov = deckState.cov || {};          // "slideIdx:coverIdx" -> 1 (brick cover shattered)
   deckState.score = deckState.score || null;    // scoreState snapshot
   deckState.current = (typeof deckState.current === 'number') ? deckState.current : 0;
   return deckState;
@@ -1049,6 +1244,14 @@ function restoreDeckState() {
     var blanks = slide.querySelectorAll('.att-blank');
     blanks.forEach(function(b, bi) {
       if (st.att[si + ':' + bi]) { b.textContent = '\u2713'; b.classList.add('filled'); }
+    });
+    // 3b. Brick covers over rate chips (shattered = data revealed)
+    var covers = slide.querySelectorAll('.rate-cover');
+    covers.forEach(function(cv, ci) {
+      if (st.cov[si + ':' + ci]) {
+        cv.classList.remove('cracked');
+        cv.classList.add('shattered');
+      }
     });
   });
 
@@ -1328,161 +1531,271 @@ function resetProgress() {
 
 
 
-// === legacy deck-specific functions (from 2021DSE-Paper1_v4.html) ===
-function checkDragDropS11(){
-  var allDrag=document.querySelectorAll('#word-pool-sbq11 .draggable');
-  var placed=0,correct=0,wrong=0,unplaced=0;
-  allDrag.forEach(function(d){
-    var parent=d.closest('.drop-zone');
-    if(parent){
-      placed++;
-      if(parent.dataset.cat===d.dataset.cat){d.classList.add('correct-placed');d.classList.remove('wrong-placed');correct++;}
-      else{d.classList.add('wrong-placed');d.classList.remove('correct-placed');wrong++;}
-    }else{unplaced++;}
-  });
-  var result=document.getElementById('drag-result-s11');
-  result.style.display='block';
-  var msg='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' / 6 正确 / ❌ '+wrong+' 错误 / 📦 '+unplaced+' 未拖</h4>';
-  if(correct===6)msg+='<p style="color:var(--xdf-green);font-size:16px;margin-top:8px">🎉 全部正确！</p>';
-  else if(placed>0)msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">💡 正确答案：<br>i)→C · ii)→B · iii)→E · iv)→F · v)→A · vi)→D</p>';
-  else msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">👆 请先把 statements 拖到对应人物框内再提交。</p>';
-  msg+='</div>';
-  result.innerHTML=msg;
-}
-function checkMatching(){
-  var answers={mA:'francis',mB:'liam',mD:'amelia',mF:'mccary'};
-  var names={mA:'A',mB:'B',mC:'C',mD:'D',mE:'E',mF:'F'};
-  var personNames={mccary:'Dr Barbara McCary',liam:'Liam Thomas',amelia:'Amelia Wong',francis:'Francis Tam'};
-  var allDrag=document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable');
-  var correct=0,wrong=0,unplaced=0;
-  var details=[];
-  allDrag.forEach(function(d){
-    var parent=d.closest('.drop-zone');
-    var letter=names[d.dataset.word]||'?';
-    if(!parent){
-      unplaced++;
-      if(d.dataset.cat!=='')details.push('<span style="color:#999">'+letter+': 未拖入</span>');
-    }else{
-      var cat=parent.dataset.cat;
-      var expected=d.dataset.cat;
-      if(cat===expected&&expected!==''){
-        correct++;
-        details.push('<span style="color:var(--xdf-green)">✅ '+letter+' → '+personNames[cat]+'</span>');
-      }else if(expected===''){
-        wrong++;
-        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (此引用不在答案中)</span>');
-      }else{
-        wrong++;
-        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (应拖到 '+personNames[expected]+')</span>');
-      }
+// === legacy deck-specific functions (from 2024DSE-Paper1_v2.html) ===
+function checkMatch(poolId,total){
+  var pool=document.getElementById(poolId+'-pool');
+  if(!pool)return;
+  var wrap=pool.closest('.split-right')||document;
+  var zones=wrap.querySelectorAll('.drop-zone');
+  var correct=0;
+  zones.forEach(function(z){
+    var placed=z.querySelector('.draggable');
+    if(placed){
+      placed.classList.remove('correct-placed','wrong-placed');
+      if(placed.dataset.cat===z.dataset.accept){placed.classList.add('correct-placed');correct++;}
+      else{placed.classList.add('wrong-placed');}
     }
   });
-  var result=document.getElementById('match-result');
-  result.style.display='block';
-  result.innerHTML='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' 正确 / ❌ '+wrong+' 错误 / ⏳ '+unplaced+' 未拖</h4><div style="margin-top:10px;font-size:15px;line-height:2;text-align:left">'+details.join('<br>')+'</div><div style="margin-top:10px;font-size:16px;color:var(--text-1)">正确答案：McCary→F · Liam→B · Amelia→D · Francis→A<br>C 和 E 不用</div><div style="margin-top:8px;font-size:18px;font-weight:800;color:'+(correct===4?'var(--xdf-green)':'var(--xdf-red)')+'">得分：'+correct+' / 4</div></div>';
+  var result=document.getElementById(poolId+'-result');
+  if(result){
+    result.classList.add('show');
+    result.innerHTML='<div class="card accent" style="text-align:center"><h4>'+correct+'/'+total+' correct'+(correct===total?' 🎉':'')+'</h4></div>';
+  }
+  if(correct===total)showToast('\u2705 All correct!','success');
+  else showToast(correct+'/'+total+' correct','error');
+  recordAnswer(correct===total);
 }
-function highlightSelection(container){
-  var sel=window.getSelection();
-  if(!sel||sel.isCollapsed)return;
-  try{
-    var range=sel.getRangeAt(0);
-    var span=document.createElement('span');
-    span.className='user-highlight';
-    range.surroundContents(span);
-    sel.removeAllRanges();
-  }catch(e){}
-}
-function initDots(){
-  var slides=document.querySelectorAll('.slide');
-  var dots=document.getElementById('progressDots');dots.innerHTML='';
-  slides.forEach(function(_,i){
-    var d=document.createElement('span');d.className='dot';d.dataset.pn='\u7b2c'+(i+1)+'\u9875';
-    d.onclick=function(){goTo(i);};dots.appendChild(d);
+function initDots() {
+  var slides = document.querySelectorAll('.slide');
+  var dots = document.getElementById('progressDots');
+  if (!dots) return;
+  dots.innerHTML = '';
+  slides.forEach(function(_, i) {
+    var d = document.createElement('span');
+    d.className = 'dot';
+    d.dataset.pn = 'Slide ' + (i + 1);
+    d.onclick = function() { goTo(i); };
+    dots.appendChild(d);
   });
 }
-function initS11DragDrop(){
-  // SB Q11 - 6 个 drop-zones
-  ['A','B','C','D','E','F'].forEach(function(letter){
-    var z=document.getElementById('dz-'+letter+'-sbq11');
-    if(!z)return;
-    z.addEventListener('dragover',function(e){
-      e.preventDefault();
-      z.classList.add('drag-over');
-      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
-    });
-    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
-    z.addEventListener('drop',function(e){
-      e.preventDefault();z.classList.remove('drag-over');
-      var word=e.dataTransfer.getData('text/plain');
-      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
-      if(dragged){
-        var content=z.querySelector('.drop-content');
-        content.appendChild(dragged);
-        dragged.classList.remove('correct-placed','wrong-placed');
+function isItemAnswered(item){
+  var el=item.el;
+  if(!el)return false;
+  if(item.kind==='mc')return !!el.querySelector('.pmcq-opt.answered');
+  if(item.kind==='tfng')return el.classList.contains('answered');
+  if(item.kind==='qz')return el.dataset.done==='1';
+  if(item.kind==='match'){var r=document.getElementById(item.id+'-result');return !!(r&&r.classList.contains('show'));}
+  if(item.kind==='proof'){var rows=el.querySelectorAll('.pf-row');for(var i=0;i<rows.length;i++){if(!rows[i].classList.contains('pf-done'))return false;}return rows.length>0;}
+  if(item.kind==='cloze'){var cz=el.querySelectorAll('.cloze[data-answer]');for(var i=0;i<cz.length;i++){if(!cz[i].classList.contains('revealed'))return false;}return cz.length>0;}
+  if(item.kind==='reveal'){var rv=el.querySelector('.ans-reveal');return !!(rv&&rv.classList.contains('show'));}
+  return false;
+}
+function qzPick(el, cellId){
+  var cell=document.getElementById(cellId);
+  if(!cell||cell.dataset.done)return;
+  var ok=el.getAttribute('data-correct')==='true';
+  el.classList.add('answered'); el.classList.add(ok?'correct':'wrong');
+  cell.dataset.done='1';
+  recordAnswer(ok);
+  if(!ok){
+    var opts=cell.querySelectorAll('.qz-opt');
+    for(var i=0;i<opts.length;i++){
+      if(opts[i].getAttribute('data-correct')==='true')opts[i].classList.add('correct');
+    }
+  }
+  // reveal explanation if present
+  var exp=el.getAttribute('data-explain');
+  if(!ok && exp)showToast(exp,'error');
+}
+function qzRevealAll(prefix){
+  var box=document.getElementById(prefix+'-wrap')||document.getElementById('q43-box')||document;
+  var scope=box.querySelectorAll('.qz-opt[data-correct="true"]');
+  scope.forEach(function(o){o.classList.add('answered','correct');});
+  scope.forEach(function(o){var c=o.closest('.qz-set');if(c)c.dataset.done='1';});
+  showToast('All answers revealed','info');
+  if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
+}
+function refreshQuestionProgress(){
+  if(!QUIZ_MANIFEST.length)scanQuizItems();
+  var perSlide={}, answered=0;
+  QUIZ_MANIFEST.forEach(function(item){
+    var done=isItemAnswered(item);
+    if(done)answered++;
+    var s=perSlide[item.slide]||(perSlide[item.slide]={done:0,total:0});
+    s.total++; if(done)s.done++;
+  });
+  document.querySelectorAll('.sidebar-item').forEach(function(el){
+    var si=parseInt(el.dataset.slideIndex,10);
+    var st=perSlide[si];
+    var chip=el.querySelector('.si-state');
+    if(!st){if(chip)chip.remove();return;}
+    if(!chip){chip=document.createElement('span');chip.className='si-state';el.appendChild(chip);}
+    chip.textContent=(st.done===st.total)?'✓':(st.done+'/'+st.total);
+    chip.classList.toggle('done',st.done===st.total);
+  });
+  var prog=document.querySelector('.sd-progress');
+  if(!prog){
+    var detail=document.querySelector('.score-detail');
+    if(detail){prog=document.createElement('div');prog.className='sd-progress';detail.appendChild(prog);}
+  }
+  if(prog)prog.innerHTML='Answered <b>'+answered+'/'+QUIZ_MANIFEST.length+'</b>';
+  var fs=document.getElementById('finalScore'), ft=document.getElementById('finalTotal'), fp=document.getElementById('finalProgress');
+  if(fs)fs.textContent=scoreState.correct;
+  if(ft)ft.textContent=scoreState.total;
+  if(fp)fp.textContent=answered+'/'+QUIZ_MANIFEST.length;
+}
+function resetMatch(poolId){
+  var pool=document.getElementById(poolId+'-pool');
+  if(!pool)return;
+  var wrap=pool.closest('.split-right')||document;
+  wrap.querySelectorAll('.drop-zone .draggable').forEach(function(d){
+    d.classList.remove('correct-placed','wrong-placed');
+    pool.appendChild(d);
+  });
+  if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool);
+  var result=document.getElementById(poolId+'-result');
+  if(result)result.classList.remove('show');
+  if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
+}
+function revealProof(rowId){
+  var row=document.getElementById(rowId);
+  if(!row||row.classList.contains('pf-done'))return;
+  row.classList.add('pf-done');
+  if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
+}
+function revealQ51(){
+  var box=document.getElementById('q51-box');
+  if(!box)return;
+  box.querySelectorAll('.q1-hidden-row').forEach(function(r){r.classList.add('revealed');});
+  box.querySelectorAll('.q51-answer').forEach(function(a){a.style.display='inline';});
+  if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
+}
+function scanQuizItems(){
+  QUIZ_MANIFEST = [];
+  var slides = document.querySelectorAll('.slide');
+  slides.forEach(function(slide, si){
+    slide.querySelectorAll('.practice-mcq[id$="-box"]').forEach(function(box){
+      if(box.querySelector('.pmcq-opt[data-correct]')){
+        QUIZ_MANIFEST.push({id:box.id, kind:'mc', slide:si, el:box});
+      }else if(box.querySelector('.tfng-group[data-answer]')){
+        box.querySelectorAll('.tfng-group[data-answer]').forEach(function(g,gi){
+          QUIZ_MANIFEST.push({id:g.id||(box.id+'-g'+gi), kind:'tfng', slide:si, el:g});
+        });
+      }else if(box.querySelector('.word-pool')){
+        // match item; added by pool scan below
+      }else if(box.querySelector('.pf-row')){
+        QUIZ_MANIFEST.push({id:box.id, kind:'proof', slide:si, el:box});
+      }else if(box.querySelector('.cloze[data-answer]')){
+        QUIZ_MANIFEST.push({id:box.id, kind:'cloze', slide:si, el:box});
+      }else if(box.querySelector('.ans-reveal')){
+        QUIZ_MANIFEST.push({id:box.id, kind:'reveal', slide:si, el:box});
       }
+    });
+    slide.querySelectorAll('.qz-set').forEach(function(c){
+      if(c.id)QUIZ_MANIFEST.push({id:c.id, kind:'qz', slide:si, el:c});
+    });
+    slide.querySelectorAll('.word-pool[id$="-pool"]').forEach(function(p){
+      QUIZ_MANIFEST.push({id:p.id.replace(/-pool$/,''), kind:'match', slide:si, el:p});
     });
   });
-  var pool11=document.getElementById('word-pool-sbq11');
-  if(pool11){
-    pool11.addEventListener('dragover',function(e){
-      e.preventDefault();
-      pool11.classList.add('drag-over');
-      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,pool11);
-    });
-    pool11.addEventListener('dragleave',function(e){pool11.classList.remove('drag-over');});
-    pool11.addEventListener('drop',function(e){
-      e.preventDefault();pool11.classList.remove('drag-over');
-      var word=e.dataTransfer.getData('text/plain');
-      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
-      if(dragged){
-        pool11.appendChild(dragged);
-        dragged.classList.remove('correct-placed','wrong-placed');
-        if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool11);
-      }
-    });
-  }
 }
-function initSBQ10DragDrop(){
-  var zoneIds=['dz-mccary','dz-liam','dz-amelia','dz-francis','word-pool-sbq10'];
-  zoneIds.forEach(function(id){
-    var z=document.getElementById(id);
-    if(!z)return;
-    z.addEventListener('dragover',function(e){
-      e.preventDefault();
-      z.classList.add('drag-over');
-      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
-    });
-    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
-    z.addEventListener('drop',function(e){
-      e.preventDefault();z.classList.remove('drag-over');
-      var word=e.dataTransfer.getData('text/plain');
-      var dragged=document.querySelector('.draggable[data-word="'+word+'"]');
-      if(dragged){
-        var content=z.querySelector('.drop-content')||z;
-        content.appendChild(dragged);
-        dragged.classList.remove('correct-placed','wrong-placed');
-        if(id==='word-pool-sbq10'&&typeof sortDraggablesInPool==='function')sortDraggablesInPool(content);
-      }
-    });
+
+// === Topbar "⋯ more" menu (2026-08-28 — 收纳右侧次要工具，修复窄屏溢出) ===
+function closeTBMore() {
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (m) m.classList.remove('open');
+  if (btn) btn.classList.remove('active');
+}
+function toggleTBMore(e) {
+  if (e) e.stopPropagation();
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (!m || !btn) return;
+  var opening = !m.classList.contains('open');
+  m.classList.toggle('open');
+  btn.classList.toggle('active', opening);
+}
+(function initTBMore() {
+  // click outside → close
+  document.addEventListener('click', function(ev) {
+    var m = document.getElementById('tbExtra');
+    var btn = document.getElementById('tbMoreBtn');
+    if (!m || !m.classList.contains('open')) return;
+    if (m.contains(ev.target) || (btn && btn.contains(ev.target))) return;
+    closeTBMore();
   });
+  // Esc → close
+  document.addEventListener('keydown', function(ev) {
+    if (ev.key === 'Escape') {
+      var m = document.getElementById('tbExtra');
+      if (m && m.classList.contains('open')) closeTBMore();
+    }
+  });
+  // tool clicked inside menu → run its action, then auto-close the menu.
+  // capture phase so per-button stopPropagation (e.g. palette) can't skip this.
+  var m = document.getElementById('tbExtra');
+  if (!m) return;
+  m.addEventListener('click', function(ev) {
+    var btn = ev.target.closest('button');
+    if (!btn) return;
+    if (btn.id === 'paletteBtn') {
+      // palette panel is fixed-positioned & JS-placed; close menu first so the
+      // panel anchors to the button's in-menu position without overlap.
+      setTimeout(function() {
+        var mm = document.getElementById('tbExtra');
+        if (mm) mm.classList.remove('open');
+        var mb = document.getElementById('tbMoreBtn');
+        if (mb) mb.classList.remove('active');
+      }, 0);
+      return;
+    }
+    setTimeout(closeTBMore, 180); // let Show Data / Hard / Reset feedback render first
+  }, true);
+})();
+
+// === 📝 Notes panel (per-page localStorage, unified 2026-09-02, ref 2015DSE-Paper1_v1) ===
+var NOTE_KEY = 'xdf-dse2017-p1-note_';
+function curSlideIdx() {
+  if (typeof current === 'number') return current;
+  if (typeof window.current !== 'undefined') return window.current;
+  var act = document.querySelector('.slide.is-active');
+  if (!act) return 0;
+  var slides = document.querySelectorAll('.slide');
+  for (var i = 0; i < slides.length; i++) if (slides[i] === act) return i;
+  return 0;
 }
-function resetDragDropS11(){
-  var pool=document.getElementById('word-pool-sbq11');
-  if(pool){
-    document.querySelectorAll('#word-pool-sbq11 .draggable').forEach(function(d){
-      d.classList.remove('correct-placed','wrong-placed');
-      pool.appendChild(d);
-    });
+function loadNote() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  ta.value = localStorage.getItem(NOTE_KEY + curSlideIdx()) || '';
+  var pg = document.getElementById('npPage');
+  if (pg) {
+    var slides = document.querySelectorAll('.slide');
+    var ci = curSlideIdx();
+    pg.textContent = '第 ' + (ci + 1) + ' 页' + (slides[ci] && slides[ci].dataset.title ? ' · ' + slides[ci].dataset.title : '');
   }
-  document.getElementById('drag-result-s11').style.display='none';
 }
-function resetMatching(){
-  var pool=document.getElementById('word-pool-sbq10');
-  if(pool){
-    document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable').forEach(function(d){
-      d.classList.remove('correct-placed','wrong-placed');
-      pool.appendChild(d);
-    });
-  }
-  document.getElementById('match-result').style.display='none';
+function openNotes() {
+  loadNote();
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.add('open');
+  if (ov) ov.classList.add('open');
+  var ta = document.getElementById('npTa');
+  if (ta) setTimeout(function() { ta.focus(); }, 250);
 }
+function closeNotes() {
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+}
+(function initNotes() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  var t = null;
+  ta.addEventListener('input', function() {
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(NOTE_KEY + curSlideIdx(), ta.value); } catch (e) {}
+    }, 300);
+  });
+  document.addEventListener('click', function(ev) {
+    var pn = document.getElementById('notesPanel');
+    if (!pn || !pn.classList.contains('open')) return;
+    if (pn.contains(ev.target)) return;
+    if (ev.target.closest && ev.target.closest('#notesBtn')) return;
+    closeNotes();
+  });
+})();

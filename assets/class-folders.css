@@ -1,0 +1,283 @@
+/* 智学平台 · 班级管理（班级文件夹）
+ * 复用平台像素复古视觉令牌（--line / --shadow / --card / --bg / --pink / --green / --yellow / --blue 等，来自 shell.css）
+ */
+
+/* 侧边栏「班级管理」按钮：用黄色强调，与上传按钮区分 */
+.parent-sidebar .class-btn {
+  margin-top: 14px;
+  background: var(--yellow, #FFD23F);
+  color: #2E2A3B;
+}
+.parent-sidebar .class-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow); }
+
+/* 班级管理弹窗：更宽、内部两栏布局 */
+.class-modal {
+  width: 880px;
+  max-width: calc(100vw - 32px);
+  padding: 22px 24px 20px;
+}
+.class-modal h3 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 16px; margin-bottom: 16px;
+}
+.class-modal h3 .pixel { font-size: 9px; color: var(--muted); }
+.class-modal .modal-x {
+  margin-left: auto;
+  width: 34px; height: 34px; flex-shrink: 0;
+  border: 3px solid var(--line); background: var(--card);
+  box-shadow: 3px 3px 0 var(--shadow); cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.class-modal .modal-x:hover { background: var(--yellow); }
+
+.class-layout { display: flex; gap: 18px; align-items: stretch; min-height: 440px; }
+
+/* 左：文件库（拖拽源） */
+.class-left { width: 330px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+.class-panel-head { display: flex; align-items: baseline; gap: 8px; font-size: 13px; font-weight: 700; }
+.class-panel-head .muted { font-size: 10px; font-family: "Press Start 2P", monospace; color: var(--muted); }
+.lib-filter {
+  border: 3px solid var(--line); background: var(--bg);
+  padding: 8px 10px; font-family: inherit; font-size: 12px; color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow); outline: none;
+}
+.lib-filter:focus { border-color: var(--blue); }
+.file-lib {
+  flex: 1; min-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+  padding: 8px; border: 3px dashed var(--line); background: rgba(46,42,59,.03); transition: border-color .12s, background .12s;
+}
+.file-lib.drop-over { border-color: var(--pink); background: rgba(255,93,143,.10); }
+
+/* ---------- 批量选择工具条 ---------- */
+.lib-tools {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 8px 0 0;
+}
+.lib-tools .lt-all {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text); cursor: pointer; user-select: none;
+}
+.lib-tools .lt-all input { width: 15px; height: 15px; accent-color: var(--green); cursor: pointer; }
+.lib-tools .lt-count { font-size: 12px; color: var(--muted); }
+.lib-tools .lt-count b { color: var(--pink); font-family: "Press Start 2P", monospace; font-size: 11px; }
+.lib-tools .lt-archive {
+  margin-left: auto; font-family: "Press Start 2P", monospace; font-size: 9px;
+  border: 3px solid var(--line); background: var(--green); color: #2E2A3B;
+  padding: 8px 12px; cursor: pointer; box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform .12s;
+}
+.lib-tools .lt-archive:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.lib-tools .lt-archive:disabled { background: var(--muted); color: #fff; cursor: not-allowed; opacity: .6; }
+
+/* 文件卡片：复选框 + 选中态 */
+.file-card .fc-cb {
+  width: 17px; height: 17px; flex-shrink: 0;
+  border: 2px solid var(--line); background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+}
+.file-card .fc-cb::after { content: "✓"; font-size: 11px; line-height: 1; color: #fff; display: none; }
+.file-card.sel { background: var(--yellow); }
+.file-card.sel .fc-cb { background: var(--green); border-color: var(--line); }
+.file-card.sel .fc-cb::after { display: block; }
+
+/* 拖拽进行中：整页保持 grabbing 光标，避免误选文本打断拖拽 */
+body.dnd-active, body.dnd-active .file-card, body.dnd-active .cf-file { cursor: grabbing; }
+body.dnd-active .file-card:hover, body.dnd-active .cf-file:hover { transform: none; }
+
+.file-card {
+  display: flex; align-items: center; gap: 8px; padding: 9px 10px;
+  border: 3px solid var(--line); background: var(--bg); box-shadow: 3px 3px 0 var(--shadow);
+  cursor: grab; transition: transform .12s, box-shadow .12s;
+  user-select: none; -webkit-user-select: none;
+}
+.file-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.file-card.dragging { opacity: .5; cursor: grabbing; }
+.file-card .fl-badge {
+  font-family: "Press Start 2P", monospace; font-size: 8px; padding: 4px 5px; flex-shrink: 0; color: #2E2A3B;
+}
+.file-card .fl-badge.kind-md { background: var(--green); }
+.file-card .fl-badge.kind-pdf { background: var(--yellow); }
+.file-card .fl-name { flex: 1; min-width: 0; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-card .fl-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.file-card .fl-tag { font-size: 9px; padding: 2px 6px; background: var(--pink); color: #fff; border: 2px solid var(--line); white-space: nowrap; }
+.file-card .fl-untagged { font-size: 10px; color: var(--muted); }
+
+/* 右：班级文件夹（拖放目标） */
+.class-right {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;
+  border-left: 3px solid var(--line); padding-left: 18px;
+}
+.class-new { display: flex; gap: 8px; }
+.class-new input[type="text"] {
+  flex: 1; min-width: 0;
+  border: 3px solid var(--line); background: var(--bg);
+  padding: 9px 10px; font-family: inherit; font-size: 13px; color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow); outline: none;
+}
+.class-new input[type="text"]:focus { border-color: var(--blue); }
+.class-new .btn-add {
+  width: 42px; flex-shrink: 0;
+  font-family: "Press Start 2P", monospace; font-size: 12px;
+  background: var(--green); color: #2E2A3B;
+  border: 3px solid var(--line); box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+}
+.class-new .btn-add:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--shadow); }
+
+.class-folders { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
+.class-card.folder {
+  border: 3px solid var(--line); background: var(--bg); box-shadow: 3px 3px 0 var(--shadow);
+  padding: 10px 12px; cursor: default; transition: border-color .12s, background .12s, box-shadow .12s;
+}
+.class-card.folder.drop-over { border-color: var(--pink); background: rgba(255,93,143,.10); box-shadow: 4px 4px 0 var(--pink); }
+.cf-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.cf-head .cn { flex: 1; min-width: 0; font-weight: 700; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-head .cc { font-size: 10px; font-family: "Press Start 2P", monospace; color: var(--muted); white-space: nowrap; }
+.cf-head .cx {
+  width: 22px; height: 22px; flex-shrink: 0; display: none; align-items: center; justify-content: center;
+  border: 2px solid currentColor; font-size: 13px; line-height: 1; background: transparent; cursor: pointer; color: var(--text);
+}
+.class-card.folder:hover .cf-head .cx { display: flex; }
+.cf-head .cx:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+.cf-body { display: flex; flex-direction: column; gap: 6px; }
+.cf-file {
+  display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+  border: 2px solid var(--line); background: var(--card); cursor: grab; transition: transform .12s;
+}
+.cf-file:hover { transform: translate(-1px, -1px); }
+.cf-file.dragging { opacity: .5; }
+.cf-file .cf-fname { flex: 1; min-width: 0; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-file .cf-rm {
+  width: 20px; height: 20px; flex-shrink: 0; border: 2px solid var(--line); background: transparent;
+  cursor: pointer; font-size: 12px; line-height: 1; display: flex; align-items: center; justify-content: center;
+}
+.cf-file .cf-rm:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+.cf-empty { font-size: 11px; color: var(--muted); text-align: center; padding: 14px 6px; border: 2px dashed var(--line); }
+
+.class-empty, .class-empty-sm {
+  color: var(--muted); font-size: 13px; text-align: center;
+}
+.class-empty { padding: 60px 20px; }
+.class-empty-sm { padding: 18px 10px; border: 3px dashed var(--line); }
+
+@media (max-width: 720px) {
+  .class-layout { flex-direction: column; min-height: 0; }
+  .class-left { width: 100%; }
+  .class-right { border-left: 0; border-top: 3px solid var(--line); padding-left: 0; padding-top: 14px; }
+}
+
+/* ============================================================
+   批量整合归档弹窗
+   ============================================================ */
+.archive-modal { width: 620px; max-height: calc(100vh - 48px); overflow-y: auto; }
+.archive-modal .modal-x { margin-left: auto; }
+
+/* 目标文件夹选择器 */
+.folder-picker {
+  display: flex; flex-direction: column; gap: 5px;
+  max-height: 194px; overflow-y: auto;
+  border: 3px solid var(--line); background: var(--bg); padding: 6px;
+}
+.fp-row {
+  display: flex; align-items: center; gap: 8px; text-align: left;
+  border: 2px solid transparent; background: var(--card); color: var(--text);
+  padding: 8px 10px; cursor: pointer; font-family: inherit; font-size: 13px;
+  transition: background .12s, border-color .12s;
+}
+.fp-row:hover { background: var(--yellow); }
+.fp-row.lv1 { margin-left: 20px; }
+.fp-row.lv1 .fp-name::before { content: "└ "; color: var(--muted); }
+.fp-row.on { border-color: var(--pink); background: var(--pink); color: #fff; }
+.fp-row.on .fp-name::before { color: #fff; }
+.fp-row .fp-ico { flex-shrink: 0; }
+.fp-row .fp-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fp-row .fp-meta { flex-shrink: 0; font-size: 11px; color: var(--muted); font-family: "Press Start 2P", monospace; }
+.fp-row.on .fp-meta { color: #fff; }
+.fp-row .fp-check { flex-shrink: 0; display: none; font-size: 13px; }
+.fp-row.on .fp-check { display: block; }
+
+.folder-new { display: flex; gap: 6px; margin-top: 8px; }
+.folder-new input {
+  flex: 1; min-width: 0; border: 3px solid var(--line); background: var(--bg);
+  padding: 8px 10px; font-family: inherit; font-size: 13px; color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow); outline: none;
+}
+.folder-new input:focus { border-color: var(--blue); }
+
+/* 已选材料清单预览 */
+.pick-list {
+  display: flex; flex-direction: column; gap: 5px;
+  max-height: 168px; overflow-y: auto;
+  border: 3px solid var(--line); background: var(--bg); padding: 6px;
+}
+.pl-item {
+  display: flex; align-items: center; gap: 8px;
+  border: 2px solid var(--line); background: var(--card); padding: 6px 8px;
+}
+.pl-item .pl-badge {
+  font-family: "Press Start 2P", monospace; font-size: 7px; padding: 4px 5px;
+  border: 2px solid var(--line); color: #2E2A3B; flex-shrink: 0;
+}
+.pl-item .pl-badge.kind-md { background: var(--green); }
+.pl-item .pl-badge.kind-pdf { background: var(--yellow); }
+.pl-item .pl-name {
+  flex: 1; min-width: 0; font-size: 12px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pl-item .pl-rm {
+  width: 22px; height: 22px; flex-shrink: 0; border: 2px solid var(--line);
+  background: transparent; cursor: pointer; font-size: 13px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.pl-item .pl-rm:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+/* 同名冲突策略 */
+.conflict-opts { display: flex; gap: 14px; flex-wrap: wrap; }
+.conflict-opts label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--text); font-weight: 400; cursor: pointer; margin-bottom: 0;
+}
+.conflict-opts input { width: 15px; height: 15px; accent-color: var(--blue); cursor: pointer; }
+.conflict-tip {
+  margin-top: 8px; font-size: 12px; color: var(--muted);
+  border-left: 4px solid var(--line); background: var(--bg); padding: 7px 10px;
+}
+.conflict-tip.ok { color: var(--green); border-left-color: var(--green); }
+.conflict-tip.warn { color: #B98300; border-left-color: var(--yellow); background: #FFF6E0; }
+
+/* 执行进度 */
+.archive-progress { margin: 4px 0 12px; }
+.archive-progress .ap-bar {
+  height: 14px; border: 3px solid var(--line); background: var(--bg); overflow: hidden;
+}
+.archive-progress .ap-fill { height: 100%; width: 0; background: var(--blue); transition: width .18s linear; }
+.archive-progress .ap-text {
+  margin-top: 6px; font-size: 12px; color: var(--muted);
+  font-family: "Press Start 2P", monospace;
+}
+
+/* 结果汇总 */
+.archive-result { margin-bottom: 12px; }
+.archive-result .ar-sum { display: flex; gap: 10px; flex-wrap: wrap; }
+.archive-result .ar-ok, .archive-result .ar-bad {
+  font-size: 12px; padding: 7px 11px; border: 2px solid var(--line); background: var(--bg);
+}
+.archive-result .ar-ok b, .archive-result .ar-bad b { font-family: "Press Start 2P", monospace; font-size: 11px; }
+.archive-result .ar-ok { color: var(--green); }
+.archive-result .ar-bad { color: var(--pink); }
+.archive-result .ar-bad.zero { color: var(--muted); }
+.archive-result .ar-fail {
+  margin-top: 8px; border: 2px solid var(--pink); background: rgba(255,93,143,.07); padding: 8px 10px;
+}
+.archive-result .ar-fail-h { font-size: 12px; font-weight: 700; color: var(--pink); margin-bottom: 6px; }
+.archive-result .ar-fail-row {
+  display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap;
+  font-size: 12px; padding: 3px 0; border-top: 1px dashed var(--line);
+}
+.archive-result .ar-fail-row .nm { color: var(--text); }
+.archive-result .ar-fail-row .why { color: var(--muted); }
+
+@media (max-width: 720px) {
+  .archive-modal { width: calc(100vw - 24px); }
+  .conflict-opts { gap: 10px; }
+}

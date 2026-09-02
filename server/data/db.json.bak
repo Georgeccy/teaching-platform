@@ -1,0 +1,1788 @@
+{
+  "users": {
+    "u_7b7b2a76b794": {
+      "id": "u_7b7b2a76b794",
+      "username": "teacher",
+      "name": "王老师",
+      "role": "teacher",
+      "salt": "7b00990a167aac0f8d5df520b74cb6a2",
+      "passwordHash": "8a1888a5fdf6a74c2e61e350e5440ccf5998846f882cf1faf712f433bf369f0a"
+    },
+    "u_4d2f035475e6": {
+      "id": "u_4d2f035475e6",
+      "username": "tangzihan",
+      "name": "唐子涵",
+      "role": "student",
+      "salt": "a686fbe80747cde733e2b4426669f3b2",
+      "passwordHash": "cfee2851d5b187d2ada63fe06bb99972739b26712c3195c6fd1bad8f31a106a2"
+    },
+    "u_8a78e52d862c": {
+      "id": "u_8a78e52d862c",
+      "username": "lihua",
+      "name": "李华",
+      "role": "student",
+      "salt": "52bc7ed380fb39cb7f74262f9b736fd7",
+      "passwordHash": "6b925c445559becdad857d8eec05d8603e935e83ef7dc94f1b64313c43c33386"
+    },
+    "u_28a9f00ea8fd": {
+      "id": "u_28a9f00ea8fd",
+      "username": "zhangming",
+      "name": "张明",
+      "role": "student",
+      "salt": "10039fca82b6cbc692c68cefa020e2cc",
+      "passwordHash": "d5be431ef666b63c5837b81b19e51ecaa1990c68c28a9ca90a39862c6a3febd4"
+    },
+    "u_d8d57c810148": {
+      "id": "u_d8d57c810148",
+      "username": "chenxiao",
+      "name": "陈晓",
+      "role": "student",
+      "salt": "74475d02a7b1da86586bd004f92a706b",
+      "passwordHash": "6f46ef375e43f31116d655e8eab25cf0c0bfcb6de3660b799bde6fdc3802ca57"
+    },
+    "u_5fa9e15d459f": {
+      "id": "u_5fa9e15d459f",
+      "username": "wangfang",
+      "name": "王芳",
+      "role": "student",
+      "salt": "63d075fad24338a910bf33a707070479",
+      "passwordHash": "b2d5316e9cffecb5d8faf8f2b2464f617a162caac2dfeb6d2595998cda71e1fc"
+    },
+    "u_323aaf15bd25": {
+      "id": "u_323aaf15bd25",
+      "username": "liuyang",
+      "name": "刘洋",
+      "role": "student",
+      "salt": "3d7204571ae04423567714ab5e5e9a76",
+      "passwordHash": "987dbb5eec3a5731420374cc62194209af13e18c8a05d0868d4e7e24aced58c4"
+    },
+    "u_35e8308f5584": {
+      "id": "u_35e8308f5584",
+      "username": "george",
+      "name": "george",
+      "role": "student",
+      "salt": "3269368d4305abd5d8c83d2373a36935",
+      "passwordHash": "2d471528400e9f253db8e526efd35431f54ada4c78e9fd01214b2b56ff3a911d"
+    },
+    "u_6385fe228662": {
+      "id": "u_6385fe228662",
+      "username": "zxtest_rec",
+      "name": "进度测试",
+      "role": "student",
+      "salt": "8b580c0a6e6b175d9eadb03bdf77ff2a",
+      "passwordHash": "6a8ee796c76a9c9c49db8b598964c42320bd3b2e933b2bf88439169df610a966"
+    },
+    "u_64ece6e7c3d1": {
+      "id": "u_64ece6e7c3d1",
+      "username": "qa_probe_1787405410588",
+      "name": "QA探针",
+      "role": "student",
+      "salt": "1ca073e681afcf87b6947a63ce5104a1",
+      "passwordHash": "c0ef504e9419362f6ede93f40688997624630009c96d48bd513207d8940e1b30"
+    },
+    "u_23b7d292bd56": {
+      "id": "u_23b7d292bd56",
+      "username": "qa_dbg_1787405420504",
+      "name": "DBG",
+      "role": "student",
+      "salt": "1940720ea504c476415824fc94e71fbc",
+      "passwordHash": "b745201e8fde30ed02fd8242bc5383a8344f2956a37dd80f95465350526e7182"
+    },
+    "u_b7380c68031c": {
+      "id": "u_b7380c68031c",
+      "username": "qa_pet_1787411265967",
+      "name": "QA宝",
+      "role": "student",
+      "salt": "4c924f8303a9416b440261fe6406f88b",
+      "passwordHash": "102e2982c52e76dc47a0a62e457219cbd6e33067d88465e3b4f59efc82add4ab"
+    },
+    "u_810349fb476e": {
+      "id": "u_810349fb476e",
+      "username": "reset_test_320724",
+      "name": "ResetTest",
+      "role": "student",
+      "salt": "608f6ec92c6edbd3bb505e04f8eb5933",
+      "passwordHash": "19bc8492989684d3918e973cb757e5a45633e9e517247cdb9b8360e830b5bdb5"
+    },
+    "u_18881e1bc441": {
+      "id": "u_18881e1bc441",
+      "username": "reset_test_332690",
+      "name": "ResetTest",
+      "role": "student",
+      "salt": "4298b43db71cac995f3c73df3c7d6b02",
+      "passwordHash": "13e572b53dce886bc9e7fe9f86f68958af68356065c73164fa4b177866fe7492"
+    },
+    "u_1a5f6125ff14": {
+      "id": "u_1a5f6125ff14",
+      "username": "visual_370607",
+      "name": "VisualTest",
+      "role": "student",
+      "salt": "85ffbe6c534bdf9586befc43b07dd445",
+      "passwordHash": "c98c2c89ad8cb7ed5c532dfcfefc36dbb3ed020a5121e05181e4ebba6634f666"
+    }
+  },
+  "sessions": {
+    "11e0edfd25be4b17b1b55b5333ac5dead3436b36683e467a": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1783992855321,
+      "expiresAt": 1786584855321
+    },
+    "b7c1566e5fbdeb4aa120e51b92e96efc0ec59fa746067cc3": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1783992855354,
+      "expiresAt": 1786584855354
+    },
+    "a38bea9542863b2e78fd2bd16df17236041d4e74e405e2a9": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1783992866670,
+      "expiresAt": 1786584866670
+    },
+    "66ee67979c692309c575451bcbece8b0bb7023058d47e13e": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1783992866712,
+      "expiresAt": 1786584866712
+    },
+    "2524276e8fb20a194d3bacfe134c162d58abd8ff8fd1f527": {
+      "userId": "u_8a78e52d862c",
+      "createdAt": 1783993206115,
+      "expiresAt": 1786585206115
+    },
+    "b5e094258142dea2a482fe6e9b43371d5f558485cbfd792e": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1783993206156,
+      "expiresAt": 1786585206156
+    },
+    "a301881bc3702805c110e90fadbad0ed7a8d99a04c0c4845": {
+      "userId": "u_35e8308f5584",
+      "createdAt": 1783997540558,
+      "expiresAt": 1786589540558
+    },
+    "2a64e92ca47d169e7f182d0f039e0b1c01d7b50545c197e9": {
+      "userId": "u_35e8308f5584",
+      "createdAt": 1783997679854,
+      "expiresAt": 1786589679854
+    },
+    "1328d0fc5fa2363b7dfa8234b7a81ea90cde5503fcd7f569": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1783998649179,
+      "expiresAt": 1786590649179
+    },
+    "41223a791eeac5855a9c39338a25e657ceaa593db3aa2fb5": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1783998649215,
+      "expiresAt": 1786590649215
+    },
+    "419ad3e0d1212f3fcc85a56c0407ef620109d6d85429ada6": {
+      "userId": "u_35e8308f5584",
+      "createdAt": 1784005823629,
+      "expiresAt": 1786597823629
+    },
+    "855ff739ae46f1a66aeb570b43dbaad621bf0e7dbd8822e4": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1784167521075,
+      "expiresAt": 1786759521075
+    },
+    "9dce602fe0d5fd56396355cc4dbeca437993914eddab7be6": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1784167537541,
+      "expiresAt": 1786759537541
+    },
+    "dba951135b60968a3f5904c57a5da43fbe4fbc9ed4b0ec73": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1784167537709,
+      "expiresAt": 1786759537709
+    },
+    "636befeb513c0e1d3ad6f26eecc57fda736d36f41b11ec29": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1784169624470,
+      "expiresAt": 1786761624470
+    },
+    "e407ce032b5ee0d1680edd9100317de96f73b274a70d79c3": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1784169624643,
+      "expiresAt": 1786761624643
+    },
+    "e9410ee1e0350e4c695cf754d89ca5d264b6a9482a3582f7": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1784182382593,
+      "expiresAt": 1786774382593
+    },
+    "2ba95653fc88985e66d1347b00e86276bd5bc6f8557db5cb": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1784182382713,
+      "expiresAt": 1786774382713
+    },
+    "a16d8fd98efdff159dcba0f5704a5bc97eb0d26d96c7ea7d": {
+      "userId": "u_35e8308f5584",
+      "createdAt": 1786516950165,
+      "expiresAt": 1789108950165
+    },
+    "90a4829e3d29a158c5244252415b1b9ff196e766b0057033": {
+      "userId": "u_35e8308f5584",
+      "createdAt": 1787045422460,
+      "expiresAt": 1789637422460
+    },
+    "d17c93ef9813e774097df32b2d8b0df1b84cf51241df51d9": {
+      "userId": "u_6385fe228662",
+      "createdAt": 1787379185568,
+      "expiresAt": 1789971185568
+    },
+    "8f31db1bdd6b0c38caf2af951ab824a0a02affc8a2677e0c": {
+      "userId": "u_64ece6e7c3d1",
+      "createdAt": 1787405410630,
+      "expiresAt": 1789997410630
+    },
+    "fb337e27f0e273b417667207dc2451ac6e1cce0bbd6e8bcf": {
+      "userId": "u_23b7d292bd56",
+      "createdAt": 1787405420541,
+      "expiresAt": 1789997420541
+    },
+    "30978780a072b0e10adc12d999103ca86efd14cfed9d1277": {
+      "userId": "u_b7380c68031c",
+      "createdAt": 1787411266013,
+      "expiresAt": 1790003266013
+    },
+    "d2deabb633dfdb09e1e81b5a741f2b0eb923becaf5f867b7": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787449121143,
+      "expiresAt": 1790041121143
+    },
+    "0030d58af60efbeae17881e55456bf3b66237c2a6d480f7f": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787449161116,
+      "expiresAt": 1790041161116
+    },
+    "954b7056c4a74818a7a15c5ae55c768942a8af88ef2b0011": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787449249342,
+      "expiresAt": 1790041249342
+    },
+    "2d5375c334a93cae49451bcbd2719747ea83e7892f0feeab": {
+      "userId": "u_810349fb476e",
+      "createdAt": 1787449320769,
+      "expiresAt": 1790041320769
+    },
+    "dc48a542de489e9cbb5acdd5df8341340b5dbfb1a74df41d": {
+      "userId": "u_18881e1bc441",
+      "createdAt": 1787449332718,
+      "expiresAt": 1790041332718
+    },
+    "fe205c1f23993d6ec3dbd0465563f40a7f2659d9776ac426": {
+      "userId": "u_1a5f6125ff14",
+      "createdAt": 1787449370638,
+      "expiresAt": 1790041370638
+    },
+    "601d7a34af914c36946c9c665a0e2edcd431e7fb45e8d171": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787531429944,
+      "expiresAt": 1790123429944
+    },
+    "df8b7d2d11d9bbd82ed4234e69c51dfafaafd1806e7544f1": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787582418201,
+      "expiresAt": 1790174418201
+    },
+    "d7fdecc7f2cea8499ce324fa7420b4f0765c1faba44f883e": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787582433167,
+      "expiresAt": 1790174433167
+    },
+    "86e58975d350bcda6d30585165a8a892eeca782f7b8936da": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787582447340,
+      "expiresAt": 1790174447340
+    },
+    "655bd7db8a79e35221bf9795afe44ccd290ae1e07dce13e9": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787583213327,
+      "expiresAt": 1790175213327
+    },
+    "7c52515e58fcd547a425af8ad3535c8ebccc6b0182275c33": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787583213648,
+      "expiresAt": 1790175213648
+    },
+    "7dfe636aa59db93f6141d8c48df73b9fe3643ffad8d214be": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787583213799,
+      "expiresAt": 1790175213799
+    },
+    "38b09556c48b0911b89bf4b21fdba8ae470229761bd2cfbc": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787583259079,
+      "expiresAt": 1790175259079
+    },
+    "47eeccf1b1e196e6725cba148f4f261fb2df3d85a263028d": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787583259693,
+      "expiresAt": 1790175259693
+    },
+    "2d7366ce0d7c4d9ebe159480ea675d47bc35a797a548ba6d": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787583259837,
+      "expiresAt": 1790175259837
+    },
+    "468739e3d177fd0d771e973f9c07b08209388207768406c0": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586329936,
+      "expiresAt": 1790178329936
+    },
+    "8b1cae95f6f600d9151a0b59fc0bf8cc93b0bb43f2b1d86b": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787586330101,
+      "expiresAt": 1790178330101
+    },
+    "c7c9c05006a3bd5a53f1d3535606be0636fd72d1726d35e8": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787586330241,
+      "expiresAt": 1790178330241
+    },
+    "752f047fbd7871d5ce0f0e6a9984b859d8d9054e2692b246": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586330368,
+      "expiresAt": 1790178330368
+    },
+    "80f416198836b54a38a044ea511f38aeb2e2c3e97697d8e2": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586330649,
+      "expiresAt": 1790178330649
+    },
+    "432b2cf3254d04588bb5610eeb98a61ee76b8aa457a04a47": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586383604,
+      "expiresAt": 1790178383604
+    },
+    "3a7f755d31d496d1b75124cf3ac4ce992d03d1b7352cb4a5": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787586383774,
+      "expiresAt": 1790178383774
+    },
+    "b39407dee03240bbf0fc1257e585acb256f255ef9ca74e37": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787586383931,
+      "expiresAt": 1790178383931
+    },
+    "97b7f304f7f246be0cf58d63a25790b31f4260e73a6993a4": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586384075,
+      "expiresAt": 1790178384075
+    },
+    "de46829f7160a4d71363acc48ec4c001fc23f93c0a952831": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586384330,
+      "expiresAt": 1790178384330
+    },
+    "36128fa9c4651f998ac17947b28e0061001fdcf5812237e3": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787586393781,
+      "expiresAt": 1790178393781
+    },
+    "a1e0ba81e9cc4ce0dc9cff97cd28689d7717ad1fee301db1": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787586394085,
+      "expiresAt": 1790178394085
+    },
+    "7aeec8db629e61cd25b48f0f64b9dfe01f5d9010a5201e26": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787615082745,
+      "expiresAt": 1790207082745
+    },
+    "987197c8f295697cc2e137bb89e9fb20ce39c163d532d44f": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787615082983,
+      "expiresAt": 1790207082983
+    },
+    "aa2be639b354b1eafea06ff86ca8c3f6e948577757b93308": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787615083200,
+      "expiresAt": 1790207083200
+    },
+    "bc091cbe7c605658aba4bc533c5a389218bab975d7ec128f": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787615083373,
+      "expiresAt": 1790207083373
+    },
+    "2e41bc730711a207a275c62c184090f642b3b376e7cdab2e": {
+      "userId": "u_4d2f035475e6",
+      "createdAt": 1787615083555,
+      "expiresAt": 1790207083555
+    },
+    "811ccd99a4a0bc2655e0ceead3299e91d7def33074e07620": {
+      "userId": "u_7b7b2a76b794",
+      "createdAt": 1787616184864,
+      "expiresAt": 1790208184864
+    }
+  },
+  "progress": {
+    "u_4d2f035475e6": {
+      "userId": "u_4d2f035475e6",
+      "name": "唐子涵",
+      "weakPoints": {
+        "tfng": 50,
+        "pronoun": 52,
+        "attitude": 55,
+        "wordform": 45,
+        "conjunction": 50,
+        "intransitive": 58
+      },
+      "stats": {
+        "correct": 179,
+        "total": 254,
+        "streak": 18,
+        "maxStreak": 18,
+        "completedUnits": [
+          "reading-u1",
+          "reading-u2",
+          "grammar-sprint",
+          "reading-u3"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 11,
+          "total": 14,
+          "score": 79
+        },
+        {
+          "date": "2026-07-01",
+          "type": "reading",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-02",
+          "type": "writing",
+          "correct": 7,
+          "total": 9,
+          "score": 78
+        },
+        {
+          "date": "2026-07-02",
+          "type": "reading",
+          "correct": 7,
+          "total": 12,
+          "score": 58
+        },
+        {
+          "date": "2026-07-03",
+          "type": "reading",
+          "correct": 10,
+          "total": 12,
+          "score": 83
+        },
+        {
+          "date": "2026-07-05",
+          "type": "reading",
+          "correct": 6,
+          "total": 10,
+          "score": 60
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 12,
+          "total": 14,
+          "score": 86
+        },
+        {
+          "date": "2026-07-07",
+          "type": "grammar",
+          "correct": 10,
+          "total": 15,
+          "score": 67
+        },
+        {
+          "date": "2026-07-07",
+          "type": "writing",
+          "correct": 8,
+          "total": 13,
+          "score": 62
+        },
+        {
+          "date": "2026-07-08",
+          "type": "reading",
+          "correct": 6,
+          "total": 10,
+          "score": 60
+        },
+        {
+          "date": "2026-07-08",
+          "type": "grammar",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-09",
+          "type": "grammar",
+          "correct": 8,
+          "total": 13,
+          "score": 62
+        },
+        {
+          "date": "2026-07-09",
+          "type": "reading",
+          "correct": 9,
+          "total": 15,
+          "score": 60
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 10,
+          "total": 12,
+          "score": 83
+        },
+        {
+          "date": "2026-07-10",
+          "type": "grammar",
+          "correct": 8,
+          "total": 12,
+          "score": 67
+        },
+        {
+          "date": "2026-07-11",
+          "type": "grammar",
+          "correct": 8,
+          "total": 12,
+          "score": 67
+        },
+        {
+          "date": "2026-07-13",
+          "type": "grammar",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-14",
+          "type": "writing",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-14",
+          "type": "reading",
+          "correct": 9,
+          "total": 14,
+          "score": 64
+        },
+        {
+          "date": "2026-07-14",
+          "type": "reading",
+          "correct": 8,
+          "total": 10,
+          "score": 80
+        },
+        {
+          "date": "2026-07-14",
+          "type": "reading",
+          "correct": 7,
+          "total": 10,
+          "score": 70
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 1,
+          "total": 1,
+          "score": 100
+        }
+      ],
+      "updatedAt": 1784182382761,
+      "questionTimings": [
+        {
+          "session": "reading-u1",
+          "qid": "q0",
+          "type": "mc",
+          "ms": 3500,
+          "correct": true,
+          "ts": 1784167537834
+        },
+        {
+          "session": "reading-u1",
+          "qid": "q1",
+          "type": "mc",
+          "ms": 4700,
+          "correct": false,
+          "ts": 1784167537855
+        },
+        {
+          "session": "reading-u1",
+          "qid": "q2",
+          "type": "mc",
+          "ms": 5900,
+          "correct": true,
+          "ts": 1784167537874
+        },
+        {
+          "session": "reading-u1",
+          "qid": "q3",
+          "type": "mc",
+          "ms": 7100,
+          "correct": true,
+          "ts": 1784167537894
+        },
+        {
+          "session": "reading-u2",
+          "qid": "q0",
+          "type": "mc",
+          "ms": 5000,
+          "correct": true,
+          "ts": 1784169624669
+        },
+        {
+          "session": "reading-u2",
+          "qid": "q1",
+          "type": "mc",
+          "ms": 7300,
+          "correct": false,
+          "ts": 1784169624689
+        },
+        {
+          "session": "reading-u3",
+          "qid": "q0",
+          "type": "mc",
+          "ms": 4200,
+          "correct": true,
+          "ts": 1784182382733
+        },
+        {
+          "session": "reading-u3",
+          "qid": "q1",
+          "type": "mc",
+          "ms": 5900,
+          "correct": false,
+          "ts": 1784182382747
+        },
+        {
+          "session": "reading-u3",
+          "qid": "q2",
+          "type": "mc",
+          "ms": 7600,
+          "correct": true,
+          "ts": 1784182382761
+        }
+      ]
+    },
+    "u_8a78e52d862c": {
+      "userId": "u_8a78e52d862c",
+      "name": "李华",
+      "weakPoints": {
+        "tfng": 83,
+        "pronoun": 52,
+        "attitude": 44,
+        "wordform": 63,
+        "conjunction": 47,
+        "intransitive": 42
+      },
+      "stats": {
+        "correct": 183,
+        "total": 229,
+        "streak": 19,
+        "maxStreak": 19,
+        "completedUnits": [
+          "reading-u1",
+          "reading-u2",
+          "mobile-grammar"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 8,
+          "total": 12,
+          "score": 67
+        },
+        {
+          "date": "2026-07-02",
+          "type": "grammar",
+          "correct": 8,
+          "total": 9,
+          "score": 89
+        },
+        {
+          "date": "2026-07-03",
+          "type": "writing",
+          "correct": 13,
+          "total": 14,
+          "score": 93
+        },
+        {
+          "date": "2026-07-03",
+          "type": "reading",
+          "correct": 11,
+          "total": 12,
+          "score": 92
+        },
+        {
+          "date": "2026-07-04",
+          "type": "grammar",
+          "correct": 13,
+          "total": 15,
+          "score": 87
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 9,
+          "total": 13,
+          "score": 69
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 11,
+          "total": 15,
+          "score": 73
+        },
+        {
+          "date": "2026-07-07",
+          "type": "writing",
+          "correct": 7,
+          "total": 11,
+          "score": 64
+        },
+        {
+          "date": "2026-07-07",
+          "type": "reading",
+          "correct": 12,
+          "total": 14,
+          "score": 86
+        },
+        {
+          "date": "2026-07-07",
+          "type": "writing",
+          "correct": 9,
+          "total": 14,
+          "score": 64
+        },
+        {
+          "date": "2026-07-08",
+          "type": "writing",
+          "correct": 9,
+          "total": 10,
+          "score": 90
+        },
+        {
+          "date": "2026-07-08",
+          "type": "writing",
+          "correct": 9,
+          "total": 11,
+          "score": 82
+        },
+        {
+          "date": "2026-07-09",
+          "type": "grammar",
+          "correct": 9,
+          "total": 12,
+          "score": 75
+        },
+        {
+          "date": "2026-07-10",
+          "type": "reading",
+          "correct": 10,
+          "total": 12,
+          "score": 83
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 10,
+          "total": 12,
+          "score": 83
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 13,
+          "total": 14,
+          "score": 93
+        },
+        {
+          "date": "2026-07-13",
+          "type": "writing",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 10,
+          "total": 13,
+          "score": 77
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 4,
+          "total": 5,
+          "score": 80
+        }
+      ],
+      "updatedAt": 1783993206197
+    },
+    "u_28a9f00ea8fd": {
+      "userId": "u_28a9f00ea8fd",
+      "name": "张明",
+      "weakPoints": {
+        "tfng": 47,
+        "pronoun": 80,
+        "attitude": 83,
+        "wordform": 86,
+        "conjunction": 70,
+        "intransitive": 87
+      },
+      "stats": {
+        "correct": 151,
+        "total": 242,
+        "streak": 0,
+        "maxStreak": 4,
+        "completedUnits": [
+          "reading-u1"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "writing",
+          "correct": 8,
+          "total": 12,
+          "score": 67
+        },
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 5,
+          "total": 8,
+          "score": 63
+        },
+        {
+          "date": "2026-07-02",
+          "type": "grammar",
+          "correct": 8,
+          "total": 12,
+          "score": 67
+        },
+        {
+          "date": "2026-07-02",
+          "type": "grammar",
+          "correct": 4,
+          "total": 8,
+          "score": 50
+        },
+        {
+          "date": "2026-07-02",
+          "type": "reading",
+          "correct": 8,
+          "total": 14,
+          "score": 57
+        },
+        {
+          "date": "2026-07-03",
+          "type": "grammar",
+          "correct": 6,
+          "total": 9,
+          "score": 67
+        },
+        {
+          "date": "2026-07-03",
+          "type": "grammar",
+          "correct": 10,
+          "total": 15,
+          "score": 67
+        },
+        {
+          "date": "2026-07-05",
+          "type": "writing",
+          "correct": 6,
+          "total": 10,
+          "score": 60
+        },
+        {
+          "date": "2026-07-06",
+          "type": "writing",
+          "correct": 8,
+          "total": 13,
+          "score": 62
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 7,
+          "total": 13,
+          "score": 54
+        },
+        {
+          "date": "2026-07-07",
+          "type": "grammar",
+          "correct": 10,
+          "total": 14,
+          "score": 71
+        },
+        {
+          "date": "2026-07-08",
+          "type": "grammar",
+          "correct": 9,
+          "total": 15,
+          "score": 60
+        },
+        {
+          "date": "2026-07-08",
+          "type": "writing",
+          "correct": 6,
+          "total": 11,
+          "score": 55
+        },
+        {
+          "date": "2026-07-09",
+          "type": "grammar",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-09",
+          "type": "reading",
+          "correct": 4,
+          "total": 8,
+          "score": 50
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 4,
+          "total": 8,
+          "score": 50
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 5,
+          "total": 8,
+          "score": 63
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 6,
+          "total": 12,
+          "score": 50
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 11,
+          "total": 15,
+          "score": 73
+        },
+        {
+          "date": "2026-07-13",
+          "type": "grammar",
+          "correct": 11,
+          "total": 14,
+          "score": 79
+        },
+        {
+          "date": "2026-07-14",
+          "type": "writing",
+          "correct": 7,
+          "total": 12,
+          "score": 58
+        }
+      ],
+      "updatedAt": 1783992855233
+    },
+    "u_d8d57c810148": {
+      "userId": "u_d8d57c810148",
+      "name": "陈晓",
+      "weakPoints": {
+        "tfng": 87,
+        "pronoun": 84,
+        "attitude": 52,
+        "wordform": 81,
+        "conjunction": 83,
+        "intransitive": 73
+      },
+      "stats": {
+        "correct": 269,
+        "total": 298,
+        "streak": 28,
+        "maxStreak": 28,
+        "completedUnits": [
+          "reading-u1",
+          "reading-u2",
+          "grammar-sprint"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "writing",
+          "correct": 11,
+          "total": 11,
+          "score": 100
+        },
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 8,
+          "total": 10,
+          "score": 80
+        },
+        {
+          "date": "2026-07-01",
+          "type": "reading",
+          "correct": 12,
+          "total": 15,
+          "score": 80
+        },
+        {
+          "date": "2026-07-02",
+          "type": "writing",
+          "correct": 11,
+          "total": 12,
+          "score": 92
+        },
+        {
+          "date": "2026-07-02",
+          "type": "writing",
+          "correct": 9,
+          "total": 12,
+          "score": 75
+        },
+        {
+          "date": "2026-07-02",
+          "type": "reading",
+          "correct": 10,
+          "total": 10,
+          "score": 100
+        },
+        {
+          "date": "2026-07-03",
+          "type": "writing",
+          "correct": 9,
+          "total": 9,
+          "score": 100
+        },
+        {
+          "date": "2026-07-03",
+          "type": "writing",
+          "correct": 13,
+          "total": 15,
+          "score": 87
+        },
+        {
+          "date": "2026-07-03",
+          "type": "grammar",
+          "correct": 8,
+          "total": 9,
+          "score": 89
+        },
+        {
+          "date": "2026-07-04",
+          "type": "reading",
+          "correct": 12,
+          "total": 13,
+          "score": 92
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 12,
+          "total": 12,
+          "score": 100
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-07",
+          "type": "reading",
+          "correct": 10,
+          "total": 10,
+          "score": 100
+        },
+        {
+          "date": "2026-07-07",
+          "type": "grammar",
+          "correct": 14,
+          "total": 15,
+          "score": 93
+        },
+        {
+          "date": "2026-07-08",
+          "type": "reading",
+          "correct": 8,
+          "total": 8,
+          "score": 100
+        },
+        {
+          "date": "2026-07-08",
+          "type": "writing",
+          "correct": 8,
+          "total": 8,
+          "score": 100
+        },
+        {
+          "date": "2026-07-08",
+          "type": "grammar",
+          "correct": 8,
+          "total": 9,
+          "score": 89
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 9,
+          "total": 11,
+          "score": 82
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 9,
+          "total": 9,
+          "score": 100
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 7,
+          "total": 8,
+          "score": 88
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 7,
+          "total": 8,
+          "score": 88
+        },
+        {
+          "date": "2026-07-10",
+          "type": "grammar",
+          "correct": 9,
+          "total": 9,
+          "score": 100
+        },
+        {
+          "date": "2026-07-10",
+          "type": "reading",
+          "correct": 9,
+          "total": 11,
+          "score": 82
+        },
+        {
+          "date": "2026-07-12",
+          "type": "writing",
+          "correct": 9,
+          "total": 9,
+          "score": 100
+        },
+        {
+          "date": "2026-07-13",
+          "type": "reading",
+          "correct": 8,
+          "total": 8,
+          "score": 100
+        },
+        {
+          "date": "2026-07-13",
+          "type": "grammar",
+          "correct": 9,
+          "total": 11,
+          "score": 82
+        },
+        {
+          "date": "2026-07-14",
+          "type": "writing",
+          "correct": 13,
+          "total": 15,
+          "score": 87
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 11,
+          "total": 13,
+          "score": 85
+        }
+      ],
+      "updatedAt": 1783992855255
+    },
+    "u_5fa9e15d459f": {
+      "userId": "u_5fa9e15d459f",
+      "name": "王芳",
+      "weakPoints": {
+        "tfng": 43,
+        "pronoun": 48,
+        "attitude": 86,
+        "wordform": 61,
+        "conjunction": 50,
+        "intransitive": 72
+      },
+      "stats": {
+        "correct": 171,
+        "total": 290,
+        "streak": 0,
+        "maxStreak": 4,
+        "completedUnits": [
+          "reading-u1",
+          "reading-u2",
+          "grammar-sprint"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "writing",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-01",
+          "type": "reading",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 7,
+          "total": 10,
+          "score": 70
+        },
+        {
+          "date": "2026-07-02",
+          "type": "reading",
+          "correct": 9,
+          "total": 15,
+          "score": 60
+        },
+        {
+          "date": "2026-07-03",
+          "type": "writing",
+          "correct": 5,
+          "total": 9,
+          "score": 56
+        },
+        {
+          "date": "2026-07-03",
+          "type": "writing",
+          "correct": 10,
+          "total": 15,
+          "score": 67
+        },
+        {
+          "date": "2026-07-04",
+          "type": "reading",
+          "correct": 5,
+          "total": 9,
+          "score": 56
+        },
+        {
+          "date": "2026-07-05",
+          "type": "reading",
+          "correct": 6,
+          "total": 9,
+          "score": 67
+        },
+        {
+          "date": "2026-07-06",
+          "type": "writing",
+          "correct": 5,
+          "total": 8,
+          "score": 63
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 8,
+          "total": 11,
+          "score": 73
+        },
+        {
+          "date": "2026-07-06",
+          "type": "writing",
+          "correct": 4,
+          "total": 8,
+          "score": 50
+        },
+        {
+          "date": "2026-07-07",
+          "type": "reading",
+          "correct": 8,
+          "total": 15,
+          "score": 53
+        },
+        {
+          "date": "2026-07-08",
+          "type": "grammar",
+          "correct": 6,
+          "total": 9,
+          "score": 67
+        },
+        {
+          "date": "2026-07-09",
+          "type": "reading",
+          "correct": 4,
+          "total": 8,
+          "score": 50
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 7,
+          "total": 12,
+          "score": 58
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 5,
+          "total": 8,
+          "score": 63
+        },
+        {
+          "date": "2026-07-10",
+          "type": "grammar",
+          "correct": 6,
+          "total": 13,
+          "score": 46
+        },
+        {
+          "date": "2026-07-10",
+          "type": "writing",
+          "correct": 7,
+          "total": 13,
+          "score": 54
+        },
+        {
+          "date": "2026-07-11",
+          "type": "writing",
+          "correct": 6,
+          "total": 11,
+          "score": 55
+        },
+        {
+          "date": "2026-07-12",
+          "type": "writing",
+          "correct": 7,
+          "total": 14,
+          "score": 50
+        },
+        {
+          "date": "2026-07-13",
+          "type": "reading",
+          "correct": 6,
+          "total": 11,
+          "score": 55
+        },
+        {
+          "date": "2026-07-13",
+          "type": "grammar",
+          "correct": 11,
+          "total": 15,
+          "score": 73
+        },
+        {
+          "date": "2026-07-13",
+          "type": "grammar",
+          "correct": 5,
+          "total": 10,
+          "score": 50
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 6,
+          "total": 10,
+          "score": 60
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 8,
+          "total": 15,
+          "score": 53
+        },
+        {
+          "date": "2026-07-14",
+          "type": "grammar",
+          "correct": 6,
+          "total": 13,
+          "score": 46
+        }
+      ],
+      "updatedAt": 1783992855277
+    },
+    "u_323aaf15bd25": {
+      "userId": "u_323aaf15bd25",
+      "name": "刘洋",
+      "weakPoints": {
+        "tfng": 70,
+        "pronoun": 89,
+        "attitude": 56,
+        "wordform": 47,
+        "conjunction": 68,
+        "intransitive": 76
+      },
+      "stats": {
+        "correct": 161,
+        "total": 207,
+        "streak": 19,
+        "maxStreak": 19,
+        "completedUnits": [
+          "reading-u1"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-07-01",
+          "type": "grammar",
+          "correct": 7,
+          "total": 10,
+          "score": 70
+        },
+        {
+          "date": "2026-07-02",
+          "type": "grammar",
+          "correct": 12,
+          "total": 13,
+          "score": 92
+        },
+        {
+          "date": "2026-07-02",
+          "type": "grammar",
+          "correct": 7,
+          "total": 9,
+          "score": 78
+        },
+        {
+          "date": "2026-07-03",
+          "type": "reading",
+          "correct": 7,
+          "total": 11,
+          "score": 64
+        },
+        {
+          "date": "2026-07-06",
+          "type": "grammar",
+          "correct": 7,
+          "total": 9,
+          "score": 78
+        },
+        {
+          "date": "2026-07-06",
+          "type": "reading",
+          "correct": 8,
+          "total": 9,
+          "score": 89
+        },
+        {
+          "date": "2026-07-07",
+          "type": "grammar",
+          "correct": 6,
+          "total": 9,
+          "score": 67
+        },
+        {
+          "date": "2026-07-08",
+          "type": "writing",
+          "correct": 7,
+          "total": 8,
+          "score": 88
+        },
+        {
+          "date": "2026-07-08",
+          "type": "grammar",
+          "correct": 8,
+          "total": 10,
+          "score": 80
+        },
+        {
+          "date": "2026-07-09",
+          "type": "reading",
+          "correct": 6,
+          "total": 9,
+          "score": 67
+        },
+        {
+          "date": "2026-07-09",
+          "type": "reading",
+          "correct": 6,
+          "total": 8,
+          "score": 75
+        },
+        {
+          "date": "2026-07-09",
+          "type": "writing",
+          "correct": 8,
+          "total": 13,
+          "score": 62
+        },
+        {
+          "date": "2026-07-10",
+          "type": "grammar",
+          "correct": 9,
+          "total": 11,
+          "score": 82
+        },
+        {
+          "date": "2026-07-11",
+          "type": "grammar",
+          "correct": 9,
+          "total": 10,
+          "score": 90
+        },
+        {
+          "date": "2026-07-13",
+          "type": "reading",
+          "correct": 12,
+          "total": 15,
+          "score": 80
+        },
+        {
+          "date": "2026-07-13",
+          "type": "writing",
+          "correct": 11,
+          "total": 13,
+          "score": 85
+        },
+        {
+          "date": "2026-07-14",
+          "type": "reading",
+          "correct": 9,
+          "total": 13,
+          "score": 69
+        },
+        {
+          "date": "2026-07-14",
+          "type": "writing",
+          "correct": 12,
+          "total": 14,
+          "score": 86
+        },
+        {
+          "date": "2026-07-14",
+          "type": "reading",
+          "correct": 10,
+          "total": 13,
+          "score": 77
+        }
+      ],
+      "updatedAt": 1783992855299
+    },
+    "u_35e8308f5584": {
+      "userId": "u_35e8308f5584",
+      "name": "george",
+      "weakPoints": {
+        "tfng": 0,
+        "pronoun": 0,
+        "attitude": 0,
+        "wordform": 0,
+        "conjunction": 0,
+        "intransitive": 0
+      },
+      "petScore": 0,
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787615988682
+    },
+    "u_6385fe228662": {
+      "userId": "u_6385fe228662",
+      "name": "进度测试",
+      "weakPoints": {
+        "tfng": 59,
+        "pronoun": 51,
+        "attitude": 68,
+        "wordform": 55,
+        "conjunction": 50,
+        "intransitive": 68
+      },
+      "stats": {
+        "correct": 9,
+        "total": 10,
+        "streak": 1,
+        "maxStreak": 1,
+        "completedUnits": [
+          "reading-u999"
+        ]
+      },
+      "history": [
+        {
+          "date": "2026-08-22",
+          "type": "reading",
+          "correct": 9,
+          "total": 10,
+          "score": 90
+        }
+      ],
+      "questionTimings": [],
+      "updatedAt": 1787379185576
+    },
+    "u_64ece6e7c3d1": {
+      "userId": "u_64ece6e7c3d1",
+      "name": "QA探针",
+      "weakPoints": {
+        "tfng": 63,
+        "pronoun": 59,
+        "attitude": 53,
+        "wordform": 60,
+        "conjunction": 64,
+        "intransitive": 53
+      },
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787405410629
+    },
+    "u_23b7d292bd56": {
+      "userId": "u_23b7d292bd56",
+      "name": "DBG",
+      "weakPoints": {
+        "tfng": 65,
+        "pronoun": 54,
+        "attitude": 59,
+        "wordform": 50,
+        "conjunction": 60,
+        "intransitive": 54
+      },
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787405420540
+    },
+    "u_b7380c68031c": {
+      "userId": "u_b7380c68031c",
+      "name": "QA宝",
+      "weakPoints": {
+        "tfng": 65,
+        "pronoun": 56,
+        "attitude": 59,
+        "wordform": 61,
+        "conjunction": 65,
+        "intransitive": 51
+      },
+      "petScore": 0,
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787411266043
+    },
+    "u_810349fb476e": {
+      "userId": "u_810349fb476e",
+      "name": "ResetTest",
+      "weakPoints": {
+        "tfng": 54,
+        "pronoun": 55,
+        "attitude": 68,
+        "wordform": 59,
+        "conjunction": 67,
+        "intransitive": 65
+      },
+      "petScore": 0,
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787449320779
+    },
+    "u_18881e1bc441": {
+      "userId": "u_18881e1bc441",
+      "name": "ResetTest",
+      "weakPoints": {
+        "tfng": 0,
+        "pronoun": 0,
+        "attitude": 0,
+        "wordform": 0,
+        "conjunction": 0,
+        "intransitive": 0
+      },
+      "petScore": 0,
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787449332725
+    },
+    "u_1a5f6125ff14": {
+      "userId": "u_1a5f6125ff14",
+      "name": "VisualTest",
+      "weakPoints": {
+        "tfng": 0,
+        "pronoun": 0,
+        "attitude": 0,
+        "wordform": 0,
+        "conjunction": 0,
+        "intransitive": 0
+      },
+      "petScore": 0,
+      "stats": {
+        "correct": 0,
+        "total": 0,
+        "streak": 0,
+        "maxStreak": 0,
+        "completedUnits": []
+      },
+      "history": [],
+      "questionTimings": [],
+      "updatedAt": 1787449383457
+    }
+  }
+}

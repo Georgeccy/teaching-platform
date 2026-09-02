@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  智学平台 · DDNS 定时更新（每 5 分钟把域名指到当前公网 IP）
+
+  安装（先填好三个 TODO 值）：
+    sudo cp deploy/com.zhixue.ddns.plist /Library/LaunchDaemons/
+    sudo chown root:wheel /Library/LaunchDaemons/com.zhixue.ddns.plist
+    sudo launchctl bootstrap system /Library/LaunchDaemons/com.zhixue.ddns.plist
+
+  查看结果：cat /usr/local/var/log/zhixue-ddns.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.zhixue.ddns</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/zhixue/Developer/zhixue-platform/deploy/ddns-cloudflare.sh</string>
+    </array>
+
+    <!-- TODO：填入你的 Cloudflare 凭据与域名 -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>CF_API_TOKEN</key>
+        <string>粘贴你的Token</string>
+        <key>CF_ZONE_ID</key>
+        <string>粘贴你的ZoneID</string>
+        <key>CF_RECORD_NAME</key>
+        <string>dse.yourdomain.com</string>
+    </dict>
+
+    <key>StartInterval</key>
+    <integer>300</integer>
+
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/zhixue-ddns.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/zhixue-ddns.log</string>
+</dict>
+</plist>

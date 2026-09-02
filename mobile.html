@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 移动答题</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root { --bg:#F4ECD8; --card:#FFFFFF; --text:#2E2A3B; --line:#2E2A3B; --muted:#6B6478; --pink:#FF5D8F; --blue:#4D7CFE; --yellow:#FFC83D; --green:#4FC46A; --shadow:#2E2A3B; }
     body.dark { --bg:#1A1726; --card:#2E2A3B; --text:#F4ECD8; --line:#F4ECD8; --muted:#B4B2A9; --shadow:#000; }
@@ -54,6 +52,7 @@
     .back { font-size:12px; cursor:pointer; color:var(--blue); text-decoration:underline; }
     footer { text-align:center; color:var(--muted); font-size:12px; padding:10px 0 30px; }
   </style>
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="page-head">
@@ -75,6 +74,7 @@
   <footer>智学平台 · 移动端答题（作答实时同步至教师后台）</footer>
 
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script>
     const BANK = {
       reading: { label:'Reading · T/F/NG', weakKey:'tfng', unit:'mobile-reading', qs:[

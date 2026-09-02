@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  智学平台 · macOS launchd 服务（Mac mini 部署用，等价于 Linux 的 systemd 单元）
+
+  安装（把两处路径改成实际值后）：
+    sudo cp deploy/com.zhixue.platform.plist /Library/LaunchDaemons/
+    sudo chown root:wheel /Library/LaunchDaemons/com.zhixue.platform.plist
+    sudo launchctl bootstrap system /Library/LaunchDaemons/com.zhixue.platform.plist
+
+  常用操作：
+    sudo launchctl kickstart -k system/com.zhixue.platform   # 重启服务（相当于 systemctl restart）
+    sudo launchctl bootout system/com.zhixue.platform        # 停止（相当于 systemctl stop）
+    tail -f /usr/local/var/log/zhixue.log                    # 看日志
+
+  ⚠️ 必改的两处（见下方 TODO 标记）：
+    1. ProgramArguments 里的 node 绝对路径  → 终端执行 which node 查看
+    2. WorkingDirectory / 脚本路径          → 项目实际位置
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.zhixue.platform</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <!-- TODO 1：改成 which node 的输出，例如 /opt/homebrew/bin/node -->
+        <string>/opt/homebrew/bin/node</string>
+        <!-- TODO 2：改成项目实际位置 -->
+        <string>/Users/zhixue/Developer/zhixue-platform/server/index.js</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <!-- TODO 2：与上面保持一致（项目根目录） -->
+    <string>/Users/zhixue/Developer/zhixue-platform</string>
+
+    <!-- 与 deploy/zhixue.service 对齐：生产模式 / 关 Live Reload / 只监听回环 -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>NODE_ENV</key>
+        <string>production</string>
+        <key>LIVERELOAD</key>
+        <string>0</string>
+        <key>HOST</key>
+        <string>127.0.0.1</string>
+        <key>PORT</key>
+        <string>3000</string>
+    </dict>
+
+    <!-- 崩溃 / 被杀后自动拉起；开机登录后自启 -->
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- 30 秒内最多重启 3 次，防止坏配置陷入疯狂重启循环（等价 systemd RestartSec） -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/zhixue.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/zhixue.log</string>
+
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

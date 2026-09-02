@@ -21,6 +21,8 @@
 
   function init() {
     if (!window.ZhiXue) return;
+    // 学宝 HUD：特性开关关闭时完全不注入（默认隐藏）
+    if (window.ZhiXue.features && window.ZhiXue.features.xuebao === false) return;
     var cfg = window.__ZX__ || { kind: 'courseware', unit: 'unknown', mode: 'score' };
     var loggedIn = !!(window.ZhiXue.user && window.ZhiXue.token);
     var petScore = 0;

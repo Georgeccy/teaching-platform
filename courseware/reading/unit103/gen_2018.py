@@ -175,16 +175,18 @@ q35 = mcq("q35", "Q35 · MC · 1 mark", chip(41),
 
 q36 = ('<div class="practice-mcq" id="q36-box"><div class="pmcq-label">Q36 · Summary cloze · 4 marks '
        + chip([("(i)", 23), ("(ii)", 15), ("(iii)", 26), ("(iv)", 41)]) + '</div>'
-       '<div class="pmcq-q">Complete the summary about Michael Leung and HK Honey (paragraph 2). Click each blank '
-       'to check.</div>'
+       '<div class="pmcq-q">Complete the following summary of Michael Leung and HK Honey with a word or phrase '
+       'found in paragraph 2. Click each blank to check.</div>'
        '<div class="card" style="padding:14px 18px;font-size:20px;line-height:2">'
-       'He set up HK Honey and is also its (i) ' + cloze("creative director") + '. HK Honey links Hongkongers with '
+       'Michael Leung has more than one job. He set up HK Honey and is also its (i) '
+       + cloze("creative director") + ', in addition to being a product designer. HK Honey links Hongkongers with '
        '(ii) ' + cloze("(local) beekeepers") + ' through the products from its bees. HK Honey\'s priorities are to '
-       'maintain (iii) ' + cloze("bee population(s)") + ' ...and to increase people\'s (iv) '
+       'maintain (iii) ' + cloze("bee population(s)") + ' and to increase people\'s (iv) '
        + cloze("awareness") + ' of the importance of bees.</div>'
-       '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 摘要已把 founder 转述为 '
-       'He set up HK Honey，所以 (i) 只填 creative director（最大坑：重复照抄）。(ii)–(iii) 原文 links local '
-       'beekeepers with city dwellers · help sustain bee populations。</span></div></div>')
+       '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 (i) 最大坑：He set up HK '
+       'Honey 已交代 founder 身份，also + in addition to being a product designer 提示 (i) 只填 creative '
+       'director（不要重复照抄）。(ii)–(iii) 原文 links local beekeepers with city dwellers · help sustain bee '
+       'populations。</span></div></div>')
 
 q37a = mcq("q37i", "Q37(i) · MC · 1 mark", chip(43),
            "When did <strong>beekeeping start in Hong Kong</strong> (in the outlying areas)?",
@@ -444,14 +446,18 @@ q52 = sa("q52", "Q52 · Word replacement · 1 mark", chip(40),
 
 q53 = ('<div class="practice-mcq" id="q53-box"><div class="pmcq-label">Q53 · Summary cloze · 5 marks '
        + chip([("(i)", 38), ("(ii)", 42), ("(iii)", 63), ("(iv)", 65), ("(v)", 48)]) + '</div>'
-       '<div class="pmcq-q">Complete the summary of paragraphs 3–5. Use <strong>ONE word</strong> for each blank.</div>'
-       '<div class="card" style="padding:14px 18px;font-size:20px;line-height:2">'
+       '<div class="pmcq-q">Based on the information in paragraphs 3–5, complete the summary by writing '
+       '<strong>ONE word</strong> to fill in each blank. You should make sure that your answers are grammatically '
+       'correct.</div>'
+       '<div class="card" style="padding:14px 18px;font-size:19px;line-height:2">'
        'After a decade of study, economists released a (i) ' + cloze("surprising / shocking / startling") +
-       ' report: apple production increased despite the absence of bees. This was in spite of the (ii) '
-       + cloze("disappearing / missing / absent") + ' bees. Human pollinators are better because they are able to '
-       'access each (iii) ' + cloze("flower / blossom") + ', boosting productivity. Bees are less dependable, '
-       'preferring warm and (iv) ' + cloze("dry / calm") + ' weather. The economists concluded we need not worry '
-       'about the (v) ' + cloze("diversity / variety") + ' of life on Earth.</div>'
+       ' report about a hike in crop yields. This was in spite of the (ii) '
+       + cloze("disappearing / missing / absent") + ' bees. It turns out that, for the farmers of Maoxian County, '
+       'bees are superfluous as their human replacements can be depended upon far more. This is because they are '
+       'able to access each (iii) ' + cloze("flower / blossom") + ', boosting productivity. Bees, it appears, are '
+       'fussy workers preferring warm and (iv) ' + cloze("dry / calm") + ' weather. The message economists took '
+       'from this was that we should spend less time and energy worrying about the (v) '
+       + cloze("diversity / variety") + ' of life on Earth.</div>'
        '<div class="method-wrap" style="display:none"><span class="method-badge">🔑 &#182;3 a shocker... '
        '30 to 40 percent greater... better at getting to every blossom... could work in windy, rainy weather · '
        '&#182;4 They don\'t like working when it\'s wet → bees like warm &amp; dry · &#182;5 biological '
@@ -880,14 +886,18 @@ HEAD = '''<!DOCTYPE html>
         <button class="timer-play" id="timerPlayBtn" onclick="toggleTimer()">&#9654;</button>
         <button class="timer-reset" onclick="resetTimer()">Reset</button>
       </span>
-      <button class="hint-toggle-btn" id="hintToggleBtn" onclick="showAllData()" title="Remove all brick covers — reveal every correct rate (H)">&#128202; Show Data</button>
-      <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode: show full passage">&#128274; Easy</button>
-      <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">&#128465; Clear</button>
-      <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">&#8634; Reset</button>
-      <span class="palette-wrap">
-        <button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">&#127912;</button>
+      <button class="toc-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker — 随机点名">&#127922;</button>
+      <button class="tb-more-btn" id="tbMoreBtn" onclick="toggleTBMore(event)" title="更多工具 More tools">⋯</button>
+      <span class="tb-extra" id="tbExtra">
+        <button class="hint-toggle-btn" id="hintToggleBtn" onclick="showAllData()" title="Toggle: shatter ALL brick covers to reveal rates / restore all covers (H)">&#128202; Show Data</button>
+        <button class="hardmode-btn" id="hardmodeBtn" onclick="toggleHardMode()" title="Toggle hard mode: show full passage">&#128274; Easy</button>
+        <button class="clear-hl-btn" id="notesBtn" onclick="openNotes()" title="Lesson notes — 按页笔记">&#128221; Notes</button>
+        <button class="clear-hl-btn" onclick="clearAllHighlights()" title="Clear all highlights">&#128465; Clear</button>
+        <button class="clear-hl-btn" onclick="resetProgress()" title="Reset all saved answers &amp; progress">&#8634; Reset</button>
+        <span class="palette-wrap">
+          <button class="clear-hl-btn" id="paletteBtn" onclick="togglePalettePanel(event)" title="Change theme color">&#127912; Theme</button>
+        </span>
       </span>
-      <button class="clear-hl-btn" id="randBtn" onclick="toggleRandPanel(event)" title="Random number picker — 随机点名">&#127922;</button>
     </div>
 
     <!-- Random picker overlay -->
@@ -905,6 +915,16 @@ HEAD = '''<!DOCTYPE html>
         <div class="rand-history" id="randHistory"></div>
       </div>
     </div>
+
+<!-- Notes panel (unified 2026-09-02, ref 2015DSE-Paper1_v1) -->
+<div class="notes-overlay" id="notesOverlay" onclick="closeNotes()"></div>
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-header">
+    <span class="notes-title" id="npPage">笔记</span>
+    <button class="notes-close" onclick="closeNotes()">✕</button>
+  </div>
+  <textarea class="notes-ta" id="npTa" placeholder="在这一页记笔记……（自动保存到本地）"></textarea>
+</div>
 
     <div class="progress-bar" id="progressBar"></div>
 

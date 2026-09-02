@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  智学平台 · 数据定时备份（每天 04:00，调 deploy/backup.sh）
+
+  安装：
+    sudo cp deploy/com.zhixue.backup.plist /Library/LaunchDaemons/
+    sudo chown root:wheel /Library/LaunchDaemons/com.zhixue.backup.plist
+    sudo launchctl bootstrap system /Library/LaunchDaemons/com.zhixue.backup.plist
+
+  ⚠️ 首次务必手动跑一次带 --verify 的恢复演练：
+    sudo bash deploy/backup.sh /backup/zhixue --verify
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.zhixue.backup</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <!-- TODO：改成项目实际位置 -->
+        <string>/Users/zhixue/Developer/zhixue-platform/deploy/backup.sh</string>
+        <string>/backup/zhixue</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>4</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/zhixue-backup.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/zhixue-backup.log</string>
+</dict>
+</plist>

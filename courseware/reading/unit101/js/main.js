@@ -539,6 +539,97 @@ function toggleRev(id) {
   saveDeckState();
 }
 
+// ================= Multi-select tick question (Tick all that apply) =================
+// Click an option to pick / unpick it; after ALL choices are made, press Check to
+// judge every option individually (right pick / wrong pick / missed).
+function toggleTick(el) {
+  var group = el.closest('.tick-group');
+  if (!group || group.classList.contains('judged')) return;
+  el.classList.toggle('picked');
+}
+
+function checkTicks(gid) {
+  var group = document.getElementById(gid + '-opts');
+  if (!group || group.classList.contains('judged')) return;
+  var opts = group.querySelectorAll('.pmcq-opt');
+  var picked = 0, needed = 0, rightItems = 0;
+  // Pass 1: collect stats without mutating, so we know whether the whole answer is correct
+  opts.forEach(function (o) {
+    var isC = o.getAttribute('data-correct') === 'true';
+    var isP = o.classList.contains('picked');
+    if (isP) picked++;
+    if (isC) needed++;
+    if (isP === isC) rightItems++;
+  });
+  var pickedNone = (picked === 0);
+  var allRight = (rightItems === opts.length);
+  // Pass 2: apply per-item marks.
+  // All-correct: ONLY the options the user actually picked light up green;
+  // unpicked options keep their original state (no colour change, no mark).
+  // Not-all-correct: keep the previous per-item behaviour (✓ right / ✗ wrong pick / ✗ missed).
+  opts.forEach(function (o) {
+    var isC = o.getAttribute('data-correct') === 'true';
+    var isP = o.classList.contains('picked');
+    o.classList.remove('tick-right', 'tick-wrong', 'tick-missed');
+    var old = o.querySelector('.tick-mark');
+    if (old) old.remove();
+    if (pickedNone) return; // nothing marked until the user actually answers
+    if (allRight) {
+      if (!isP) return; // unpicked option: leave original state
+      o.classList.add('tick-right');
+      var mark = document.createElement('span');
+      mark.className = 'tick-mark';
+      mark.textContent = '\u2713';
+      mark.title = '\u6b63\u786e\uff1a\u4f60\u52fe\u9009\u7684\u8fd9\u4e00\u9879\u662f\u6b63\u786e\u7b54\u6848';
+      o.appendChild(mark);
+      return;
+    }
+    var ok = (isP === isC);
+    o.classList.add(ok ? 'tick-right' : (isP ? 'tick-wrong' : 'tick-missed'));
+    var mark2 = document.createElement('span');
+    mark2.className = 'tick-mark';
+    if (ok) { mark2.textContent = '\u2713'; mark2.title = '\u6b63\u786e\uff1a\u8be5\u9879\u5904\u7406\u5f97\u5f53'; }
+    else if (isP) { mark2.textContent = '\u2717'; mark2.title = '\u4e0d\u5e94\u52fe\u9009'; }
+    else { mark2.textContent = '\u2717 \u6f0f\u9009'; mark2.title = '\u6b64\u5904\u5e94\u52fe\u9009\u800c\u672a\u52fe'; }
+    o.appendChild(mark2);
+  });
+  var res = document.getElementById(gid + '-result');
+  if (pickedNone) {
+    if (res) {
+      res.classList.add('show');
+      res.innerHTML = '<div class="ans-banner" style="border-color:#C62828"><span class="tick" style="color:#C62828">&#9888;</span>'
+        + '<div><div class="at">\u8bf7\u5148\u4f5c\u7b54</div><div class="asub">\u81f3\u5c11\u52fe\u9009\u4e00\u9879\u540e\u518d\u63d0\u4ea4\u5224\u5b9a\u3002</div></div></div>';
+    }
+    return;
+  }
+  group.classList.add('judged');
+  allRight = (rightItems === opts.length);
+  if (!group.dataset.recorded) { recordAnswer(allRight); group.dataset.recorded = '1'; }
+  if (res) {
+    res.classList.add('show');
+    res.innerHTML = (allRight
+      ? '<div class="ans-banner"><span class="tick">&#10003;</span><div><div class="at">All Correct!</div>'
+        + '<div class="asub">' + opts.length + ' \u5904\u9009\u62e9\u5168\u90e8\u5224\u65ad\u6b63\u786e\uff08\u5e94\u52fe ' + needed + ' \u9879\uff09\u3002</div></div></div>'
+      : '<div class="ans-banner" style="border-color:#C62828"><span class="tick" style="color:#C62828">&#10007;</span>'
+        + '<div><div class="at">Not quite</div><div class="asub">' + rightItems + '/' + opts.length
+        + ' \u5904\u5224\u65ad\u6b63\u786e \u2014 \u5e94\u52fe\u9009 ' + needed + ' \u9879\uff0c\u4f60\u52fe\u4e86 ' + picked
+        + ' \u9879\u3002\u9010\u9879\u5224\u5b9a\u5df2\u6807\u51fa\uff1a\u2713 \u6b63\u786e\uff0f\u2717 \u4e0d\u5e94\u52fe\uff0f\u2717 \u6f0f\u9009\u3002</div></div></div>');
+  }
+}
+
+function resetTicks(gid) {
+  var group = document.getElementById(gid + '-opts');
+  if (!group) return;
+  group.classList.remove('judged');
+  group.querySelectorAll('.pmcq-opt').forEach(function (o) {
+    o.classList.remove('picked', 'tick-right', 'tick-wrong', 'tick-missed');
+    var m = o.querySelector('.tick-mark');
+    if (m) m.remove();
+  });
+  var res = document.getElementById(gid + '-result');
+  if (res) { res.classList.remove('show'); res.innerHTML = ''; }
+}
+
 function flipCardPersist(card) {
   card.classList.toggle('flipped');
   var st = loadDeckState();
@@ -623,19 +714,31 @@ function revealCloze(el) {
 }
 
 // === Proofreading row reveal (模板 11 — 两步揭示) ===
-// Step 1: 点击 "Tap to reveal" → 行内错词变为虚线 cloze（高亮可疑位置）
-// Step 2: 点击该词 → revealCloze 显示正确答案
+// Step 1: 点击 "Tap to reveal" → 行内错词变为虚线可点击（高亮可疑位置），砖块同时击碎
+// Step 2: 点击该词 → revealQ64Word 显示正确答案（#FFE600 高亮），不写入状态持久化
 // 无误行（.q1-no-mistake）在 Step 1 时直接显示 ✓
 function revealQ1Row(rowId) {
   var row = document.getElementById(rowId);
   if (!row) return;
   row.classList.add('revealed');
-  var clozes = row.querySelectorAll('.cloze');
-  for (var i = 0; i < clozes.length; i++) {
-    clozes[i].onclick = function() { revealCloze(this); };
+  var words = row.querySelectorAll('.q64-wrong');
+  for (var i = 0; i < words.length; i++) {
+    words[i].onclick = function() { revealQ64Word(this); };
   }
   var btn = row.querySelector('.q1-tap-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Revealed ✓'; }
+  // auto-shatter this row's brick cover so the accuracy badge joins the reveal
+  row.querySelectorAll('.rate-cover').forEach(function(c) {
+    if (typeof shatterCover === 'function' && !c.classList.contains('shattered')) shatterCover(c, false);
+  });
+}
+// Q64 wrong-word reveal — decoupled from the .cloze state system.
+// restoreDeckState replays "slideIdx:clozeIdx" positional entries and would
+// otherwise overwrite the stem's wrong word with the correct answer on load.
+function revealQ64Word(el) {
+  if (el.classList.contains('corrected')) return;
+  el.classList.add('corrected');
+  el.textContent = el.getAttribute('data-correct');
 }
 
 // === Chronological order reveal (模板 10 — 逐行揭示时序答案) ===
@@ -1053,32 +1156,53 @@ function spawnFragments(el) {
     }
   }
 }
-// Show Data button: remove ALL brick covers at once
+// Show Data button (TOGGLE): 1st click shatters ALL covers & reveals rates;
+// 2nd click restores every cover to the initial full-brick state. Repeats.
 function showAllData() {
-  var covers = document.querySelectorAll('.rate-cover:not(.shattered)');
-  if (covers.length === 0) {
-    showToast('All data already revealed', 'info');
-    return;
-  }
-  covers.forEach(function (el) { shatterCover(el, true); });
-  // celebration burst from the button area
   var btn = document.getElementById('hintToggleBtn');
-  if (btn && btn.animate) {
-    btn.animate(
-      [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
-      { duration: 220, easing: 'ease-out' }
-    );
+  var standing = document.querySelectorAll('.rate-cover:not(.shattered)');
+  if (standing.length > 0) {
+    // --- Reveal mode: shatter every remaining cover ---
+    standing.forEach(function (el) { shatterCover(el, true); });
+    if (btn && btn.animate) {
+      btn.animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+        { duration: 220, easing: 'ease-out' }
+      );
+    }
+    if (btn) {
+      btn.textContent = '\uD83E\uDDF1 Restore Covers';
+      btn.classList.add('active');
+    }
+    showToast('\uD83D\uDCCA All ' + standing.length + ' covers removed — data revealed!', 'success');
+  } else {
+    // --- Restore mode: rebuild every cover (reset cracked & shattered states) ---
+    document.querySelectorAll('.rate-cover').forEach(function (el) {
+      el.classList.remove('shattered', 'cracked');
+      el.classList.add('rebuild');
+      setTimeout((function (node) { return function () { node.classList.remove('rebuild'); }; })(el), 450);
+    });
+    // clear persisted cover states so a refresh keeps the bricks
+    var st = loadDeckState();
+    st.cov = {};
+    saveDeckState();
+    if (btn && btn.animate) {
+      btn.animate(
+        [{ transform: 'rotate(0)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }],
+        { duration: 220, easing: 'ease-out' }
+      );
+    }
+    if (btn) {
+      btn.textContent = '\uD83D\uDCCA Show Data';
+      btn.classList.remove('active');
+    }
+    showToast('\uD83E\uDDF1 All brick covers restored!', 'info');
   }
-  if (btn) {
-    btn.textContent = '\uD83D\uDCCA Data Shown \u2713';
-    btn.classList.add('active');
-  }
-  showToast('\uD83E\uDDF1 All ' + covers.length + ' covers removed — data revealed!', 'success');
 }
 
 
 // === Answer State Persistence (v3 — Safari 刷新不丢答题记录) ===
-var DECK_KEY = 'xdf-dse2018-p1-state';
+var DECK_KEY = 'xdf-dse2015-p1-v2-state';
 var deckState = null;
 function loadDeckState() {
   if (deckState) return deckState;
@@ -1494,7 +1618,7 @@ function qzRevealAll(prefix){
   if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
 }
 function refreshQuestionProgress(){
-  if(!QUIZ_MANIFEST.length)scanQuizItems();
+  if(typeof QUIZ_MANIFEST==="undefined"||!QUIZ_MANIFEST.length)scanQuizItems();
   var perSlide={}, answered=0;
   QUIZ_MANIFEST.forEach(function(item){
     var done=isItemAnswered(item);
@@ -1549,7 +1673,7 @@ function revealQ51(){
   if(typeof refreshQuestionProgress==='function')refreshQuestionProgress();
 }
 function scanQuizItems(){
-  QUIZ_MANIFEST = [];
+  window.QUIZ_MANIFEST = [];
   var slides = document.querySelectorAll('.slide');
   slides.forEach(function(slide, si){
     slide.querySelectorAll('.practice-mcq[id$="-box"]').forEach(function(box){
@@ -1577,3 +1701,115 @@ function scanQuizItems(){
     });
   });
 }
+
+// === Notes panel + Palette adapter (2026-08-29 — 目录按钮移除，笔记收进「⋯」菜单) ===
+// 📝 笔记：右侧滑入笔记面板（按页存储到 localStorage）
+var NOTE_KEY = 'xdf-dse2015-p1-note_';
+function loadNote() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  ta.value = localStorage.getItem(NOTE_KEY + current) || '';
+  var pg = document.getElementById('npPage');
+  if (pg) {
+    var slides = document.querySelectorAll('.slide');
+    pg.textContent = '第 ' + (current + 1) + ' 页 · ' + (slides[current] ? slides[current].dataset.title : '');
+  }
+}
+function openNotes() {
+  loadNote();
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.add('open');
+  if (ov) ov.classList.add('open');
+  if (ta_focusable()) { var ta = document.getElementById('npTa'); setTimeout(function() { ta.focus(); }, 250); }
+}
+function ta_focusable() { return !!document.getElementById('npTa'); }
+function closeNotes() {
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+}
+(function initNotes() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  var t = null;
+  ta.addEventListener('input', function() {
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(NOTE_KEY + current, ta.value); } catch (e) {}
+    }, 300);
+  });
+  document.addEventListener('click', function(ev) {
+    var pn = document.getElementById('notesPanel');
+    if (!pn || !pn.classList.contains('open')) return;
+    if (pn.contains(ev.target)) return;
+    var nb = ev.target.closest ? ev.target.closest('.topbar button[onclick*="openNotes"]') : null;
+    if (nb) return;
+    closeNotes();
+  });
+})();
+
+// 🎨 主题色：适配按钮（复用 togglePalettePanel 的定位与换色逻辑）
+function togglePalette(e) { togglePalettePanel(e); }
+
+// Esc 关闭所有浮层
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+  var tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') { if (e.target.id !== 'npTa') return; }
+  closeNotes();
+  var pn = document.getElementById('palettePanel');
+  if (pn) pn.classList.remove('open');
+});
+
+
+
+
+// === Topbar "⋯ more" menu（与 2017 v2 一致 — 收纳右侧次要工具）===
+function closeTBMore() {
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (m) m.classList.remove('open');
+  if (btn) btn.classList.remove('active');
+}
+function toggleTBMore(e) {
+  if (e) e.stopPropagation();
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (!m || !btn) return;
+  var opening = !m.classList.contains('open');
+  m.classList.toggle('open');
+  btn.classList.toggle('active', opening);
+}
+(function initTBMore() {
+  document.addEventListener('click', function(ev) {
+    var m = document.getElementById('tbExtra');
+    var btn = document.getElementById('tbMoreBtn');
+    if (!m || !m.classList.contains('open')) return;
+    if (m.contains(ev.target) || (btn && btn.contains(ev.target))) return;
+    closeTBMore();
+  });
+  document.addEventListener('keydown', function(ev) {
+    if (ev.key === 'Escape') {
+      var m = document.getElementById('tbExtra');
+      if (m && m.classList.contains('open')) closeTBMore();
+    }
+  });
+  var m = document.getElementById('tbExtra');
+  if (!m) return;
+  m.addEventListener('click', function(ev) {
+    var btn = ev.target.closest('button');
+    if (!btn) return;
+    if (btn.id === 'paletteBtn') {
+      setTimeout(function() {
+        var mm = document.getElementById('tbExtra');
+        if (mm) mm.classList.remove('open');
+        var mb = document.getElementById('tbMoreBtn');
+        if (mb) mb.classList.remove('active');
+      }, 0);
+      return;
+    }
+    setTimeout(closeTBMore, 180);
+  }, true);
+})();

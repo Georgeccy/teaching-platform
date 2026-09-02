@@ -611,30 +611,81 @@
     }
   }
 
-  /* ---------- 学习工具导航：补齐 错题本 / 作业 / 排行榜 / 设置 入口 ---------- */
+  /* ---------- 功能开关读取（兼容未加载 app.js 的页面，如 grammar.html） ----------
+   * 单一来源在 app.js 的 FEATURES；app.js 会将其持久化到 localStorage('zhixue-features')。
+   * 此处做兜底：app.js 未加载时用 localStorage，再退化为默认值（与 app.js 对齐：四个模块默认隐藏）。 */
+  function getFeatures() {
+    var def = { xuebao: false, coursewareStudio: false, mistakes: false, homework: false, leaderboard: false, settings: true };
+    if (window.ZhiXue && window.ZhiXue.features) return window.ZhiXue.features;
+    try {
+      var raw = localStorage.getItem('zhixue-features');
+      if (raw) {
+        var stored = JSON.parse(raw);
+        for (var k in stored) if (stored.hasOwnProperty(k)) def[k] = stored[k];
+      }
+    } catch (e) {}
+    return def;
+  }
+
+  /* ---------- 清理空分组分隔标题（其下无可见链接时隐藏） ---------- */
+  function cleanupEmptySep(nav) {
+    $all('.nav-sep', nav).forEach(function (sep) {
+      var n = sep.nextElementSibling, visible = 0;
+      while (n && !n.classList.contains('nav-sep')) {
+        if (n.tagName === 'A' && n.style.display !== 'none' && getComputedStyle(n).display !== 'none') visible++;
+        n = n.nextElementSibling;
+      }
+      sep.style.display = visible > 0 ? '' : 'none';
+    });
+  }
+
+  /* ---------- 学习工具导航：补齐 错题本 / 作业 / 排行榜 / 设置 入口；隐藏未启用模块 ---------- */
   function featureNav() {
     var cur = location.pathname.split('/').pop() || 'index.html';
     var BLOCK = { 'teacher.html': 1, 'courseware-studio.html': 1 };
     if (BLOCK[cur]) return;
     var nav = $('.sidebar .nav') || $('.nav');
     if (!nav) return;
-    var FEAT = [
-      { href: 'mistakes.html', label: '错题本' },
-      { href: 'homework.html', label: '作业' },
-      { href: 'leaderboard.html', label: '排行榜' },
-      { href: 'settings.html', label: '设置' }
+    var feats = getFeatures();
+    // 待隐藏模块（含静态占位链接与课件生成工坊）：flag=false 时整条隐藏
+    var HIDE = [
+      { href: 'courseware-studio.html', label: '课件生成工坊', feature: 'coursewareStudio' },
+      { href: 'mistakes.html', label: '错题本', feature: 'mistakes' },
+      { href: 'homework.html', label: '作业', feature: 'homework' },
+      { href: 'leaderboard.html', label: '排行榜', feature: 'leaderboard' }
     ];
-    // 1) 修正既有占位链接（href="#"）
+    // 仅启用功能参与「修正占位 + 补齐入口」
+    var FEAT = [
+      { href: 'mistakes.html', label: '错题本', feature: 'mistakes' },
+      { href: 'homework.html', label: '作业', feature: 'homework' },
+      { href: 'leaderboard.html', label: '排行榜', feature: 'leaderboard' },
+      { href: 'settings.html', label: '设置', feature: 'settings' }
+    ];
+    // 1) 隐藏未启用模块的全部入口（覆盖 grammar.html 等页面里的静态占位 <a href="#"> 与已修正链接）
+    HIDE.forEach(function (f) {
+      if (feats[f.feature] === false) {
+        $all('a', nav).forEach(function (a) {
+          var h = a.getAttribute('href');
+          var t = (a.textContent || '').trim();
+          if (h === f.href || (h === '#' && t.indexOf(f.label) >= 0)) {
+            a.style.display = 'none';
+            a.setAttribute('data-feature-hidden', f.feature);
+          }
+        });
+      }
+    });
+    var ENABLED = FEAT.filter(function (f) { return feats[f.feature] !== false; });
+    // 2) 修正既有占位链接（href="#"），仅对仍启用的功能
     $all('a', nav).forEach(function (a) {
       if (a.getAttribute('href') === '#') {
         var t = (a.textContent || '').trim();
-        FEAT.forEach(function (f) { if (t.indexOf(f.label) >= 0) a.setAttribute('href', f.href); });
+        ENABLED.forEach(function (f) { if (t.indexOf(f.label) >= 0) a.setAttribute('href', f.href); });
       }
     });
-    // 2) 补齐缺失入口
+    // 3) 补齐缺失入口
     var have = {};
     $all('a', nav).forEach(function (a) { have[a.getAttribute('href')] = 1; });
-    var miss = FEAT.filter(function (f) { return !have[f.href]; });
+    var miss = ENABLED.filter(function (f) { return !have[f.href]; });
     if (miss.length) {
       var sep = document.createElement('div');
       sep.className = 'nav-sep';
@@ -643,6 +694,7 @@
       miss.forEach(function (f) {
         var a = document.createElement('a');
         a.href = f.href;
+        a.setAttribute('data-feature', f.feature);
         a.innerHTML = '<span class="dot"></span>' + f.label;
         if (f.href === cur) a.classList.add('active');
         nav.appendChild(a);
@@ -651,9 +703,10 @@
       // 入口已存在：仅确保当前功能页 active
       $all('a', nav).forEach(function (a) {
         var h = a.getAttribute('href');
-        if (FEAT.some(function (f) { return f.href === h && f.href === cur; })) a.classList.add('active');
+        if (ENABLED.some(function (f) { return f.href === h && f.href === cur; })) a.classList.add('active');
       });
     }
+    cleanupEmptySep(nav);
   }
 
   function init() {
@@ -671,7 +724,8 @@
     tilt();
     ripple();
     shortcuts();
-    pet();
+    // 学宝像素宠物：仅在特性开关开启时渲染（默认隐藏）
+    if (window.ZhiXue && window.ZhiXue.features && window.ZhiXue.features.xuebao === true) pet();
     featureNav();
   }
   if (document.readyState !== 'loading') init();

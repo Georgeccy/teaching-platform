@@ -52,7 +52,10 @@ function newId(prefix) {
 // ---- 默认进度结构 ----
 function emptyProgress(name, userId) {
   const weak = {};
-  WEAK_KEYS.forEach((k) => (weak[k] = 50 + Math.floor(Math.random() * 20)));
+  // 清空/新建时薄弱点回退到 0（代表尚未产生掌握度），而非随机 50–69%。
+  // 否则「清空进度」后仪表盘薄弱项进度条仍显示 50–69%，进度清零不生效。
+  // 演示学生由 buildSeed 单独覆盖 weakPoints，不受影响。
+  WEAK_KEYS.forEach((k) => (weak[k] = 0));
   return {
     userId,
     name,
@@ -174,9 +177,14 @@ function load() {
   return cache;
 }
 
+// 原子写入：先写临时文件再 rename。
+// 直接 writeFileSync 会先截断原文件，若写入途中进程被杀 / 磁盘满，
+// db.json 会变成半截 JSON → 下次启动 load() 解析失败 → 回退到种子数据（等于全体学生数据丢失）。
 function save() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(DB_FILE, JSON.stringify(cache, null, 2), 'utf8');
+  const tmp = DB_FILE + '.tmp';
+  fs.writeFileSync(tmp, JSON.stringify(cache, null, 2), 'utf8');
+  fs.renameSync(tmp, DB_FILE);
 }
 
 // ============================================================
@@ -219,6 +227,15 @@ function publicUser(u) {
   return { id: u.id, username: u.username, name: u.name, role: u.role };
 }
 
+// 学生账号清单（只读）：家长会归档导航用账号 username 作为「学号」展示来源。
+// 仅暴露 id / username / name，不含任何凭据字段。
+function listStudents() {
+  const db = load();
+  return Object.values(db.users)
+    .filter((u) => u.role === 'student')
+    .map((u) => ({ id: u.id, username: u.username, name: u.name }));
+}
+
 function createSession(userId) {
   const db = load();
   const token = crypto.randomBytes(24).toString('hex');
@@ -238,6 +255,68 @@ function getSessionUser(token) {
     return null;
   }
   return getUserById(s.userId);
+}
+
+// 真登出：删除服务端会话。
+// 之前只有前端清 localStorage，服务端 token 在 30 天内依然有效——
+// 在公用电脑 / 网吧登录后「退出」，拿到 token 的人仍可继续访问。
+function deleteSession(token) {
+  if (!token) return false;
+  const db = load();
+  if (!db.sessions[token]) return false;
+  delete db.sessions[token];
+  save();
+  return true;
+}
+
+// 清理某用户的会话（改密码后调用：把其它设备踢下线）。
+// exceptToken 保留当前设备，避免改完密码立刻把自己登出。
+function deleteUserSessions(userId, exceptToken) {
+  const db = load();
+  let n = 0;
+  Object.keys(db.sessions).forEach((t) => {
+    if (t === exceptToken) return;
+    if (db.sessions[t].userId === userId) { delete db.sessions[t]; n++; }
+  });
+  if (n) save();
+  return n;
+}
+
+// 数据量统计（健康检查用，仅教师可见）：不暴露任何凭据或 PII
+function stats() {
+  const db = load();
+  const users = Object.values(db.users);
+  return {
+    users: users.length,
+    students: users.filter((u) => u.role === 'student').length,
+    teachers: users.filter((u) => u.role === 'teacher').length,
+    activeSessions: Object.keys(db.sessions).length,
+    progressRecords: Object.keys(db.progress || {}).length,
+  };
+}
+
+// 修改密码：校验旧密码 → 换新盐重新派生哈希。
+// 换盐是必须的：复用旧盐时，若新密码与旧密码相同则哈希一致，无法判断是否真换了。
+function changePassword(userId, oldPassword, newPassword, force) {
+  const db = load();
+  const u = db.users[userId];
+  if (!u) return { error: '用户不存在' };
+  // force=true 供离线运维工具（server/set-password.js）使用：不知道原密码也能重置
+  if (!force && !verifyPassword(u, oldPassword || '')) return { error: '原密码不正确' };
+  const salt = makeSalt();
+  u.salt = salt;
+  u.passwordHash = hashPassword(newPassword, salt);
+  u.passwordChangedAt = Date.now();
+  save();
+  return { ok: true };
+}
+
+// 启动自检：找出仍在使用演示密码的账号（只返回用户名，不泄露哈希）。
+// 只检查「从未改过密码」的账号，并限制数量，避免启动时做大量 scrypt 拖慢服务。
+function auditDemoPasswords(passwords, limit) {
+  const db = load();
+  const list = Object.values(db.users).filter((u) => !u.passwordChangedAt).slice(0, limit || 20);
+  return list.filter((u) => (passwords || []).some((p) => verifyPassword(u, p))).map((u) => u.username);
 }
 
 function getProgress(userId) {
@@ -441,11 +520,17 @@ module.exports = {
   WEAK_LABELS,
   getUserByUsername,
   getUserById,
+  listStudents,
   createUser,
   verifyPassword,
   publicUser,
   createSession,
   getSessionUser,
+  deleteSession,
+  deleteUserSessions,
+  changePassword,
+  auditDemoPasswords,
+  stats,
   getProgress,
   saveProgress,
   appendEvent,

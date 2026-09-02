@@ -3,6 +3,77 @@
    像素复古风：零圆角、3px 硬边框、4px 硬阴影、Press Start 2P
    ============================================================ */
 
+/* ---------- 视图切换（主菜单 / 各游戏独立界面） ---------- */
+.view { padding-bottom: 60px; }
+
+/* ---------- 主菜单启动器 ---------- */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 26px;
+}
+.launch-card {
+  display: flex; align-items: center; gap: 18px; text-align: left;
+  border: 3px solid var(--line); background: var(--card);
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 22px; cursor: pointer; font-family: inherit; color: var(--text);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.launch-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--shadow); }
+.launch-card:active { transform: translate(1px, 1px); box-shadow: 3px 3px 0 var(--shadow); }
+.launch-card.snake { border-left: 8px solid var(--green); }
+.launch-card.tetris { border-left: 8px solid var(--blue); }
+.lc-ico {
+  width: 64px; height: 64px; flex-shrink: 0;
+  border: 3px solid var(--line); box-shadow: 3px 3px 0 var(--shadow);
+  display: flex; align-items: center; justify-content: center; font-size: 34px;
+}
+.launch-card.snake .lc-ico { background: var(--green); }
+.launch-card.tetris .lc-ico { background: var(--blue); }
+.lc-body { flex: 1; min-width: 0; }
+.lc-body h3 { font-family: "Press Start 2P", monospace; font-size: 13px; margin-bottom: 8px; }
+.lc-body .tag {
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  background: var(--yellow); color: #2E2A3B; border: 2px solid var(--line); padding: 3px 5px;
+}
+.lc-body p { color: var(--muted); font-size: 13px; margin-top: 10px; line-height: 1.7; }
+.lc-go {
+  font-family: "Press Start 2P", monospace; font-size: 9px; flex-shrink: 0;
+  align-self: center; color: var(--text);
+}
+
+/* ---------- 游戏内顶部栏（返回 + 标题 + 难度） ---------- */
+.view-bar {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;
+}
+.back-btn {
+  font-family: "Press Start 2P", monospace; font-size: 9px; color: #fff;
+  background: var(--muted); border: 3px solid var(--line);
+  box-shadow: 3px 3px 0 var(--shadow); padding: 9px 12px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.back-btn:hover { transform: translate(-2px, -2px); }
+.back-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--shadow); }
+.view-title { font-family: "Press Start 2P", monospace; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+.view-title .tag {
+  font-family: "Press Start 2P", monospace; font-size: 7px;
+  background: var(--yellow); color: #2E2A3B; border: 2px solid var(--line); padding: 3px 5px;
+}
+
+/* 难度分段控件 */
+.diff { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.diff-label { font-family: "Press Start 2P", monospace; font-size: 8px; color: var(--muted); }
+.seg { display: inline-flex; border: 3px solid var(--line); box-shadow: 3px 3px 0 var(--shadow); background: var(--card); }
+.seg-btn {
+  font-family: "Press Start 2P", monospace; font-size: 8px; color: var(--text);
+  background: var(--card); border: none; border-right: 3px solid var(--line);
+  padding: 8px 10px; cursor: pointer; transition: background .12s ease, color .12s ease;
+}
+.seg-btn:last-child { border-right: none; }
+.seg-btn:hover { background: var(--bg); }
+.seg-btn.active { background: var(--pink); color: #fff; }
+
+/* ---------- 游戏面板（两游戏共用外观，但各自在独立视图内） ---------- */
 .games-hero {
   border: 3px solid var(--line);
   background: var(--card);
@@ -21,12 +92,6 @@
 .games-hero h1 { font-size: 20px; margin-bottom: 6px; }
 .games-hero p { color: var(--muted); font-size: 13px; max-width: 560px; }
 
-.games-wrap {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 26px;
-  padding-bottom: 130px; /* 给右下角像素宠物留位置 */
-}
 .game {
   border: 3px solid var(--line);
   background: var(--card);
@@ -100,8 +165,8 @@ canvas.game-cv {
 .dpad button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
 .dpad .up    { grid-area: 1 / 2; }
 .dpad .left  { grid-area: 2 / 1; }
-.dpad .mid   { grid-area: 2 / 2; font-size: 12px; }
 .dpad .right { grid-area: 2 / 3; }
+.dpad .mid   { grid-area: 2 / 2; font-size: 12px; }
 .dpad .down  { grid-area: 3 / 2; }
 
 .controls-hint {
@@ -116,4 +181,5 @@ canvas.game-cv {
 @media (max-width: 760px) {
   .play { justify-content: center; }
   .dpad { margin-left: auto; margin-right: auto; }
+  .diff { margin-left: 0; width: 100%; }
 }

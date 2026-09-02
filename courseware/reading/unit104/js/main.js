@@ -414,10 +414,8 @@ function initDragDrop(scope) {
     z.addEventListener('dragleave', function(e) { z.classList.remove('drag-over'); });
     z.addEventListener('drop', function(e) {
       e.preventDefault(); z.classList.remove('drag-over');
-      // FIX: use .dragging class to find the actual dragged element,
-      // NOT data-word lookup — multiple slides share data-word values (A–E),
-      // so the global querySelector returned the wrong slide's element.
-      var dragged = document.querySelector('.draggable.dragging');
+      var word = e.dataTransfer.getData('text/plain');
+      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
       if (dragged) { var content = z.querySelector('.drop-content'); if (content) content.appendChild(dragged); dragged.classList.remove('correct-placed', 'wrong-placed'); }
     });
   });
@@ -426,8 +424,8 @@ function initDragDrop(scope) {
     p.addEventListener('dragleave', function(e) { p.classList.remove('drag-over'); });
     p.addEventListener('drop', function(e) {
       e.preventDefault(); p.classList.remove('drag-over');
-      // FIX: same as zone handler — use .dragging class, not data-word lookup
-      var dragged = document.querySelector('.draggable.dragging');
+      var word = e.dataTransfer.getData('text/plain');
+      var dragged = document.querySelector('.draggable[data-word="' + word + '"]');
       if (dragged) { p.appendChild(dragged); dragged.classList.remove('correct-placed', 'wrong-placed'); if (typeof sortDraggablesInPool === 'function') sortDraggablesInPool(p); }
     });
   });
@@ -463,6 +461,13 @@ function resetDragDrop() {
 
 // === MC check (V7 — with score tracking) ===
 function checkMC(el, isCorrect, containerId, explanation) {
+  // When called as onclick="checkMC(this)" (the standard HTML pattern in this
+  // deck), only `el` is provided — containerId is undefined.  Delegate to
+  // checkMCAuto which auto-detects the container and correctness from
+  // data-correct / data-explain attributes on the element itself.
+  if (containerId === undefined) {
+    return checkMCAuto(el);
+  }
   var container = document.getElementById(containerId);
   if (!container) return;
   if (el.classList.contains('answered')) return;
@@ -512,11 +517,18 @@ function checkMCAuto(el) {
   el.classList.add(isCorrect ? 'correct' : 'wrong');
   el.classList.add('answered');
   recordAnswer(isCorrect);
+  // Remove any previous banner so wrong-answer retries don't stack banners
+  var prevBanner = container.nextElementSibling;
+  if (prevBanner && prevBanner.classList.contains('mc-banner')) prevBanner.remove();
   if (isCorrect) {
     container.classList.add('answered');
     container.classList.add('correct-revealed');
+    // Reveal the correct option's highlight if the user had clicked a wrong one first
     var allOpts = container.querySelectorAll('.pmcq-opt');
-    allOpts.forEach(function(o) { o.classList.add('answered'); });
+    allOpts.forEach(function(o) {
+      o.classList.add('answered');
+      if (o.getAttribute('data-correct') === 'true' && o !== el) o.classList.add('correct-revealed');
+    });
     var banner = document.createElement('div');
     banner.className = 'mc-banner mc-correct';
     banner.innerHTML = '<span class="tick">\u2705</span><div><div class="at">Correct!</div></div>';
@@ -525,6 +537,11 @@ function checkMCAuto(el) {
     var methodWrap = container.querySelector('.method-wrap');
     if (methodWrap && typeof hintsVisible !== 'undefined' && hintsVisible) methodWrap.style.display = 'block';
   } else {
+    // After a wrong answer, reveal the correct option so the student can learn
+    var correctOpt = container.querySelector('.pmcq-opt[data-correct="true"]');
+    if (correctOpt && !correctOpt.classList.contains('answered')) {
+      correctOpt.classList.add('correct-revealed');
+    }
     var banner = document.createElement('div');
     banner.className = 'mc-banner mc-wrong';
     banner.innerHTML = '<span class="tick">\u274c</span><div><div class="at">Not quite</div><div class="asub">' + (el.getAttribute('data-explain') || '') + '</div></div>';
@@ -979,7 +996,7 @@ document.addEventListener('keydown', function(e) {
 
 
 // === Answer State Persistence (v3 — Safari 刷新不丢答题记录) ===
-var DECK_KEY = 'xdf-dse2023-p1-state';
+var DECK_KEY = 'xdf-dse2021-p1-v7-state';
 var deckState = null;
 function loadDeckState() {
   if (deckState) return deckState;
@@ -1311,115 +1328,340 @@ function resetProgress() {
 
 
 
-// === legacy deck-specific functions (from 2023DSE-Paper1_v1.html) ===
-// === Q20 Timeline Drag (independent) ===
-(function(){
-  function check(){
-    var zones = document.querySelectorAll('#q20-pool ~ div .drop-zone');
-    var correct = 0, total = 3;
-    zones.forEach(function(z){
-      var accept = z.dataset.accept;
-      var placed = z.querySelector('.draggable');
-      if(placed){
-        var cat = placed.dataset.cat;
-        placed.classList.remove('correct-placed','wrong-placed');
-        if(cat === accept){placed.classList.add('correct-placed');correct++;}
-        else{placed.classList.add('wrong-placed');}
+// === legacy deck-specific functions (from 2021DSE-Paper1_v4.html) ===
+function checkDragDropS11(){
+  var allDrag=document.querySelectorAll('#word-pool-sbq11 .draggable');
+  var placed=0,correct=0,wrong=0,unplaced=0;
+  allDrag.forEach(function(d){
+    var parent=d.closest('.drop-zone');
+    if(parent){
+      placed++;
+      if(parent.dataset.cat===d.dataset.cat){d.classList.add('correct-placed');d.classList.remove('wrong-placed');correct++;}
+      else{d.classList.add('wrong-placed');d.classList.remove('correct-placed');wrong++;}
+    }else{unplaced++;}
+  });
+  var result=document.getElementById('drag-result-s11');
+  result.style.display='block';
+  var msg='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' / 6 正确 / ❌ '+wrong+' 错误 / 📦 '+unplaced+' 未拖</h4>';
+  if(correct===6)msg+='<p style="color:var(--xdf-green);font-size:16px;margin-top:8px">🎉 全部正确！</p>';
+  else if(placed>0)msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">💡 正确答案：<br>i)→C · ii)→B · iii)→E · iv)→F · v)→A · vi)→D</p>';
+  else msg+='<p style="color:var(--text-1);font-size:14px;margin-top:6px">👆 请先把 statements 拖到对应人物框内再提交。</p>';
+  msg+='</div>';
+  result.innerHTML=msg;
+}
+function checkMatching(){
+  var answers={mA:'francis',mB:'liam',mD:'amelia',mF:'mccary'};
+  var names={mA:'A',mB:'B',mC:'C',mD:'D',mE:'E',mF:'F'};
+  var personNames={mccary:'Dr Barbara McCary',liam:'Liam Thomas',amelia:'Amelia Wong',francis:'Francis Tam'};
+  var allDrag=document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable');
+  var correct=0,wrong=0,unplaced=0;
+  var details=[];
+  allDrag.forEach(function(d){
+    var parent=d.closest('.drop-zone');
+    var letter=names[d.dataset.word]||'?';
+    if(!parent){
+      unplaced++;
+      if(d.dataset.cat!=='')details.push('<span style="color:#999">'+letter+': 未拖入</span>');
+    }else{
+      var cat=parent.dataset.cat;
+      var expected=d.dataset.cat;
+      if(cat===expected&&expected!==''){
+        correct++;
+        details.push('<span style="color:var(--xdf-green)">✅ '+letter+' → '+personNames[cat]+'</span>');
+      }else if(expected===''){
+        wrong++;
+        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (此引用不在答案中)</span>');
+      }else{
+        wrong++;
+        details.push('<span style="color:var(--xdf-red)">❌ '+letter+' → '+personNames[cat]+' (应拖到 '+personNames[expected]+')</span>');
+      }
+    }
+  });
+  var result=document.getElementById('match-result');
+  result.style.display='block';
+  result.innerHTML='<div class="card accent" style="text-align:center"><h4>提交结果：✅ '+correct+' 正确 / ❌ '+wrong+' 错误 / ⏳ '+unplaced+' 未拖</h4><div style="margin-top:10px;font-size:15px;line-height:2;text-align:left">'+details.join('<br>')+'</div><div style="margin-top:10px;font-size:16px;color:var(--text-1)">正确答案：McCary→F · Liam→B · Amelia→D · Francis→A<br>C 和 E 不用</div><div style="margin-top:8px;font-size:18px;font-weight:800;color:'+(correct===4?'var(--xdf-green)':'var(--xdf-red)')+'">得分：'+correct+' / 4</div></div>';
+}
+function highlightSelection(container){
+  var sel=window.getSelection();
+  if(!sel||sel.isCollapsed)return;
+  try{
+    var range=sel.getRangeAt(0);
+    var span=document.createElement('span');
+    span.className='user-highlight';
+    range.surroundContents(span);
+    sel.removeAllRanges();
+  }catch(e){}
+}
+function initDots(){
+  var slides=document.querySelectorAll('.slide');
+  var dots=document.getElementById('progressDots');dots.innerHTML='';
+  slides.forEach(function(_,i){
+    var d=document.createElement('span');d.className='dot';d.dataset.pn='\u7b2c'+(i+1)+'\u9875';
+    d.onclick=function(){goTo(i);};dots.appendChild(d);
+  });
+}
+function initS11DragDrop(){
+  // SB Q11 - 6 个 drop-zones
+  ['A','B','C','D','E','F'].forEach(function(letter){
+    var z=document.getElementById('dz-'+letter+'-sbq11');
+    if(!z)return;
+    z.addEventListener('dragover',function(e){
+      e.preventDefault();
+      z.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
+    });
+    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
+      if(dragged){
+        var content=z.querySelector('.drop-content');
+        content.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
       }
     });
-    var result = document.getElementById('q20-result');
-    if(result){
-      result.style.display='block';
-      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong>'+(correct===total?' 🎉 All correct!':'')+'</div>';
-    }
-    if(correct===total)showToast('\u2705 Q20 correct!','success');
-    else showToast('Q20: '+correct+'/3 correct','error');
+  });
+  var pool11=document.getElementById('word-pool-sbq11');
+  if(pool11){
+    pool11.addEventListener('dragover',function(e){
+      e.preventDefault();
+      pool11.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,pool11);
+    });
+    pool11.addEventListener('dragleave',function(e){pool11.classList.remove('drag-over');});
+    pool11.addEventListener('drop',function(e){
+      e.preventDefault();pool11.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('#word-pool-sbq11 .draggable[data-word="'+word+'"]');
+      if(dragged){
+        pool11.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+        if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool11);
+      }
+    });
   }
-  function reset(){
-    var pool=document.getElementById('q20-pool');
-    if(pool){
-      // scoped to Q20's own slide only — previously the unscoped selector
-      // '.drop-zone .draggable' pulled items out of Q22/Q68 zones too
-      document.querySelectorAll('#q20-pool .draggable, #q20-pool ~ div .drop-zone .draggable').forEach(function(d){
-        d.classList.remove('correct-placed','wrong-placed');
-        pool.appendChild(d);
-      });
-    }
-    var result=document.getElementById('q20-result');
-    if(result)result.style.display='none';
+}
+function initSBQ10DragDrop(){
+  var zoneIds=['dz-mccary','dz-liam','dz-amelia','dz-francis','word-pool-sbq10'];
+  zoneIds.forEach(function(id){
+    var z=document.getElementById(id);
+    if(!z)return;
+    z.addEventListener('dragover',function(e){
+      e.preventDefault();
+      z.classList.add('drag-over');
+      if(typeof autoScrollToVisible==='function')autoScrollToVisible(e,z);
+    });
+    z.addEventListener('dragleave',function(e){z.classList.remove('drag-over');});
+    z.addEventListener('drop',function(e){
+      e.preventDefault();z.classList.remove('drag-over');
+      var word=e.dataTransfer.getData('text/plain');
+      var dragged=document.querySelector('.draggable[data-word="'+word+'"]');
+      if(dragged){
+        var content=z.querySelector('.drop-content')||z;
+        content.appendChild(dragged);
+        dragged.classList.remove('correct-placed','wrong-placed');
+        if(id==='word-pool-sbq10'&&typeof sortDraggablesInPool==='function')sortDraggablesInPool(content);
+      }
+    });
+  });
+}
+function resetDragDropS11(){
+  var pool=document.getElementById('word-pool-sbq11');
+  if(pool){
+    document.querySelectorAll('#word-pool-sbq11 .draggable').forEach(function(d){
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
   }
-  window.checkQ20=check;window.resetQ20=reset;
+  document.getElementById('drag-result-s11').style.display='none';
+}
+function resetMatching(){
+  var pool=document.getElementById('word-pool-sbq10');
+  if(pool){
+    document.querySelectorAll('#word-pool-sbq10 .draggable, .drop-zone[id^="dz-"] .draggable').forEach(function(d){
+      d.classList.remove('correct-placed','wrong-placed');
+      pool.appendChild(d);
+    });
+  }
+  document.getElementById('match-result').style.display='none';
+}
+
+// === Unified topbar "⋯ more" menu (2026-09-02, ref 2015DSE-Paper1_v1) ===
+function closeTBMore() {
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (m) m.classList.remove('open');
+  if (btn) btn.classList.remove('active');
+}
+function toggleTBMore(e) {
+  if (e) e.stopPropagation();
+  var m = document.getElementById('tbExtra');
+  var btn = document.getElementById('tbMoreBtn');
+  if (!m || !btn) return;
+  var opening = !m.classList.contains('open');
+  m.classList.toggle('open');
+  btn.classList.toggle('active', opening);
+}
+(function initTBMore() {
+  var m = document.getElementById('tbExtra');
+  if (!m) return;
+  document.addEventListener('click', function(ev) {
+    var mm = document.getElementById('tbExtra');
+    var btn = document.getElementById('tbMoreBtn');
+    if (!mm || !mm.classList.contains('open')) return;
+    if (mm.contains(ev.target) || (btn && btn.contains(ev.target))) return;
+    closeTBMore();
+  });
+  document.addEventListener('keydown', function(ev) {
+    if (ev.key === 'Escape') {
+      var mm = document.getElementById('tbExtra');
+      if (mm && mm.classList.contains('open')) closeTBMore();
+    }
+  });
+  m.addEventListener('click', function(ev) {
+    var btn = ev.target.closest('button');
+    if (!btn) return;
+    if (btn.id === 'paletteBtn') {
+      setTimeout(function() {
+        var mm = document.getElementById('tbExtra');
+        if (mm) mm.classList.remove('open');
+        var mb = document.getElementById('tbMoreBtn');
+        if (mb) mb.classList.remove('active');
+      }, 0);
+      return;
+    }
+    setTimeout(closeTBMore, 180);
+  }, true);
 })();
-// === Q22 Character Match Drag (independent) ===
-(function(){
-  function check(){
-    var zones=document.querySelectorAll('#q22-pool ~ div .drop-zone, #q22-pool ~ p .drop-zone');
-    var correct=0,total=3;
-    zones.forEach(function(z){
-      var accept=z.dataset.accept;
-      var placed=z.querySelector('.draggable');
-      if(placed){
-        var cat=placed.dataset.cat;
-        placed.classList.remove('correct-placed','wrong-placed');
-        if(cat===accept){placed.classList.add('correct-placed');correct++;}
-        else{placed.classList.add('wrong-placed');}
-      }
-    });
-    var result=document.getElementById('q22-result');
-    if(result){
-      result.style.display='block';
-      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong></div>';
-    }
-    if(correct===total)showToast('\u2705 Q22 correct!','success');
-    else showToast('Q22: '+correct+'/3 correct','error');
+
+// === 📝 Notes panel (per-page localStorage, unified 2026-09-02, ref 2015DSE-Paper1_v1) ===
+var NOTE_KEY = 'xdf-dse2021-p1-note_';
+function curSlideIdx() {
+  if (typeof current === 'number') return current;
+  if (typeof window.current !== 'undefined') return window.current;
+  var act = document.querySelector('.slide.is-active');
+  if (!act) return 0;
+  var slides = document.querySelectorAll('.slide');
+  for (var i = 0; i < slides.length; i++) if (slides[i] === act) return i;
+  return 0;
+}
+function loadNote() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  ta.value = localStorage.getItem(NOTE_KEY + curSlideIdx()) || '';
+  var pg = document.getElementById('npPage');
+  if (pg) {
+    var slides = document.querySelectorAll('.slide');
+    var ci = curSlideIdx();
+    pg.textContent = '第 ' + (ci + 1) + ' 页' + (slides[ci] && slides[ci].dataset.title ? ' · ' + slides[ci].dataset.title : '');
   }
-  function reset(){
-    var pool=document.getElementById('q22-pool');
-    if(pool){
-      document.querySelectorAll('#q22-pool .draggable, #q22-pool ~ div .drop-zone .draggable, #q22-pool ~ p .drop-zone .draggable').forEach(function(d){
-        d.classList.remove('correct-placed','wrong-placed');
-        pool.appendChild(d);
-      });
-    }
-    var result=document.getElementById('q22-result');
-    if(result)result.style.display='none';
-  }
-  window.checkQ22=check;window.resetQ22=reset;
+}
+function openNotes() {
+  loadNote();
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.add('open');
+  if (ov) ov.classList.add('open');
+  var ta = document.getElementById('npTa');
+  if (ta) setTimeout(function() { ta.focus(); }, 250);
+}
+function closeNotes() {
+  var pn = document.getElementById('notesPanel');
+  var ov = document.getElementById('notesOverlay');
+  if (pn) pn.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+}
+(function initNotes() {
+  var ta = document.getElementById('npTa');
+  if (!ta) return;
+  var t = null;
+  ta.addEventListener('input', function() {
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(NOTE_KEY + curSlideIdx(), ta.value); } catch (e) {}
+    }, 300);
+  });
+  document.addEventListener('click', function(ev) {
+    var pn = document.getElementById('notesPanel');
+    if (!pn || !pn.classList.contains('open')) return;
+    if (pn.contains(ev.target)) return;
+    if (ev.target.closest && ev.target.closest('#notesBtn')) return;
+    closeNotes();
+  });
 })();
-// === Q68 Heading Match Drag (independent) ===
-(function(){
-  function check(){
-    var zones=document.querySelectorAll('#q68-pool ~ div .drop-zone');
-    var correct=0,total=5;
-    zones.forEach(function(z){
-      var accept=z.dataset.accept;
-      var placed=z.querySelector('.draggable');
-      if(placed){
-        var cat=placed.dataset.cat;
-        placed.classList.remove('correct-placed','wrong-placed');
-        if(cat===accept){placed.classList.add('correct-placed');correct++;}
-        else{placed.classList.add('wrong-placed');}
-      }
+
+// === 🧱 Brick covers + Show Data (ported from 2015DSE-Paper1_v1, unified 2026-09-02) ===
+function hitCover(el) {
+  if (el.classList.contains('shattered')) return;
+  if (el.classList.contains('cracked')) {
+    shatterCover(el, false);
+  } else {
+    el.classList.add('cracked');
+    if (el.animate) el.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(.92)' }, { transform: 'scale(1)' }],
+      { duration: 160, easing: 'ease-out' }
+    );
+  }
+}
+function shatterCover(el, silent) {
+  if (el.classList.contains('shattered')) return;
+  el.classList.remove('cracked');
+  el.classList.add('shattered');
+  if (!silent && typeof spawnFragments === 'function') spawnFragments(el);
+  var si = (typeof slideIndexOf === 'function') ? slideIndexOf(el) : -1;
+  if (si >= 0) {
+    var st = loadDeckState();
+    st.cov = st.cov || {};
+    var covers = document.querySelectorAll('.slide')[si].querySelectorAll('.rate-cover');
+    for (var i = 0; i < covers.length; i++) if (covers[i] === el) { st.cov[si + ':' + i] = 1; break; }
+    saveDeckState();
+  }
+}
+function spawnFragments(el) {
+  var rect = el.getBoundingClientRect();
+  var n = 12;
+  for (var i = 0; i < n; i++) {
+    var f = document.createElement('span');
+    f.className = 'rate-fragment';
+    f.style.left = (rect.left + Math.random() * rect.width) + 'px';
+    f.style.top = (rect.top + Math.random() * rect.height) + 'px';
+    document.body.appendChild(f);
+    setTimeout((function(node) { return function() { node.remove(); }; })(f), 900);
+  }
+}
+function showAllData() {
+  var btn = document.getElementById('showDataBtn') || document.getElementById('hintToggleBtn');
+  var standing = document.querySelectorAll('.rate-cover:not(.shattered)');
+  if (standing.length > 0) {
+    standing.forEach(function(el) { shatterCover(el, true); });
+    if (btn && btn.animate) btn.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+      { duration: 220, easing: 'ease-out' });
+    if (btn) { btn.textContent = '\uD83E\uDDF1 Restore Covers'; btn.classList.add('active'); }
+    if (typeof showToast === 'function') showToast('\uD83D\uDCCA All ' + standing.length + ' covers removed — data revealed!', 'success');
+  } else {
+    document.querySelectorAll('.rate-cover').forEach(function(el) {
+      el.classList.remove('shattered', 'cracked');
+      el.classList.add('rebuild');
+      setTimeout((function(node) { return function() { node.classList.remove('rebuild'); }; })(el), 450);
     });
-    var result=document.getElementById('q68-result');
-    if(result){
-      result.style.display='block';
-      result.innerHTML='<div style="padding:12px;text-align:center"><strong>'+correct+'/'+total+' correct</strong>'+(correct===total?' 🎉 All correct!':'')+'</div>';
-    }
-    if(correct===total)showToast('\u2705 Q68 correct!','success');
-    else showToast('Q68: '+correct+'/5 correct','error');
+    var st = loadDeckState();
+    st.cov = {};
+    saveDeckState();
+    if (btn && btn.animate) btn.animate(
+      [{ transform: 'rotate(0)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }],
+      { duration: 220, easing: 'ease-out' });
+    if (btn) { btn.textContent = '\uD83D\uDCCA Show Data'; btn.classList.remove('active'); }
+    if (typeof showToast === 'function') showToast('\uD83E\uDDF1 All brick covers restored!', 'info');
   }
-  function reset(){
-    var pool=document.getElementById('q68-pool');
-    if(pool){
-      document.querySelectorAll('#q68-pool .draggable, #q68-pool ~ div .drop-zone .draggable').forEach(function(d){
-        d.classList.remove('correct-placed','wrong-placed');
-        pool.appendChild(d);
-      });
-      if(typeof sortDraggablesInPool==='function')sortDraggablesInPool(pool);
-    }
-    var result=document.getElementById('q68-result');
-    if(result)result.style.display='none';
-  }
-  window.checkQ68=check;window.resetQ68=reset;
+}
+(function restoreCoversInit() {
+  var st = loadDeckState();
+  if (!st.cov) return;
+  document.querySelectorAll('.slide').forEach(function(slide, si) {
+    slide.querySelectorAll('.rate-cover').forEach(function(cv, ci) {
+      if (st.cov[si + ':' + ci]) cv.classList.add('shattered');
+    });
+  });
 })();

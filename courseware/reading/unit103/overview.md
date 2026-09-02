@@ -1,77 +1,100 @@
-# 2022 DSE Paper 1 阅读卷 · 网页课件 v2 — 构建文档
+# 2018DSE-Paper1_v2 — 制作记录
 
-> **v2 变更（2026-08-06）**：Q1(ii) 答案由 D（over a thousand）更正为 **C（over a hundred）**——¶1 为 128 drawings 全数售出，超过一百而非超过一千；解析同步移到 C。其余内容与 v1 完全一致。
+## 2026-09-02：以 2015DSE-Paper1_v1 为参考的全功能统一迭代
 
-> **配色更新（2026-08-12）**：在原有 8 套主题色基础上新增 **Pink（粉色）** 主题色（dark `#db2777` / light `#f9a8d4`），设为默认主题。原 Purple 保留为第二选项。同时将 legacy 区段所有硬编码紫色 RGB 值（`rgba(90,1,167,…)` / `rgba(219,184,255,…)`）统一替换为 CSS 变量 `var(--accent-rgb)` / `var(--accent-light-rgb)`，使主题切换在 legacy 样式区段也生效。`--sidebar-active` 改为跟随 `var(--fcc-purple)` 动态变化。备份位于 `2022DSE-Paper1_v2_backup`。
+来源版本：`2018DSE-Paper1_v1/`（原版保留未动；zip 备份：`_backup_20260902/2018DSE-Paper1_v1_backup_20260902.zip`）
 
-## 产物
-- 目录：`/Users/chenchengyu/Desktop/真题&模拟题/网页课件/2022DSE-Paper1_v2/`（由 v1 复制，v1 保留未动）
-- 结构：`index.html` + `css/main.css` + `js/main.js`（css/js 复制自 2023DSE-Paper1_v2 模板）
-- `DECK_KEY = 'xdf-dse2022-p1-state'`（与 2023 版隔离，互不串档）
-- 范围：按用户要求**仅含 Part A（Q1–23）+ Part B2（Q43–65）**；Part B1 不含（MD 中 B1 只有答案无篇章题目）
+### 统一内容（对齐 2015_v1 功能集）
+1. **Topbar 重构**：📊 Show Data / 🔒 Easy / 📝 Notes / 🗑 Clear / ↺ Reset / 🎨 Theme 收进「⋯」菜单；🎲 随机点名直达导航栏
+2. **📝 Notes 笔记**：右侧滑入面板、按页 localStorage 持久化（NOTE_KEY=`xdf-dse2018-p1-note_`）、300ms 防抖自动保存
+3. **🧱 砖块正确率**：裸 rate-chip 已有砖块 128；Show Data 一键全碎/复原（含状态 cov 回放）
+4. **响应式收纳**：<1300 隐 course-tag；<1024 计时器紧凑；<768 隐标题/连击+换行兜底；<430 隐缩放
+5. **悬浮修复**：reveal-btn / q1-tap-btn 悬浮改亮紫底+深色文字（废除 brightness 连带提亮白字）
+6. **DECK_KEY**：`xdf-dse2018-p1-state` → `xdf-dse2018-p1-v2-state`（版本隔离惯例；旧版保存的答题记录重置，笔记不受影响）
+7. **移植方式**：直接修补 index.html / js / css（gen_2018.py HEAD 同步修补，未来 regen 不回退）
 
-## Slide 结构（共 50 张）
-| Slides | 内容 |
-|---|---|
-| 1–2 | 封面、考试说明（45,029 考生 / B1 45.3% vs B2 54.7% / 等级规则） |
-| 3 | Part A 篇章导入（Text 1 港漫衰落 · 结构导读） |
-| 4–10 | Text 1 全文 ¶1–15（逐段 verbatim，7 张） |
-| 11–25 | Part A Q1–23（Q1 三空 MC / Q2 词汇 / Q3 MC / Q4–5 / Q6–7 小传填空 / Q8 MC / Q9 / Q10 TFNG 表 / Q11 改错表 / Q12 开放题 / Q13–14 / Q15–16 / Q17 / Q18 年表填空 / Q19–21 / Q22 预测对照表 / Q23 MC） |
-| 26 | Part A 官方考生表现分析 |
-| 27 | Part B2 篇章导入（Text 4 AI 伦理 · 四位人物） |
-| 28–33 | Text 4 全文 ¶1–12（含两个小标题，6 张） |
-| 34–48 | Part B2 Q43–65（Q43 摘要填空 / Q44 隐喻 / Q45–46 / Q47 MC / Q48 指代 / Q49 / Q50 伦理担忧表 / Q51–52 / Q53 填空 / Q54–55 / Q56 利弊表 / Q57–58 / Q59 MC / Q60 Tick 表 / Q61 Furman 表 / Q62–63 / Q64 人物匹配表 / Q65 MC） |
-| 49 | Part B2 官方考生表现分析 |
-| 50 | 官方备考建议 4 条 + 总结 |
+### 验证（headless，4 尺寸 × 全功能）
+菜单开合且各项在视口内、Notes 输入→重载→持久化、Picker 开启→滚动落点、Easy⇄Hard、Show Data 全碎+Restore、1280/1024/768/375 零溢出零裁剪、零页面错误。JS `node --check` 通过 + gen ast.parse 通过。
 
-## 交互组件
-- MC（`pmcq-opt` + `checkMCAuto`）：Q1(i–iii)、Q3、Q8、Q16、Q19、Q23、Q47、Q59、Q65 共 11 组，`data-correct` 与官方答案一致（11/11 PASS）
-- 填空揭示（`cloze` + `revealCloze`）：Q4、Q7、Q14、Q18、Q22、Q43、Q45、Q49、Q50、Q53、Q54、Q56、Q58、Q61 —— 答案含全部官方可接受变体（`//` 分隔）
-- 简答揭示（`reveal-btn` + `toggleRev` + `ans-reveal`）：Q2、Q5、Q6、Q9、Q12、Q13、Q15、Q17、Q20、Q21、Q44、Q46、Q48、Q51、Q52、Q55、Q57、Q62、Q63
-- 逐行揭示表（`q1-hidden-row` + `revealQ1Row`）：Q10 TFNG、Q11 改错、Q64 人物匹配
-- 静态答案表：Q60 Tick 表（✓/— 直标）
-- 所有答案均附官方正确率；隐藏方法提示（`method-wrap`）由顶栏 💡 Show Tips 统一展开
+---
 
-## 校验结果
-- 标签平衡：div 522/522 · section 50/50 · table 9/9 · tr 40/40 · td 103/103 · th 30/30 · span 231/231 · p 41/41 · ul 8/8 · ol 1/1 · li 32/32 · button 48/48 ✅
-- 无重复 id；`node --check js/main.js` 通过
-- MC 答案键 11/11 与 MD 官方答案一致
-- 内容标记 30/30 全部命中（Old Master Q / toxic storm / redlining / ubiquity / Kowloon Walled City / resume-screening / human gatekeepers / educational intervention 等）
-- `data-hard-group`：`pa`（Part A）、`pb2`（Part B2）；篇章页用整页 `passage-excerpt`（无 split-left），Hard 模式按钮惰性无害
+# 以下为来源版本历史记录 ---
 
-## 保真说明
-- 两篇篇章 ¶1–15 / ¶1–12 逐字照录，含两个 B2 小标题（What are the ethical concerns… / How much government regulation…）
-- 所有题干、选项、分值、（正确率）与官方答案（含 `//` 变体与括号可选部分）与 MD 完全一致
-- Q22 表格中 example 行（unappreciated）按 MD 原样标注 (example)
-- Q60 按 MD 勾选 Liability from misuse + Unintended consequences
-- 官方考生表现分析拆为 Part A（S26）与 Part B2（S49）两张；备考建议并入 S50 总结页；B1 相关分析未收录（与本课件范围一致）
+# 2018 DSE Paper 1 阅读卷 网页课件 v1 — 制作记录
 
-## 2026-07-29 更新：三项交互改造
+## 2026-08-21：初版生成（基于 2024DSE-Paper1_v4 模板）
 
-### 1. Q60（S44）多选交互
-- 原为静态表格直接暴露 ✓ 答案 → 改为 data-multi="true" 多选 MC：逐项判分，选对一项提示继续、选对全部锁定、选错揭示所有应选项；官方答案转入 Show Official Answer 折叠块
-- js/main.js 的 checkMCAuto 新增多选分支（data-multi）
+### 依据
+`/Users/chenchengyu/Downloads/HKDSE_2018_English_Paper1_Reading_QA (1).md`（2018 DSE Paper 1 官方评卷参考，含 71 题答案、正确率与全卷篇章）。
+模板：`2024DSE-Paper1_v4`（整目录复制，改 `DECK_KEY` 为 `xdf-dse2018-p1-state`）。
 
-### 2. Q64（S47）拖拽改造
-- 原为逐行 Tap 揭示 → 改为完整拖拽：6 条评论 draggable 在 #q64-pool 选项池，5 个 drop-zone（A Furman/B Fuller/C Mills/D Sandel/E Not stated）
-- 拖回选项池自动 sortDraggablesInPool 重排（复用模板现有函数）；q64Check/q64Reset 作用域限定本 slide
+### 试卷结构（36 张幻灯片）
+- **Part A（Q1–Q22）**：Text 1 音乐课程分类广告 + Text 2 音乐与专注力（含读者评论）
+- **Part B1（Q23–Q45）**：Text 3 蜂蜇急救指南 + Text 4 香港城市养蜂人
+- **Part B2（Q46–Q71）**：Text 5 人工授粉 + Text 6 Sweetness and Light
+- 每部分含 divider / Entry Test（翻转卡）/ 题目页 / Close Reading（sigwords）/ Exit Test / Recap（难题榜）
+- 全卷数据榜（Top-10 / Bottom-10 正确率表）+ 考生表现分析（54,382 名考生；Part A 54.3% / B1 47.9% / B2 52.5%）+ Well Done 收尾页
 
-### 3. 正确率统一 rate-chip（对齐 2025DSE-Paper1_v1）
-- css 移植 .rate-chip / .rate-chip.hard + 暗色覆盖（<50% 显示 ⚠️ 橙色 hard 样式）
-- 47 处 chip：所有 pmcq-label 题干旁（33 处脚本 + 11 处 MC pass1 + Q10/Q22/Q64 h3 等）
-- 清除散落于 data-explain / ans-reveal / cloze 行内（xx%）/[xx%] 的正确率文本；保留：方法 badge 内一句、Q64 官方答案块、S26/S49 分析页
-- 校验：tags ALL OK / 50 slides / 无重复 id / node --check OK / 12 MC blocks 完整
+### 题型组件统计
+- rate-chip ×128（全部覆盖砖块遮盖）、cloze 填空 ×40、practice-mcq ×81、tfng-group ×10、Q71 匹配题（word-pool 拖放 ×6）
 
-## 2026-07-29 更新 2：Q11 改错两步揭示 + Q10 TFNG 点选
+### 新功能 1：正确率像素砖块遮盖（本版核心特性）
+- 所有正确率 chip（`rate-cover-wrap`）初始被像素砖块遮盖（`.rate-cover`，砖纹用 repeating-linear-gradient 绘制）。
+- **第 1 次点击**：砖块出现裂缝（`.cracked`：两道斜裂纹 + 抖动动画）。
+- **第 2 次点击**：砖块碎裂消失（`.shattered` 缩放淡出 + 12 个像素碎片颗粒飞溅 `spawnFragments`），露出下方正确率。
+- 遮盖状态持久化：`deckState.cov`（"slideIdx:coverIdx" → 1），刷新不还原。
+- 暗色模式砖块配色已适配（`body.dark .rate-cover`）。
 
-### Q11（S17）改错题 → 仿 2023 v2 两步揭示
-- 去掉 <u> 下划线与 Correction 答案列（开始时无任何提示）
-- Step 1：Tap to reveal → 行加 .revealed，错词变为虚线 cloze（显示原错词 gain/high/publisher/traditional）
-- Step 2：再点击错词 → revealCloze 显示订正词（lose / no·zero·no cost / website / successful·popular·famous），绿色加粗
-- (iv) 行 Tap 后显示 ✓ no mistake；h3 补 rate-chip ✅ 49%（改错题整体正确率）
+### 新功能 2：Show Data 按钮
+- 原 "Show Tips" 按钮重命名为 **📊 Show Data**（`showAllData()`），点击一次性击碎全部遮盖，显示所有题目正确率；快捷键 H 同步改为该功能。
+- 已全部揭示时点击提示 "All data already revealed"；揭示后按钮变为 "📊 Data Shown ✓"。
+- 旧 `toggleHints()` 函数保留但不再被按钮/H 键引用。
 
-### Q10（S16）TFNG → 点选作答
-- 新增 tfngPick(btn,rowId,answer)：学生先点 T/F/NG → 锁定该行使官方答案按钮变绿，答对 picked-correct / 答错 picked-wrong + note 提示；recordAnswer 计入总分
-- 新增 .tfng-btn/.picked-correct/.picked-wrong/.answer-shown/.tfng-note CSS（桌面断点，复用全局 .tfng-btn 无冲突）
-- 答案：i=NG(82%) ii=T(87%) iii=F(77%)
-- 校验：tags ALL OK / 50 slides / 无重复 id / JS OK / Q11 无暴露下划线
+### 生成方式
+两段式 Python 生成器（避免单文件写入超限）：
+- `gen_part1.py`：helpers（`chip`/`mcq`/`sa`/`tfng_slide`/`cloze`/`flip_grid`/`sig`/`slide`/`split`）+ 全部篇章文本 + Part A slides 1–11
+- `gen_2018.py`：B1/B2 slides 12–36 + HTML 外壳（侧边栏/顶栏/Show Data 按钮）+ 输出 index.html
+
+### 验证
+- HTML 标签平衡（div 1333/span 849/section 36/button 59/table 8/tr 53/td 142/th 24 全配对）✅
+- `node --check js/main.js` ✅；`hitCover` 绑定 128 处与遮盖数一致 ✅；无 "Show Tips"/`toggleHints` 残留 ✅
+
+### 已知说明
+- 2018 原始 MD 只给填空题答案、无 summary 原文，summary 句（Q6/Q17/Q26/Q27/Q36/Q53/Q60/Q70）为按篇章内容合理改写重构。
+
+## 2026-08-22：题干修复（Q6/Q17/Q36/Q53）
+
+### 依据
+`/Users/chenchengyu/Desktop/加速班【港】/网页课件/Unit 8 写作/HKDSE_2018_English_Paper1_Reading_QA .md`（更新版官方评卷参考）。
+
+### 修复内容
+1. **Q17 时间线填空（6 marks）**：原表格只有片段文字（"technological [limitations]"、"somewhat [simplistic] music"等），改为 MD 原始完整句（"At the start, technological (i) ____ resulted in the use of somewhat (ii) ____ music."等三阶段六空全文），学生可见完整语境。
+2. **Q53 摘要填空（5 marks）**：原 HTML 使用改写摘要，把答案嵌入题干（如 "despite the absence of bees" 直接暴露 (ii)=disappearing/absent；"Human pollinators are better" 暴露句意）。替换为 MD 原始考试文本（"a hike in crop yields"、"the (ii) ____ bees"、"superfluous"、"fussy workers"），不再泄露答案。
+3. **Q6 摘要填空（7 marks）**：原 HTML 使用改写流水文本，替换为 MD 原始结构化格式——含标题 "Paying Attention"、Conscious System / Unconscious System 分节，学生可对照原文结构定位。
+4. **Q36 摘要填空（4 marks）**：补充缺失的首句 "Michael Leung has more than one job." 及空 (i) 后的 "in addition to being a product designer"，与 MD 原文一致；题干说明也改为 "with a word or phrase found in paragraph 2"；method-wrap 同步更新。
+
+### 核对结果
+- Q26（表格填空）、Q27（流程图）、Q60（摘要）、Q70（摘要）：原文与 MD 一致，无暴露答案问题，无需修改。
+- 全卷 71 题答案与正确率与更新后 MD 全部一致。
+
+### 验证
+- HTML 标签平衡（div 1333/span 849/section 36/button 59/table 8/tr 50/td 136/th 24/p 148 全配对）✅
+- `node --check js/main.js` ✅；128 处 hitCover 绑定与遮盖数一致 ✅
+- Q17 完整句验证 ✅；Q53 原文 "superfluous" 存在且无答案泄露 ✅；Q6 "Paying Attention" 标题 ✅；Q36 完整句 ✅
+
+## 2026-08-22（晚）：Show Data 按钮改为双向切换（toggle）
+
+### 行为变更
+- **第 1 次点击**（有未碎砖块时）：一次性击碎全部剩余遮盖，显示所有正确率；按钮变为 **🧱 Restore Covers**。
+- **第 2 次点击**（全部已碎时）：恢复所有砖块至初始完整状态——移除全部 `.shattered`/`.cracked` 类，砖块以 `coverRebuild` 缩放动画重建；同时清空 `deckState.cov` 持久化记录（刷新后砖块保持完整）；按钮回到 **📊 Show Data**。
+- 可无限次来回切换；快捷键 H 同步生效（同一切换逻辑）。
+- 按钮提示文字更新为 "Toggle: shatter ALL brick covers to reveal rates / restore all covers (H)"（index.html 与 gen_2018.py 已同步）。
+
+### 改动文件
+- `js/main.js`：`showAllData()` 重写为双向 toggle（揭示分支 / 恢复分支）。
+- `css/main.css`：新增 `.rate-cover.rebuild` + `@keyframes coverRebuild` 砖块重建动画。
+- `index.html` / `gen_2018.py`：按钮 title 更新。
+
+### 验证（headless Chrome 端到端测试）
+- 128 个遮盖：第 1 次点击后 shattered=128/standing=0 ✅；第 2 次点击后 standing=128/shattered=0/cracked=0、按钮回到 "📊 Show Data"、`cov` 持久化清空 ✅；第 3 次点击再次全部击碎 ✅（VERDICT:PASS）。
+- `node --check js/main.js` ✅。

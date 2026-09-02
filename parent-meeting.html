@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智学平台 · 家长会</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="assets/shell.css" />
+  <link rel="stylesheet" href="assets/polish.css" />
+  <link rel="stylesheet" href="assets/parent-meeting.css" />
+  <link rel="stylesheet" href="assets/class-folders.css" />
+  <link rel="stylesheet" href="assets/parent-archive.css" />
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
+</head>
+<body>
+  <div class="parent-app">
+    <!-- 左侧：学生名册 -->
+    <aside class="parent-sidebar">
+      <div class="logo">家长会<br/>PARENT MTG</div>
+      <div class="head">
+        <h2>学生名册</h2>
+        <span class="pixel">ROSTER</span>
+      </div>
+
+      <button class="multi-toggle" id="multiToggle" type="button">☐ 多选删除</button>
+
+      <button class="upload-btn" id="uploadBtn" type="button">
+        <span style="font-size:14px">＋</span> 上传家长会材料
+      </button>
+      <div class="upload-hint">支持 Markdown（.md）或 PDF（.pdf）文档</div>
+
+      <button class="upload-btn class-btn" id="classManageBtn" type="button">
+        <span style="font-size:14px">📁</span> 班级管理
+      </button>
+      <div class="upload-hint">按班级建文件夹，把同学分组管理</div>
+
+      <div class="student-list" id="studentList">
+        <div class="doc-loading">加载中…</div>
+      </div>
+
+      <div class="batch-bar" id="batchBar" style="display:none">
+        <span class="bb-count">已选 <b id="batchCount">0</b> 项</span>
+        <div class="bb-actions">
+          <button class="bb-btn" id="batchAll" type="button">全选</button>
+          <button class="bb-btn" id="batchClear" type="button">清空</button>
+          <button class="bb-btn danger" id="batchDelete" type="button" disabled>删除选中</button>
+        </div>
+      </div>
+
+      <div class="parent-sidebar-foot">
+        <span class="role-tag" id="roleTag">--</span>
+        <a href="teacher.html">← 返回看板</a>
+      </div>
+    </aside>
+
+    <!-- 右侧：文档展示区 -->
+    <main class="parent-main">
+      <div class="parent-topbar">
+        <div class="crumb">智学平台 · 家长会 <b id="crumbName">未选择</b></div>
+        <div class="spacer"></div>
+        <div class="view-tabs" id="viewTabs" role="tablist">
+          <button class="vt active" data-view="archive" type="button" role="tab">🗂 归档浏览</button>
+          <button class="vt" data-view="flat" type="button" role="tab">📄 全部资料</button>
+        </div>
+        <button class="icon-btn" id="themeBtn" title="切换主题">🌙</button>
+      </div>
+
+      <!-- 归档导航：面包屑「家长会 > 班级 > 学生」+ 返回上级 -->
+      <nav class="archive-crumb" id="archiveCrumb" aria-label="归档路径">
+        <button class="ac-back" id="acBack" type="button" title="返回上级">← 返回</button>
+        <ol class="ac-path" id="acPath"></ol>
+      </nav>
+
+      <!-- 归档浏览：班级层（网格）/ 学生层（列表） -->
+      <section class="archive-view" id="archiveView" aria-live="polite">
+        <div class="av-head">
+          <div class="av-title">
+            <span id="avTitle">班级</span>
+            <span class="av-sub" id="avSub"></span>
+          </div>
+          <div class="av-search">
+            <input type="text" id="avSearch" placeholder="搜索班级…" autocomplete="off" />
+            <button class="av-clear" id="avClear" type="button" title="清空搜索">×</button>
+          </div>
+        </div>
+        <div class="av-body" id="avBody"></div>
+      </section>
+
+      <!-- 学生资料切换（同一学生多份材料时，在资料详情上方提供切换） -->
+      <div class="archive-mat" id="archiveMat" style="display:none"></div>
+
+      <div class="doc-toolbar" id="docToolbar" style="display:none">
+        <div class="info">
+          <div class="t" id="docTitle">--</div>
+          <div class="d" id="docDate">--</div>
+        </div>
+        <div class="actions">
+          <button class="icon-btn" id="viewReaderBtn" title="全屏阅读模式" style="display:none">⛶</button>
+          <button class="icon-btn" id="openPdfBtn" title="在新标签打开 PDF" style="display:none">↗</button>
+          <button class="icon-btn" id="openMdTabBtn" title="在新标签页打开" style="display:none">↗</button>
+          <button class="icon-btn" id="deleteBtn" title="删除此份材料">🗑</button>
+        </div>
+      </div>
+
+      <div class="doc-shell">
+        <article class="doc-paper" id="docPaper" style="display:none"></article>
+        <div class="doc-pdf" id="docPdf" style="display:none"></div>
+        <div class="doc-empty" id="docEmpty">
+          <div class="pixel">EMPTY</div>
+          <p>从左侧选择一位学生，或上传一份新的家长会材料。</p>
+        </div>
+        <div class="doc-loading" id="docLoading" style="display:none">加载中…</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 上传弹窗 -->
+  <div class="modal-mask" id="uploadModal">
+    <div class="modal">
+      <h3>上传家长会材料 <span class="pixel">.MD / .PDF</span></h3>
+      <div class="row">
+        <label>选择文件（可多选 · Markdown .md 或 PDF .pdf）</label>
+        <div class="file-drop" id="fileDrop">
+          <div class="icon">📄</div>
+          <div>点击或拖拽文件到此处</div>
+          <div class="hint">Markdown 会被解析为报告样式；PDF 将直接在界面内预览（不解析文本）</div>
+        </div>
+        <input type="file" id="fileInput" accept=".md,.pdf,text/markdown,application/pdf" multiple style="display:none" />
+        <div class="file-queue" id="fileQueue" style="display:none"></div>
+        <button class="file-queue-clear" id="fileQueueClear" type="button" style="display:none">清空列表</button>
+      </div>
+      <div class="row">
+        <label>统一标题（可选，留空则使用各文件原名作为标题）</label>
+        <input type="text" id="titleInput" placeholder="例如：张淳安 · 家长会汇报材料" />
+      </div>
+      <div class="err" id="uploadErr"></div>
+      <div class="actions">
+        <button class="btn-cancel" id="uploadCancel" type="button">取消</button>
+        <button class="btn-upload" id="uploadConfirm" type="button" disabled>上传</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全屏阅读模式（Markdown / PDF 通用，类似 PDF viewer 全屏阅读） -->
+  <div class="doc-reader" id="docReader">
+    <div class="doc-reader-bar">
+      <div class="doc-reader-title">
+        <span id="readerTitle">--</span>
+        <span class="doc-reader-date" id="readerDate"></span>
+      </div>
+      <div class="doc-reader-actions">
+        <a href="#" target="_blank" rel="noopener" class="reader-newtab" id="readerNewtab" style="display:none">↗ 新标签</a>
+        <div class="reader-zoom" role="group" aria-label="内容缩放">
+          <button class="reader-zoom-out" id="readerZoomOut" type="button" title="缩小">−</button>
+          <span class="reader-zoom-label" id="readerZoomLabel">120%</span>
+          <button class="reader-zoom-in" id="readerZoomIn" type="button" title="放大">＋</button>
+        </div>
+        <button class="reader-fill" id="readerFillBtn" type="button" title="铺满全屏">⤢</button>
+        <button class="reader-fs" id="readerFs" type="button" title="系统全屏（可选）">⬚</button>
+        <button class="reader-close" id="readerClose" type="button" title="退出全屏阅读（Esc）">✕</button>
+      </div>
+    </div>
+    <div class="doc-reader-body" id="docReaderBody"></div>
+  </div>
+
+  <!-- 班级管理（班级文件夹）：创建班级、按班添加同学、分组管理 -->
+  <div class="modal-mask" id="classModal">
+    <div class="modal class-modal">
+      <h3>班级管理 <span class="pixel">CLASS FOLDERS</span>
+        <button class="modal-x" id="classClose" type="button" title="关闭">✕</button>
+      </h3>
+      <div class="class-layout">
+        <!-- 左：文件库（可拖拽的源） -->
+        <div class="class-left">
+          <div class="class-panel-head">📂 文件库 <span class="muted" id="libCount"></span></div>
+          <input type="text" id="libFilter" class="lib-filter" placeholder="筛选文件名…" />
+          <div class="lib-tools">
+            <label class="lt-all"><input type="checkbox" id="selAll" /> 全选当前筛选</label>
+            <span class="lt-count">已选 <b id="selCount">0</b></span>
+            <button class="lt-archive" id="batchArchiveBtn" type="button" disabled>📦 批量整合</button>
+          </div>
+          <div class="file-lib" id="fileLib">
+            <div class="class-empty-sm">还没有已导入的文件。</div>
+          </div>
+        </div>
+        <!-- 右：班级文件夹（拖放目标） -->
+        <div class="class-right">
+          <div class="class-new">
+            <input type="text" id="classNameInput" placeholder="新建班级，如：香港加速班264" maxlength="40" />
+            <button class="btn-add" id="classCreate" type="button" title="新建班级">＋</button>
+          </div>
+          <div class="class-folders" id="classList">
+            <div class="class-empty-sm">还没有班级，先新建一个吧。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 批量整合归档：目标文件夹选择器 + 冲突处理 + 进度与结果 -->
+  <div class="modal-mask" id="archiveModal">
+    <div class="modal archive-modal">
+      <h3>批量整合归档 <span class="pixel">BATCH ARCHIVE</span>
+        <button class="modal-x" id="archiveClose" type="button" title="关闭">✕</button>
+      </h3>
+
+      <div class="row">
+        <label>目标文件夹</label>
+        <input type="text" id="folderFilter" class="lib-filter" placeholder="搜索班级或子文件夹…" autocomplete="off" />
+        <div class="folder-picker" id="folderPicker">
+          <div class="class-empty-sm">加载中…</div>
+        </div>
+        <div class="folder-new">
+          <input type="text" id="newSubInput" placeholder="在选中班级下新建子文件夹…" maxlength="40" />
+          <button class="btn-add" id="newSubBtn" type="button" title="新建子文件夹">＋</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label>已选材料（<b id="pickCount">0</b>）</label>
+        <div class="pick-list" id="pickList"></div>
+      </div>
+
+      <div class="row">
+        <label>同名冲突处理</label>
+        <div class="conflict-opts">
+          <label><input type="radio" name="conflict" value="rename" checked /> 自动重命名</label>
+          <label><input type="radio" name="conflict" value="overwrite" /> 覆盖</label>
+          <label><input type="radio" name="conflict" value="skip" /> 跳过</label>
+        </div>
+        <div class="conflict-tip" id="conflictTip">请先选择目标文件夹</div>
+      </div>
+
+      <div class="archive-progress" id="archiveProgress" style="display:none">
+        <div class="ap-bar"><div class="ap-fill" id="apFill"></div></div>
+        <div class="ap-text" id="apText">准备中…</div>
+      </div>
+
+      <div class="archive-result" id="archiveResult" style="display:none"></div>
+
+      <div class="err" id="archiveErr"></div>
+      <div class="actions">
+        <button class="btn-cancel" id="archiveCancel" type="button">关闭</button>
+        <button class="btn-cancel" id="retryBtn" type="button" style="display:none">↻ 重试失败项</button>
+        <button class="btn-upload" id="archiveConfirm" type="button" disabled>开始归档</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
+  <script src="assets/polish.js"></script>
+  <script src="assets/parent-meeting.js"></script>
+  <script src="assets/parent-archive.js"></script>
+  <script src="assets/class-folders.js"></script>
+</body>
+</html>

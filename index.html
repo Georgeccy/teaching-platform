@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 学习主页</title>
   <link rel="icon" type="image/png" href="assets/app-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg: #F4ECD8;
@@ -49,7 +47,15 @@
       padding: 24px 16px;
       display: flex; flex-direction: column;
       position: sticky; top: 0; height: 100vh;
+      /* 侧栏项超过一屏时（工具区注入后共 11 项）内部滚动，避免底部按钮被裁掉 */
+      overflow-y: auto; overscroll-behavior: contain;
+      scrollbar-width: thin; scrollbar-color: var(--line) transparent;
     }
+    .sidebar::-webkit-scrollbar { width: 8px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--line); border: 2px solid var(--bg); }
+    /* 侧栏内容较高时不要把页脚吸底，否则会顶开滚动区 */
+    .sidebar .nav { flex-shrink: 0; }
     .main { flex: 1; min-width: 0; padding: 24px 32px 48px; }
 
     /* logo */
@@ -167,7 +173,7 @@
     .bar > i { display: block; height: 100%; background: var(--green); }
     .bar > span { position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"Press Start 2P"; font-size:8px; color:#2E2A3B; }
     .card .row { display:flex; align-items:center; justify-content:space-between; }
-    .card .go { font-family:"Press Start 2P"; font-size:9px; background: var(--blue); color:#fff; border:3px solid var(--line); padding:8px 10px; cursor:pointer; box-shadow:3px 3px 0 var(--shadow); }
+    .card .go { font-family:"Press Start 2P"; font-size:9px; background: var(--blue); color:#fff; border:3px solid var(--line); padding:8px 14px; cursor:pointer; box-shadow:3px 3px 0 var(--shadow); white-space:nowrap; }
     .card .go:hover { transform: translate(-2px,-2px); }
 
     .mascot-row { display:flex; gap: 4px; align-items:center; }
@@ -181,6 +187,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/polish.css" />
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="app">
@@ -196,6 +203,7 @@
         <a href="games.html"><span class="dot"></span>课间小游戏</a>
         <div class="nav-sep">工具</div>
         <a href="courseware-studio.html" class="tool"><span class="dot"></span>课件生成工坊</a>
+        <a href="parent-meeting.html" class="tool nav-teacher-only" id="navParentMeeting" style="display:none"><span class="dot"></span>家长会</a>
       </nav>
       <div class="sidebar-foot">
         <!-- pixel blob mascot -->
@@ -246,10 +254,10 @@
           </svg>
         </div>
           <h3>Reading 单元库</h3>
-          <div class="sub">阅读理解 · Paper 1 · 4 个单元</div>
+          <div class="sub" data-prog-total="reading">阅读理解 · Paper 1</div>
           <div class="desc">考试认知 / 题型策略 / 真实 DSE 篇章精读：网络交友、价值观、瞬逝艺术、西九文化区等主题。</div>
-          <div class="bar"><i style="width:60%"></i><span>60%</span></div>
-          <div class="row"><span class="sub">已学 6/10 节</span><a class="go" href="reading.html" data-enter="reading.html">进入 →</a></div>
+          <div class="bar" data-prog="reading"><i style="width:0%"></i><span>0%</span></div>
+          <div class="row"><span class="sub" data-prog-label="reading">已学 0 节</span><a class="go" href="reading.html" data-enter="reading.html">进入 →</a></div>
         </div>
 
         <div class="card">
@@ -267,10 +275,10 @@
           </svg>
         </div>
           <h3>Writing 单元库</h3>
-          <div class="sub">写作训练 · Paper 2 · 4 个单元</div>
+          <div class="sub" data-prog-total="writing">写作训练 · Paper 2</div>
           <div class="desc">审题构思 / 文章结构 / 描述性语言库 / PEER 论证：读者来信、课外活动、年鉴条目、叙事文章。</div>
-          <div class="bar"><i style="width:30%"></i><span>30%</span></div>
-          <div class="row"><span class="sub">已学 3/10 节</span><a class="go" href="writing.html" data-enter="writing.html">进入 →</a></div>
+          <div class="bar" data-prog="writing"><i style="width:0%"></i><span>0%</span></div>
+          <div class="row"><span class="sub" data-prog-label="writing">已学 0 节</span><a class="go" href="writing.html" data-enter="writing.html">进入 →</a></div>
         </div>
 
         <div class="card">
@@ -289,10 +297,10 @@
           </svg>
         </div>
           <h3>Grammar 单元库</h3>
-          <div class="sub">语法 · Oxford Success · 4 个单元</div>
+          <div class="sub" data-prog-total="grammar">语法 · Oxford Success</div>
           <div class="desc">词形转换 · 连词语序 · 不及物动词陷阱 · 综合薄弱点混合训练。</div>
-          <div class="bar"><i style="width:80%"></i><span>80%</span></div>
-          <div class="row"><span class="sub">已学 8/10 节</span><a class="go" href="grammar.html" data-enter="grammar.html">进入 →</a></div>
+          <div class="bar" data-prog="grammar"><i style="width:0%"></i><span>0%</span></div>
+          <div class="row"><span class="sub" data-prog-label="grammar">已学 0 节</span><a class="go" href="grammar.html" data-enter="grammar.html">进入 →</a></div>
         </div>
       </section>
 
@@ -320,7 +328,20 @@
     });
   </script>
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script src="assets/polish.js"></script>
+  <script>
+    // 仅教师可见「家长会」入口（该页含全体学生评估，学生端不展示）
+    (function () {
+      try {
+        var u = (window.ZhiXue && ZhiXue.user) || JSON.parse(localStorage.getItem('zhixue-user') || 'null');
+        if (u && u.role === 'teacher') {
+          var el = document.getElementById('navParentMeeting');
+          if (el) el.style.display = '';
+        }
+      } catch (e) {}
+    })();
+  </script>
   <script>
     ZhiXue.initAuthChip();
 
@@ -337,7 +358,7 @@
         return d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
       }
       function poll() {
-        fetch('/.watch_status.json', { cache: 'no-store' })
+        fetch('/api/sync-status', { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (s) {
             if (!s) { chip.className = 'sync-chip'; txt.textContent = '同步：未运行'; return; }
@@ -366,7 +387,7 @@
           .then(function (r) { return r.json(); })
           .then(function () {
             var iv = setInterval(function () {
-              fetch('/.watch_status.json', { cache: 'no-store' })
+              fetch('/api/sync-status', { cache: 'no-store' })
                 .then(function (r) { return r.ok ? r.json() : null; })
                 .then(function (s) {
                   if (s && s.status && s.status !== 'running') {
@@ -384,6 +405,83 @@
             btn.textContent = '立即同步';
             ZhiXue.toast('同步请求失败', 'err');
           });
+      });
+    })();
+
+    // ── 单元库进度条：接后端真实进度（替代原先硬编码 60% / 30% / 80%）──
+    (function () {
+      var META = {
+        reading: { label: '阅读理解 · Paper 1', fallback: 4 },
+        writing: { label: '写作训练 · Paper 2', fallback: 4 },
+        grammar: { label: '语法 · Oxford Success', fallback: 4 }
+      };
+      var totals = null;
+
+      // 单元总数以 courseware/manifest.json 为唯一来源（同步脚本产出）
+      function loadTotals() {
+        if (totals) return Promise.resolve(totals);
+        return fetch('courseware/manifest.json', { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : {}; })
+          .then(function (m) { return (totals = countFrom(m)); })
+          .catch(function () { return (totals = countFrom(null)); });
+      }
+      function countFrom(m) {
+        var t = {};
+        Object.keys(META).forEach(function (k) {
+          var v = m && m[k];
+          var n = v && typeof v === 'object' ? Object.keys(v).length : 0;
+          t[k] = n || META[k].fallback;
+        });
+        return t;
+      }
+
+      // completedUnits 形如 reading-u1 / writing-u12 / grammar-sprint
+      function tally(units) {
+        var done = { reading: 0, writing: 0, grammar: 0 };
+        (units || []).forEach(function (u) {
+          var kind = String(u).split('-')[0];
+          if (done[kind] !== undefined) done[kind]++;
+        });
+        return done;
+      }
+
+      function paint(tot, done) {
+        Object.keys(META).forEach(function (kind) {
+          var total = tot[kind] || 0;
+          var n = Math.min(done[kind] || 0, total);
+          var pct = total ? Math.round((n / total) * 100) : 0;
+
+          var sub = document.querySelector('[data-prog-total="' + kind + '"]');
+          if (sub) sub.textContent = META[kind].label + ' · ' + total + ' 个单元';
+
+          var bar = document.querySelector('[data-prog="' + kind + '"]');
+          if (bar) {
+            var fill = bar.querySelector('i'), txt = bar.querySelector('span');
+            if (fill) fill.style.width = pct + '%';
+            if (txt) txt.textContent = pct + '%';
+          }
+
+          var lab = document.querySelector('[data-prog-label="' + kind + '"]');
+          if (lab) lab.textContent = '已学 ' + n + '/' + total + ' 节';
+        });
+      }
+
+      function refresh() {
+        loadTotals().then(function (tot) {
+          if (!window.ZhiXue || !ZhiXue.user) { paint(tot, {}); return; }
+          Promise.resolve(ZhiXue.loadProgress())
+            .then(function (p) {
+              paint(tot, tally(p && p.stats && p.stats.completedUnits));
+            })
+            .catch(function () { paint(tot, {}); });
+        });
+      }
+
+      refresh();
+      // 清空进度 / 做完练习后返回主页时，进度条同步刷新
+      window.addEventListener('focus', refresh);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) refresh();
       });
     })();
   </script>

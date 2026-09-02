@@ -1,0 +1,201 @@
+/* 智学平台 · 家长会「两级归档导航」
+ * 沿用平台像素复古令牌（--card / --line / --shadow / --pink / --green / --blue / --yellow）
+ * 结构：视图标签 → 面包屑 → 班级层网格 / 学生层列表 → 学生资料详情
+ */
+
+/* ---------- 顶栏视图标签 ---------- */
+.view-tabs { display: flex; gap: 6px; flex-shrink: 0; }
+.view-tabs .vt {
+  font-family: "Press Start 2P", monospace; font-size: 9px;
+  border: 3px solid var(--line); background: var(--card); color: var(--text);
+  padding: 9px 12px; cursor: pointer; box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform .12s, background .12s, box-shadow .12s;
+  white-space: nowrap;
+}
+.view-tabs .vt:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.view-tabs .vt.active { background: var(--yellow); }
+
+/* ---------- 面包屑 ---------- */
+.archive-crumb {
+  display: none; align-items: center; gap: 12px;
+  margin: 0 0 16px; flex-wrap: wrap;
+}
+.archive-crumb .ac-back {
+  font-family: "Press Start 2P", monospace; font-size: 9px;
+  border: 3px solid var(--line); background: var(--card); color: var(--text);
+  padding: 9px 12px; cursor: pointer; box-shadow: 3px 3px 0 var(--shadow);
+  transition: transform .12s, background .12s; flex-shrink: 0;
+}
+.archive-crumb .ac-back:hover:not(:disabled) { background: var(--yellow); transform: translate(-2px, -2px); }
+.archive-crumb .ac-back:disabled { opacity: .4; cursor: not-allowed; box-shadow: 3px 3px 0 var(--shadow); }
+
+.archive-crumb .ac-path {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  list-style: none; margin: 0; padding: 0; min-width: 0;
+}
+.archive-crumb .ac-item { display: flex; align-items: center; }
+.archive-crumb .ac-sep { color: var(--muted); font-size: 13px; }
+.archive-crumb .ac-link {
+  font-size: 13px; color: var(--muted); background: transparent; border: 0;
+  border-bottom: 2px solid transparent; padding: 2px 0; cursor: pointer; font-family: inherit;
+  transition: color .12s, border-color .12s;
+}
+.archive-crumb .ac-link:hover { color: var(--blue); border-bottom-color: var(--blue); }
+/* 当前层级高亮 */
+.archive-crumb .ac-item.active .ac-link,
+.archive-crumb .ac-item.active .ac-cur {
+  color: var(--text); font-weight: 700; border-bottom-color: var(--pink);
+}
+.archive-crumb .ac-cur { font-size: 13px; color: var(--text); font-weight: 700; padding: 2px 0; }
+
+/* ---------- 归档浏览容器 ---------- */
+.archive-view { display: none; }
+.archive-view .av-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.archive-view .av-title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.archive-view .av-title > span:first-child { font-size: 18px; font-weight: 700; }
+.archive-view .av-sub { font-size: 12px; color: var(--muted); font-family: "Press Start 2P", monospace; }
+
+.archive-view .av-search { display: flex; align-items: stretch; flex-shrink: 0; }
+.archive-view .av-search input {
+  width: 230px; max-width: 52vw; border: 3px solid var(--line); background: var(--bg);
+  padding: 9px 12px; font-family: inherit; font-size: 13px; color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow); outline: none;
+}
+.archive-view .av-search input:focus { border-color: var(--blue); }
+.archive-view .av-clear {
+  width: 38px; border: 3px solid var(--line); border-left: 0; background: var(--card);
+  color: var(--muted); cursor: pointer; font-size: 15px; box-shadow: 3px 3px 0 var(--shadow);
+}
+.archive-view .av-clear:hover { background: var(--pink); color: #fff; }
+
+/* ---------- 班级层：网格 ---------- */
+.av-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+}
+.cls-card {
+  display: flex; flex-direction: column; gap: 10px; text-align: left;
+  border: 3px solid var(--line); background: var(--card); color: var(--text);
+  box-shadow: 4px 4px 0 var(--shadow); padding: 16px 16px 14px;
+  cursor: pointer; font-family: inherit;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.cls-card:hover { transform: translate(-3px, -3px); box-shadow: 7px 7px 0 var(--shadow); background: var(--bg); }
+.cls-card .cc-icon { font-size: 22px; line-height: 1; }
+.cls-card .cc-name {
+  font-size: 15px; font-weight: 700; line-height: 1.35;
+  overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.cls-card .cc-stats { display: flex; flex-wrap: wrap; gap: 6px; }
+.cls-card .cc-stats .st {
+  font-size: 11px; color: var(--muted);
+  border: 2px solid var(--line); background: var(--bg); padding: 4px 7px; white-space: nowrap;
+}
+.cls-card .cc-stats .st b { color: var(--text); font-family: "Press Start 2P", monospace; font-size: 10px; }
+.cls-card .cc-go {
+  margin-top: auto; font-size: 12px; color: var(--blue); font-weight: 700;
+}
+
+/* ---------- 学生层：列表 ---------- */
+.av-list { display: flex; flex-direction: column; gap: 8px; }
+.stu-row {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  border: 3px solid var(--line); background: var(--card); color: var(--text);
+  box-shadow: 3px 3px 0 var(--shadow); padding: 11px 14px;
+  cursor: pointer; font-family: inherit; width: 100%;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.stu-row:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); background: var(--bg); }
+.stu-row .sr-av {
+  width: 38px; height: 38px; flex-shrink: 0; background: var(--blue); color: #fff;
+  border: 3px solid var(--line); font-family: "Press Start 2P", monospace; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stu-row .sr-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.stu-row .sr-name { font-weight: 700; font-size: 15px; line-height: 1.3; }
+.stu-row .sr-meta { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stu-row .sr-badge {
+  flex-shrink: 0; font-size: 10px; padding: 4px 7px;
+  border: 2px solid var(--line); font-family: "Press Start 2P", monospace;
+}
+.stu-row .sr-badge.ok { background: var(--green); color: #2E2A3B; }
+.stu-row .sr-badge.warn { background: var(--yellow); color: #2E2A3B; }
+.stu-row .sr-go { flex-shrink: 0; color: var(--muted); font-size: 18px; }
+
+/* ---------- 状态：加载 / 空 / 错误 / 无权限 ---------- */
+.av-state {
+  border: 3px dashed var(--line); background: var(--card);
+  padding: 44px 22px; text-align: center; color: var(--muted);
+}
+.av-state .pixel { font-size: 11px; margin-bottom: 12px; }
+.av-state p { font-size: 14px; line-height: 1.7; }
+.av-state.err, .av-state.perm { border-color: var(--pink); color: var(--pink); }
+.av-state.err .pixel, .av-state.perm .pixel { color: var(--pink); }
+.av-state.err p, .av-state.perm p { color: var(--text); }
+.av-state .av-retry {
+  margin-top: 14px; font-family: "Press Start 2P", monospace; font-size: 9px;
+  border: 3px solid var(--line); background: var(--blue); color: #fff;
+  padding: 9px 14px; cursor: pointer; box-shadow: 3px 3px 0 var(--shadow);
+}
+.av-state.loading { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 14px; }
+.av-spin {
+  width: 18px; height: 18px; border: 3px solid var(--line);
+  border-top-color: transparent; border-radius: 50%;
+  animation: avSpin .7s linear infinite;
+}
+@keyframes avSpin { to { transform: rotate(360deg); } }
+
+/* ---------- 学生资料切换条 ---------- */
+.archive-mat {
+  display: none; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 14px; padding: 10px 12px;
+  border: 3px solid var(--line); background: var(--card); box-shadow: 3px 3px 0 var(--shadow);
+}
+.archive-mat .am-label { font-size: 12px; color: var(--muted); font-weight: 700; flex-shrink: 0; }
+.archive-mat .am-chip {
+  font-size: 12px; border: 2px solid var(--line); background: var(--bg); color: var(--text);
+  padding: 6px 10px; cursor: pointer; font-family: inherit;
+  transition: transform .1s, background .12s;
+}
+.archive-mat .am-chip:hover { transform: translate(-1px, -1px); }
+.archive-mat .am-chip.on { background: var(--pink); color: #fff; }
+
+/* ---------- 归档模式下隐藏文档区（查看资料详情时除外） ---------- */
+/* 只在归档模式且未进入资料详情时隐藏，避免与 parent-meeting.js 自身的 display 控制打架 */
+.parent-main.archiving:not(.at-doc) #docToolbar,
+.parent-main.archiving:not(.at-doc) .doc-shell { display: none !important; }
+
+/* ---------- 入场动效（简洁、不阻塞操作） ---------- */
+@keyframes avIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.av-grid .cls-card,
+.av-list .stu-row { animation: avIn .18s ease both; }
+.av-grid .cls-card:nth-child(n+7),
+.av-list .stu-row:nth-child(n+11) { animation-delay: 0s; }
+@media (prefers-reduced-motion: reduce) {
+  .av-grid .cls-card, .av-list .stu-row { animation: none; }
+  .av-spin { animation-duration: 1.6s; }
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 920px) {
+  .view-tabs .vt { font-size: 8px; padding: 8px 9px; }
+  .archive-view .av-search input { width: 180px; }
+}
+@media (max-width: 720px) {
+  .parent-topbar { flex-wrap: wrap; gap: 8px; }
+  .view-tabs { order: 3; width: 100%; }
+  .view-tabs .vt { flex: 1; }
+  .av-grid { grid-template-columns: 1fr; }
+  .archive-view .av-head { align-items: stretch; }
+  .archive-view .av-search { width: 100%; }
+  .archive-view .av-search input { width: 100%; max-width: none; flex: 1; }
+  /* 移动端列表行更紧凑，保证可点击下钻 */
+  .stu-row { padding: 10px 11px; gap: 10px; }
+  .stu-row .sr-av { width: 34px; height: 34px; font-size: 11px; }
+  .stu-row .sr-meta { font-size: 11px; white-space: normal; }
+  .stu-row .sr-badge { font-size: 8px; padding: 3px 5px; }
+}

@@ -248,6 +248,21 @@ body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;b
   .task-quote{font-size:16px}
   .cb-label{font-size:16px}
 }
+/* ── Sort exercise (Body 1 排序练习) ── */
+.sort-wrap{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.sort-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:12px;background:#fafafa;border:1.5px solid rgba(0,0,0,.06);transition:border-color .2s,background .2s}
+.sort-row.sort-right{border-color:#2E7D32;background:#E8F5E9}
+.sort-row.sort-wrong{border-color:#C62828;background:#FFEBEE}
+.sort-slot{display:flex;align-items:center;font-size:22px;font-weight:800;color:var(--text-2);flex-shrink:0;white-space:nowrap}
+.sort-input{width:34px;height:40px;text-align:center;font-size:22px;font-weight:700;border:2px solid var(--card-bd);border-radius:8px;outline:none;color:var(--text-1);margin:0 4px;-moz-appearance:textfield}
+.sort-input::-webkit-inner-spin-button,.sort-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.sort-input:focus{border-color:var(--xdf-green)}
+.sort-sent{font-size:19px;line-height:1.9;flex:1}
+.sort-fn{display:none;font-size:16px;font-weight:700;color:var(--xdf-green);background:var(--xdf-gl);padding:4px 12px;border-radius:8px;white-space:nowrap;flex-shrink:0;align-self:center}
+.sort-result{font-size:19px;font-weight:700;padding:10px 16px;border-radius:10px;margin-top:6px;display:none}
+.sort-result.sort-ok{display:block;background:var(--xdf-gp);border:1.5px solid var(--xdf-green);color:var(--xdf-gd)}
+.sort-result.sort-err{display:block;background:#FFF3E0;border:1.5px solid #C85D0A;color:#C85D0A}
+@media(max-width:900px){.sort-row{flex-direction:column;align-items:flex-start}.sort-fn{align-self:flex-start}}
 </style>
 </head><body>
 <div class="topbar">
@@ -325,7 +340,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;b
 </section><section class="slide" data-title="📋 审题分析">
 <p class="sec-label">Task 2A · Understanding the Question</p>
 <h2 class="slide-h2">📋 审题分析</h2>
-<div class="task-quote" style="margin-bottom:16px;font-size:17px">The following excerpt appeared in an article in the <i>Hong Kong Post</i>: Another social media trend that has been garnering significant attention is the '10-year challenge'... Posters unsurprisingly see this as a harmless—and potentially even healthy—trend... On the other hand, there are many who view the trend with scepticism, arguing that it is another case of the shallow self-centredness of social media users.</div>
+<div class="task-quote" style="margin-bottom:16px;font-size:17px">The following excerpt appeared in an article in the <i>Hong Kong Post</i>: Another social media trend that has been garnering significant attention is the '10-year challenge', which entails posting a set of 'then-and-now' photos of yourself onto social media to compare the 10-year differences between the photos. Posters unsurprisingly see this as a harmless—and potentially even healthy—trend, pointing out that documenting the ways they have changed over the years can be beneficial for their self-esteem. On the other hand, there are many who view the trend with scepticism, arguing that it is another case of the shallow self-centredness of social media users.</div>
 <div class="ce-item">
 <div class="ce-cn">1. <b>Role</b>（你是谁）</div>
 <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看答案</button>
@@ -348,37 +363,34 @@ body{font-family:'PingFang SC','Microsoft YaHei','Inter','Segoe UI',sans-serif;b
 <div class="ce-en">✅ 应选第一项。题目要求 present your opinions and discuss whether such trends can be harmful — 即讨论该趋势的正面/负面影响。其余选项范围过宽或偏离题目焦点。</div>
 </div>
 <div class="ce-item">
-<div class="ce-cn">4. <b>Register</b>（正式程度）+ 5. <b>Tone</b>（语气，可多选）</div>
-<div style="display:flex;gap:16px;flex-wrap:wrap;margin:8px 0">
-<div class="quiz-card" data-correct="0" style="border:none;padding:0;flex:1;min-width:180px">
-<p style="font-weight:700;margin-bottom:6px">Register:</p>
+<div class="ce-cn">4. <b>Register</b>（正式程度）— 选择后点击「检查答案」</div>
+<div class="quiz-card" data-correct="0">
 <div class="quiz-opts">
 <button class="quiz-opt" onclick="checkQuiz(this)">formal</button>
 <button class="quiz-opt" onclick="checkQuiz(this)">semi-formal</button>
 <button class="quiz-opt" onclick="checkQuiz(this)">informal</button>
 </div>
-<div class="quiz-ans">✅ <b>formal</b> — 致信编辑，面向公众读者</div>
+<div class="quiz-ans">✅ <b>formal</b> — 致信编辑、面向公众读者，须用正式书面语体</div>
 </div>
-<div style="flex:1;min-width:180px">
-<p style="font-weight:700;margin-bottom:6px">Tone（可多选）:</p>
-<div style="display:flex;flex-direction:column;gap:2px">
+</div>
+<div class="ce-item">
+<div class="ce-cn">5. <b>Tone</b>（语气，可多选）— 勾选后点击「检查答案」</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin:6px 0">
 <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> logical</label>
 <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> neutral</label>
 <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="true"> persuasive</label>
 <label class="cb-label"><input type="checkbox" class="tone-cb" data-correct="false"> vivid / descriptive</label>
 </div>
-<button class="ce-btn" onclick="checkTones(this)" style="margin-top:6px">✅ 检查</button>
-</div>
-</div>
-<div class="ce-en show" style="margin-top:4px">✅ Tone: <b>logical + persuasive</b> — LTE 需要有逻辑地论证并用说服力打动读者</div>
+<button class="ce-btn" onclick="checkTones(this)">✅ 检查答案</button>
+<div class="ce-en">✅ <b>logical + persuasive</b> — LTE 须有逻辑地论证，并用说服力打动读者；不宜 neutral（立场须鲜明），也无需 vivid / descriptive（非描写文）。</div>
 </div>
 </section><section class="slide" data-title="🧠 Brainstorming">
 <p class="sec-label">Part 3 · Brainstorming</p>
 <h2 class="slide-h2">🧠 想论点</h2>
-<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.1: 你会选择参加"十年挑战"活动吗？为什么？（开放性问题）</span></div>
+<div class="think-prompt"><span class="think-icon">📍</span><span class="think-text">思考3.1: 你会选择参加"十年挑战"活动吗？为什么？</span></div>
 <div class="ce-item">
 <button class="ce-btn" onclick="var a=this.parentElement.querySelector('.ce-en');a.classList.toggle('show')">✅ 看提示</button>
-<div class="ce-en">让学生代入自己的视角更好想观点。无论选择参加或不参加，关键是想出合理的理由。</div>
+<div class="ce-en">代入个人视角，是为后面归纳利弊做铺垫。可从两个方向思考：<br>• 若<b>选择参加</b>：你的动机和期待是什么？（如记录成长、与朋友互动、回顾人生变化）<br>• 若<b>不参加</b>：你的顾虑是什么？（如隐私担忧、攀比心理、浪费时间）<br>无论立场如何，关键是想出<b>合理且有依据</b>的理由，这些理由将在下一步转化为文章论点。</div>
 </div>
 <div class="think-prompt" style="margin-top:16px"><span class="think-icon">📍</span><span class="think-text">思考3.2: "十年挑战"活动有什么好处？（提示：可根据利弊7大论点构想）</span></div>
 <div class="flip-grid g3 mt-m">
@@ -466,15 +478,38 @@ Dear editor,<br><br>
 </div>
 </section><section class="slide" data-title="✍️ Body 1 范文">
 <p class="sec-label">Part 6 · Body Paragraph 1 — Model Text</p>
-<h2 class="slide-h2">✍️ Body 1 范文精读（排序答案）</h2>
+<h2 class="slide-h2">✍️ Body 1 范文精读（排序练习）</h2>
 <p style="font-size:20px;color:var(--text-2);margin-bottom:6px">P2 >>>>>>>> Body paragraph 1 — Benefit 1: Accomplishment</p>
-<div class="para-quote">
-<b>( <span class="hl-chunk">1</span> )</b> To begin with, the 10-year challenge can bring people joy and a sense of accomplishment. <br><i style="color:var(--xdf-green)">→ P (Point)</i><br><br>
-<b>( <span class="hl-chunk">2</span> )</b> In today's fast-paced world, many people are <span class="cloze" onclick="revealCloze(this)" data-answer="too busy to organise old photos">______</span> or revisit important memories. However, the fun and creative nature of this trend encourages them to do so.<br><i style="color:var(--xdf-green)">→ E (Explain)</i><br><br>
-<b>( <span class="hl-chunk">3</span> )</b> By searching through old pictures, people may <span class="cloze" onclick="revealCloze(this)" data-answer="rediscover meaningful moments">______</span>, <span class="cloze" onclick="revealCloze(this)" data-answer="recognise goals they have achieved">______</span> and <span class="cloze" onclick="revealCloze(this)" data-answer="appreciate how far they have come">______</span>.<br><i style="color:var(--xdf-green)">→ E (Example)</i><br><br>
-<b>( <span class="hl-chunk">4</span> )</b> As a result, they may experience a sense of joy, take pride in their achievements and <span class="cloze" onclick="revealCloze(this)" data-answer="develop a greater sense of accomplishment">______</span>.<br><i style="color:var(--xdf-green)">→ R (Result)</i>
+<p style="font-size:19px;color:var(--text-2);margin-bottom:10px">🌟 请根据 PEER 逻辑，将下列句子重新排序（在括号中填入 1–4 的序号），并点击空格补全关键短语。</p>
+<div class="sort-wrap" id="b1sort">
+<div class="sort-row" data-correct="3">
+<span class="sort-slot">(<input type="text" class="sort-input" maxlength="1" inputmode="numeric">)</span>
+<span class="sort-sent">By searching through old pictures, people may <span class="cloze" onclick="revealCloze(this)" data-answer="rediscover meaningful moments">______</span>, <span class="cloze" onclick="revealCloze(this)" data-answer="recognise goals they have achieved">______</span> and <span class="cloze" onclick="revealCloze(this)" data-answer="appreciate how far they have come">______</span>.</span>
+<span class="sort-fn">→ E (Example)</span>
 </div>
-<div class="notes-box mt-m">
+<div class="sort-row" data-correct="2">
+<span class="sort-slot">(<input type="text" class="sort-input" maxlength="1" inputmode="numeric">)</span>
+<span class="sort-sent">In today's fast-paced world, many people are <span class="cloze" onclick="revealCloze(this)" data-answer="too busy to organise old photos">______</span> or revisit important memories. However, the fun and creative nature of this trend encourages them to do so.</span>
+<span class="sort-fn">→ E (Explain)</span>
+</div>
+<div class="sort-row" data-correct="1">
+<span class="sort-slot">(<input type="text" class="sort-input" maxlength="1" inputmode="numeric">)</span>
+<span class="sort-sent">To begin with, the 10-year challenge can bring people joy and a sense of accomplishment.</span>
+<span class="sort-fn">→ P (Point)</span>
+</div>
+<div class="sort-row" data-correct="4">
+<span class="sort-slot">(<input type="text" class="sort-input" maxlength="1" inputmode="numeric">)</span>
+<span class="sort-sent">As a result, they may experience a sense of joy, take pride in their achievements and <span class="cloze" onclick="revealCloze(this)" data-answer="develop a greater sense of accomplishment">______</span>.</span>
+<span class="sort-fn">→ R (Result)</span>
+</div>
+</div>
+<div style="margin-top:14px">
+<button class="ce-btn" onclick="checkSort('b1sort')">✅ 检查排序</button>
+<button class="ce-btn" onclick="revealSort('b1sort')" style="border-color:var(--xdf-blue);color:var(--xdf-blue)">👁 看答案</button>
+<button class="ce-btn" onclick="resetSort('b1sort')" style="border-color:var(--text-3);color:var(--text-3)">🔄 重置</button>
+</div>
+<div class="sort-result" id="b1sort-result"></div>
+<div class="notes-box mt-m" id="b1sort-analysis" style="display:none">
 <b>📝 分析：</b>P1 提出论点（成就感）→ E1 解释为什么人们平时不做（太忙）但这个趋势鼓励他们做 → E2 举例具体做什么（翻找旧照、重新发现有意义的时刻）→ R1 结果（感受到快乐和成就感）。PEER 逻辑链清晰完整。
 </div>
 </section><section class="slide" data-title="📐 Body 2 · PEER规划">
@@ -1193,6 +1228,63 @@ function checkTones(btn){
   }
   var ans=wrap.querySelector('.ce-en');
   if(ans)ans.classList.add('show');
+}
+// ── Sort exercise (排序练习) ──
+function checkSort(id){
+  var wrap=document.getElementById(id);
+  if(!wrap||wrap.classList.contains('judged'))return;
+  var rows=wrap.querySelectorAll('.sort-row');
+  var allRight=true;
+  rows.forEach(function(r){
+    var inp=r.querySelector('.sort-input');
+    var val=parseInt(inp.value);
+    var correct=parseInt(r.dataset.correct);
+    r.classList.remove('sort-right','sort-wrong');
+    if(val===correct){r.classList.add('sort-right')}
+    else{r.classList.add('sort-wrong');allRight=false}
+    var fn=r.querySelector('.sort-fn');if(fn)fn.style.display='inline-block';
+  });
+  wrap.classList.add('judged');
+  var res=document.getElementById(id+'-result');
+  var an=document.getElementById(id+'-analysis');
+  if(allRight){
+    if(res){res.className='sort-result sort-ok';res.innerHTML='🎉 全部正确！PEER 逻辑链排序完成。'}
+  }else{
+    if(res){res.className='sort-result sort-err';res.innerHTML='⚠️ 部分排序有误（红色为错误顺序），可点击「看答案」对照正确顺序。'}
+  }
+  if(an)an.style.display='block';
+}
+function revealSort(id){
+  var wrap=document.getElementById(id);
+  if(!wrap)return;
+  var rows=wrap.querySelectorAll('.sort-row');
+  rows.forEach(function(r){
+    var inp=r.querySelector('.sort-input');
+    inp.value=r.dataset.correct;
+    r.classList.remove('sort-wrong');r.classList.add('sort-right');
+    var fn=r.querySelector('.sort-fn');if(fn)fn.style.display='inline-block';
+  });
+  wrap.classList.add('judged');
+  var res=document.getElementById(id+'-result');
+  var an=document.getElementById(id+'-analysis');
+  if(res){res.className='sort-result sort-ok';res.innerHTML='👁 正确顺序：1 → 2 → 3 → 4（Point → Explain → Example → Result）。'}
+  if(an)an.style.display='block';
+}
+function resetSort(id){
+  var wrap=document.getElementById(id);
+  if(!wrap)return;
+  wrap.classList.remove('judged');
+  var rows=wrap.querySelectorAll('.sort-row');
+  rows.forEach(function(r){
+    var inp=r.querySelector('.sort-input');
+    inp.value='';
+    r.classList.remove('sort-right','sort-wrong');
+    var fn=r.querySelector('.sort-fn');if(fn)fn.style.display='none';
+  });
+  var res=document.getElementById(id+'-result');
+  var an=document.getElementById(id+'-analysis');
+  if(res){res.className='sort-result';res.innerHTML=''}
+  if(an)an.style.display='none';
 }
 </script>
 <script src="../../assets/app.js"></script>

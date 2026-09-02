@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>智学平台 · 我的看板</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <style>
     :root {
       --bg: #F4ECD8; --card: #FFFFFF; --text: #2E2A3B; --line: #2E2A3B;
@@ -18,7 +16,13 @@
     body { background: var(--bg); color: var(--text); font-family:"Noto Sans SC",system-ui,sans-serif; font-size:15px; line-height:1.6; transition: background .25s, color .25s; }
     .pixel { font-family:"Press Start 2P", monospace; }
     .app { display:flex; min-height:100vh; }
-    .sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+    .sidebar { width:220px; flex-shrink:0; border-right:3px solid var(--line); padding:24px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
+      /* 侧栏项超过一屏时（工具区注入后共 11 项）内部滚动，避免底部按钮被裁掉 */
+      overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+    .sidebar::-webkit-scrollbar { width:8px; }
+    .sidebar::-webkit-scrollbar-track { background:transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background:var(--line); border:2px solid var(--bg); }
+    .sidebar .nav { flex-shrink:0; }
     .logo { font-family:"Press Start 2P",monospace; font-size:13px; line-height:1.7; border:3px solid var(--line); background:var(--yellow); color:#2E2A3B; padding:10px 12px; box-shadow:4px 4px 0 var(--shadow); margin-bottom:28px; }
     .nav { display:flex; flex-direction:column; gap:6px; }
     .nav a { display:flex; align-items:center; gap:10px; padding:11px 12px; color:var(--text); text-decoration:none; border:3px solid transparent; font-weight:500; transition:transform .12s, background .12s, border-color .12s; }
@@ -26,6 +30,10 @@
     .nav a:hover { transform:translate(-2px,-2px); border-color:var(--line); box-shadow:3px 3px 0 var(--shadow); background:var(--card); }
     .nav a.active { background:var(--pink); color:#fff; border-color:var(--line); box-shadow:4px 4px 0 var(--shadow); }
     .nav a.active .dot { background:#fff; }
+    /* 工具区（由 polish.js featureNav 注入：错题本 / 作业 / 排行榜 / 设置） */
+    .nav-sep { font-family:"Press Start 2P",monospace; font-size:8px; color:var(--muted); margin:16px 0 6px; padding-left:12px; letter-spacing:1px; }
+    .nav a.tool .dot { background:var(--teal); }
+    .nav a.tool:hover { background:var(--teal); color:#04201f; }
     .sidebar-foot { margin-top:auto; display:flex; justify-content:center; padding-top:20px; }
     .main { flex:1; min-width:0; padding:24px 32px 48px; }
     .topbar { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
@@ -69,6 +77,8 @@
     .loading { text-align:center; color:var(--muted); padding:60px 0; font-size:14px; }
     @media (max-width:860px){ .cols{ grid-template-columns:1fr; } .sidebar{ display:none; } .main{ padding:18px; } .hero{ flex-direction:column; text-align:center; } }
   </style>
+  <link rel="stylesheet" href="assets/polish.css" />
+  <link rel="stylesheet" href="assets/classroom-rules.css" />
 </head>
 <body>
   <div class="app">
@@ -107,6 +117,7 @@
   </div>
 
   <script src="assets/app.js"></script>
+  <script src="assets/classroom-rules.js"></script>
   <script>
     const WEAK = { tfng:'T/F/NG 判断', pronoun:'代词指代', attitude:'态度词推断', wordform:'词形转换', conjunction:'连词语序', intransitive:'不及物陷阱' };
     const WEAK_COLOR = { tfng:'#FF5D8F', pronoun:'#4D7CFE', attitude:'#FFC83D', wordform:'#4FC46A', conjunction:'#2DD4BF', intransitive:'#9B6BF2' };
@@ -241,5 +252,6 @@
       return `<svg class="trend-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">${base}${bars}</svg>`;
     }
   </script>
+  <script src="assets/polish.js"></script>
 </body>
 </html>

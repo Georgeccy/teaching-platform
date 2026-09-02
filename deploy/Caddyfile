@@ -3,18 +3,32 @@
 # 仅靠本机回环通信：Node 后端只监听 127.0.0.1:3000，外部流量由 Caddy 转发。
 
 dse.yourdomain.com {
+    # ---- 压缩：课件是 17MB 的 HTML/JS/CSS，压缩后首屏与流量都明显改善 ----
+    encode zstd gzip
+
+    # ---- 缓存策略 ----
+    # 静态资源（脚本/样式/字体/图片）缓存 1 小时；HTML 不缓存，保证更新立即生效
+    @static path *.css *.js *.png *.jpg *.svg *.woff *.woff2 *.ico
+    header @static Cache-Control "public, max-age=3600"
+
+    @pages path *.html
+    header @pages Cache-Control "no-cache"
+
     # 反向代理到本地 Node 后端
     reverse_proxy 127.0.0.1:3000
 
-    # 基础安全头
+    # ---- 安全头 ----
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains"
         X-Content-Type-Options "nosniff"
         X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        # 平台用不到定位/麦克风/摄像头，直接关掉，减少被恶意脚本利用的面
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
         -Server
     }
 
-    # 上传体积上限（课件/图片），按需调整
+    # 上传体积上限（家长会 PDF 以 base64 提交，30MB PDF 约 40MB JSON，留出余量）
     request_body {
         max_size 50MB
     }
