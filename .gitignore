@@ -39,3 +39,6 @@ tools/
 
 # ---- Node 依赖（零依赖项目，保险） ----
 node_modules/
+
+# ---- WorkBuddy 工作目录（含截图等本机产物，不入库） ----
+.workbuddy/
